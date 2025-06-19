@@ -1,0 +1,18 @@
+{
+    "name": "GObject",
+    "rootNamespace": "",
+    "references": [
+        "GMath",
+        "Tools",
+        "Notify"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
