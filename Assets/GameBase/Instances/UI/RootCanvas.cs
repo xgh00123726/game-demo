@@ -11,6 +11,9 @@ namespace GameBase.UI
 
             SpellPanel._instance = PrefabMgr.Instance.GetNotfromPool<SpellPanel>();
             UIMgr.AttachToRoot(SpellPanel._instance.transform);
+
+            BuffPanel._instance = PrefabMgr.Instance.GetNotfromPool<BuffPanel>();
+            UIMgr.AttachToRoot(BuffPanel._instance.transform);
         }
     }
 }

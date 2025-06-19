@@ -5,28 +5,25 @@ using UnityEngine.Assertions;
 
 namespace GameBase.UI
 {
-    public class AttrPanel : BaseUI
+    public class AttrPanel : BasePanel
     {
         internal static AttrPanel _instance;
         public static AttrPanel Instance => _instance;
 
         private List<AttrItem> _childs = new List<AttrItem>();
         public List<AttrItem> Childs => _childs;
-        private GameObject _uiComponents;
         private GameObject _attrsField;
 
-        private void Awake()
+        protected override void Awake()
         {
-            _uiComponents = transform.Find("UIComponents").gameObject;
-            Assert.IsNotNull(_uiComponents);
-
-            _attrsField = _uiComponents.transform.Find("AttrsField").gameObject;
+            base.Awake();
+            _attrsField = _UIComponents.transform.Find("AttrsField").gameObject;
             Assert.IsNotNull(_attrsField);
         }
 
         public void ToggleShow()
         {
-            _uiComponents.SetActive(!_uiComponents.activeSelf);
+            _UIComponents.SetActive(!_UIComponents.activeSelf);
         }
         private int ItemY(int itemIndex)
         {

@@ -58,7 +58,9 @@ public class Player : BaseEntity
         {
             spellAction = () =>
             {
-                new BuffModify(this, new ModifyLite() { coolingAcclerate = 10 }) { duration = 5 }.CastTo(this);
+                var buff = new BuffModify(this, new ModifyLite() { coolingAcclerate = 10 }) { duration = 5 };
+                buff.CastTo(this);
+                BuffPanel.Instance.ShowBuff(buff);
             },
             ChooseCondition = (GSpell spell) => Inputs.GetKeyDown(KeyFunction.Spell2),
             CancelCondition = (GSpell spell) => Inputs.GetKeyDown(KeyFunction.Cancel),

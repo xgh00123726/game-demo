@@ -16,13 +16,11 @@ namespace GameBase.Buff
         protected override void OnCast()
         {
             _modify.ModifyTo(_target);
-            Debug.Log("lite cast");
         }
 
         protected override void OnClear()
         {
             _modify.Destroy();
-            Debug.Log("lite destroy");
         }
     }
 }

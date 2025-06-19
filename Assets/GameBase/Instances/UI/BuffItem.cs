@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using GameBase.Buff;
 using TMPro;
 using GameBase.Tools;
+using GameBase.Resources;
 
 namespace GameBase.UI
 {
@@ -15,7 +16,8 @@ namespace GameBase.UI
 
         private TextMeshProUGUI _stackNumTMP;
         private Image _maskGOImage;
-        private IViewableBuff _bindBuff;
+        internal IViewableBuff _bindBuff;
+        internal bool _isReleased = false;
 
         // 0: ÎÞmask
         // 1: ÌîÂú
@@ -36,6 +38,12 @@ namespace GameBase.UI
 
         private void Update()
         {
+            if (_isReleased) return;
+            if (_bindBuff.DurationRemain <= 0)
+            {
+                PoolableMonoMgr<BuffItem>.Instance.Release(this);
+                _isReleased = true;
+            }
             _maskGOImage.fillAmount = 1 - _bindBuff.DurationRemain / _bindBuff.DurationSet;
             _stackNumTMP.text = _bindBuff.StackNum.ToString();
         }
@@ -51,6 +59,7 @@ namespace GameBase.UI
             _iconGO.SetActive(true);
             _maskGO.SetActive(true);
             _stackNumGO.SetActive(true);
+            _isReleased = false;
         }
 
         void IPoolableObject.OnRelease()
@@ -58,6 +67,7 @@ namespace GameBase.UI
             _iconGO.SetActive(false);
             _maskGO.SetActive(false);
             _stackNumGO.SetActive(false);
+            _isReleased = true;
         }
     }
 }
