@@ -1,0 +1,12 @@
+{
+    "prefab": {
+        "MoveIndicatorEffect": "RightClickEffect",
+        "ArrowOfRain": "ProjectileArrow",
+        "Explore": "CFXR Explosion 1",
+        "DestIndicator": "CircleIndicator",
+        "SpellCircleIndicator": "CircleIndicator"
+    },
+    "material": {
+        "FadeMaterial": "FadeMaterial"
+    }
+}

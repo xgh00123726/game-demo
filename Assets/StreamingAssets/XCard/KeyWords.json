@@ -1,0 +1,12 @@
+{
+    "keyword-invoke": {
+        "zh-cn" : {
+            "content" : "触发",
+            "tip" : "具有触发词条的卡牌可以在你的回合时发动特殊效果，每张卡牌仅一次"
+        },
+        "en" : {
+            "content" : "Invoke",
+            "tip" : "if a card has an 'invoke' tag, it get a invoke skill in your turn, once per card"
+        }
+    }
+}
