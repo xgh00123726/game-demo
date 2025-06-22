@@ -20,7 +20,7 @@ public class BaseEntity : GObject,
     public RotateComponent rotateComponent;
     public AnimationComponent animationComponent;
     public List<GSpell> spells = new List<GSpell>();
-    public Dictionary<GSpell, SpellUI> spellUI = new Dictionary<GSpell, SpellUI>();
+    public Dictionary<GSpell, SpellItem> spellUI = new Dictionary<GSpell, SpellItem>();
 
     public void AddSpell(GSpell spell, bool needUI = true)
     {

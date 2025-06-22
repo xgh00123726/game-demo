@@ -16,8 +16,10 @@ namespace GameBase.UI
 
         private TextMeshProUGUI _stackNumTMP;
         private Image _maskGOImage;
+        private PoolableMonoMgr<BuffItem> _buffItemMgr;
         internal IViewableBuff _bindBuff;
         internal bool _isReleased = false;
+        
 
         // 0: ÎÞmask
         // 1: ÌîÂú
@@ -34,6 +36,8 @@ namespace GameBase.UI
 
             _maskGOImage = _maskGO.GetComponent<Image>();
             _stackNumTMP = _stackNumGO.GetComponent<TextMeshProUGUI>();
+
+            _buffItemMgr = PoolableMonoMgr<BuffItem>.Instance(PrefabType.UI);
         }
 
         private void Update()
@@ -41,7 +45,7 @@ namespace GameBase.UI
             if (_isReleased) return;
             if (_bindBuff.DurationRemain <= 0)
             {
-                PoolableMonoMgr<BuffItem>.Instance.Release(this);
+                _buffItemMgr.Release(this);
                 _isReleased = true;
             }
             _maskGOImage.fillAmount = 1 - _bindBuff.DurationRemain / _bindBuff.DurationSet;

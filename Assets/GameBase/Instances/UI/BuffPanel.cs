@@ -11,23 +11,30 @@ namespace GameBase.UI
     {
         public static BuffPanel Instance => _instance;
         internal static BuffPanel _instance;
+        PoolableMonoMgr<BuffItem> _buffItemMgr;
         public Vector3 BuffPositionDelta(int index)
         {
             return new Vector3(32 * index, 0, 0);
         }
         public void ShowBuff(IViewableBuff buff)
         {
-            var buffItem = PoolableMonoMgr<BuffItem>.Instance.Get();
+            var buffItem = _buffItemMgr.Get();
             buffItem.Bind(buff);
             buffItem.transform.SetParent(_UIComponents.transform, false);
-            buffItem.transform.localPosition = BuffPositionDelta(PoolableMonoMgr<BuffItem>.Instance.Pool.ActiveList.Count);
+            buffItem.transform.localPosition = BuffPositionDelta(_buffItemMgr.Pool.ActiveList.Count);
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _buffItemMgr = PoolableMonoMgr<BuffItem>.Instance(PrefabType.UI);
         }
 
         private void Update()
         {
-            for (int i = 0; i < PoolableMonoMgr<BuffItem>.Instance.Pool.ActiveList.Count; ++i)
+            for (int i = 0; i < _buffItemMgr.Pool.ActiveList.Count; ++i)
             {
-                BuffItem item = PoolableMonoMgr<BuffItem>.Instance.Pool.ActiveList[i];
+                BuffItem item = _buffItemMgr.Pool.ActiveList[i];
                 item.transform.localPosition = BuffPositionDelta(i);
             }
         }

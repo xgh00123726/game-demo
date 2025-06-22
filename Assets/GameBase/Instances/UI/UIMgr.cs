@@ -20,6 +20,11 @@ namespace GameBase.UI
             }
         }
 
+        private void Awake()
+        {
+            DontDestroyOnLoad(this);
+        }
+
         public static void AttachToRoot(Transform ui)
         {
             ui.SetParent(RootCanvas, false);

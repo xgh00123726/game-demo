@@ -21,7 +21,7 @@ namespace GameBase.Projectile
 
         public T CreateProjectile<T>() where T : GProjectile
         {
-            return PrefabMgr.Instance.GetFromPool<T>();
+            return PrefabMgr.Instance.GetFromPool<T>(PrefabType.Projectile);
         }
     }
 }

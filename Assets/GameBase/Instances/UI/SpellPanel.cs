@@ -9,11 +9,11 @@ namespace GameBase.UI
         internal static SpellPanel _instance;
         public static SpellPanel Instance => _instance;
         public Transform UIComponents;
-        private List<SpellUI> _childs = new List<SpellUI>();
-        public List<SpellUI> Childs => _childs;
-        public SpellUI AddItem()
+        private List<SpellItem> _childs = new List<SpellItem>();
+        public List<SpellItem> Childs => _childs;
+        public SpellItem AddItem()
         {
-            var ui = PrefabMgr.Instance.GetNotfromPool<SpellUI>();
+            var ui = PrefabMgr.Instance.GetNotfromPool<SpellItem>(PrefabType.UI);
             ui.transform.SetParent(_UIComponents.transform, false);
             ui.GetComponent<RectTransform>().position = new Vector2(540 + 120 * _childs.Count, 75);
 

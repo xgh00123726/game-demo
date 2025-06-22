@@ -35,7 +35,7 @@ public class TestButton : MonoBehaviour
             _getOver = false;
             Timer.AddTask(getInterval, cardNum, true, () =>
             {
-                var card = PrefabMgr.Instance.GetFromPool<XCardBase>();
+                var card = PrefabMgr.Instance.GetFromPool<XCardBase>(PrefabType.Entity);
                 Vector3 pos = Vector3.zero;
                 pos.x = (rightEdge + leftEdge) / 2 + (_cards.Count - (cardNum - 1) / 2) * disInterval;
                 pos.y = y;

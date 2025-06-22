@@ -1,3 +1,4 @@
+using UnityEngine;
 using GameBase.Spell;
 using GameBase.GCamera;
 
@@ -20,12 +21,12 @@ namespace GameBase.Effects
 
         void IIndicatorSpell.Move()
         {
-            PlayAt(PlayerCamera.MouseHitPoint);
+            PlayAt(PlayerCamera.MouseHitPoint + new Vector3(0, 2, 0));
         }
 
         void IIndicatorSpell.Show()
         {
-            PlayAt(PlayerCamera.MouseHitPoint);
+            PlayAt(PlayerCamera.MouseHitPoint + new Vector3(0, 2, 0));
         }
     }
 }

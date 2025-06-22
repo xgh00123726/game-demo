@@ -8,17 +8,11 @@ namespace GameBase.Resources
     public class PrefabMgr : MonoBehaviour
     {
         private static PrefabMgr _instance;
-        public static PrefabMgr Instance
-        {
-            get
-            {
-                return _instance;
-            }
-        }
+        public static PrefabMgr Instance => _instance;
 
         private Dictionary<string, ObjectPool<PoolablePrefab>> _prefabPools;
         
-        private ObjectPool<PoolablePrefab> PoolOf<T>() where T : PoolablePrefab
+        private ObjectPool<PoolablePrefab> PoolOf<T>(PrefabType type) where T : PoolablePrefab
         {
             string name = typeof(T).Name;
             if (_prefabPools.ContainsKey(name))
@@ -28,7 +22,7 @@ namespace GameBase.Resources
             var pool = new ObjectPool<PoolablePrefab>();
             pool.InstantiateObject = () =>
             {
-                var obj = ResourceMgr.InstaniatePrefab(name);
+                var obj = ResourceMgr.InstaniatePrefab(type, name);
                 var prefab = obj.GetComponent<PoolablePrefab>();
                 if (prefab != null)
                 {
@@ -43,14 +37,14 @@ namespace GameBase.Resources
             return pool;
         }
 
-        public T GetFromPool<T>() where T : PoolablePrefab
+        public T GetFromPool<T>(PrefabType type) where T : PoolablePrefab
         {
-            return PoolOf<T>().Get() as T;
+            return PoolOf<T>(type).Get() as T;
         }
 
-        public T GetNotfromPool<T>(string project = "public") where T : MonoBehaviour
+        public T GetNotfromPool<T>(PrefabType type) where T : MonoBehaviour
         {
-            var obj = ResourceMgr.InstaniatePrefab(typeof(T).Name);
+            var obj = ResourceMgr.InstaniatePrefab(type, typeof(T).Name);
             var prefab = obj.GetComponent<T>();
             if (prefab != null)
             {
