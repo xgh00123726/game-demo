@@ -6,17 +6,17 @@ namespace GameBase.Resources
     public class PoolableMonoMgr<T> where T : MonoBehaviour, IPoolableObject
     {
         private static PoolableMonoMgr<T> _instance;
-        public static PoolableMonoMgr<T> Instance(PrefabType type) => _instance ??= new PoolableMonoMgr<T>(type);
+        public static PoolableMonoMgr<T> Instance(PrefabType type, string subFolder = null) => _instance ??= new PoolableMonoMgr<T>(type, subFolder);
 
         ObjectPool<T> _pool;
         public ObjectPool<T> Pool => _pool;
 
-        private PoolableMonoMgr(PrefabType type)
+        private PoolableMonoMgr(PrefabType type, string subFolder)
         {
             _pool = new ObjectPool<T>();
             _pool.InstantiateObject = () =>
             {
-                var obj = ResourceMgr.InstaniatePrefab(type, typeof(T).Name);
+                var obj = ResourceMgr.InstaniatePrefab(type, typeof(T).Name, subFolder);
                 var prefab = obj.GetComponent<T>();
                 if (prefab != null)
                 {

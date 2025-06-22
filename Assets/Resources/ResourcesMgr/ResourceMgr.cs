@@ -10,13 +10,13 @@ namespace GameBase.Resources
         private static Dictionary<string, Material> _materialDict = new Dictionary<string, Material> { };
 
         // ´Ó×ÖµäÀï
-        public static GameObject LoadPrefab(PrefabType type, string name)
+        public static GameObject LoadPrefab(PrefabType type, string name, string subFolder)
         {
             if (_prefabDict.ContainsKey(name))
             {
                 return _prefabDict[name];
             }
-            GameObject go = ResourcesLoader.LoadFrefab(type, name);
+            GameObject go = ResourcesLoader.LoadFrefab(type, name, subFolder);
             if (go == null)
             {
                 Debug.LogWarning($"The prefab your load is null, prefab type:{type.ToString()}, prefab name:{name}");
@@ -37,9 +37,9 @@ namespace GameBase.Resources
             return m;
         }
 
-        public static GameObject InstaniatePrefab(PrefabType type, string name)
+        public static GameObject InstaniatePrefab(PrefabType type, string name, string subFolder)
         {
-            GameObject go = LoadPrefab(type, name);
+            GameObject go = LoadPrefab(type, name, subFolder);
             return GameObject.Instantiate(go);
         }
 

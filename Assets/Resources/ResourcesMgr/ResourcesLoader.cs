@@ -23,7 +23,7 @@ namespace GameBase.Resources
             }
         }
 
-        public static GameObject LoadFrefab(PrefabType type, string name)
+        public static GameObject LoadFrefab(PrefabType type, string name, string subFolder)
         {
             string prefabName;
             // 从名称映射json文件中读取名称，json文件中没有该名字，则使用类名作为索引
@@ -34,6 +34,11 @@ namespace GameBase.Resources
             else
             {
                 prefabName = name;
+            }
+            
+            if (subFolder != null && subFolder != "" && subFolder.Length != 0)
+            {
+                return UnityEngine.Resources.Load<GameObject>($"prefabs/{_typeName[(int)type]}/{subFolder}/{prefabName}");
             }
             return UnityEngine.Resources.Load<GameObject>($"prefabs/{_typeName[(int)type]}/{prefabName}");
         }
