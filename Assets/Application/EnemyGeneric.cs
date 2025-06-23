@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using GameBase.Object;
-using UnityEngine;
+using GameBase.Entity;
 
-public class EnemyGeneric : BaseEntity
+public class EnemyGeneric : GameEntity
 {
 }

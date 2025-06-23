@@ -43,6 +43,15 @@ namespace GameBase.Resources
             return UnityEngine.Resources.Load<GameObject>($"prefabs/{_typeName[(int)type]}/{prefabName}");
         }
 
+        public static GameObject[] LoadAllPrefab(PrefabType type, string subFolder)
+        {
+            if (subFolder != null && subFolder != "" && subFolder.Length != 0)
+            {
+                return UnityEngine.Resources.LoadAll<GameObject>($"prefabs/{_typeName[(int)type]}/{subFolder}");
+            }
+            return UnityEngine.Resources.LoadAll<GameObject>($"prefabs/{_typeName[(int)type]}");
+        }
+
         public static Material LoadMaterial(string name)
         {
             return UnityEngine.Resources.Load<Material>($"materials/{_pathDict["material"][name]}");

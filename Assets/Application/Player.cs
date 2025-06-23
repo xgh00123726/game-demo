@@ -9,8 +9,9 @@ using GameBase.Modify;
 using GameBase.Buff;
 using UnityEngine;
 using GameBase.Resources;
+using GameBase.Entity;
 
-public class Player : BaseEntity
+public class Player : GameEntity
 {
     public bool isSkillIndicatorPlay = false;
     

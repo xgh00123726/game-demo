@@ -26,6 +26,16 @@ namespace GameBase.Resources
             return go;
         }
 
+        public static GameObject[] LoadAllPrefab(PrefabType type, string subFolder)
+        {
+            GameObject[] gos = ResourcesLoader.LoadAllPrefab(type, subFolder);
+            if (gos == null)
+            {
+                Debug.LogWarning($"The prefab your load is null, prefab type:{type.ToString()}, prefab path:{subFolder}");
+            }
+            return gos;
+        }
+
         public static Material LoadMaterial(string name)
         {
             if (_materialDict.ContainsKey(name))
