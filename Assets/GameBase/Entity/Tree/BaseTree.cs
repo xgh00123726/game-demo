@@ -23,9 +23,7 @@ public class BaseTree : BaseEntity
 
         int foliageIndex = Random.Range(0, _foliagePrefabs.Count - 1);
         int trunkIndex = Random.Range(0, _trunkPrefabs.Count - 1);
-        _foliageObj = GameObject.Instantiate<GameObject>(_foliagePrefabs[foliageIndex]);
-        _trunkObj = GameObject.Instantiate<GameObject>(_trunkPrefabs[trunkIndex]);
-        _foliageObj.transform.parent = transform;
-        _trunkObj.transform.parent = transform;
+        _foliageObj = GameObject.Instantiate<GameObject>(_foliagePrefabs[foliageIndex], transform);
+        _trunkObj = GameObject.Instantiate<GameObject>(_trunkPrefabs[trunkIndex], transform);
     }
 }

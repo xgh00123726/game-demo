@@ -1,0 +1,16 @@
+{
+    "name": "Editable",
+    "rootNamespace": "",
+    "references": [
+        "GUID:a37901e73280e1142a0d40f62ccc5e41"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
