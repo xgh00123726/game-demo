@@ -8,7 +8,7 @@ namespace GameBase.Projectile
         DestIndicator _destIndicator;
         protected override void OnEmit()
         {
-            _destIndicator = PrefabMgr.Instance.GetFromPool<DestIndicator>(PrefabType.Effect);
+            _destIndicator = PrefabMgr.GetFromPool<DestIndicator>(PrefabType.Effect);
             _destIndicator.transform.position = Dest;
         }
 
@@ -16,7 +16,7 @@ namespace GameBase.Projectile
         {
             //var explore = PrefabMgr.Instance.GetFromPool<Explore>();
             //explore.transform.position = transform.position;
-            PrefabMgr.Instance.ReleaseToPool(_destIndicator);
+            PrefabMgr.ReleaseToPool(_destIndicator);
         }
     }
 }

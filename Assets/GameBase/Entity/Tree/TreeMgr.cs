@@ -13,7 +13,8 @@ public class TreeMgr : MonoBehaviour
     // 创建树，并在Mgr中保存引用
     public static BaseTree CreateTree(Vector3? position = null, Transform parent = null, string name = "Tree")
     {
-        BaseTree tree = PrefabMgr.Instance.GetNotfromPool<BaseTree>(PrefabType.Vegetation, "Tree");
+        BaseTree tree = PrefabMgr.GetNotfromPool<BaseTree>(PrefabType.Vegetation, "Tree");
+        tree.Init();
         _treeList.Add(tree);
         if (parent != null)
         {

@@ -18,7 +18,7 @@ namespace GameBase.Effects
 
         public void PlayAt(Vector3 pos)
         {
-            MoveIndicatorEffect effect = PrefabMgr.Instance.GetFromPool<MoveIndicatorEffect>(PrefabType.Effect);
+            MoveIndicatorEffect effect = PrefabMgr.GetFromPool<MoveIndicatorEffect>(PrefabType.Effect);
             effect.PlayAt(pos);
         }
 

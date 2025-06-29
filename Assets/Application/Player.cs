@@ -29,7 +29,7 @@ public class Player : GameEntity
             animationComponent.ResetEnable = true;
             animationComponent.ForceSetClipRun("HumanIdle");
         };
-        AddSpell(new ArrowOfRain(this, PrefabMgr.Instance.GetNotfromPool<SpellCircleIndicator>(PrefabType.Effect))
+        AddSpell(new ArrowOfRain(this, PrefabMgr.GetNotfromPool<SpellCircleIndicator>(PrefabType.Effect))
         {
             AttackAction = (ArrowOfRain skill) =>
             {

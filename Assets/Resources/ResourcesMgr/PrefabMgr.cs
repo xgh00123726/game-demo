@@ -7,12 +7,9 @@ namespace GameBase.Resources
 {
     public class PrefabMgr : MonoBehaviour
     {
-        private static PrefabMgr _instance;
-        public static PrefabMgr Instance => _instance;
-
-        private Dictionary<string, ObjectPool<PoolablePrefab>> _prefabPools;
+        private static Dictionary<string, ObjectPool<PoolablePrefab>> _prefabPools = new Dictionary<string, ObjectPool<PoolablePrefab>>();
         
-        private ObjectPool<PoolablePrefab> PoolOf<T>(PrefabType type, string subFolder = null) where T : PoolablePrefab
+        private static ObjectPool<PoolablePrefab> PoolOf<T>(PrefabType type, string subFolder = null) where T : PoolablePrefab
         {
             string name = typeof(T).Name;
             if (_prefabPools.ContainsKey(name))
@@ -37,12 +34,12 @@ namespace GameBase.Resources
             return pool;
         }
 
-        public T GetFromPool<T>(PrefabType type, string subFolder = null) where T : PoolablePrefab
+        public static T GetFromPool<T>(PrefabType type, string subFolder = null) where T : PoolablePrefab
         {
             return PoolOf<T>(type, subFolder).Get() as T;
         }
 
-        public T GetNotfromPool<T>(PrefabType type, string subFolder = null) where T : MonoBehaviour
+        public static T GetNotfromPool<T>(PrefabType type, string subFolder = null) where T : MonoBehaviour
         {
             var obj = ResourceMgr.InstaniatePrefab(type, typeof(T).Name, subFolder);
             var prefab = obj.GetComponent<T>();
@@ -56,22 +53,16 @@ namespace GameBase.Resources
             }
         }
 
-        public void ReleaseToPool(PoolablePrefab prefab)
+        public static void ReleaseToPool(PoolablePrefab prefab)
         {
             string name = prefab.GetType().Name;
             _prefabPools[name].Release(prefab);
         }
 
-        public void TryReleaseToPool(PoolablePrefab prefab)
+        public static void TryReleaseToPool(PoolablePrefab prefab)
         {
             string name = prefab.GetType().Name;
             _prefabPools[name].TryRelease(prefab);
-        }
-
-        void Awake()
-        {
-            _prefabPools = new Dictionary<string, ObjectPool<PoolablePrefab>>();
-            _instance = this;
         }
 
         void Start()

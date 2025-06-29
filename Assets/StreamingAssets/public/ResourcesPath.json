@@ -4,7 +4,8 @@
         "ArrowOfRain": "ProjectileArrow",
         "Explore": "CFXR Explosion 1",
         "DestIndicator": "CircleIndicator",
-        "SpellCircleIndicator": "CircleIndicator"
+        "SpellCircleIndicator": "CircleIndicator",
+        "BaseTree": "NullTree"
     },
     "material": {
         "FadeMaterial": "FadeMaterial"
