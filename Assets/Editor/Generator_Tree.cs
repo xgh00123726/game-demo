@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-public class Generator
+public partial class Generator
 {
     public const string ToolBarTitle = "Generate";
     public static GameObject select;
