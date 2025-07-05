@@ -14,6 +14,7 @@ using GameBase.Entity;
 public class Player : GameEntity
 {
     public bool isSkillIndicatorPlay = false;
+    public AttrItem coolAccPanelItem;
     
 
     protected override void Start()
@@ -69,8 +70,8 @@ public class Player : GameEntity
             coolingTimeSet = 10f
         });
 
-        AttrPanel.Instance.AddItem();
-        AttrPanel.Instance.Childs[0].KeyText = "spell accelerate";
+        coolAccPanelItem = AttrPanel.Instance.AddItem();
+        coolAccPanelItem.KeyText = "spell accelerate";
     }
 
     // Update is called once per frame
@@ -96,6 +97,6 @@ public class Player : GameEntity
             AttrPanel.Instance.ToggleShow();
         }
 
-        AttrPanel.Instance.Childs[0].ValueText = attrs.coolingAcclerate.Value.ToString();
+        coolAccPanelItem.ValueText = attrs.coolingAcclerate.Value.ToString();
     }
 }
