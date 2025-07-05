@@ -3,19 +3,18 @@ using GameBase.Effects;
 
 namespace GameBase.Projectile
 {
-    public class Arrow : GProjectile
+    public class Arrow : CurveProjectile
     {
         DestIndicator _destIndicator;
         protected override void OnEmit()
         {
             _destIndicator = PrefabMgr.GetFromPool<DestIndicator>(PrefabType.Effect);
-            _destIndicator.transform.position = Dest;
+            _destIndicator.transform.position = _dest;
         }
 
-        protected override void OnStop()
+        protected override void OnRelease()
         {
-            //var explore = PrefabMgr.Instance.GetFromPool<Explore>();
-            //explore.transform.position = transform.position;
+            ExploreMgr.InvokeExplore(_dest);
             PrefabMgr.ReleaseToPool(_destIndicator);
         }
     }

@@ -1,9 +1,5 @@
 using UnityEngine;
 using GameBase.Projectile;
-using GameBase.Resources;
-using GameBase.Effects;
-using GameBase.GCamera;
-using GameBase.Object;
 
 namespace GameBase.Spell
 {
@@ -16,7 +12,7 @@ namespace GameBase.Spell
 
         public ArrowOfRain(ISpeller speller, IIndicatorCircleSpell indicator) : base(speller, indicator)
         {
-            coolingTimeSet = 5f;
+            coolingTimeSet = 1f;
             Radius = 2f;
         }
 
@@ -29,16 +25,13 @@ namespace GameBase.Spell
         {
             base.OnCast();
             AttackAction?.Invoke(this);
-            for (int i = 0; i < 5; ++i)
+            for (int i = 0; i < 1; ++i)
             {
-                var projectile = ProjectileMgr.Instance.CreateProjectile<Arrow>();
+                var projectile = ProjectileMgr<FireArrow>.Instance.CreateProjectile();
                 projectile.transform.position = src;
-
-                var curise = new Parabolic();
-                curise.speed = 5f;
-                projectile.Curise = curise;
-
-                projectile.Dest = dest + new Vector3(Random.Range(-_radius, _radius), 0, Random.Range(-_radius, _radius));
+                Debug.Log("parabolic time limit");
+                projectile.Curve = new ParabolicTimeLimit(projectile);
+                projectile.SetTrack(src, dest);
             }
         }
     }

@@ -1,7 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using GameBase.Resources;
-using GameBase.Tools;
 using UnityEngine;
 
 namespace GameBase.Effects
@@ -9,8 +8,8 @@ namespace GameBase.Effects
     public class Explore : PoolablePrefab
     {
         private ParticleSystem _particle;
+        internal string prefabName = null;
 
-        public override bool ReleaseTrigger => (_particle.time >= 1.5f || !_particle.isPlaying) && gameObject.activeSelf;
         protected override void OnInstantiate()
         {
             gameObject.SetActive(true);

@@ -24,7 +24,8 @@ namespace GameBase.Tools
         {
             if (_InstantiateObject == null)
             {
-                Debug.LogWarning("before get a object from object pool, you shold set the instantiate method by setter 'InstantiateObject'");
+                Logger.Level(Logger.LogLevel.Warning)
+                    .Log("before get a object from object pool, you shold set the instantiate method by setter 'InstantiateObject'");
                 return default;
             }
             if(_releasedList.Count > 0)
@@ -76,7 +77,7 @@ namespace GameBase.Tools
             _releasedBuffer.Add(obj);
         }
 
-        public void PushReleaseBuffer()
+        public void FlushReleaseBuffer()
         {
             foreach(var item in _releasedBuffer)
             {

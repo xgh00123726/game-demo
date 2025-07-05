@@ -18,16 +18,9 @@ namespace GameBase.Spell
         protected override void OnCast()
         {
             AttackAction?.Invoke(this);
-            var projectile = ProjectileMgr.Instance.CreateProjectile<Arrow>();
+            var projectile = ProjectileMgr<Arrow>.Instance.CreateProjectile();
+            projectile.SetTrack(projectile.transform.position, dest);
             projectile.transform.position = src;
-            
-            var snake = new SnakeCurise();
-            snake.amp = 2;
-            snake.freq = 4;
-            projectile.Curise = snake;
-
-            dest.y = projectile.transform.position.y;
-            projectile.Dest = dest;
         }
     }
 }

@@ -11,12 +11,16 @@ namespace GameBase.Effects
     {
         internal ParticleSystem _particle;
 
-        public override bool ReleaseTrigger => (_particle.time >= 1.5f || !_particle.isPlaying) && gameObject.activeSelf;
+        public override bool ReleaseTrigger => (_particle.time >= particleLifeTime || !_particle.isPlaying) && gameObject.activeSelf;
         public bool releaseTrigger;
         public float particleTime;
         public bool activeSelf;
         public bool isPlaying;
         public bool isPaused;
+        public Vector3 beginOffset;
+        public Vector3 endOffset;
+        public float particleLifeTime = 1f;
+        public Vector3 positionSet;
 
         protected override void OnInstantiate()
         {
@@ -31,6 +35,7 @@ namespace GameBase.Effects
         private void Awake()
         {
             _particle = gameObject.GetComponent<ParticleSystem>();
+            particleLifeTime = _particle.main.startLifetime.constant;
         }
 
         private void Update()
@@ -40,11 +45,13 @@ namespace GameBase.Effects
             activeSelf = gameObject.activeSelf;
             isPaused = _particle.isPaused;
             isPlaying = _particle.isPlaying;
+            transform.position = positionSet + Vector3.Lerp(beginOffset, endOffset, particleTime / particleLifeTime);
         }
 
         public void PlayAt(Vector3 pos)
         {
             gameObject.transform.position = pos;
+            positionSet = pos;
             _particle.Simulate(0f);
             _particle.Play();
         }

@@ -1,17 +1,32 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LifeTimeMgr : MonoBehaviour
+namespace GameBase.Object
 {
-    public string startScene = "DemoCopy";
-    void Start()
+    public class LifeTimeMgr : MonoBehaviour
     {
-        DontDestroyOnLoad(gameObject);
-        SceneManager.LoadScene(startScene);
-    }
+        public string startScene = "DemoCopy";
+        public int managerNum = 0;
+        private static List<IManager> _managers = new List<IManager>();
 
-    void Update()
-    {
-        
+        public static void AddMgr(IManager manager)
+        {
+            _managers.Add(manager);
+        }
+        void Start()
+        {
+            DontDestroyOnLoad(gameObject);
+            SceneManager.LoadScene(startScene);
+        }
+
+        void Update()
+        {
+            foreach (IManager manager in _managers)
+            {
+                manager.Update();
+            }
+            managerNum = _managers.Count;
+        }
     }
 }

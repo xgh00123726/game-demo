@@ -1,6 +1,7 @@
 using UnityEngine;
 using GameBase.Tools;
 using GameBase.GCamera;
+using Logger = GameBase.Tools.Logger;
 
 namespace GameBase.GCamera
 {
@@ -92,6 +93,14 @@ namespace GameBase.GCamera
             rotateComponent.rotateSpeed = new Vector3(100, 100, 100);
         }
 
+        private void RecordInputInfo()
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                Logger.Log($"Lmouse:{_mouseHitPoint}");
+            }
+        }
+
         // Update is called once per frame
         protected override void Update()
         {
@@ -102,6 +111,10 @@ namespace GameBase.GCamera
             moveRay = _camera.ScreenPointToRay(UnityEngine.Input.mousePosition);
             Physics.Raycast(moveRay, out rayHit);
             _mouseHitPoint = rayHit.point;
+
+#if UNITY_EDITOR
+            RecordInputInfo();
+#endif
         }
     }
 }

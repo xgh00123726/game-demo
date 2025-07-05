@@ -21,6 +21,8 @@ namespace GameBase.Entity
         public MoveComponent moveComponent;
         public RotateComponent rotateComponent;
         public AnimationComponent animationComponent;
+        public SphereCollider sphereCollider;
+
         public List<GSpell> spells = new List<GSpell>();
         public Dictionary<GSpell, SpellItem> spellUI = new Dictionary<GSpell, SpellItem>();
 
@@ -37,13 +39,19 @@ namespace GameBase.Entity
         protected virtual void Start()
         {
             moveComponent = GetComponent<MoveComponent>();
-            Assert.IsNotNull(moveComponent);
+            moveComponent ??= gameObject.AddComponent<MoveComponent>();
 
             rotateComponent = GetComponent<RotateComponent>();
-            Assert.IsNotNull(rotateComponent);
+            rotateComponent ??= gameObject.AddComponent<RotateComponent>();
 
             animationComponent = GetComponent<AnimationComponent>();
-            Assert.IsNotNull(animationComponent);
+            animationComponent ??= gameObject.AddComponent<AnimationComponent>();
+
+            sphereCollider = GetComponent<SphereCollider>();
+            sphereCollider ??= gameObject.AddComponent<SphereCollider>();
+
+            animationComponent.SetDefaultClip("HumanIdle");
+            animationComponent.EnableClipLoop("HumanRun");
         }
 
         // Update is called once per frame
