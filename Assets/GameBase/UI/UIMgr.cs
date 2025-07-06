@@ -25,6 +25,11 @@ namespace GameBase.UI
             DontDestroyOnLoad(this);
         }
 
+        /// <summary>
+        /// 将制定的UI放在rootcanvas下
+        /// <list type="bullet">
+        /// <item><param name="ui"><paramref name="ui"/>:UI的transform</param></item>
+        /// </list></summary>
         public static void AttachToRoot(Transform ui)
         {
             ui.SetParent(RootCanvas, false);

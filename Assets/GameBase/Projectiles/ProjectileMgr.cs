@@ -19,7 +19,7 @@ namespace GameBase.Projectile
 
         ProjectileMgr(string subFolder = null)
         {
-            LifeTimeMgr.AddMgr(this);
+            LifeTimeMgr.RegisterMgr(this);
             MonoMgr = PoolableMonoMgr<T>.Instance(PrefabType.Projectile, subFolder);
         }
 

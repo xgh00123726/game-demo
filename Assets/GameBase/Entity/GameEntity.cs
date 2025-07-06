@@ -7,6 +7,7 @@ using GameBase.Spell;
 using UnityEngine.Assertions;
 using GameBase.UI;
 using GameBase.Projectile;
+using GameBase.Health;
 
 namespace GameBase.Entity
 {
@@ -14,7 +15,8 @@ namespace GameBase.Entity
         IModifyable,
         ISpeller,
         IProjectileTarget,
-        IProjectileOwner
+        IProjectileOwner,
+        IHealthBarOwner
     {
         public ModifyableAttrs attrs = new ModifyableAttrs();
         ModifyableAttrs IModifyable.attrs => attrs;
@@ -29,6 +31,8 @@ namespace GameBase.Entity
 
         Vector3 IProjectileOwner.HandPostion => transform.position + handOffset;
 
+        Vector3 IHealthBarOwner.HealthBarPosition => transform.position + healthBarOffset;
+
         public MoveComponent moveComponent;
         public RotateComponent rotateComponent;
         public AnimationComponent animationComponent;
@@ -37,8 +41,9 @@ namespace GameBase.Entity
         public List<GSpell> spells = new List<GSpell>();
         public Dictionary<GSpell, SpellItem> spellUI = new Dictionary<GSpell, SpellItem>();
 
-        public Vector3 handOffset = Vector3.zero; // 手部偏移，纠正射弹射出位置
-        public Vector3 bodyOffset = Vector3.zero; // 身体偏移，纠正被射弹击中位置
+        public Vector3 handOffset = new Vector3(0, 1, 0);      // 手部偏移，纠正射弹射出位置
+        public Vector3 bodyOffset = new Vector3(0, 1, 0);      // 身体偏移，纠正被射弹击中位置
+        public Vector3 healthBarOffset = new Vector3(0, 3, 0); // 血条偏移，使血条放在人物头部
 
         public void AddSpell(GSpell spell, bool needUI = true)
         {
@@ -76,6 +81,8 @@ namespace GameBase.Entity
 
             animationComponent.SetDefaultClip("HumanIdle");
             animationComponent.EnableClipLoop("HumanRun");
+
+            HealthBarMgr.CreateHealthBar(this);
         }
 
         // Update is called once per frame

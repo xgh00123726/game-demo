@@ -10,7 +10,7 @@ namespace GameBase.Object
         public int managerNum = 0;
         private static List<IManager> _managers = new List<IManager>();
 
-        public static void AddMgr(IManager manager)
+        public static void RegisterMgr(IManager manager)
         {
             _managers.Add(manager);
         }
