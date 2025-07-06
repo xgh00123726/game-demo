@@ -3,7 +3,7 @@ using GameBase.Object;
 
 namespace GameBase.Projectile
 {
-    public class ProjectileMgr<T> : IManager where T : GProjectile
+    public class ProjectileMgr<T> : IManager where T : Projectile
     {
         /// <summary>
         /// 这里有个很有意思的问题, 暂时记录一下
@@ -25,11 +25,16 @@ namespace GameBase.Projectile
 
         /// <summary>
         /// 从对象池中创建一个射弹
-        /// </summary>
+        /// <list type="bullet">
+        /// <item><param name="owner"><paramref name="owner"/>:射弹拥有者</param></item>
+        /// </list></summary>
         /// <returns>创建的射弹</returns>
-        public T CreateProjectile()
+        public T CreateProjectile(IProjectileOwner owner)
         {
-            return MonoMgr.Get();
+            var projectile = MonoMgr.Get();
+            projectile._owner = owner;
+            projectile.transform.position = owner.HandPostion;
+            return projectile;
         }
 
         void IManager.Update()

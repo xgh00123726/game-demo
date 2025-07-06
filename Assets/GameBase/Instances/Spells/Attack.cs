@@ -18,9 +18,12 @@ namespace GameBase.Spell
         protected override void OnCast()
         {
             AttackAction?.Invoke(this);
-            var projectile = ProjectileMgr<Arrow>.Instance.CreateProjectile();
-            projectile.SetTrack(projectile.transform.position, dest);
-            projectile.transform.position = src;
+            
+            if (_speller is IProjectileOwner owner)
+            {
+                var projectile = ProjectileMgr<Arrow>.Instance.CreateProjectile(owner);
+                projectile.Dest = dest;
+            }
         }
     }
 }

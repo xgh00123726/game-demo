@@ -25,14 +25,15 @@ namespace GameBase.Spell
         {
             base.OnCast();
             AttackAction?.Invoke(this);
-            for (int i = 0; i < 1; ++i)
+            if (_speller is IProjectileOwner owner)
             {
-                var projectile = ProjectileMgr<FireArrow>.Instance.CreateProjectile();
-                projectile.transform.position = src;
-                Debug.Log("parabolic time limit");
-                projectile.Curve = new ParabolicTimeLimit(projectile);
-                projectile.SetTrack(src, dest);
+                for (int i = 0; i < 1; ++i)
+                {
+                    var projectile = ProjectileMgr<FireArrow>.Instance.CreateProjectile(owner);
+                    projectile.Dest = dest;
+                }
             }
+
         }
     }
 }

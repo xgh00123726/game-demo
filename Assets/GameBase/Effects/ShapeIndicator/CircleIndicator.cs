@@ -29,6 +29,8 @@ namespace GameBase.Effects
         {
             _side = transform.Find("Side").gameObject;
             Assert.IsNotNull(_side);
+
+            Hide();
         }
     }
 }

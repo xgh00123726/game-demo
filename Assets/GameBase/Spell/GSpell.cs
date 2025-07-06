@@ -5,10 +5,10 @@ namespace GameBase.Spell
 {
     public class GSpell
     {
-        private ISpeller _speller;
+        protected ISpeller _speller;
         public GSpell(ISpeller speller)
         {
-            this._speller = speller;
+            _speller = speller;
             SpellMgr.Addspell(this);
         }
 

@@ -14,7 +14,7 @@ public class RoadMgr : MonoBehaviour
     // 创建树，并在Mgr中保存引用
     public static BaseRoad CreateRoad(Vector3 begin, Vector3 end, float width = 1f, Transform parent = null, string name = "RoadClip")
     {
-        BaseRoad road = PrefabMgr.GetNotfromPool<BaseRoad>(PrefabType.Terrain);
+        BaseRoad road = PoolablePrefabMgr.GetNotfromPool<BaseRoad>(PrefabType.Terrain);
         road.Init();
         _roadList.Add(road);
         if (parent != null)

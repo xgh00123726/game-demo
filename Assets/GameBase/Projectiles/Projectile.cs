@@ -5,11 +5,13 @@ using GameBase.Resources;
 
 namespace GameBase.Projectile
 {
-    public class GProjectile : MonoBehaviour,
+    public class Projectile : MonoBehaviour,
         IPoolableObject
     {
         public delegate bool ReleaseCallback();
         protected virtual void OnHit() { }
+
+        private SequentialBool _emitFlag = new SequentialBool();
         protected virtual void OnEmit() { }
         protected virtual void OnMove() { }
         protected virtual void OnRelease() { }
@@ -19,6 +21,11 @@ namespace GameBase.Projectile
         protected Vector3 _dest;              // 目标位置
         protected bool _hasTarget = false;    // 是否具有目标对象
         protected IProjectileTarget _target;  // 目标对象
+
+        internal IProjectileOwner _owner;
+        public IProjectileOwner Owner => _owner;
+
+
         public IProjectileTarget Target
         {
             get => _target;
@@ -28,7 +35,11 @@ namespace GameBase.Projectile
                 _hasTarget = true;
             }
         }
-        public Vector3 Dest => _hasTarget ? _target.Center : _dest;
+        public Vector3 Dest
+        {
+            set => _dest = value;
+            get => _hasTarget ? _target.Center : _dest;
+        }
         public float _instantiateTime = 0f; // 出生时刻
         public float _releaseTime = 10f;    // 最大持续时间
         public float _releaseDis = 10f;     // 最大运动距离
@@ -48,16 +59,9 @@ namespace GameBase.Projectile
             return false;
         }
 
-        public void SetTrack(Vector3 src, Vector3 dest)
-        {
-            _src = src;
-            _dest = dest;
-            OnEmit();
-        }
-
         internal virtual void _Update()
         {
-            
+            if (_emitFlag.EdgeRising) OnEmit();
         }
 
         void IPoolableObject.OnInstantiate()
@@ -65,11 +69,13 @@ namespace GameBase.Projectile
             gameObject.SetActive(true);
             _instantiateTime = Time.time;
             _src = transform.position;
+            _emitFlag.Set();
         }
 
         void IPoolableObject.OnRelease()
         {
             OnRelease();
+            _emitFlag.Reset();
             gameObject.SetActive(false);
         }
     }

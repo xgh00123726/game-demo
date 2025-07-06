@@ -10,10 +10,14 @@ namespace GameBase.Projectile
     {
         public ICurvableProjectile _projectile;
         public float speed = 1f;
+        
         public CurveBase(ICurvableProjectile projectile)
         {
             _projectile = projectile;
         }
+        /// <summary>
+        /// 方向更新
+        /// </summary>
         public abstract void DirUpdate();
         public virtual void PosUpdate()
         {

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using GameBase.Resources;
 using GameBase.Tools;
-using UnityEngine;
 using Logger = GameBase.Tools.Logger;
 
 namespace GameBase.Effects

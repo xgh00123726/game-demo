@@ -5,7 +5,10 @@ using UnityEngine;
 
 namespace GameBase.Resources
 {
-    public class PrefabMgr : MonoBehaviour
+    /// <summary>
+    /// 预制件管理器，针对具有PoolablePrefab脚本的预制件
+    /// </summary>
+    public class PoolablePrefabMgr : MonoBehaviour
     {
         private static Dictionary<string, ObjectPool<PoolablePrefab>> _prefabPools = new Dictionary<string, ObjectPool<PoolablePrefab>>();
         

@@ -8,14 +8,14 @@ namespace GameBase.Projectile
         DestIndicator _destIndicator;
         protected override void OnEmit()
         {
-            _destIndicator = PrefabMgr.GetFromPool<DestIndicator>(PrefabType.Effect);
-            _destIndicator.transform.position = _dest;
+            _destIndicator = PoolablePrefabMgr.GetFromPool<DestIndicator>(PrefabType.Effect);
+            _destIndicator.transform.position = Dest;
         }
 
         protected override void OnRelease()
         {
-            ExploreMgr.InvokeExplore(_dest);
-            PrefabMgr.ReleaseToPool(_destIndicator);
+            ExploreMgr.InvokeExplore(Dest);
+            PoolablePrefabMgr.ReleaseToPool(_destIndicator);
         }
     }
 }

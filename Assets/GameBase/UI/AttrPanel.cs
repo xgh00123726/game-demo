@@ -31,7 +31,7 @@ namespace GameBase.UI
         }
         public AttrItem AddItem()
         {
-            var item = PrefabMgr.GetNotfromPool<AttrItem>(PrefabType.UI);
+            var item = PoolablePrefabMgr.GetNotfromPool<AttrItem>(PrefabType.UI);
 
             item.transform.parent = _attrsField.transform;
             item.transform.localPosition = new Vector3(0, ItemY(_childs.Count), 0);

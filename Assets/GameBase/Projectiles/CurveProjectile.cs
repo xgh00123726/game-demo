@@ -2,18 +2,17 @@ using UnityEngine;
 
 namespace GameBase.Projectile
 {
-    public class CurveProjectile : GProjectile,
+    public class CurveProjectile : Projectile,
         ICurvableProjectile
     {
         public CurveBase _curve;
-        public float speed = 1f;
         public CurveBase Curve
         {
             get => _curve;
             set => _curve = value;
         }
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _curve = new Linear(this);
         }
@@ -34,7 +33,6 @@ namespace GameBase.Projectile
         internal override void _Update()
         {
             base._Update();
-            _curve.speed = speed;
             _curve.DirUpdate();
             _curve.PosUpdate();
         }

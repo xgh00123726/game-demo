@@ -1,6 +1,8 @@
 namespace GameBase.Spell
 {
-    // 带指示器的技能
+    /// <summary>
+    /// 带有指示器的技能
+    /// </summary>
     public class SpellWithIndicator : GSpell
     {
         protected IIndicatorSpell _indicator;

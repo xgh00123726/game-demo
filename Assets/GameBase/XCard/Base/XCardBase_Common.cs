@@ -53,7 +53,7 @@ namespace GameBase.XCard
         {
             Timer.AddTask(1f, () =>
             {
-                PrefabMgr.ReleaseToPool(this);
+                PoolablePrefabMgr.ReleaseToPool(this);
             });
             AnimateLoss();
         }
