@@ -12,6 +12,7 @@ namespace GameBase.Spell
         public Vector3 dest;
         public delegate void AttackInvokeAction(Attack spell);
         public AttackInvokeAction AttackAction;
+        public float damage;
 
         public Attack(ISpeller speller) : base(speller) { }
 
@@ -23,6 +24,7 @@ namespace GameBase.Spell
             {
                 var projectile = ProjectileMgr<Arrow>.Instance.CreateProjectile(owner);
                 projectile.Dest = dest;
+                projectile.damage = damage;
             }
         }
     }

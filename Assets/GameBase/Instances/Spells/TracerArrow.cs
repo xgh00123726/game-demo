@@ -7,6 +7,7 @@ namespace GameBase.Spell
         public delegate void TracerCastAction(TracerArrow tracerArrow);
         public TracerCastAction CastAction;
         public IProjectileTarget target;
+        public float damage;
 
         public TracerArrow(ISpeller speller, IIndicatorCircleSpell indicator) : base(speller, indicator)
         {
@@ -27,6 +28,7 @@ namespace GameBase.Spell
             {
                 var projectile = ProjectileMgr<GameBase.Projectile.TracerArrow>.Instance.CreateProjectile(owner);
                 projectile.Target = target;
+                projectile.damage = damage;
             }
 
         }

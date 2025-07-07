@@ -18,9 +18,10 @@ namespace GameBase.Entity
         IProjectileOwner,
         IHealthBarOwner
     {
-        public ModifyableAttrs attrs = new ModifyableAttrs();
+        public ModifyableAttrs attrs = new ModifyableAttrs();  // 实体属性      如血量上限，移速，攻击力等
+        public EntityInfo infos = new EntityInfo();            // 实体状态信息  如金钱，经验，当前血量
         ModifyableAttrs IModifyable.attrs => attrs;
-
+        
         float ISpeller.CoolingAccelerate => attrs.coolingAcclerate.Value;
 
         Transform ISpeller.Transform => transform;
@@ -33,10 +34,12 @@ namespace GameBase.Entity
 
         Vector3 IHealthBarOwner.HealthBarPosition => transform.position + healthBarOffset;
 
-        public MoveComponent moveComponent;
-        public RotateComponent rotateComponent;
-        public AnimationComponent animationComponent;
-        public SphereCollider sphereCollider;
+        public MoveComponent moveComponent;           // 移动组件
+        public RotateComponent rotateComponent;       // 旋转组件
+        public AnimationComponent animationComponent; // 动画组件
+        public SphereCollider sphereCollider;         // 碰撞体
+
+        public HealthBar healthBar;                   // 血条
 
         public List<GSpell> spells = new List<GSpell>();
         public Dictionary<GSpell, SpellItem> spellUI = new Dictionary<GSpell, SpellItem>();
@@ -52,6 +55,16 @@ namespace GameBase.Entity
             {
                 spellUI[spell] = SpellPanel.Instance.AddItem();
             }
+        }
+
+        /// <summary>
+        /// 受到伤害
+        /// <list type="bullet">
+        /// <item><param name="damageValue"><paramref name="damageValue"/>:伤害值</param></item>
+        /// </list></summary>
+        public virtual void GetDamage(float damageValue)
+        {
+            infos.HP -= Mathf.Max(0, damageValue - attrs.defense.Value);
         }
 
         protected virtual void Awake()
@@ -82,7 +95,8 @@ namespace GameBase.Entity
             animationComponent.SetDefaultClip("HumanIdle");
             animationComponent.EnableClipLoop("HumanRun");
 
-            HealthBarMgr.CreateHealthBar(this);
+            healthBar = HealthBarMgr.CreateHealthBar(this);
+            infos.HP = attrs.HPMax;
         }
 
         // Update is called once per frame
@@ -95,6 +109,9 @@ namespace GameBase.Entity
                 ui.CoolingTimeSet = spell.coolingTimeSet;
                 ui.CoolingTimeRemain = spell.CoolingTimeRemain;
             }
+
+            healthBar.HPMax = attrs.HPMax;
+            healthBar.CurrHP = infos.HP;
         }
     }
 }

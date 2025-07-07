@@ -9,6 +9,7 @@ namespace GameBase.Spell
         public Vector3 dest;
         public delegate void AttackInvokeAction(ArrowOfRain spell);
         public AttackInvokeAction AttackAction;
+        public float damage;
 
         public ArrowOfRain(ISpeller speller, IIndicatorCircleSpell indicator) : base(speller, indicator)
         {
@@ -31,6 +32,7 @@ namespace GameBase.Spell
                 {
                     var projectile = ProjectileMgr<FireArrow>.Instance.CreateProjectile(owner);
                     projectile.Dest = dest;
+                    projectile.damage = damage;
                 }
             }
 

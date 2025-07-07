@@ -5,14 +5,14 @@ namespace GameBase.Modify
 {
     internal class ModifyContainer
     {
-        internal List<GModify> _modifies = new List<GModify>();
+        internal List<Modify> _modifies = new List<Modify>();
 
-        internal void Add(GModify modify)
+        internal void Add(Modify modify)
         {
             _modifies.Add(modify);
         }
 
-        internal void Remove(GModify modify)
+        internal void Remove(Modify modify)
         {
             _modifies.Remove(modify);
         }

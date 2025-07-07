@@ -16,10 +16,11 @@ namespace GameBase.Health
             _healthBarPoolMgr = PoolableMonoMgr<HealthBar>.Instance(PrefabType.UI);
         }
 
-        public static void CreateHealthBar(IHealthBarOwner owner)
+        public static HealthBar CreateHealthBar(IHealthBarOwner owner)
         {
             var healthBar = _healthBarPoolMgr.Get();
             healthBar._owner = owner;
+            return healthBar;
         }
 
         public static void Release(HealthBar healthBar)

@@ -5,5 +5,7 @@ namespace GameBase.Projectile
     {
         Vector3 Center { get; }
         float Radius { get; }
+
+        void GetDamage(float damage);
     }
 }

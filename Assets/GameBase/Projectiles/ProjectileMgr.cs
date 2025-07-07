@@ -42,8 +42,9 @@ namespace GameBase.Projectile
             foreach (var proj in MonoMgr.Pool.ActiveList)
             {
                 proj._Update();
-                if (proj.CanRelease())
+                if (proj.JugRelease())
                 {
+                    proj.ReactToDestroyState(proj.DestoryReson);
                     MonoMgr.Pool.ReleaseToBuffer(proj);
                 }
             }
