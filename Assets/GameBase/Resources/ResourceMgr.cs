@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using GameBase.Tools;
 using UnityEngine;
+using Logger = GameBase.Tools.Logger;
 namespace GameBase.Resources
 {
     /// <summary>
@@ -29,7 +31,8 @@ namespace GameBase.Resources
             GameObject go = ResourcesLoader.LoadFrefab(type, name, subFolder);
             if (go == null)
             {
-                Debug.LogWarning($"The prefab your load is null, prefab type:{type.ToString()}, prefab name:{name}");
+                Logger.Level(Logger.LogLevel.Warning)
+                    .Log($"The prefab your load is null, prefab type:{type.ToString()}, prefab name:{name}");
             }
 
             _prefabDict[name] = go;

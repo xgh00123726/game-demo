@@ -46,7 +46,7 @@ namespace GameBase.Resources
             return _pool.Get();
         }
         /// <summary>
-        /// 将对象释放回对象池
+        /// 将对象强制释放回对象池
         /// <list type="bullet">
         /// <item><param name="obj"><paramref name="obj"/>:被释放的对象</param></item>
         /// </list></summary>
@@ -54,9 +54,16 @@ namespace GameBase.Resources
         {
             _pool.Release(obj);
         }
-        public void TryRelease(T obj)
+
+        /// <summary>
+        /// 尝试将对象释放回对象池
+        /// <list type="bullet">
+        /// <item><param name="obj"><paramref name="obj"/>:被释放的对象</param></item>
+        /// </list></summary>
+        /// <returns>是否放回成功</returns>
+        public bool TryRelease(T obj)
         {
-            _pool.TryRelease(obj);
+            return _pool.TryRelease(obj);
         }
     }
 }

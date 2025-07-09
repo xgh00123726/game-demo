@@ -21,12 +21,12 @@ namespace GameBase.Effects
 
         void IIndicatorSpell.Move()
         {
-            PlayAt(PlayerCamera.MouseHitPoint + new Vector3(0, 2, 0));
+            PlayAt(PlayerCamera.MouseHitPoint);
         }
 
         void IIndicatorSpell.Show()
         {
-            PlayAt(PlayerCamera.MouseHitPoint + new Vector3(0, 2, 0));
+            PlayAt(PlayerCamera.MouseHitPoint);
         }
     }
 }

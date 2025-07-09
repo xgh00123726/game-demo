@@ -1,12 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GameBase.Object;
+using GameBase.Resources;
+using GameBase.Tools;
 
 namespace GameBase.Entity
 {
     public class EntityMgr : IManager
     {
         static List<GameEntity> _entities = new List<GameEntity>();
+        static Dictionary<string, ObjectPool<GameEntity>> _entitiyPools = new Dictionary<string, ObjectPool<GameEntity>>();
+        static EntityMgr()
+        {
+            LifeTimeMgr.RegisterMgr(new EntityMgr());
+        }
+
         internal static void RegisterEntity(GameEntity entity)
         {
             _entities.Add(entity);
@@ -15,6 +23,64 @@ namespace GameBase.Entity
         internal static void UnRegisterEntity(GameEntity entity)
         {
             _entities.Remove(entity);
+        }
+
+        /// <summary>
+        /// 从对象池中获取一个GameEntity对象
+        /// <list type="bullet">
+        /// <item><param name="prefabName"><paramref name="prefabName"/>:GameEntity对象的预制件名字</param></item>
+        /// </list></summary>
+        /// <returns>获取的GameEntity对象</returns>
+        public static GameEntity GetFromPool(string prefabName)
+        {
+            if(!_entitiyPools.ContainsKey(prefabName))
+            {
+                _entitiyPools[prefabName] = new ObjectPool<GameEntity>()
+                {
+                    InstantiateObject = () =>
+                    {
+                        var obj = ResourceMgr.InstaniatePrefab(PrefabType.Entity, prefabName);
+                        var prefab = obj.GetComponent<GameEntity>();
+                        if (prefab != null)
+                        {
+                            return prefab;
+                        }
+                        else
+                        {
+                            return obj.AddComponent<GameEntity>();
+                        }
+                    }
+                };
+            }
+            var entity = _entitiyPools[prefabName].Get();
+            entity.prefabName = prefabName;
+            return entity;
+        }
+
+        /// <summary>
+        /// 释放一个对象池对象
+        /// <list type="bullet">
+        /// <item><param name="entity"><paramref name="entity"/>:需要被释放的对象</param></item>
+        /// </list></summary>
+        public static void Release(GameEntity entity)
+        {
+            var prefabName = entity.prefabName;
+            if (!_entitiyPools.ContainsKey(prefabName))
+            {
+                _entitiyPools[prefabName] = new ObjectPool<GameEntity>();
+            }
+            _entitiyPools[prefabName].Release(entity);
+        }
+
+        /// <summary>
+        /// 返回一个Mono 管理器
+        /// <list type="bullet">
+        /// <item><typeparam name="T"><typeparamref name="T"/>:被管理的类型</typeparam></item>
+        /// </list></summary>
+        /// <returns></returns>
+        public static PoolableMonoMgr<T> GetMonoMgr<T>() where T : GameEntity
+        {
+            return PoolableMonoMgr<T>.Instance(PrefabType.Entity);
         }
 
         /// <summary>

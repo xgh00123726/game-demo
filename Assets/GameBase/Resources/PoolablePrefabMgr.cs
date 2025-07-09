@@ -73,7 +73,7 @@ namespace GameBase.Resources
         }
 
         /// <summary>
-        /// 将对象释放回对象池
+        /// 将对象强制释放回对象池
         /// <list type="bullet">
         /// <item><param name="prefab"><paramref name="prefab"/>:需要被释放的对象</param></item>
         /// </list></summary>
@@ -83,10 +83,16 @@ namespace GameBase.Resources
             _prefabPools[name].Release(prefab);
         }
 
-        public static void TryReleaseToPool(PoolablePrefab prefab)
+        /// <summary>
+        /// 尝试讲一个对象放回对象池
+        /// <list type="bullet">
+        /// <item><param name="prefab">需要被放回的对象</param></item>
+        /// </list></summary>
+        /// <returns>是否销毁成功</returns>
+        public static bool TryReleaseToPool(PoolablePrefab prefab)
         {
             string name = prefab.GetType().Name;
-            _prefabPools[name].TryRelease(prefab);
+            return _prefabPools[name].TryRelease(prefab);
         }
 
         void Start()

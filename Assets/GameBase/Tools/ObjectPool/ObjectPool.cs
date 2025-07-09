@@ -45,31 +45,41 @@ namespace GameBase.Tools
             return objInstantiate;
         }
 
-        // 将对象释放回对象池，会触发告警
+        /// <summary>
+        /// 将一个对象强制放回对象池
+        /// <list type="bullet">
+        /// <item><param name="obj">需要被放回的对象</param></item>
+        /// </list></summary>
         public void Release(T obj)
         {
             int objIndex = _activeList.IndexOf(obj);
+            obj.OnRelease();
             if (objIndex == -1)
             {
-                Debug.LogWarning("object pool release unknown object");
+                _releasedList.Add(obj);
                 return;
             }
-            obj.OnRelease();
             _activeList.RemoveAt(objIndex);
             _releasedList.Add(obj);
         }
 
-        // 尝试将对象放回对象池，不会触发告警
-        public void TryRelease(T obj)
+        /// <summary>
+        /// 尝试讲一个对象放回对象池
+        /// <list type="bullet">
+        /// <item><param name="obj">需要被放回的对象</param></item>
+        /// </list></summary>
+        /// <returns>是否销毁成功</returns>
+        public bool TryRelease(T obj)
         {
             int objIndex = _activeList.IndexOf(obj);
             if (objIndex == -1)
             {
-                return;
+                return false;
             }
             obj.OnRelease();
             _activeList.RemoveAt(objIndex);
             _releasedList.Add(obj);
+            return true;
         }
 
         public void ReleaseToBuffer(T obj)

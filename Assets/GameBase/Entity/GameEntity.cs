@@ -4,10 +4,12 @@ using UnityEngine;
 using GameBase.Object;
 using GameBase.Modify;
 using GameBase.Spell;
-using UnityEngine.Assertions;
 using GameBase.UI;
 using GameBase.Projectile;
 using GameBase.Health;
+using GameBase.Resources;
+using GameBase.Tools;
+using Logger = GameBase.Tools.Logger;
 
 namespace GameBase.Entity
 {
@@ -16,12 +18,66 @@ namespace GameBase.Entity
         ISpeller,
         IProjectileTarget,
         IProjectileOwner,
-        IHealthBarOwner
+        IHealthBarOwner,
+        IPoolableObject
     {
+        public enum DeadState
+        {
+            Default,
+            HPZero,
+            Dead,
+        }
+
         public ModifyableAttrs attrs = new ModifyableAttrs();  // 实体属性      如血量上限，移速，攻击力等
         public EntityInfo infos = new EntityInfo();            // 实体状态信息  如金钱，经验，当前血量
-        ModifyableAttrs IModifyable.attrs => attrs;
         
+        
+        public MoveComponent moveComponent;           // 移动组件
+        public RotateComponent rotateComponent;       // 旋转组件
+        public AnimationComponent animationComponent; // 动画组件
+        public SphereCollider sphereCollider;         // 碰撞体
+
+        #region register
+        public HealthBar healthBar;                   // 血条
+        #endregion
+
+        internal string prefabName = null;
+
+        public List<GSpell> spells = new List<GSpell>();
+        public Dictionary<GSpell, SpellItem> spellUI = new Dictionary<GSpell, SpellItem>();
+
+        public Vector3 handOffset = new Vector3(0, 1, 0);      // 手部偏移，纠正射弹射出位置
+        public Vector3 bodyOffset = new Vector3(0, 1, 0);      // 身体偏移，纠正被射弹击中位置
+        public Vector3 healthBarOffset = new Vector3(0, 3, 0); // 血条偏移，使血条放在人物头部
+
+        public DeadState _deadState = DeadState.Default;       // 死亡状态
+        private bool _isRegistered = false;                    // 是否注册
+        public bool Register
+        {
+            get => _isRegistered;
+            set
+            {
+                if (value && !_isRegistered)
+                {
+                    _isRegistered = true;                // 置位true，防止重复初始化
+                    _deadState = DeadState.Default;      // 将死亡状态置位true，确保游戏生命可以正常流动
+                    healthBar = HealthBarMgr.Get(this);  // 重新获取一个血条
+                    EntityMgr.RegisterEntity(this);      // 将entity注册，便于全局管理
+                    gameObject.SetActive(true);          // 将物体设置为可见
+                    if (prefabName == null)              // 设置预制件名字，便于对象池回收
+                    {
+                        prefabName = GetType().Name;
+                    }
+                }
+                else if (!value && _isRegistered)
+                {
+                    HealthBarMgr.Release(healthBar);
+                    EntityMgr.UnRegisterEntity(this);
+                    gameObject.SetActive(false);
+                }
+            }
+        }
+        ModifyableAttrs IModifyable.attrs => attrs;
         float ISpeller.CoolingAccelerate => attrs.coolingAcclerate.Value;
 
         Transform ISpeller.Transform => transform;
@@ -34,19 +90,15 @@ namespace GameBase.Entity
 
         Vector3 IHealthBarOwner.HealthBarPosition => transform.position + healthBarOffset;
 
-        public MoveComponent moveComponent;           // 移动组件
-        public RotateComponent rotateComponent;       // 旋转组件
-        public AnimationComponent animationComponent; // 动画组件
-        public SphereCollider sphereCollider;         // 碰撞体
+        void IPoolableObject.OnInstantiate()
+        {
+            Register = true;
+        }
 
-        public HealthBar healthBar;                   // 血条
-
-        public List<GSpell> spells = new List<GSpell>();
-        public Dictionary<GSpell, SpellItem> spellUI = new Dictionary<GSpell, SpellItem>();
-
-        public Vector3 handOffset = new Vector3(0, 1, 0);      // 手部偏移，纠正射弹射出位置
-        public Vector3 bodyOffset = new Vector3(0, 1, 0);      // 身体偏移，纠正被射弹击中位置
-        public Vector3 healthBarOffset = new Vector3(0, 3, 0); // 血条偏移，使血条放在人物头部
+        void IPoolableObject.OnRelease()
+        {
+            Register = false;
+        }
 
         public void AddSpell(GSpell spell, bool needUI = true)
         {
@@ -65,37 +117,53 @@ namespace GameBase.Entity
         public virtual void GetDamage(float damageValue)
         {
             infos.HP -= Mathf.Max(0, damageValue - attrs.defense.Value);
+            if (infos.HP <= 0)
+            {
+                if (_deadState == DeadState.Default)
+                {
+                    _deadState = DeadState.HPZero;
+                    OnHPZero();
+                }
+            }
+        }
+
+        public virtual void OnHPZero()
+        {
+        }
+
+        public virtual void OnDead()
+        {
+            Register = false;
         }
 
         protected virtual void Awake()
         {
-            EntityMgr.RegisterEntity(this);
+            Register = true;
         }
 
         protected virtual void OnDestroy()
         {
-            EntityMgr.UnRegisterEntity(this);
+            Register = false;
         }
 
         // Start is called before the first frame update
         protected virtual void Start()
         {
             moveComponent = GetComponent<MoveComponent>();
-            moveComponent ??= gameObject.AddComponent<MoveComponent>();
+            moveComponent = moveComponent != null ? moveComponent : gameObject.AddComponent<MoveComponent>();
 
             rotateComponent = GetComponent<RotateComponent>();
-            rotateComponent ??= gameObject.AddComponent<RotateComponent>();
+            rotateComponent = rotateComponent != null ? rotateComponent : gameObject.AddComponent<RotateComponent>();
 
             animationComponent = GetComponent<AnimationComponent>();
-            animationComponent ??= gameObject.AddComponent<AnimationComponent>();
+            animationComponent = animationComponent != null ? animationComponent : gameObject.AddComponent<AnimationComponent>();
 
             sphereCollider = GetComponent<SphereCollider>();
-            sphereCollider ??= gameObject.AddComponent<SphereCollider>();
+            sphereCollider = sphereCollider != null ? sphereCollider : gameObject.AddComponent<SphereCollider>();
 
             animationComponent.SetDefaultClip("HumanIdle");
             animationComponent.EnableClipLoop("HumanRun");
 
-            healthBar = HealthBarMgr.CreateHealthBar(this);
             infos.HP = attrs.HPMax;
         }
 
@@ -112,6 +180,16 @@ namespace GameBase.Entity
 
             healthBar.HPMax = attrs.HPMax;
             healthBar.CurrHP = infos.HP;
+        }
+
+        protected virtual void LateUpdate()
+        {
+            if (_deadState == DeadState.HPZero)
+            {
+                OnDead();
+                _deadState = DeadState.Dead;
+                EntityMgr.Release(this);
+            }
         }
     }
 }
