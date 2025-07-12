@@ -10,6 +10,7 @@ using GameBase.Health;
 using GameBase.Resources;
 using GameBase.Tools;
 using Logger = GameBase.Tools.Logger;
+using static GameBase.Entity.EntityMgr;
 
 namespace GameBase.Entity
 {
@@ -28,6 +29,13 @@ namespace GameBase.Entity
             Dead,
         }
 
+        public enum Camp
+        {
+            Neutral,
+            Friendly,
+            Rival
+        }
+
         public ModifyableAttrs attrs = new ModifyableAttrs();  // 实体属性      如血量上限，移速，攻击力等
         public EntityInfo infos = new EntityInfo();            // 实体状态信息  如金钱，经验，当前血量
         
@@ -39,6 +47,7 @@ namespace GameBase.Entity
 
         #region register
         public HealthBar healthBar;                   // 血条
+
         #endregion
 
         internal string prefabName = null;
@@ -51,6 +60,7 @@ namespace GameBase.Entity
         public Vector3 healthBarOffset = new Vector3(0, 3, 0); // 血条偏移，使血条放在人物头部
 
         public DeadState _deadState = DeadState.Default;       // 死亡状态
+        public Camp camp = Camp.Neutral;                       // 阵营
         private bool _isRegistered = false;                    // 是否注册
         public bool Register
         {
@@ -127,11 +137,34 @@ namespace GameBase.Entity
             }
         }
 
-        public virtual void OnHPZero()
+        /// <summary>
+        /// 返回距离该实体位置最近的游戏实体
+        /// <list type="bullet">
+        /// <item><param name="filter"><paramref name="filter"/>:寻找过滤器</param></item>
+        /// <item><param name="rangeLimit"><paramref name="rangeLimit"/>:只会寻找到rangeLimit距离内的实体，负数表示无穷</param></item>
+        /// </list></summary>
+        /// <returns>符合条件最近的实体，没有实体满足条件则返回null</returns>
+        public GameEntity NearestEntity(EntityFilter filter, float rangeLimit = -1)
+        {
+            return EntityMgr.NearestEntity(transform.position, filter, rangeLimit);
+        }
+
+        /// <summary>
+        /// 返回距离该实体位置最近的游戏实体
+        /// <list type="bullet">
+        /// <item><param name="rangeLimit"><paramref name="rangeLimit"/>:只会寻找到rangeLimit距离内的实体，负数表示无穷</param></item>
+        /// </list></summary>
+        /// <returns>符合条件最近的实体，没有实体满足条件则返回null</returns>
+        public GameEntity NearestEntity(float rangeLimit = -1)
+        {
+            return EntityMgr.NearestEntity(transform.position, rangeLimit);
+        }
+
+        protected virtual void OnHPZero()
         {
         }
 
-        public virtual void OnDead()
+        protected virtual void OnDead()
         {
             Register = false;
         }

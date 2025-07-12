@@ -11,8 +11,6 @@ namespace GameBase.Projectile
     {
         public float amp = 2f;
 
-        private float _yFactor = 0f;
-
         public Parabolic(ICurvableProjectile projectile) : base(projectile)
         {
         }

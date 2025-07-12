@@ -8,6 +8,7 @@ namespace GameBase.Entity
 {
     public class EntityMgr : IManager
     {
+        public delegate bool EntityFilter(GameEntity entity);
         static List<GameEntity> _entities = new List<GameEntity>();
         static Dictionary<string, ObjectPool<GameEntity>> _entitiyPools = new Dictionary<string, ObjectPool<GameEntity>>();
         static EntityMgr()
@@ -96,6 +97,38 @@ namespace GameBase.Entity
             float minDistance = float.PositiveInfinity;
             foreach (var entity in _entities)
             {
+                if (rangeLimit > 0)
+                {
+                    float dis = (entity.transform.position - position).magnitude;
+                    if (dis > rangeLimit) continue;
+                    minDistance = dis;
+                    ret = entity;
+                }
+            }
+
+            return ret;
+        }
+
+        /// <summary>
+        /// 返回指定位置最近的游戏实体
+        /// <list type="bullet">
+        /// <item><param name="position"><paramref name="position"/>:指定的位置</param></item>
+        /// <item><param name="filter"><paramref name="filter"/>:寻找过滤器</param></item>
+        /// <item><param name="rangeLimit"><paramref name="rangeLimit"/>:只会寻找到rangeLimit距离内的实体，负数表示无穷</param></item>
+        /// </list></summary>
+        /// <returns>符合条件最近的实体，没有实体满足条件则返回null</returns>
+        public static GameEntity NearestEntity(Vector3 position, EntityFilter filter, float rangeLimit = -1)
+        {
+            if (filter == null)
+            {
+                return NearestEntity(position, rangeLimit);
+            }
+            GameEntity ret = null;
+            float minDistance = float.PositiveInfinity;
+            foreach (var entity in _entities)
+            {
+                if (!filter(entity)) continue; // 不满足过滤需求
+
                 if (rangeLimit > 0)
                 {
                     float dis = (entity.transform.position - position).magnitude;

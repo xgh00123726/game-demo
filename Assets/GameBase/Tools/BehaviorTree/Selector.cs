@@ -1,19 +1,17 @@
-using System.Collections.Generic;
-
 namespace GameBase.Tools
 {
-    // 一个语句失败，就返回失败
-    public class Sequence : Composite
+    // 一个语句成功，就返回成功
+    public class Selector : Composite
     {
         protected override Status OnUpdate()
         {
             foreach (var child in children)
             {
                 child.Tick();
-                if (child.IsFailure) return Status.Failure;
+                if (child.IsSuccess) return Status.Success;
                 if (child.IsRunning) return Status.Running;
             }
-            return Status.Success;
+            return Status.Failure;
         }
     }
 }

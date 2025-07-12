@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace GameBase.Tools
 {
+    /// <summary>
+    ///  ±–Ú±‰¡ø
+    /// </summary>
     public class SequentialMgr : MonoBehaviour
     {
         internal static List<SequentialBoolFixed> _seqFixedBools = new List<SequentialBoolFixed>();

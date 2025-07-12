@@ -1,8 +1,18 @@
+using System.Collections.Generic;
+
 namespace GameBase.Tools
 {
-    public class Composite : Behavior
+    public abstract class Composite : Behavior
     {
-        public virtual void AddChild(Behavior child) { }
-        public virtual void RemoveChild(Behavior child) { }
+        protected LinkedList<Behavior> children = new LinkedList<Behavior>();
+
+        public override void AddChild(Behavior child)
+        {
+            children.AddLast(child);
+        }
+        public virtual void Clear()
+        {
+            children.Clear();
+        }
     }
 }
