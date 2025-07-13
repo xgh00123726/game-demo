@@ -19,7 +19,7 @@ namespace GameBase.Effects
             var explore = ExplorePool.Get(name);
             if (explore == null)
             {
-                Logger.Level(Logger.LogLevel.Warning)
+                Logger.Instance.Level(Logger.LogLevel.Warning)
                     .Log("invalid explore name");
                 return;
             }
@@ -31,7 +31,7 @@ namespace GameBase.Effects
             {
                 ExplorePool.Release(explore);
             });
-            Logger.Log($"explore:{explore}, here:{position}");
+            Logger.Instance.Log($"explore:{explore}, here:{position}");
         }
 
         void IManager.Update()

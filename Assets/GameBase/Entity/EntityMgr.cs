@@ -3,6 +3,7 @@ using UnityEngine;
 using GameBase.Object;
 using GameBase.Resources;
 using GameBase.Tools;
+using Logger = GameBase.Tools.Logger;
 
 namespace GameBase.Entity
 {
@@ -27,6 +28,54 @@ namespace GameBase.Entity
         }
 
         /// <summary>
+        /// 观测量
+        /// <list type="bullet">
+        /// <item><param name="prefabName"><paramref name="prefabName"/>:预制件名</param></item>
+        /// </list>
+        /// </summary>
+        /// <returns>该预制件在对象池中的储备，1：活跃对象，2：非活跃对象</returns>
+        public static int[] ObjectNumOf(string prefabName)
+        {
+            if (_entitiyPools.ContainsKey(prefabName))
+            {
+                return new int[2]{_entitiyPools[prefabName].ActiveList.Count, _entitiyPools[prefabName].ReleasedList.Count};
+            }
+            return new int[2] { 0, 0 };
+        }
+
+        /// <summary>
+        /// 对象池字典增加一个对象池
+        /// <list type="bullet">
+        /// <item><param name="prefabName"><paramref name="prefabName"/>:需要增加的key名</param></item>
+        /// </list></summary>
+        private static void AddToPools(string prefabName)
+        {
+            _entitiyPools[prefabName] = new ObjectPool<GameEntity>()
+            {
+                InstantiateObject = () =>
+                {
+                    var obj = ResourceMgr.InstaniatePrefab(PrefabType.Entity, prefabName);
+
+                    if (obj == null)
+                    {
+                        Logger.Instance.Level(Logger.LogLevel.Warning)
+                            .Log($"{prefabName} has no prefab");
+                    }
+
+                    var prefab = obj.GetComponent<GameEntity>();
+                    if (prefab != null)
+                    {
+                        return prefab;
+                    }
+                    else
+                    {
+                        return obj.AddComponent<GameEntity>();
+                    }
+                }
+            };
+        }
+
+        /// <summary>
         /// 从对象池中获取一个GameEntity对象
         /// <list type="bullet">
         /// <item><param name="prefabName"><paramref name="prefabName"/>:GameEntity对象的预制件名字</param></item>
@@ -36,25 +85,10 @@ namespace GameBase.Entity
         {
             if(!_entitiyPools.ContainsKey(prefabName))
             {
-                _entitiyPools[prefabName] = new ObjectPool<GameEntity>()
-                {
-                    InstantiateObject = () =>
-                    {
-                        var obj = ResourceMgr.InstaniatePrefab(PrefabType.Entity, prefabName);
-                        var prefab = obj.GetComponent<GameEntity>();
-                        if (prefab != null)
-                        {
-                            return prefab;
-                        }
-                        else
-                        {
-                            return obj.AddComponent<GameEntity>();
-                        }
-                    }
-                };
+                AddToPools(prefabName);
             }
             var entity = _entitiyPools[prefabName].Get();
-            entity.prefabName = prefabName;
+            entity.PrefabName = prefabName;
             return entity;
         }
 
@@ -65,10 +99,10 @@ namespace GameBase.Entity
         /// </list></summary>
         public static void Release(GameEntity entity)
         {
-            var prefabName = entity.prefabName;
+            var prefabName = entity.PrefabName;
             if (!_entitiyPools.ContainsKey(prefabName))
             {
-                _entitiyPools[prefabName] = new ObjectPool<GameEntity>();
+                AddToPools(prefabName);
             }
             _entitiyPools[prefabName].Release(entity);
         }

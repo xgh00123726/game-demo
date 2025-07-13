@@ -12,6 +12,7 @@ namespace GameBase.Tools
         private List<T> _releasedBuffer = new List<T>();
 
         public List<T> ActiveList => _activeList;
+        public List<T> ReleasedList => _releasedList;
 
         public delegate T InstantiateObjectAction();
         private InstantiateObjectAction _InstantiateObject;
@@ -24,7 +25,7 @@ namespace GameBase.Tools
         {
             if (_InstantiateObject == null)
             {
-                Logger.Level(Logger.LogLevel.Warning)
+                Logger.Instance.Level(Logger.LogLevel.Warning)
                     .Log("before get a object from object pool, you shold set the instantiate method by setter 'InstantiateObject'");
                 return default;
             }

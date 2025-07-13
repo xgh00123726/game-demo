@@ -47,14 +47,40 @@ namespace GameBase.Object
             _isMovingDest = true;
         }
 
-        /*
-         * @FUNC 使得单位可以移动到position
-         * @COMMENT 当单位被障碍阻碍移动时，单位应该能自动避让
-         * @COMMENT 单位移动到目标位置时停下
-         */
+        /// <summary>
+        /// <list type="bullet">
+        /// <item>使得单位可以移动到position</item>
+        /// <item>当单位被障碍阻碍移动时，单位应该能自动避让</item>
+        /// <item>单位移动到目标位置时停下</item>
+        /// </list>
+        /// <list type="bullet">
+        /// <item><param name="position"><paramref name="position"/>:目标位置</param></item>
+        /// </list></summary>
         public void MoveTo(Vector3 position)
         {
             _moveDest = position;
+            if (_hasRotateComponent)
+            {
+                MoveToWithRotate(position);
+            }
+            else
+            {
+                MoveToWithoutRotate(position);
+            }
+        }
+
+        /// <summary>
+        /// <list type="bullet">
+        /// <item>使得单位远离position</item>
+        /// <item>当单位被障碍阻碍移动时，单位应该能自动避让</item>
+        /// <item>与position越近，远离的距离越远</item>
+        /// </list>
+        /// <list type="bullet">
+        /// <item><param name="position"><paramref name="position"/>:远离位置</param></item>
+        /// </list></summary>
+        public void MoveAway(Vector3 position)
+        {
+            _moveDest = transform.position * 2 - position;
             if (_hasRotateComponent)
             {
                 MoveToWithRotate(position);

@@ -11,7 +11,7 @@ namespace GameBase.Tools
         }
         protected override Status OnUpdate()
         {
-            Logger.Log(_word);
+            Logger.Instance.Log(_word);
             return Status.Success;
         }
     }

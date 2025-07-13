@@ -97,7 +97,7 @@ namespace GameBase.GCamera
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                Logger.Log($"Lmouse:{_mouseHitPoint}");
+                Logger.Instance.Log($"Lmouse:{_mouseHitPoint}");
             }
         }
 

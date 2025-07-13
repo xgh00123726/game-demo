@@ -31,7 +31,7 @@ namespace GameBase.Resources
             GameObject go = ResourcesLoader.LoadFrefab(type, name, subFolder);
             if (go == null)
             {
-                Logger.Level(Logger.LogLevel.Warning)
+                Logger.Instance.Level(Logger.LogLevel.Warning)
                     .Log($"The prefab your load is null, prefab type:{type.ToString()}, prefab name:{name}");
             }
 

@@ -57,7 +57,7 @@ namespace GameBase.Effects
             }
             if (!_pools.ContainsKey(exploreName))
             {
-                Logger.Level(Logger.LogLevel.Error)
+                Logger.Instance.Log(Logger.LogLevel.Error)
                     .Log($"unknwon explore object, name:{exploreName}");
             }
             _pools[exploreName].Release(explore);

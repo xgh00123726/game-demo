@@ -10,17 +10,29 @@ using GameBase.Buff;
 using UnityEngine;
 using GameBase.Resources;
 using GameBase.Entity;
+using Logger = GameBase.Tools.Logger;
 
 public class Player : GameEntity
 {
     public bool isSkillIndicatorPlay = false;
     public AttrItem coolAccPanelItem;
-    
+    public AttrItem HPMaxPanelItem;
+    public AttrItem MPMaxPanelItem;
+    public AttrItem damagePanelItem;
+    public AttrItem defensePanelItem;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        camp = Camp.Friendly;
+    }
 
     protected override void Start()
     {
         base.Start();
         moveComponent.moveSpeed = 10.0f;
+        attrs.damage = 100f;
+        Logger.Instance.Log($"damage:{attrs.damage.Value}");
 
         animationComponent.SetDefaultClip("HumanIdle");
         animationComponent.EnableClipLoop("HumanRun");
@@ -30,7 +42,8 @@ public class Player : GameEntity
             animationComponent.ResetEnable = true;
             animationComponent.ForceSetClipRun("HumanIdle");
         };
-        AddSpell(new ArrowOfRain(this, PrefabMgr.GetNotfromPool<SpellCircleIndicator>(PrefabType.Effect))
+        // 箭雨，发射指定数目的箭矢射向指定地点
+        AddSpell(new ArrowOfRain(this, PoolablePrefabMgr.GetNotfromPool<SpellCircleIndicator>(PrefabType.Effect))
         {
             AttackAction = (ArrowOfRain skill) =>
             {
@@ -41,8 +54,10 @@ public class Player : GameEntity
             },
             ChooseCondition = (GSpell skill) => Inputs.GetKeyDown(KeyFunction.Spell1),
             CancelCondition = (GSpell skill) => Inputs.GetKeyDown(KeyFunction.Cancel),
-            InvokeCondition = (GSpell skill) => skill.IsChoosing && Inputs.GetKeyDown(KeyFunction.MouseConfirm)
+            InvokeCondition = (GSpell skill) => skill.IsChoosing && Inputs.GetKeyDown(KeyFunction.MouseConfirm),
+            damage = attrs.damage * 0.5f
         });
+        // 普攻，发射一根箭射向指定地点
         AddSpell(new Attack(this)
         {
             AttackAction = (Attack skill) =>
@@ -54,8 +69,10 @@ public class Player : GameEntity
             },
             ChooseCondition = (GSpell skill) => Inputs.GetKeyDown(KeyFunction.Aim),
             CancelCondition = (GSpell skill) => Inputs.GetKeyDown(KeyFunction.Cancel),
-            InvokeCondition = (GSpell skill) => skill.IsChoosing && Inputs.GetKeyDown(KeyFunction.MouseConfirm)
+            InvokeCondition = (GSpell skill) => skill.IsChoosing && Inputs.GetKeyDown(KeyFunction.MouseConfirm),
+            damage = attrs.damage
         }, false);
+        // 为自己添加一个buff
         AddSpell(new SpellNoTarget(this)
         {
             spellAction = () =>
@@ -67,11 +84,40 @@ public class Player : GameEntity
             ChooseCondition = (GSpell spell) => Inputs.GetKeyDown(KeyFunction.Spell2),
             CancelCondition = (GSpell spell) => Inputs.GetKeyDown(KeyFunction.Cancel),
             InvokeCondition = (GSpell skill) => skill.IsChoosing && Inputs.GetKeyDown(KeyFunction.Spell2),
-            coolingTimeSet = 10f
+            coolingTimeSet = 10f,
+        });
+        // 向指定目标（游戏物体）发射一根追踪箭
+        AddSpell(new TracerArrow(this, PoolablePrefabMgr.GetNotfromPool<SpellCircleIndicator>(PrefabType.Effect))
+        {
+            Radius = 1f,
+            CastAction = (TracerArrow arrow) =>
+            {
+                var entity = EntityMgr.NearestEntity(PlayerCamera.MouseHitPoint, arrow.Radius);
+                arrow.target = entity;
+            },
+            ChooseCondition = (GSpell skill) => Inputs.GetKeyDown(KeyFunction.Spell3),
+            CancelCondition = (GSpell skill) => Inputs.GetKeyDown(KeyFunction.Cancel),
+            InvokeCondition = (GSpell skill) => skill.IsChoosing
+                && Inputs.GetKeyDown(KeyFunction.MouseConfirm)
+                && EntityMgr.NearestEntity(PlayerCamera.MouseHitPoint, 1) != null,
+            damage = attrs.damage * 0.75f
         });
 
         coolAccPanelItem = AttrPanel.Instance.AddItem();
         coolAccPanelItem.KeyText = "spell accelerate";
+        
+        HPMaxPanelItem = AttrPanel.Instance.AddItem();
+        HPMaxPanelItem.KeyText = "HP Max";
+
+        MPMaxPanelItem = AttrPanel.Instance.AddItem();
+        MPMaxPanelItem.KeyText = "MP Max";
+
+        damagePanelItem = AttrPanel.Instance.AddItem();
+        damagePanelItem.KeyText = "damage";
+
+        defensePanelItem = AttrPanel.Instance.AddItem();
+        defensePanelItem.KeyText = "defense";
+
     }
 
     // Update is called once per frame
@@ -98,5 +144,9 @@ public class Player : GameEntity
         }
 
         coolAccPanelItem.ValueText = attrs.coolingAcclerate.Value.ToString();
+        HPMaxPanelItem.ValueText = attrs.HPMax.Value.ToString();
+        MPMaxPanelItem.ValueText = "XXX";
+        damagePanelItem.ValueText = attrs.damage.Value.ToString();
+        defensePanelItem.ValueText = attrs.defense.Value.ToString();
     }
 }

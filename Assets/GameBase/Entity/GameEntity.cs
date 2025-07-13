@@ -50,7 +50,12 @@ namespace GameBase.Entity
 
         #endregion
 
-        internal string prefabName = null;
+        protected string _prefabName = null;
+        internal string PrefabName
+        {
+            get => _prefabName;
+            set => _prefabName = value;
+        }
 
         public List<GSpell> spells = new List<GSpell>();
         public Dictionary<GSpell, SpellItem> spellUI = new Dictionary<GSpell, SpellItem>();
@@ -69,19 +74,25 @@ namespace GameBase.Entity
             {
                 if (value && !_isRegistered)
                 {
-                    _isRegistered = true;                // 置位true，防止重复初始化
-                    _deadState = DeadState.Default;      // 将死亡状态置位true，确保游戏生命可以正常流动
-                    healthBar = HealthBarMgr.Get(this);  // 重新获取一个血条
-                    EntityMgr.RegisterEntity(this);      // 将entity注册，便于全局管理
-                    gameObject.SetActive(true);          // 将物体设置为可见
-                    if (prefabName == null)              // 设置预制件名字，便于对象池回收
+                    _isRegistered = true;                 // 置位true，防止重复初始化
+                    _deadState = DeadState.Default;       // 将死亡状态置位true，确保游戏生命可以正常流动
+                    infos.HP = attrs.HPMax;               // 死亡后重置血量
+                    healthBar = HealthBarMgr.Get(this);   // 重新获取一个血条
+                    EntityMgr.RegisterEntity(this);       // 将entity注册，便于全局管理
+                    gameObject.SetActive(true);           // 将物体设置为可见
+                    if (_prefabName == null)              // 设置预制件名字，便于对象池回收
                     {
-                        prefabName = GetType().Name;
+                        _prefabName = GetType().Name;
                     }
                 }
                 else if (!value && _isRegistered)
                 {
-                    HealthBarMgr.Release(healthBar);
+                    _isRegistered = false;
+                    // 临时解决策略：防止场景结束时，场景自动释放掉healthBar，而gameobject destroy时又释放一遍
+                    if (healthBar != null)
+                    {
+                        HealthBarMgr.Release(healthBar);
+                    }
                     EntityMgr.UnRegisterEntity(this);
                     gameObject.SetActive(false);
                 }
