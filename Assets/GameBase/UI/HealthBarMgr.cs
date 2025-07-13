@@ -1,7 +1,7 @@
 using GameBase.Object;
 using GameBase.Resources;
 
-namespace GameBase.Health
+namespace GameBase.UI
 {
     /// <summary>
     /// ¹ÜÀíÑªÌõ

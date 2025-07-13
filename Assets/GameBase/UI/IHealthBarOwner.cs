@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameBase.Health
+namespace GameBase.UI
 {
     public interface IHealthBarOwner
     {

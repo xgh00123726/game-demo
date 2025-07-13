@@ -6,7 +6,6 @@ using GameBase.Modify;
 using GameBase.Spell;
 using GameBase.UI;
 using GameBase.Projectile;
-using GameBase.Health;
 using GameBase.Resources;
 using GameBase.Tools;
 using Logger = GameBase.Tools.Logger;
@@ -138,6 +137,7 @@ namespace GameBase.Entity
         public virtual void GetDamage(float damageValue)
         {
             infos.HP -= Mathf.Max(0, damageValue - attrs.defense.Value);
+            TextMgr.ShowDamageText(transform.position);
             if (infos.HP <= 0)
             {
                 if (_deadState == DeadState.Default)

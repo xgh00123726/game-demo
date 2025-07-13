@@ -7,6 +7,20 @@ namespace GameBase.UI
 {
     public class UIMgr : MonoBehaviour
     {
+        public float _yFactorAMin = -10;
+        public float _yFactorAMax = -10;
+        public float _yFactorBMin = 0;
+        public float _yFactorBMax = 100;
+        public float _yFactorCMin = 0;
+        public float _yFactorCMax = 10;
+        public float _horizontalSpeedMin = 0;
+        public float _horizontalSpeedMax = 10;
+        public float _durationMin = 0;
+        public float _durationMax = 10;
+
+        private static UIMgr _instance;
+        public static UIMgr Instance => _instance;
+
         private static Transform _rootCanvas;
         public static Transform RootCanvas
         {
@@ -22,6 +36,7 @@ namespace GameBase.UI
 
         private void Awake()
         {
+            _instance = this;
             DontDestroyOnLoad(this);
         }
 

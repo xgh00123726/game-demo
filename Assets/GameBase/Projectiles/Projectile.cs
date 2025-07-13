@@ -1,7 +1,5 @@
 using GameBase.Tools;
-using GameBase.Object;
 using UnityEngine;
-using GameBase.Resources;
 
 namespace GameBase.Projectile
 {

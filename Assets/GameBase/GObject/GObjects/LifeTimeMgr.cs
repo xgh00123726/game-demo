@@ -8,7 +8,10 @@ namespace GameBase.Object
     {
         public string startScene = "DemoCopy";
         public int managerNum = 0;
-        private static List<IManager> _managers = new List<IManager>();
+        private static List<string> _managerNames = new List<string>();
+        public List<string> managerNames = _managerNames;
+        private static LinkedList<IManager> _managersWillAdd = new LinkedList<IManager>();
+        private static LinkedList<IManager> _managers = new LinkedList<IManager>();
 
         private static int _updateTick = 0;
         private static int _fixedUpdateTick = 0;
@@ -17,7 +20,8 @@ namespace GameBase.Object
 
         public static void RegisterMgr(IManager manager)
         {
-            _managers.Add(manager);
+            _managersWillAdd.AddLast(manager);
+            _managerNames.Add(manager.GetType().Name);
         }
         void Start()
         {
@@ -33,6 +37,11 @@ namespace GameBase.Object
         void Update()
         {
             ++_updateTick;
+            foreach (IManager manager in _managersWillAdd)
+            {
+                _managers.AddLast(manager);
+            }
+            _managersWillAdd.Clear();
             foreach (IManager manager in _managers)
             {
                 manager.Update();

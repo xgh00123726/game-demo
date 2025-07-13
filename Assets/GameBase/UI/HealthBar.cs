@@ -1,8 +1,7 @@
 using GameBase.Tools;
 using UnityEngine;
-using GameBase.UI;
 using TMPro;
-namespace GameBase.Health
+namespace GameBase.UI
 {
     /// <summary>
     /// 管理血条预制件
