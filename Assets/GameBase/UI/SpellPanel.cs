@@ -20,5 +20,12 @@ namespace GameBase.UI
             _childs.Add(ui);
             return ui;
         }
+
+        public SpellItem AddItem(string name)
+        {
+            var item = AddItem();
+            item.SetIcon(name);
+            return item;
+        }
     }
 }

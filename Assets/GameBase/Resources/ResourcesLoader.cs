@@ -75,6 +75,11 @@ namespace GameBase.Resources
             return UnityEngine.Resources.Load<Material>($"materials/{_pathDict["material"][name]}");
         }
 
+        public static Sprite LoadSprite(string name)
+        {
+            return UnityEngine.Resources.Load<Sprite>($"Sprite/{name}");
+        }
+
         public static void Load(string name)
         {
             

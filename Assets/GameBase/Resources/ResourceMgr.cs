@@ -11,6 +11,7 @@ namespace GameBase.Resources
     {
         private static Dictionary<string, GameObject> _prefabDict = new Dictionary<string, GameObject> { };
         private static Dictionary<string, Material> _materialDict = new Dictionary<string, Material> { };
+        private static Dictionary<string, Sprite> _spriteDict = new Dictionary<string, Sprite> { };
 
         /// <summary>
         /// 从resouce的指定文件夹中读取指定的prefab
@@ -74,6 +75,23 @@ namespace GameBase.Resources
         }
 
         /// <summary>
+        /// 从指定目录下载入Sprite
+        /// <list type="bullet">
+        /// <item><param name="name"><paramref name="name"/>:Sprite名</param></item>
+        /// </list>
+        /// <returns>载入的Sprite</returns>
+        /// </summary>
+        public static Sprite LoadSprite(string name)
+        {
+            if (_spriteDict.ContainsKey(name)) 
+            {
+                return _spriteDict[name];
+            }
+            Sprite sprite = ResourcesLoader.LoadSprite(name);
+            _spriteDict[name] = sprite;
+            return sprite;
+        }
+        /// <summary>
         /// 从指定目录下实例化prefab
         /// <list type="bullet">
         /// <item><param name="type"><paramref name="type"/>:PrefabType参数, 其枚举名与一级文件夹名一致</param></item>
@@ -92,6 +110,19 @@ namespace GameBase.Resources
         {
             Material m = LoadMaterial(name);
             return Material.Instantiate(m);
+        }
+
+        /// <summary>
+        /// 从指定目录下实例化Sprite
+        /// <list type="bullet">
+        /// <item><param name="name"><paramref name="name"/>:Sprite名</param></item>
+        /// </list>
+        /// <returns>实例化的Sprite</returns>
+        /// </summary>
+        public static Sprite InstantiateSprite(string name)
+        {
+            Sprite go = LoadSprite(name);
+            return Sprite.Instantiate(go);
         }
     }
 }
