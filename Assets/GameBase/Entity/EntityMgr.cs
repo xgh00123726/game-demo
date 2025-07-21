@@ -4,6 +4,8 @@ using GameBase.Object;
 using GameBase.Resources;
 using GameBase.Tools;
 using Logger = GameBase.Tools.Logger;
+using GameBase.Math;
+using UnityEngine.UIElements;
 
 namespace GameBase.Entity
 {
@@ -169,6 +171,58 @@ namespace GameBase.Entity
                     if (dis > rangeLimit) continue;
                     minDistance = dis;
                     ret = entity;
+                }
+            }
+
+            return ret;
+        }
+
+        /// <summary>
+        /// 返回范围内所有的的游戏实体
+        /// <list type="bullet">
+        /// <item><param name="center"><paramref name="center"/>:指定的位置</param></item>
+        /// <item><param name="radius"><paramref name="radius"/>:半径</param></item>
+        /// <item><param name="filter"><paramref name="filter"/>:寻找过滤器</param></item>
+        /// </list></summary>
+        /// <returns>符合条件最近的实体，没有实体满足条件则返回null</returns>
+        public static LinkedList<GameEntity> EntityWithin(Vector3 center, float radius, EntityFilter filter)
+        {
+            if (filter == null)
+            {
+                return EntityWithin(center, radius);
+            }
+
+            LinkedList<GameEntity> ret = new LinkedList<GameEntity>();
+
+            foreach (var entity in _entities)
+            {
+                if (!filter(entity)) continue;
+
+                if (GMath.IsIntersect(center, radius, entity.transform.position, entity.sphereCollider.radius))
+                {
+                    ret.AddLast(entity);
+                }
+            }
+
+            return ret;
+        }
+
+        /// <summary>
+        /// 返回范围内所有的的游戏实体
+        /// <list type="bullet">
+        /// <item><param name="center"><paramref name="center"/>:指定的位置</param></item>
+        /// <item><param name="radius"><paramref name="radius"/>:半径</param></item>
+        /// </list></summary>
+        /// <returns>符合条件最近的实体，没有实体满足条件则返回null</returns>
+        public static LinkedList<GameEntity> EntityWithin(Vector3 center, float radius)
+        {
+            LinkedList<GameEntity> ret = new LinkedList<GameEntity>();
+
+            foreach (var entity in _entities)
+            {
+                if (GMath.IsIntersect(center, radius, entity.transform.position, entity.sphereCollider.radius))
+                {
+                    ret.AddLast(entity);
                 }
             }
 

@@ -51,6 +51,12 @@ namespace GameBase.UI
                 transform.position = _showPosition;
             }
         }
+
+        public string Text
+        {
+            get => _textComponent.text;
+            set => _textComponent.text = value;
+        }
    
         protected virtual void Awake()
         {

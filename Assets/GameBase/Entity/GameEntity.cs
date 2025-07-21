@@ -137,7 +137,7 @@ namespace GameBase.Entity
         public virtual void GetDamage(float damageValue)
         {
             infos.HP -= Mathf.Max(0, damageValue - attrs.defense.Value);
-            TextMgr.ShowDamageText(transform.position);
+            TextMgr.ShowDamageText(transform.position, damageValue);
             if (infos.HP <= 0)
             {
                 if (_deadState == DeadState.Default)

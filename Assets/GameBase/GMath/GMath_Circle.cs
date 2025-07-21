@@ -72,6 +72,18 @@ namespace GameBase.Math
             return (c1.c - c2.c).magnitude < c1.r + c2.r;
         }
 
+        public static bool IsIntersect(Vector3 c1, float r1, Vector3 c2, float r2)
+        {
+            float x1 = c1.x;
+            float y1 = c1.z;
+            float x2 = c2.x;
+            float y2 = c2.z;
+            float dx = x1 - x2;
+            float dy = y1 - y2;
+            float d = r1 + r2;
+            return dx * dx + dy * dy < d * d;
+        }
+
         public static bool IsIntersect(Circle c, Rect r)
         {
             Vector2 v = new(Mathf.Abs(c.center.x - r.center.x), Mathf.Abs(c.center.y - r.center.y));

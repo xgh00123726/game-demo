@@ -1,6 +1,8 @@
+using GameBase.Effects;
+
 namespace GameBase.Projectile
 {
-    public class FireArrow : Arrow
+    public class ExploreArrow : Arrow
     {
         protected override void Awake()
         {
@@ -8,11 +10,10 @@ namespace GameBase.Projectile
             _curve = new ParabolicTimeLimit(this);
             _curve.speed = 15f;
         }
-
         protected override void OnRelease()
         {
             base.OnRelease();
-
+            ExploreMgr.InvokeExplore(Dest);
         }
     }
 }

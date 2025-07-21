@@ -14,11 +14,6 @@ namespace GameBase.Spell
             coolingTimeSet = 1f;
         }
 
-        protected override void OnChoose()
-        {
-            base.OnChoose();
-        }
-
         protected override void OnCast()
         {
             base.OnCast();

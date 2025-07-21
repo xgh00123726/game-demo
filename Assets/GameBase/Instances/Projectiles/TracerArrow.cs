@@ -6,7 +6,7 @@ namespace GameBase.Projectile
         {
             base.Awake();
             _curve = new Tracer(this);
-            _curve.speed = 5f;
+            _curve.speed = 15f;
         }
     }
 }

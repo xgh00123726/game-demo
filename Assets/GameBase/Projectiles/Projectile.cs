@@ -15,9 +15,8 @@ namespace GameBase.Projectile
         IPoolableObject
     {
         public delegate bool ReleaseTrigger();
-        protected virtual void OnHit() { }
+        
         protected virtual void OnEmit() { }
-        protected virtual void OnMove() { }
         protected virtual void OnRelease() { }
 
         private SequentialBool _emitFlag = new SequentialBool(); // Emit标志位
@@ -26,7 +25,7 @@ namespace GameBase.Projectile
         protected Vector3 _dest;                // 目标位置
         protected bool _hasTarget = false;      // 是否具有目标对象
         protected IProjectileTarget _target;    // 目标对象
-        private DestoryReson _destoryReson;     // 摧毁原因
+        protected DestoryReson _destoryReson;     // 摧毁原因
         public float damage;                    // 伤害
 
         internal IProjectileOwner _owner;
@@ -53,8 +52,15 @@ namespace GameBase.Projectile
         public float _equalConst = 0.01f;   // 相等常数，当与目标距离小于这个常数则认为相等
         public float _disToTarget = 0f;     // 到目标的距离
 
+        protected virtual void OnHit() 
+        {
+            if (_hasTarget)
+            {
+                _target.GetDamage(damage);
+            }
+        }
 
-        internal bool JugRelease()
+        internal protected virtual bool JugRelease()
         {
             if (ReleaseCondition?.Invoke() == true)
             {
@@ -85,9 +91,9 @@ namespace GameBase.Projectile
         /// </list></summary>
         internal protected virtual void ReactToDestroyState(DestoryReson reson)
         {
-            if (reson == DestoryReson.Hit && _hasTarget)
+            if (reson == DestoryReson.Hit)
             {
-                _target.GetDamage(damage);
+                OnHit();
             }
         }
 

@@ -14,7 +14,6 @@ namespace GameBase.Projectile
 
         protected override void OnRelease()
         {
-            ExploreMgr.InvokeExplore(Dest);
             PoolablePrefabMgr.ReleaseToPool(_destIndicator);
         }
     }

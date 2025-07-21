@@ -24,10 +24,11 @@ namespace GameBase.UI
         }
 
 
-        public static void ShowDamageText(Vector3 position)
+        public static void ShowDamageText(Vector3 position, float value)
         {
             var damageText = _damageTextMgr.Get();
             damageText.ShowPosition = position;
+            damageText.Text = value.ToString();
             Timer.AddTask(UnityEngine.Random.Range(DamageText.durationMin, DamageText.durationMax), 
                 () => _damageTextMgr.Release(damageText));
         }
