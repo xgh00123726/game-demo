@@ -3,12 +3,11 @@ using GameBase.Entity;
 using Logger = GameBase.Tools.Logger;
 namespace GameBase.Projectile
 {
-    public class Explore : ImmediateProjectile
+    public class Explore : ProjectileObject
     {
         protected override void OnHit()
         {
-            var entities = EntityMgr.EntityWithin(Dest, range);
-            Logger.Instance.Log($"entities:{entities}, nums:{entities.Count}");
+            var entities = EntityMgr.EntityWithin(Dest, radius);
             foreach (var entity in entities)
             {
                 entity.GetDamage(damage);

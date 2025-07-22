@@ -6,13 +6,13 @@ namespace GameBase.Projectile
     // @speed: ËÙ¶È
     public class Linear : CurveBase
     {
-        public Linear(ICurvableProjectile projectile) : base(projectile)
+        public Linear(ProjectileObject projectile) : base(projectile)
         {
         }
 
         public override void DirUpdate()
         {
-            _projectile.Dir = _projectile.Target - _projectile.Start;
+            _projectile.Dir = _projectile.Dest - _projectile._src;
         }
     }
 }

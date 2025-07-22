@@ -10,7 +10,7 @@ namespace GameBase.Projectile
         public float angle = 85f;
         public float time = 0.5f;
 
-        public ParabolicTimeLimit(ICurvableProjectile projectile) : base(projectile)
+        public ParabolicTimeLimit(ProjectileObject projectile) : base(projectile)
         {
         }
 
@@ -18,13 +18,13 @@ namespace GameBase.Projectile
         {
             if (_projectile.LifeTime < time)
             {
-                _projectile.Dir = (_projectile.Target - _projectile.Start);
-                _projectile.Transform.Rotate(-angle, 0f, 0f);
+                _projectile.Dir = (_projectile.Dest - _projectile._src);
+                _projectile.transform.Rotate(-angle, 0f, 0f);
             }
             else
             {
                 Vector3 currDir = _projectile.Dir;
-                Vector3 expectDir = _projectile.Target - _projectile.Transform.position;
+                Vector3 expectDir = _projectile.Dest - _projectile.transform.position;
                 _projectile.Dir = Vector3.Lerp(currDir, expectDir, Mathf.Clamp01(_projectile.LifeTime));
             }
         }

@@ -8,10 +8,10 @@ namespace GameBase.Projectile
 {
     public abstract class CurveBase
     {
-        public ICurvableProjectile _projectile;
+        public ProjectileObject _projectile;
         public float speed = 1f;
         
-        public CurveBase(ICurvableProjectile projectile)
+        public CurveBase(ProjectileObject projectile)
         {
             _projectile = projectile;
         }
@@ -21,7 +21,7 @@ namespace GameBase.Projectile
         public abstract void DirUpdate();
         public virtual void PosUpdate()
         {
-            _projectile.Transform.position = _projectile.Transform.position + _projectile.Dir * speed * Time.deltaTime;
+            _projectile.transform.position = _projectile.transform.position + _projectile.Dir * speed * Time.deltaTime;
         }
     }
 }

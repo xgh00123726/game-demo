@@ -6,14 +6,8 @@ namespace GameBase.Effects
 {
     // 圆形的技能指示器
     public class SpellCircleIndicator : CircleIndicator,
-        IIndicatorCircleSpell
+        IIndicatorSpell
     {
-        float IIndicatorCircleSpell.Radius 
-        { 
-            get => Radius; 
-            set => Radius = value; 
-        }
-
         void IIndicatorSpell.Hide()
         {
             Hide();

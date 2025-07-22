@@ -3,7 +3,7 @@ using GameBase.Object;
 
 namespace GameBase.Projectile
 {
-    public class ProjectileMgr<T> : IManager where T : Projectile
+    public class ProjectileMgr<T> : IManager where T : ProjectileObject
     {
         /// <summary>
         /// 这里有个很有意思的问题, 暂时记录一下
@@ -29,11 +29,9 @@ namespace GameBase.Projectile
         /// <item><param name="owner"><paramref name="owner"/>:射弹拥有者</param></item>
         /// </list></summary>
         /// <returns>创建的射弹</returns>
-        public T CreateProjectile(IProjectileOwner owner)
+        public T CreateProjectile()
         {
             var projectile = MonoMgr.Get();
-            projectile._owner = owner;
-            projectile.transform.position = owner.HandPostion;
             return projectile;
         }
 
@@ -42,9 +40,8 @@ namespace GameBase.Projectile
             foreach (var proj in MonoMgr.Pool.ActiveList)
             {
                 proj._Update();
-                if (proj.JugRelease())
+                if (proj.canRelease)
                 {
-                    proj.ReactToDestroyState(proj.DestoryReson);
                     MonoMgr.Pool.ReleaseToBuffer(proj);
                 }
             }

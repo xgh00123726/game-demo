@@ -1,18 +1,16 @@
-using GameBase.Tools;
 using UnityEngine;
 
 namespace GameBase.Spell
 {
-    public class GSpell
+    public partial class GSpell
     {
-        protected ISpeller _speller;
-        public GSpell(ISpeller speller)
+        public GSpell()
         {
-            _speller = speller;
             SpellMgr.Addspell(this);
         }
 
         public delegate bool SpellCondition(GSpell spell);
+        public delegate void SpellAction(GSpell spell);
         public SpellCondition ChooseCondition;
         public SpellCondition CancelCondition;
         public SpellCondition InvokeCondition;
@@ -20,47 +18,61 @@ namespace GameBase.Spell
         public float _spellMoment;             // 施法时刻
         public float coolingTimeSet;           // 冷却时间
         public float _coolingTimeRemain;       // 剩余冷却时间
+        public bool isTargetable = true;       // 技能是否为目标型技能
+        public SpellAction CastAction;         // 技能动作
 
-        public float CoolingTimeRemain => _coolingTimeRemain > 0 ? _coolingTimeRemain : 0;
-        public float CoolingTimeRemainPercent => CoolingTimeRemain / coolingTimeSet;
-        public bool IsCoolDown => _coolingTimeRemain <= 0;
-        private SequentialBool _isChoosing = (SequentialBool)false;
-        public virtual bool IsChoosing => _isChoosing;
+        protected ISpeller _speller;
+        protected bool _hasSpeller = false;
+        public ISpeller Speller
+        {
+            get => _speller;
+            set
+            {
+                _hasSpeller = true;
+                _speller = value;
+            }
+        }
 
-        #region virtual method
         protected virtual void OnChoosing()
         {
+            if (_hasIndicator)
+            {
+                _indicator.Move();
+            }
         }
 
         protected virtual void OnChoose()
         {
-
+            if (_hasIndicator)
+            {
+                _indicator.Show();
+            }
         }
 
         protected virtual void OnCancel()
         {
+            if (_hasIndicator)
+            {
+                _indicator.Hide();
+            }
         }
 
-        // 空函数，需完全重写
         protected virtual void OnCast()
         {
+            if (_hasIndicator)
+            {
+                _indicator.Hide();
+            }
         }
-        #endregion
         private void SpellCast()
         {
             _spellMoment = Time.time;
             _coolingTimeRemain = coolingTimeSet;
+            CastAction?.Invoke(this);
             OnCast();
         }
 
-        private void CoolDownFixedUpdate()
-        {
-            if (_coolingTimeRemain > 0)
-            {
-                _coolingTimeRemain -= Time.fixedDeltaTime
-                    * (_speller.CoolingAccelerate * 0.01f + 1);
-            }
-        }
+
 
         internal void Update()
         {

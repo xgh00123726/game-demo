@@ -120,15 +120,6 @@ namespace GameBase.Entity
             Register = false;
         }
 
-        public void AddSpell(GSpell spell, bool needUI = true)
-        {
-            spells.Add(spell);
-            if (needUI)
-            {
-                spellUI[spell] = SpellPanel.Instance.AddItem();
-            }
-        }
-
         /// <summary>
         ///  ‹µΩ…À∫¶
         /// <list type="bullet">

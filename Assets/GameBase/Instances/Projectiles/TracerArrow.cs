@@ -1,12 +1,11 @@
 namespace GameBase.Projectile
 {
-    public class TracerArrow : FireArrow
+    public class TracerArrow : ProjectileObject
     {
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
-            _curve = new Tracer(this);
-            _curve.speed = 15f;
+            curve = new Tracer(this);
+            curve.speed = 15f;
         }
     }
 }
