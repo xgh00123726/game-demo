@@ -40,7 +40,7 @@ namespace GameBase.Projectile
             foreach (var proj in MonoMgr.Pool.ActiveList)
             {
                 proj._Update();
-                if (proj.canRelease)
+                if (proj.CanRelease)
                 {
                     MonoMgr.Pool.ReleaseToBuffer(proj);
                 }

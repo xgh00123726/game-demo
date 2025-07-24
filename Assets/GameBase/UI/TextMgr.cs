@@ -4,6 +4,7 @@ using UnityEngine;
 using GameBase.Object;
 using GameBase.Resources;
 using GameBase.Tools;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 
 namespace GameBase.UI
 {
@@ -23,6 +24,14 @@ namespace GameBase.UI
             _textUpdates.AddLast(updateAction);
         }
 
+        public static void ShowText(Vector3 position, string text)
+        {
+            var damageText = _damageTextMgr.Get();
+            damageText.ShowPosition = position;
+            damageText.Text = text;
+            Timer.AddTask(UnityEngine.Random.Range(DamageText.durationMin, DamageText.durationMax),
+                () => _damageTextMgr.Release(damageText));
+        }
 
         public static void ShowDamageText(Vector3 position, float value)
         {

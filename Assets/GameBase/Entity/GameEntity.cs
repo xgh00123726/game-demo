@@ -184,6 +184,15 @@ namespace GameBase.Entity
         // Start is called before the first frame update
         protected virtual void Start()
         {
+            sphereCollider = GetComponent<SphereCollider>();
+            sphereCollider = sphereCollider != null ? sphereCollider : gameObject.AddComponent<SphereCollider>();
+
+            var rigibody = GetComponent<Rigidbody>();
+            if (rigibody == null)
+            {
+                gameObject.AddComponent<Rigidbody>();
+            }
+
             moveComponent = GetComponent<MoveComponent>();
             moveComponent = moveComponent != null ? moveComponent : gameObject.AddComponent<MoveComponent>();
 
@@ -192,9 +201,6 @@ namespace GameBase.Entity
 
             animationComponent = GetComponent<AnimationComponent>();
             animationComponent = animationComponent != null ? animationComponent : gameObject.AddComponent<AnimationComponent>();
-
-            sphereCollider = GetComponent<SphereCollider>();
-            sphereCollider = sphereCollider != null ? sphereCollider : gameObject.AddComponent<SphereCollider>();
 
             animationComponent.SetDefaultClip("HumanIdle");
             animationComponent.EnableClipLoop("HumanRun");

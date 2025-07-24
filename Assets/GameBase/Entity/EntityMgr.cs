@@ -29,6 +29,11 @@ namespace GameBase.Entity
             _entities.Remove(entity);
         }
 
+        public static bool OnlyEnemy(GameEntity entity)
+        {
+            return entity.camp == GameEntity.Camp.Rival;
+        }
+
         /// <summary>
         /// π€≤‚¡ø
         /// <list type="bullet">

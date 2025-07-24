@@ -19,6 +19,7 @@ namespace GameBase.Tools
             {new List<KeyCode>{ KeyCode.Alpha2 }, new List<KeyFunction>{ KeyFunction.Spell2 } },
             {new List<KeyCode>{ KeyCode.Alpha3 }, new List<KeyFunction>{ KeyFunction.Spell3 } },
             {new List<KeyCode>{ KeyCode.Alpha4 }, new List<KeyFunction>{ KeyFunction.Spell4 } },
+            {new List<KeyCode>{KeyCode.Alpha5}, new List<KeyFunction> { KeyFunction.Spell5 } },
             {new List<KeyCode>{ KeyCode.Space },  new List<KeyFunction>{ KeyFunction.Blink } },
             {new List<KeyCode>{ KeyCode.F },      new List<KeyFunction>{ KeyFunction.Interaction } },
             {new List<KeyCode>{ KeyCode.Y },      new List<KeyFunction>{ KeyFunction.LockView } }, // Ëø¶¨ÊÓ½Ç

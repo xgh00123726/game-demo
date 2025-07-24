@@ -22,6 +22,8 @@ namespace GameBase.Object
 
         public void MovePosition(Vector3 position)
         {
+            if (float.IsNaN(position.z) || float.IsNaN(position.y) || float.IsNaN(position.z)) return;
+
             if (usePhysic)
             {
                 MovePositionUsePhysic(position);

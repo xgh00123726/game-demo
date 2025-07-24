@@ -5,6 +5,19 @@ namespace GameBase.Projectile
     {
         public CurveBase curve;
         public float LifeTime => Time.time - _instantiateTime;
+        public float Speed
+        {
+            get
+            {
+                if (curve == null) return 0;
+                return curve.speed;
+            }
+            set
+            {
+                if (curve == null) return;
+                curve.speed = value;
+            }
+        }
 
         public Vector3 Dir
         {

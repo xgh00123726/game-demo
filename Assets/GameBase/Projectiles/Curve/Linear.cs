@@ -12,7 +12,7 @@ namespace GameBase.Projectile
 
         public override void DirUpdate()
         {
-            _projectile.Dir = _projectile.Dest - _projectile._src;
+            _projectile.Dir = _projectile.Dest - _projectile.Src;
         }
     }
 }

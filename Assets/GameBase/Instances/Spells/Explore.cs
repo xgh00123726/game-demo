@@ -1,6 +1,7 @@
 using UnityEngine;
+using GameBase.Tools;
 using GameBase.Projectile;
-using static UnityEngine.GraphicsBuffer;
+using Logger = GameBase.Tools.Logger;
 
 namespace GameBase.Spell
 {
@@ -12,14 +13,11 @@ namespace GameBase.Spell
 
             if (_speller is IProjectileOwner owner)
             {
-                new Projectile<GameBase.Projectile.Explore>()
-                {
-                    isImmediatly = true,
-                    radius = radius,
-                    dest = dest,
-                    damage = effective,
-                    owenr = owner
-                }.SetAttr();
+                var proj = ProjectileMgr<GameBase.Projectile.Explore>.Instance.CreateProjectile();
+                proj.Owner = owner;
+                proj.radius = radius;
+                proj.damage = effective;
+                proj.Dest = dest;
             }
         }
     }

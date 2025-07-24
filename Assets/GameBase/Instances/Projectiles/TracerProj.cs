@@ -1,6 +1,6 @@
 namespace GameBase.Projectile
 {
-    public class TracerArrow : ProjectileObject
+    public class TracerProj : ProjectileObject
     {
         protected void Awake()
         {

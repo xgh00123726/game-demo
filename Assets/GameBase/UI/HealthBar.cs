@@ -116,6 +116,8 @@ namespace GameBase.UI
 
         void IPoolableObject.OnInstantiate()
         {
+            Percent = 1;
+            LosingPercent = 1;
             gameObject.SetActive(true);
         }
 

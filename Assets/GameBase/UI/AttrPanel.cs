@@ -25,6 +25,10 @@ namespace GameBase.UI
         {
             _UIComponents.SetActive(!_UIComponents.activeSelf);
         }
+        public void Hide()
+        {
+            _UIComponents.SetActive(false);
+        }
         private int ItemY(int itemIndex)
         {
             return 500 - itemIndex * 50;

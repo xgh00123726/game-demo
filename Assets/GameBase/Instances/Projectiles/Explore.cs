@@ -3,15 +3,20 @@ using GameBase.Entity;
 using Logger = GameBase.Tools.Logger;
 namespace GameBase.Projectile
 {
-    public class Explore : ProjectileObject
+    public class Explore : AOEProjectile
     {
-        protected override void OnHit()
+        protected override void BeforeHit()
         {
-            var entities = EntityMgr.EntityWithin(Dest, radius);
-            foreach (var entity in entities)
+            foreach (var entity in EntityMgr.EntityWithin(Dest, radius, EntityMgr.OnlyEnemy))
             {
-                entity.GetDamage(damage);
+                AddTarget(entity);
             }
+        }
+
+        protected override void OnInstantiate()
+        {
+            base.OnInstantiate();
+            isImmediatly = true;
         }
 
         protected override void OnRelease()
