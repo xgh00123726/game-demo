@@ -1,4 +1,4 @@
-namespace GameBase.Object
+namespace GameBase.LifeTime
 {
     public interface IManager
     {

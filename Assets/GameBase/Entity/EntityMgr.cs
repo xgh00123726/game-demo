@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using GameBase.Object;
+using GameBase.LifeTime;
 using GameBase.Resources;
 using GameBase.Tools;
 using Logger = GameBase.Tools.Logger;
@@ -13,7 +13,7 @@ namespace GameBase.Entity
     {
         public delegate bool EntityFilter(GameEntity entity);
         static List<GameEntity> _entities = new List<GameEntity>();
-        static Dictionary<string, ObjectPool<GameEntity>> _entitiyPools = new Dictionary<string, ObjectPool<GameEntity>>();
+        static Dictionary<string, PoolableObjectPool<GameEntity>> _entitiyPools = new Dictionary<string, PoolableObjectPool<GameEntity>>();
         static EntityMgr()
         {
             LifeTimeMgr.RegisterMgr(new EntityMgr());
@@ -57,7 +57,7 @@ namespace GameBase.Entity
         /// </list></summary>
         private static void AddToPools(string prefabName)
         {
-            _entitiyPools[prefabName] = new ObjectPool<GameEntity>()
+            _entitiyPools[prefabName] = new PoolableObjectPool<GameEntity>()
             {
                 InstantiateObject = () =>
                 {

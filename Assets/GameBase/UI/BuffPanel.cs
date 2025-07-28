@@ -32,10 +32,10 @@ namespace GameBase.UI
 
         private void Update()
         {
-            for (int i = 0; i < _buffItemMgr.Pool.ActiveList.Count; ++i)
+            int idx = 0;
+            foreach (var buff in _buffItemMgr.Pool.ActiveList)
             {
-                BuffItem item = _buffItemMgr.Pool.ActiveList[i];
-                item.transform.localPosition = BuffPositionDelta(i);
+                buff.transform.localPosition = BuffPositionDelta(idx++);
             }
         }
     }

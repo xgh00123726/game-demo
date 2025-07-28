@@ -6,7 +6,8 @@ using Logger = GameBase.Tools.Logger;
 namespace GameBase.Projectile
 {
     public partial class ProjectileObject : MonoBehaviour,
-        IPoolableObject
+        IPoolableObject,
+        ICurveProjectile
     {
         public delegate void HitTargetEventCallback(IProjectileTarget target);
 
@@ -74,6 +75,21 @@ namespace GameBase.Projectile
             set => _dest = value;
             get => _hasTarget ? _target.Center : _dest;
         }
+        Vector3 ICurveProjectile.Position
+        {
+            get => transform.position;
+            set => transform.position = value;
+        }
+        Vector3 ICurveProjectile.Dir
+        {
+            get => Dir;
+            set => Dir = value;
+        }
+        Vector3 ICurveProjectile.Dest => Dest;
+
+        Vector3 ICurveProjectile.Src => Src;
+
+        float ICurveProjectile.LifeTime => LifeTime;
 
         protected void HitTarget(IProjectileTarget target)
         {

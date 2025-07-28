@@ -1,6 +1,6 @@
 using UnityEngine;
 using GameBase.Tools;
-using GameBase.Object;
+using GameBase.LifeTime;
 using Logger = GameBase.Tools.Logger;
 
 namespace GameBase.Effects

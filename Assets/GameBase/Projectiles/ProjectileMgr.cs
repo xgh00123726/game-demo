@@ -1,5 +1,6 @@
 using GameBase.Resources;
-using GameBase.Object;
+using GameBase.LifeTime;
+using GameBase.Tools;
 
 namespace GameBase.Projectile
 {

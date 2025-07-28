@@ -3,8 +3,7 @@
     "rootNamespace": "",
     "references": [
         "GMath",
-        "Tools",
-        "Notify"
+        "Tools"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -1,17 +1,13 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using GameBase.Tools;
 using UnityEngine;
 
 namespace GameBase.Projectile
 {
     public abstract class CurveBase
     {
-        public ProjectileObject _projectile;
+        public ICurveProjectile _projectile;
         public float speed = 1f;
         
-        public CurveBase(ProjectileObject projectile)
+        public CurveBase(ICurveProjectile projectile)
         {
             _projectile = projectile;
         }
@@ -21,7 +17,18 @@ namespace GameBase.Projectile
         public abstract void DirUpdate();
         public virtual void PosUpdate()
         {
-            _projectile.transform.position = _projectile.transform.position + _projectile.Dir * speed * Time.deltaTime;
+            float disToDest = (_projectile.Position - _projectile.Dest).magnitude;
+            Vector3 delta = _projectile.Dir * speed * Time.deltaTime;
+            float deltaMag = delta.magnitude;
+
+            if (disToDest < deltaMag)
+            {
+                _projectile.Position = _projectile.Dest;
+            }
+            else
+            {
+                _projectile.Position = _projectile.Position + delta;
+            }
         }
     }
 }

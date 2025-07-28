@@ -19,10 +19,26 @@ namespace GameBase.Spell
         public float coolingTimeSet;           // 冷却时间
         public float _coolingTimeRemain;       // 剩余冷却时间
         public bool isTargetable = true;       // 技能是否为目标型技能
+        private bool _hasTarget = false;       // 是否具有目标
+        public ISpellTarget _target;           // 技能目标
         public SpellAction CastAction;         // 技能动作
 
         protected ISpeller _speller;
         protected bool _hasSpeller = false;
+
+
+        public ISpellTarget Target
+        {
+            get => _target;
+            set
+            {
+                if (value == null) return;
+
+                _hasTarget = true;
+                _target = value;
+            }
+        }
+        public bool HasTarget => _hasTarget;
         public ISpeller Speller
         {
             get => _speller;

@@ -6,7 +6,7 @@ namespace GameBase.Projectile
     // @speed: ËÙ¶È
     public class Linear : CurveBase
     {
-        public Linear(ProjectileObject projectile) : base(projectile)
+        public Linear(ICurveProjectile projectile) : base(projectile)
         {
         }
 

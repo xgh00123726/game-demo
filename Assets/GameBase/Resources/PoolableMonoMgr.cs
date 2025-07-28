@@ -13,15 +13,15 @@ namespace GameBase.Resources
         private static PoolableMonoMgr<T> _instance;
         public static PoolableMonoMgr<T> Instance(PrefabType type, string subFolder = null) => _instance ??= new PoolableMonoMgr<T>(type, subFolder);
 
-        ObjectPool<T> _pool;
+        PoolableObjectPool<T> _pool;
         /// <summary>
         /// 管理prefab的对象池
         /// </summary>
-        public ObjectPool<T> Pool => _pool;
+        public PoolableObjectPool<T> Pool => _pool;
 
         private PoolableMonoMgr(PrefabType type, string subFolder)
         {
-            _pool = new ObjectPool<T>();
+            _pool = new PoolableObjectPool<T>();
             _pool.InstantiateObject = () =>
             {
                 var obj = ResourceMgr.InstaniatePrefab(type, typeof(T).Name, subFolder);

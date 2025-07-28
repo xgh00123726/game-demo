@@ -1,12 +1,17 @@
 using System.Collections.Generic;
+using GameBase.Resources;
+using GameBase.Tools;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Logger = GameBase.Tools.Logger;
 
-namespace GameBase.Object
+namespace GameBase.LifeTime
 {
     public class LifeTimeMgr : MonoBehaviour
     {
+        public string managerScene = "Managers";
         public string startScene = "DemoCopy";
+        public bool _sceneLoaded = false;
         public int managerNum = 0;
         private static List<string> _managerNames = new List<string>();
         public List<string> managerNames = _managerNames;
@@ -26,8 +31,12 @@ namespace GameBase.Object
         void Start()
         {
             DontDestroyOnLoad(gameObject);
+            ResourcesLoader.LoadAllAsset();
+            SceneManager.LoadScene(managerScene);
             SceneManager.LoadScene(startScene);
+            Tools.Logger.Instance.Log($"id 0:{ResourcesLoader._prefabs[0]}, id 1:{ResourcesLoader._prefabs[1]}");
         }
+
 
         private void FixedUpdate()
         {

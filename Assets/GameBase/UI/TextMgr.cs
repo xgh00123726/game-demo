@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using GameBase.Object;
+using GameBase.LifeTime;
 using GameBase.Resources;
 using GameBase.Tools;
 using Unity.VisualScripting.YamlDotNet.Core.Tokens;

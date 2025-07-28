@@ -10,16 +10,16 @@ namespace GameBase.Resources
     /// </summary>
     public class PoolablePrefabMgr : MonoBehaviour
     {
-        private static Dictionary<string, ObjectPool<PoolablePrefab>> _prefabPools = new Dictionary<string, ObjectPool<PoolablePrefab>>();
+        private static Dictionary<string, PoolableObjectPool<PoolablePrefab>> _prefabPools = new Dictionary<string, PoolableObjectPool<PoolablePrefab>>();
         
-        private static ObjectPool<PoolablePrefab> PoolOf<T>(PrefabType type, string subFolder = null) where T : PoolablePrefab
+        private static PoolableObjectPool<PoolablePrefab> PoolOf<T>(PrefabType type, string subFolder = null) where T : PoolablePrefab
         {
             string name = typeof(T).Name;
             if (_prefabPools.ContainsKey(name))
             {
                 return _prefabPools[name];
             }
-            var pool = new ObjectPool<PoolablePrefab>();
+            var pool = new PoolableObjectPool<PoolablePrefab>();
             pool.InstantiateObject = () =>
             {
                 var obj = ResourceMgr.InstaniatePrefab(type, name, subFolder);

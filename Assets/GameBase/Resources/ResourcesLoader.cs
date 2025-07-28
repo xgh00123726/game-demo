@@ -4,14 +4,26 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using UnityEngine.AddressableAssets;
+using NReco.Csv;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using System.Threading.Tasks;
 
 namespace GameBase.Resources
 {
 
-    public static class ResourcesLoader
+    public partial class ResourcesLoader
     {
         public static JToken _pathDict;
         static List<string> _typeName = new List<string>();
+
+        public static GameObject[] _prefabs;
+
+        public static GameObject GetPrefab(int id)
+        {
+            return _prefabs[id];
+        }
+
         // 静态初始化，用于初始化游戏开始前需要加载的资源
         static ResourcesLoader()
         {
@@ -80,9 +92,28 @@ namespace GameBase.Resources
             return UnityEngine.Resources.Load<Sprite>($"Sprite/{name}");
         }
 
-        public static void Load(string name)
+        private static void LoadCsvAsset<T>(string csvPath, out T[] container)
         {
-            
+            StreamReader reader = File.OpenText(csvPath);
+            CsvReader csvReader = new CsvReader(reader);
+            int id;
+            string path;
+            csvReader.Read();
+            container = new T[int.Parse(csvReader[0])];
+            while (csvReader.Read())
+            {
+                id = int.Parse(csvReader[0]);
+                path = csvReader[1];
+                container[id] = Addressables.LoadAssetAsync<T>(path).WaitForCompletion();
+            }
+        }
+
+        public static void LoadAllAsset()
+        {
+            LoadCsvAsset($"{Application.streamingAssetsPath}/public/PrefabIDDictionary.csv", out _prefabs);
+
+            LoadAllProjectileBodyPrefab();
+            LoadAllUIPrefab();
         }
 
     }
