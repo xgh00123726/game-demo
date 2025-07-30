@@ -36,16 +36,15 @@ namespace GameBase.UI
 
         }
 
-        GameObject IEntity<GameObject>.Obj 
+        public GameObject Obj 
         {
             get => body;
             set => body = value;
         }
-        int IEntity<GameObject>.ID => bodyID;
+        public int ID => bodyID;
 
         void IPoolableObject.OnInstantiate()
         {
-            bodyID = 1;
             duration = 4f;
             instantiateTime = Time.time;
 

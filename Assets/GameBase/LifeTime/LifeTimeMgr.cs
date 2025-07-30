@@ -10,7 +10,8 @@ namespace GameBase.LifeTime
     public class LifeTimeMgr : MonoBehaviour
     {
         public string managerScene = "Managers";
-        public string startScene = "DemoCopy";
+        public List<string> backgroundScenes = new List<string> { "BackGround" };
+        public List<string> entityScenes = new List<string>{ "ProjTextTest" };
         public bool _sceneLoaded = false;
         public int managerNum = 0;
         private static List<string> _managerNames = new List<string>();
@@ -31,10 +32,23 @@ namespace GameBase.LifeTime
         void Start()
         {
             DontDestroyOnLoad(gameObject);
+
             ResourcesLoader.LoadAllAsset();
-            SceneManager.LoadScene(managerScene);
-            SceneManager.LoadScene(startScene);
             Tools.Logger.Instance.Log($"id 0:{ResourcesLoader._prefabs[0]}, id 1:{ResourcesLoader._prefabs[1]}");
+
+            SceneManager.LoadScene(managerScene);
+            if (backgroundScenes.Count > 0)
+            {
+                SceneManager.LoadScene(backgroundScenes[0]);
+            }
+            for (int i = 1; i < backgroundScenes.Count; i++)
+            {
+                SceneManager.LoadScene(backgroundScenes[i], LoadSceneMode.Additive);
+            }
+            foreach (var s in entityScenes)
+            {
+                SceneManager.LoadScene(s, LoadSceneMode.Additive);
+            }
         }
 
 

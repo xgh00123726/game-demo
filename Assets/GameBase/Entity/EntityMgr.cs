@@ -13,7 +13,7 @@ namespace GameBase.Entity
     {
         public delegate bool EntityFilter(GameEntity entity);
         static List<GameEntity> _entities = new List<GameEntity>();
-        static Dictionary<string, PoolableObjectPool<GameEntity>> _entitiyPools = new Dictionary<string, PoolableObjectPool<GameEntity>>();
+        static Dictionary<string, CSObjectPool<GameEntity>> _entitiyPools = new Dictionary<string, CSObjectPool<GameEntity>>();
         static EntityMgr()
         {
             LifeTimeMgr.RegisterMgr(new EntityMgr());
@@ -57,28 +57,8 @@ namespace GameBase.Entity
         /// </list></summary>
         private static void AddToPools(string prefabName)
         {
-            _entitiyPools[prefabName] = new PoolableObjectPool<GameEntity>()
+            _entitiyPools[prefabName] = new CSObjectPool<GameEntity>()
             {
-                InstantiateObject = () =>
-                {
-                    var obj = ResourceMgr.InstaniatePrefab(PrefabType.Entity, prefabName);
-
-                    if (obj == null)
-                    {
-                        Logger.Instance.Level(Logger.LogLevel.Warning)
-                            .Log($"{prefabName} has no prefab");
-                    }
-
-                    var prefab = obj.GetComponent<GameEntity>();
-                    if (prefab != null)
-                    {
-                        return prefab;
-                    }
-                    else
-                    {
-                        return obj.AddComponent<GameEntity>();
-                    }
-                }
             };
         }
 

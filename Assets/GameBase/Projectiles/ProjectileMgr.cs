@@ -38,15 +38,6 @@ namespace GameBase.Projectile
 
         void IManager.Update()
         {
-            foreach (var proj in MonoMgr.Pool.ActiveList)
-            {
-                proj._Update();
-                if (proj.CanRelease)
-                {
-                    MonoMgr.Pool.ReleaseToBuffer(proj);
-                }
-            }
-            MonoMgr.Pool.FlushReleaseBuffer();
         }
     }
 }

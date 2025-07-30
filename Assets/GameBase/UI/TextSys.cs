@@ -3,23 +3,26 @@ using GameBase.Tools;
 using UnityEngine;
 namespace GameBase.UI
 {
-    public class TextSys : EntitySys<FloatText, GameObject>
+    public class TextSys : UObjEntitySys<FloatText, CSObjectPool<FloatText>, GameObject, UObjectPool<GameObject>>
     {
-        protected override int IDCount => ResourcesLoader.UIPrefabCount;
+        protected override int ContainerCapacity => ResourcesLoader.UIPrefabCount;
 
-        protected override GameObject InstantiateObject(int id)
+        protected override GameObject InstantiateObj(IEntity<GameObject> e)
         {
-            return GameObject.Instantiate(ResourcesLoader.GetUIPrefab(id));
+            var obj = GameObject.Instantiate(ResourcesLoader.GetUIPrefab(e.ID));
+            Tools.Logger.Instance.Log(obj);
+            return obj;
         }
 
-        protected override void OnObjectGet(FloatText e)
+        protected override void OnInstantiateUObject(FloatText e)
         {
             e.rectTransform = e.body.GetComponent<RectTransform>();
+            e.body.SetActive(true);
         }
 
-        protected override void OnObjectRelease(FloatText e)
+        protected override void OnReleaseUObject(FloatText e)
         {
-            
+            e.body.SetActive(false);
         }
 
         protected override void UpdateEntity(FloatText e)

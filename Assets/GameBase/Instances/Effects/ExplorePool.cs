@@ -16,7 +16,7 @@ namespace GameBase.Effects
             ResourceMgr.LoadAllPrefab(PrefabType.Effect, "Hits and explosions");
         }
 
-        private static Dictionary<string, PoolableObjectPool<Explore>> _pools = new Dictionary<string, PoolableObjectPool<Explore>>();
+        private static Dictionary<string, CSObjectPool<Explore>> _pools = new Dictionary<string, CSObjectPool<Explore>>();
         /// <summary>
         /// 从对象池中获取一个爆炸特效的gameobject
         /// <list type="bullet">
@@ -27,18 +27,7 @@ namespace GameBase.Effects
         {
             if (!_pools.ContainsKey(name))
             {
-                _pools[name] = new PoolableObjectPool<Explore>();
-                _pools[name].InstantiateObject = () =>
-                {
-                    var obj = ResourceMgr.InstaniatePrefab(PrefabType.Effect, name);
-                    var explore = obj.GetComponent<Explore>();
-                    if (explore == null)
-                    {
-                        explore = obj.AddComponent<Explore>();
-                    }
-                    explore.prefabName = name;
-                    return explore;
-                };
+                _pools[name] = new CSObjectPool<Explore>();
             }
             return _pools[name].Get();
         }

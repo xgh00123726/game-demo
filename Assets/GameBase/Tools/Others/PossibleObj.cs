@@ -5,8 +5,8 @@ namespace GameBase.Tools
         T obj;
         private bool _objExist;
         public bool Exist => _objExist;
-        public static explicit operator T(PossibleObj<T> obj) => obj.obj;
-        public static explicit operator PossibleObj<T>(T obj)
+
+        public static PossibleObj<T> New(T obj)
         {
             var ret = new PossibleObj<T>();
             ret.Set(obj);

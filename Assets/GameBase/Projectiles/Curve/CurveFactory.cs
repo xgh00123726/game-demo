@@ -9,7 +9,7 @@ namespace GameBase.Projectile
             Tracer = 2,
         }
 
-        public static CurveBase CreateInstance(CurveType type, ICurveProjectile p)
+        public static CurveBase CreateInstance(CurveType type, ICurveProjectile e)
         {
             if (type == CurveType.None)
             {
@@ -17,11 +17,11 @@ namespace GameBase.Projectile
             }
             if (type == CurveType.Liner)
             {
-                return new Linear(p);
+                return new Linear(e);
             }
             if (type == CurveType.Tracer)
             {
-                return new Tracer(p);
+                return new Tracer(e);
             }
 
             return null;

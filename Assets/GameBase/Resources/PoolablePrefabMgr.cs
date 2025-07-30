@@ -10,29 +10,16 @@ namespace GameBase.Resources
     /// </summary>
     public class PoolablePrefabMgr : MonoBehaviour
     {
-        private static Dictionary<string, PoolableObjectPool<PoolablePrefab>> _prefabPools = new Dictionary<string, PoolableObjectPool<PoolablePrefab>>();
+        private static Dictionary<string, CSObjectPool<PoolablePrefab>> _prefabPools = new Dictionary<string, CSObjectPool<PoolablePrefab>>();
         
-        private static PoolableObjectPool<PoolablePrefab> PoolOf<T>(PrefabType type, string subFolder = null) where T : PoolablePrefab
+        private static CSObjectPool<PoolablePrefab> PoolOf<T>(PrefabType type, string subFolder = null) where T : PoolablePrefab
         {
             string name = typeof(T).Name;
             if (_prefabPools.ContainsKey(name))
             {
                 return _prefabPools[name];
             }
-            var pool = new PoolableObjectPool<PoolablePrefab>();
-            pool.InstantiateObject = () =>
-            {
-                var obj = ResourceMgr.InstaniatePrefab(type, name, subFolder);
-                var prefab = obj.GetComponent<PoolablePrefab>();
-                if (prefab != null)
-                {
-                    return prefab;
-                }
-                else
-                {
-                    return obj.AddComponent<T>();
-                }
-            };
+            var pool = new CSObjectPool<PoolablePrefab>();
             _prefabPools[name] = pool;
             return pool;
         }
@@ -83,17 +70,6 @@ namespace GameBase.Resources
             _prefabPools[name].Release(prefab);
         }
 
-        /// <summary>
-        /// 尝试讲一个对象放回对象池
-        /// <list type="bullet">
-        /// <item><param name="prefab">需要被放回的对象</param></item>
-        /// </list></summary>
-        /// <returns>是否销毁成功</returns>
-        public static bool TryReleaseToPool(PoolablePrefab prefab)
-        {
-            string name = prefab.GetType().Name;
-            return _prefabPools[name].TryRelease(prefab);
-        }
 
         void Start()
         {
@@ -102,17 +78,6 @@ namespace GameBase.Resources
 
         void Update()
         {
-            foreach (var pool in _prefabPools.Values)
-            {
-                foreach (var prefab in pool.ActiveList)
-                {
-                    if (prefab.ReleaseTrigger)
-                    {
-                        pool.ReleaseToBuffer(prefab);
-                    }
-                }
-                pool.FlushReleaseBuffer();
-            }
         }
     }
 }

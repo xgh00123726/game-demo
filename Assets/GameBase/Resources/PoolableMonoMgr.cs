@@ -13,28 +13,15 @@ namespace GameBase.Resources
         private static PoolableMonoMgr<T> _instance;
         public static PoolableMonoMgr<T> Instance(PrefabType type, string subFolder = null) => _instance ??= new PoolableMonoMgr<T>(type, subFolder);
 
-        PoolableObjectPool<T> _pool;
+        CSObjectPool<T> _pool;
         /// <summary>
         /// 管理prefab的对象池
         /// </summary>
-        public PoolableObjectPool<T> Pool => _pool;
+        public CSObjectPool<T> Pool => _pool;
 
         private PoolableMonoMgr(PrefabType type, string subFolder)
         {
-            _pool = new PoolableObjectPool<T>();
-            _pool.InstantiateObject = () =>
-            {
-                var obj = ResourceMgr.InstaniatePrefab(type, typeof(T).Name, subFolder);
-                var prefab = obj.GetComponent<T>();
-                if (prefab != null)
-                {
-                    return prefab;
-                }
-                else
-                {
-                    return obj.AddComponent<T>();
-                }
-            };
+            _pool = new CSObjectPool<T>();
         }
 
         /// <summary>
@@ -53,17 +40,6 @@ namespace GameBase.Resources
         public void Release(T obj)
         {
             _pool.Release(obj);
-        }
-
-        /// <summary>
-        /// 尝试将对象释放回对象池
-        /// <list type="bullet">
-        /// <item><param name="obj"><paramref name="obj"/>:被释放的对象</param></item>
-        /// </list></summary>
-        /// <returns>是否放回成功</returns>
-        public bool TryRelease(T obj)
-        {
-            return _pool.TryRelease(obj);
         }
     }
 }

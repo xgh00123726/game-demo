@@ -61,9 +61,6 @@ namespace GameBase.Projectile
 
         void IPoolableObject.OnInstantiate()
         {
-            bodyID = -1;
-            hitEffectID = -1;
-            trailID = -1;
             maxExistTime = 10f;
             damage = 99;
             speed = 10f;
