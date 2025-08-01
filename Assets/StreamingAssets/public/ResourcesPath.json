@@ -2,10 +2,11 @@
     "prefab": {
         "MoveIndicatorEffect": "RightClickEffect",
         "ArrowOfRain": "ProjectileArrow",
-        "Explore": "CFXR Explosion 1",
         "DestIndicator": "CircleIndicator",
         "SpellCircleIndicator": "CircleIndicator",
-        "BaseTree": "NullTree"
+        "BaseTree": "NullTree",
+        "TracerProj": "Lighting",
+        "ProjectileObject": "Lighting"
     },
     "material": {
         "FadeMaterial": "FadeMaterial"

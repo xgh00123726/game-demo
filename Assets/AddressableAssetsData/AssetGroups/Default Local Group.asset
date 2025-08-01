@@ -1,0 +1,820 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 99e66562739860d4fa975f7650113420
+  m_SerializeEntries:
+  - m_GUID: 00d39d07cd361e34e97f8ed711c5d9e4
+    m_Address: Textures/AllBlack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 012c47cee87a3d34f8e3a132f2f4dd1c
+    m_Address: Textures/Splat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 01c194e73d2bb784d974690dab2c2887
+    m_Address: Materials/Slash
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 023e6cf3cee7ae347a5704903bd6460a
+    m_Address: Textures/Concrete slab_MetallicSmoothness
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 02aaacbbc35ea7648b7f39e90d5e0434
+    m_Address: Materials/TechCircle2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 03ea2d256bf144dfa907b17f13aa4949
+    m_Address: Packs/SpaceRobotKyle/Materials/KyleRobot
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 04dd3169a9e676e42adc66e8646e7849
+    m_Address: Materials/Stone
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 05ab7a71e9e2c874e8e8f97868f89e65
+    m_Address: Prefabs/Effect/Character auras/Buff
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 060153d9b13de4b478c77f95feb041f5
+    m_Address: Prefabs/Effect/Portals/Portal green
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 063aa479676c4084ebf187660ca0a7b8
+    m_Address: Packs/SpaceRobotKyle/Animations/Jump--InAir.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 07c3bda3394003a49a2dbc12922d8e2c
+    m_Address: Materials/Arrow1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 08af0ad7d90461f4b9769c1f3500940f
+    m_Address: Materials/FadeMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0a4c5c0c1259ae947a1d38add04587dd
+    m_Address: Textures/TechCircle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 12e52e465ed793a4d801955e9f964a82
+    m_Address: Packs/SpaceRobotKyle/Animations/Stand--Idle.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 14e8a8d2158bec840b56c54f5266e692
+    m_Address: Packs/SpaceRobotKyle/Sfx/Player_Footstep_05
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 16114d403eabb53438de032c6f0d1deb
+    m_Address: Packs/SpaceRobotKyle/Animations/Locomotion--Run_N.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 16f55d79387ca264588e4e15fe72c693
+    m_Address: Sprite/Spell_Speeder
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 186de84b3207156479abe98f4958fed0
+    m_Address: Packs/SpaceRobotKyle/Sfx/Player_Footstep_03
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1a014eb03492e8b4eb1cf538ddc3e5ea
+    m_Address: Prefabs/Effect/Hits and explosions/Star hit
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1a91fcd19acf1e54bba0945d9f390849
+    m_Address: Packs/SpaceRobotKyle/Sfx/Player_Footstep_04
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1b62ac2a381b55343a16c500ea743155
+    m_Address: Prefabs/Effect/Slash effects/Electro slash
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1c4fec7f839916448ab5abd9613cfbf1
+    m_Address: Materials/PrototypeMap
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1cdb4f0ba62d4894c921b789dac3bb46
+    m_Address: Prefabs/Effect/Magic shields/Magic shield blue
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1ff795fcda23f1d489e518983c0707bb
+    m_Address: Textures/Point1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2012080c447c48e4f982e6e6dbbb7768
+    m_Address: Prefabs/Effect/Hits and explosions/Snow hit
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 212ceabd6af9f7b438b478cdcd50aa60
+    m_Address: Prefabs/UI/AttrPanel
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 216b3d5679e127b4490153d226ca3692
+    m_Address: Materials/Flash2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 234dfa1f894ca054695eb1872fac01cd
+    m_Address: Prefabs/Effect/Slash effects/Snow slash
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 234f11d0175370140a185255a39a77b5
+    m_Address: Materials/Smoke26
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2384fd779ea2fbd4dac5515dc8d24ccf
+    m_Address: Materials/Snowflake
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2571b3f3684ca3149ac77a1262ab220c
+    m_Address: Prefabs/Info/HealthBar
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 274649b0e221539409070ebf6c18918b
+    m_Address: Packs/SpaceRobotKyle/Sfx/Player_Footstep_09
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 28a8d4fe3e4d1294587d489f4a4fed33
+    m_Address: Prefabs/Effect/Magic shields/Magic shield yellow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 29841e7d5bbfb5b419c9ad16ca8bc4c1
+    m_Address: Packs/SpaceRobotKyle/Sfx/Player_Footstep_06
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2b354916f87bef04e82cfe88c0a97337
+    m_Address: Prefabs/UI/SpellItem
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 325a26d62b61fa94cb3c97c435efebc5
+    m_Address: Packs/SpaceRobotKyle/Animations/Locomotion--Walk_N_Land.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 339ecf8d97a4ccf4a80d62818a448020
+    m_Address: Materials/Trail67
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 33b0bc4687ee1d1418fb1cb072c0af75
+    m_Address: Prefabs/Effect/Love aura
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 35738a1e71d6c9a4b8ed4332a7c03b0d
+    m_Address: Prefabs/Effect/Hits and explosions/Green hit
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 37444fcb56715c140afa336e7ba8866a
+    m_Address: Prefabs/Effect/Portals/Portal red
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 378c02398119a9342a68842df6f5edef
+    m_Address: Meshes/cfxr ring mesh local space smoother
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3c033631149b9c541bcf155cd94cccba
+    m_Address: Packs/SpaceRobotKyle/Animations/Locomotion--Run_N_Land.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3c75438cee60ed848a1d2ad7e9fbb2e8
+    m_Address: Textures/Snowflake
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3dcd47c574f23ea489f2eca2a1fca24b
+    m_Address: Prefabs/Projectile/Lighting
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3ecde855bcb751d458a8f81639c831e1
+    m_Address: Prefabs/Effect/Portals/Portal yellow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 40db3173a05ae3242b1c182a09b0a183
+    m_Address: Packs/SpaceRobotKyle/Animations/StarterAssetsThirdPerson
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 448a98f2297c6bd4f9d17f98bc14d072
+    m_Address: Materials/Heart
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 453e3acf5546bee438331684986393f8
+    m_Address: Prefabs/Effect/Hits and explosions/Holy hit
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 46adb81519a1b844cb47b51991fdc8d7
+    m_Address: Prefabs/Effect/Character auras/Love aura
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 47cf02b284d50c04fbd5e1f7e1ca5e79
+    m_Address: Textures/Gradient2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 48112abdc7b9bb64598154c6539b36e1
+    m_Address: Sprite/Font1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4917a7926ecfe4d41b0f881275dfee59
+    m_Address: Materials/MagicCircle2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4bf510cf9e0bba644affa2c5557c371b
+    m_Address: Materials/Circle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4cd7cfbb985ec4518bfc6c73c4ee1433
+    m_Address: Packs/SpaceRobotKyle/Textures/KyleRobot_BaseMap
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4e2d32db458c32649a1ce7fe1336ebcb
+    m_Address: Prefabs/Effect/Slash effects/Charge slash purple
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4f552e9740e48fb4cbe2fb15e8d91085
+    m_Address: Prefabs/Effect/Character auras/Debuff
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 53f8c774bbf4aaa409d0f46a7a312f5c
+    m_Address: Prefabs/Effect/Hits and explosions/Default
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 569cd08967d9fd34ca84e6acb2703819
+    m_Address: Textures/Concrete slab_Height
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5718ec5f5cc79234d956fa6320398056
+    m_Address: Prefabs/Effect/AoE effects/Snow AOE
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 576ac1eb1f3cd264ea75a7c8ebbd293d
+    m_Address: Prefabs/Effect/AoE effects/Red energy explosion
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5aae2859b99764250836fdf4c100e428
+    m_Address: Packs/SpaceRobotKyle/Textures/KyleRobot_Metallic
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c2742eb713e13c4288e003af72c860a
+    m_Address: Materials/Floor3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5d0132965bb3eb643842dc9940df05df
+    m_Address: Prefabs/Effect/Hits and explosions/Stones hit
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5d86f8ce51bdd714b9bd02a0af00f04a
+    m_Address: Materials/Crack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 60ad0b364f33a16478c3e507b1cf9703
+    m_Address: Prefabs/Effect/Character auras/Healing
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 624582b3b65da9a45bc1d204b8a69122
+    m_Address: Prefabs/Entity/Player1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6344c9d67dc038e41981713c4ebe7482
+    m_Address: Prefabs/Prop/Banner/Prop_Banner_Blue_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6389d589b40d4d14ca310c9794a45ce9
+    m_Address: Textures/Slash
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 67b5ffc520c2cb44c823530ba007486c
+    m_Address: Textures/Flare
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 67c8b33e424ccdc4486edf538ab91c5a
+    m_Address: Packs/SpaceRobotKyle/Sfx/Player_Footstep_08
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 688fb3df656028e47bf876d7412c3d67
+    m_Address: Textures/Electro
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 692f8b38021d02d4483dbab13116508b
+    m_Address: Shader/SkillIndicatorDecal
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 72f526a6a9890f643a88e85a61c86c8a
+    m_Address: Packs/SpaceRobotKyle/Sfx/Player_Footstep_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 733515c1ec6a0a743a4b8e6dab58f0de
+    m_Address: Materials/Gradient2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 73ffbc06802a247cfb1b26f4ee67eba8
+    m_Address: Packs/SpaceRobotKyle/Models/KyleRobot
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 755cd1439725c564691250681244f889
+    m_Address: Prefabs/Effect/RightClickEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 781898c65743eea439b106f626fc0412
+    m_Address: Prefabs/UI/HealthBar
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 791054af2a3e84d5f80f671672739900
+    m_Address: Packs/SpaceRobotKyle/Textures/KyleRobot_Normal
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 79da7101e844ee14f9d40822baa936c3
+    m_Address: Prefabs/Effect/AoE effects/Laser AOE
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7ae956b4f54394e80818898d8f4d30c6
+    m_Address: Packs/SpaceRobotKyle/Prefabs/RobotKyle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7b3585cab2538884fb1f44c7689c43e6
+    m_Address: Prefabs/Effect/Magic circles/Magic circle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7f12fa216df1eb94181563e8ea03826b
+    m_Address: Materials/VFXatlas
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7f180b60648bf2145a9b5aeba6179bf0
+    m_Address: Textures/Heart
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 80b58f19dbfb46343b2ec062280b00f0
+    m_Address: Prefabs/Effect/Slash effects/Charge slash blue
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8269a9f8cf495034c817722ac21f309f
+    m_Address: Packs/SpaceRobotKyle/Animations/Locomotion--Walk_N.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 82e6bf167cb432c4a992cde3246b834f
+    m_Address: Prefabs/Effect/Magic circles/Freeze circle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 85016e0f2b01da248b9663dd49a161b0
+    m_Address: Packs/SpaceRobotKyle/Sfx/Player_Footstep_02
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 862c9ad1f8de7d947b351c72592b89ef
+    m_Address: Materials/DistortionPoint
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 86f9aaeb028a51644953d85aac8263bd
+    m_Address: Prefabs/UI/DamageText
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 873c8846ac8810a489b12dc9d00aee39
+    m_Address: Materials/Gradient
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 878a7da511e396b42a9319598eb7d0eb
+    m_Address: Prefabs/Effect/AoE effects/Meteors AOE
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 87f29e83564832349aee84e919fded53
+    m_Address: Textures/Concrete slab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 87f51fd9ac1373d478aa1fbe5b66c5fd
+    m_Address: Textures/Smoke26
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 888f2270c2b7d27459d122272c169370
+    m_Address: Prefabs/Effect/Magic circles/Magic circle 2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8a998afdae746404eab632f00ab27937
+    m_Address: Prefabs/Effect/Slash effects/Stone slash
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8b756c1bc42ee4a4db4b7d4b94c5f21c
+    m_Address: Prefabs/Effect/Hits and explosions/Electro hit
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9051fe82e3dd567448954f234ddec326
+    m_Address: Shader/ModelLoss
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9080bae97563a9949b406191dbde13a5
+    m_Address: Prefabs/UI/AttrItem
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9437099e5efbdea4a96be77148ebd302
+    m_Address: Materials/MagicCircle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 95b5f7ed449e9554aaa7ddb3ee46ba13
+    m_Address: Sprite/Spell_ArrowRain
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9794bd6e87edabf4b92a64296801a07e
+    m_Address: Prefabs/Effect/AoE effects/AoE slash green
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9844afb59689efe48916829afcdea2bd
+    m_Address: Textures/Point1n
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 98f277b0c8055e143b2fcf058d3c27dc
+    m_Address: Packs/SpaceRobotKyle/Animations/Jump--Jump.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9aeb2d664357bb84b8ddec0069991d69
+    m_Address: Textures/Arrow1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9bae3237af3205341aaef172f8acc91c
+    m_Address: Materials/Electro
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9c760473ad645974e9a0ec1aa7882487
+    m_Address: Prefabs/Effect/Hits and explosions/Explosion
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a073c604c44135e438eeeaef77058ac5
+    m_Address: Packs/SpaceRobotKyle/Animations/Locomotion--Run_S.anim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a3194b8bbc96ef84fab1f98f4b7dae3e
+    m_Address: Packs/SpaceRobotKyle/Sfx/Player_Footstep_10
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a6e8d246b654fdb41a202f49198395c1
+    m_Address: Textures/Flash
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a8b35fd8199fe0d4cbcdfde776b85173
+    m_Address: Textures/Stone
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a8b60b001da62b349b81c8d558cd0848
+    m_Address: Materials/Flash
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ac93b30b5547fac4498ba790a3c8b3e3
+    m_Address: Textures/Star
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ad00694d8d8975544a9d1eb94d72e0c8
+    m_Address: Materials/TechCircle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ad3c804766a4f964f9289265ddc5fb04
+    m_Address: Materials/CardSuit
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ae18758e68d1dca48b122b77430f1e17
+    m_Address: Materials/CircleIndicator
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b1c965172a423de4582721d477c239b1
+    m_Address: Prefabs/Effect/Slash effects/Charge slash red
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b383f5416ebe14442ace0605759c15ad
+    m_Address: Prefabs/Effect/Character auras/Lightning aura
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b564974a2808ba049990959f26974abe
+    m_Address: Textures/TechCircle2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b565a3ba281c99441a0d8394015f36e8
+    m_Address: Textures/Concrete slab_Normal
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b847a0596cb58714ca5d4db64a7a06e3
+    m_Address: Textures/Trail67
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: baaa31ff42893ae44b22f2640c165baa
+    m_Address: Prefabs/Effect/Hits and explosions/Love hit
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bbcb06deff79d44479edee9570771f96
+    m_Address: Prefabs/Effect/Fire
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bbe17dbc12910c14aba40793305b5abd
+    m_Address: Prefabs/UI/SpellPanel
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bc6b68d1512cc8742926a06c4c0de9fb
+    m_Address: Materials/Mask1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bd054bcc5b987354497da1b5023dd5a9
+    m_Address: Prefabs/Projectile/Explore
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: be7c57106c3f7264d976d54ff4f27373
+    m_Address: Materials/SkillIndicatorDecal
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c0c274d8dc3146344acb1643a440ebd5
+    m_Address: Materials/Star
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c2fe82790fe63f34fa4e4f4c31fb1797
+    m_Address: Prefabs/Effect/Magic circles/Healing circle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c3b898f223988824b9c92978d5c772fa
+    m_Address: Prefabs/UI/BuffPanel
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c4e966805c5d5bd458fc406c40694c8b
+    m_Address: Prefabs/UI/FloatText
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c5ae1d874e0fc6249960ab86961d4583
+    m_Address: Textures/Circle2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: caf2fa2ae1b3a68488974f90f5ce83dd
+    m_Address: Textures/Mask1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cd59121197f0a844f8e5aafbf91e4ccb
+    m_Address: Shader/Fade
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d0868bab79d55b84bb0c5973f7bd6904
+    m_Address: Prefabs/Effect/Character auras/Star aura
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d2a9290392d734d45a8452c9ae6b7404
+    m_Address: Sprite/Font2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d4a51fca589e7f34898d6ac6bf3d5b27
+    m_Address: Textures/Flash2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d57553ca627a41144a4de4ca4d219482
+    m_Address: Prefabs/Entity/Enemy1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d924530cabd6f424ea6dcf562d8dd98f
+    m_Address: Materials/Circle2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: da02f65c3eca5714f8c4aad25dec5819
+    m_Address: Textures/HalfBlack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dbb676dfa82b3bb48a565153b7a52870
+    m_Address: Textures/MagicCircle2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dd1af302b8902684d9381de1f2d3a5af
+    m_Address: Packs/SpaceRobotKyle/Sfx/Player_Footstep_07
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: df5f2fe04bfe8e6498e353b82e3ae68a
+    m_Address: Textures/Circle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: df9e69e9da8e1e24e8bbb392fa8f26cc
+    m_Address: Prefabs/UI/CmdUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e452da8da066b8d499fd4a5da7a67a85
+    m_Address: Textures/Crack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e624487489edb0c44bed21cff1de13ea
+    m_Address: Shader/CircleIndicator
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e96e991603c19ea42841c59dbb8a59a2
+    m_Address: Prefabs/Prop/Runes/Runes_Arcane
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e9f77b8e9e9ce7047b84ea8afb397c30
+    m_Address: Prefabs/Effect/Magic shields/Magic shield pink
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ea09a2af70c3c614a919bd377fd2e879
+    m_Address: Prefabs/Effect/AoE effects/AoE slash blue
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ebaed54917a3c4841a6cbcf08c9862a8
+    m_Address: Prefabs/UI/BuffItem
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ec7399d07b0fae94db7260fc4e87417e
+    m_Address: Materials/Flare
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ec8494246b4daf1468bd86099d2f0b0d
+    m_Address: Textures/poker_suit
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: efa1bd10ff217b949a581a8e1b97183c
+    m_Address: Prefabs/Effect/AoE effects/AoE slash orange
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f09ff078054569a45bf667cd4abea9da
+    m_Address: Textures/Gradient
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f363ead7ab7a9be4fb2f4ef561912e13
+    m_Address: Prefabs/Effect/CircleIndicator
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f8c6db556c4c4874e82b8e2148c6f2ac
+    m_Address: Prefabs/Effect/Portals/Portal blue
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fa55f7a5aa66d574392c9700e9c5c4ab
+    m_Address: Materials/Additive
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fbe0e3310ad6a8c45950b16db6696862
+    m_Address: Textures/MagicCircle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fd9b514397ad90e478ce5c84ec0e1d89
+    m_Address: Materials/Point
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ff697d3070687ce4583faa0561a145a2
+    m_Address: Packs/SpaceRobotKyle/Sfx/Player_Land
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 4a220a0cf5014c147a511326b0c055bd, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: c09e4ba73d2f2d84cbfd34fad265d6f5, type: 2}
+    - {fileID: 11400000, guid: 3655840fd3798e74e8b1b4203dae1d65, type: 2}
