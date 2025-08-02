@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameBase.Move
 {
-    public class Mover
+    public class Mover : IEntity
     {
         public GameObject body;
         public float speed;
@@ -13,6 +13,13 @@ namespace GameBase.Move
         internal PossibleObj<Rigidbody> rigidbody;
         internal Vector3 dest;
         internal PossibleObj<GameObject> target;
+        internal int id;
+
+        public int ID
+        {
+            get => id;
+            set => id = value;
+        }
 
         public Rigidbody RigidyBody
         {

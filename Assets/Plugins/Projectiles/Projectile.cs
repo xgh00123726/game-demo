@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GameBase.Math;
 using GameBase.Tools;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace GameBase.Projectile
 {
     public class Projectile : ICurveProjectile,
         IPoolableObject,
-        IEntity<GameObject>
+        IUEntity<GameObject>
     {
         public int bodyID;
         public int hitEffectID;
@@ -15,26 +16,47 @@ namespace GameBase.Projectile
         public float damage;
         public Vector3 dest;
         public Vector3 src;
+        public CurveBase curve;
         public PossibleObj<IProjectileTarget> target;
         public PossibleObj<IProjectileOwner> owner;
+        public PossibleObj<IShape2D> shape;
         public bool isImmediately;
         public float speed;
         public int penetrate;
-        public bool hitWhiteListEnable;
+        public bool whiteEnable;
+        public int tickRate;
 
         public CurveFactory.CurveType curveType;
 
-        internal CurveBase curve;
+        internal int id;
+        internal int tick;
         internal GameObject body;
         internal GameObject hitEffect;
         internal GameObject trail;
-        internal LinkedList<IProjectileTarget> whites;
+        public PossibleObj<HashSet<int>> whites;
 
 
         internal float instantiateTime;
 
+        public float Size
+        {
+            set
+            {
+                if (shape.Exist)
+                {
+                    shape.Get().Size = value;
+                    body.transform.localScale = new Vector3(value, value, value);
+                }
+            }
+        }
+
+        public int ID
+        {
+            get => id;
+            set => id = value;
+        }
         public Vector3 Dest => target.Exist ? target.Get().Center : dest;
-        public Vector3 Src => owner.Exist ? owner.Get().HandPostion : src;
+        public Vector3 Src => src;
         public float DisToTarget { get; internal set; }
         Vector3 ICurveProjectile.Position
         {
@@ -52,25 +74,42 @@ namespace GameBase.Projectile
 
         float ICurveProjectile.LifeTime => Time.time - instantiateTime;
 
-        GameObject IEntity<GameObject>.Obj
+        GameObject IUEntity<GameObject>.Obj
         {
             get => body;
             set => body = value;
         }
-        int IEntity<GameObject>.ID => bodyID;
+        int IUEntity<GameObject>.ObjID => bodyID;
 
         void IPoolableObject.OnInstantiate()
         {
-            maxExistTime = 10f;
-            damage = 99;
-            speed = 10f;
-            penetrate = 1;
-            hitWhiteListEnable = false;
+            // 记录射弹生成时刻
+            instantiateTime = Time.time;
+
+            if (curveType != CurveFactory.CurveType.None)
+            {
+                curve = CurveFactory.CreateInstance(curveType, this);
+            }
+
+            // 如果射弹是穿透性的，才给射弹设置白名单
+            if (whiteEnable && penetrate > 1)
+            {
+                whites = PossibleObj<HashSet<int>>.New(new HashSet<int>());
+            }
+
+            if (owner.Exist)
+            {
+                src = owner.Get().HandPostion;
+            }
         }
 
         void IPoolableObject.OnRelease()
         {
-            
+            if (whites.Exist)
+            {
+                whites.Get().Clear();
+            }
+            body.transform.localScale = Vector3.one;
         }
     }
 }

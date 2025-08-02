@@ -9,11 +9,12 @@ namespace GameBase.Tools
     /// <item><typeparam name="T_entity"><typeparamref name="T_entity"/>:实体类型</typeparam></item>
     /// </list></summary>
     public abstract class SimplestEntitySys<T_entity, T_container> : MonoBehaviour
-        where T_entity : new()
+        where T_entity : IEntity
         where T_container : IEntityContainer<T_entity>, IEnumerable<T_entity>, new()
     {
         public int sysID = 0;
         public int entityCount = 0;
+        public int allocatedID = 0;
 
         private static SimplestEntitySys<T_entity, T_container> _instance;
         public static SimplestEntitySys<T_entity, T_container> Instance => _instance;
@@ -57,10 +58,17 @@ namespace GameBase.Tools
         public T_entityType NewEntity<T_entityType>() where T_entityType : T_entity, new()
         {
             var e = new T_entityType();
+            e.ID = allocatedID++;
             Register(e);
             return e;
         }
 
+        public T_entityType NewEntity<T_entityType>(T_entityType e) where T_entityType : T_entity
+        {
+            e.ID = allocatedID++;
+            Register(e);
+            return e;
+        }
 
         protected virtual void Awake()
         {

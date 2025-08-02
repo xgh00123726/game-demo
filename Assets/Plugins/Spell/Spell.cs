@@ -4,7 +4,8 @@ using GameBase.Tools;
 
 namespace GameBase.Spell
 {
-    public class Spell : IPoolableObject
+    public class Spell : IPoolableObject,
+        IEntity
     {
         public float coolingTimeSet;           // 冷却时间
         public bool targetable;
@@ -20,11 +21,18 @@ namespace GameBase.Spell
         public SpellDelegate CancelDelegate;
         public SpellDelegate ReadyDelegate;
 
+        internal int id;
         internal bool userReady;
         internal bool coolReady;
         internal float spellMoment;             // 施法时刻
         internal float coolingTimeRemain;       // 剩余冷却时间
         internal bool hasTarget = false;       // 是否具有目标
+
+        public int ID
+        {
+            get => id;
+            set => id = value;
+        }
 
         protected virtual void OnInstantiate() { }
         protected virtual void OnRealese() { }

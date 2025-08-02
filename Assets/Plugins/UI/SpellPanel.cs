@@ -13,7 +13,7 @@ namespace GameBase.UI
         public List<SpellItem> Childs => _childs;
         public SpellItem AddItem()
         {
-            var ui = PoolablePrefabMgr.GetNotfromPool<SpellItem>(PrefabType.UI);
+            var ui = new SpellItem();
             ui.transform.SetParent(_UIComponents.transform, false);
             ui.GetComponent<RectTransform>().position = new Vector2(540 + 120 * _childs.Count, 75);
 

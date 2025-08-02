@@ -4,7 +4,7 @@ using UnityEngine;
 namespace GameBase.Tools
 {
     public abstract class UObjEntitySys<T_entity, T_entityContainer, T_UObject, T_UObjectContainer> : SimplestEntitySys<T_entity, T_entityContainer>
-        where T_entity : IEntity<T_UObject>, new()
+        where T_entity : IUEntity<T_UObject>
         where T_entityContainer : IEntityContainer<T_entity>, IEnumerable<T_entity>, new()
         where T_UObjectContainer : IEntityContainer<T_UObject>, IEnumerable<T_UObject>, new()
     {
@@ -15,34 +15,34 @@ namespace GameBase.Tools
 
         protected abstract int ContainerCapacity { get; }
 
-        protected abstract T_UObject InstantiateObj(IEntity<T_UObject> e);
+        protected abstract T_UObject InstantiateObj(T_entity e);
         protected abstract void OnInstantiateUObject(T_entity e);
 
         protected abstract void OnReleaseUObject(T_entity e);
 
         protected override void OnRemoveEntity(T_entity e)
         {
-            if (e.ID >= ContainerCapacity || e.ID < 0)
+            if (e.ObjID >= ContainerCapacity || e.ObjID < 0)
             {
                 Tools.XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log($"entity:{e}-->id out of defined, id:{e.ID}, max:{ContainerCapacity}");
+                    .Log($"entity:{e}-->id out of defined, id:{e.ObjID}, max:{ContainerCapacity}");
                 return;
             }
 
             OnReleaseUObject(e);
-            _objContainers[e.ID].Release(e.Obj);
+            _objContainers[e.ObjID].Release(e.Obj);
         }
 
         protected override void OnRegisterEntity(T_entity e)
         {
-            if (e.ID >= ContainerCapacity || e.ID < 0)
+            if (e.ObjID >= ContainerCapacity || e.ObjID < 0)
             {
                 Tools.XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log($"entity:{e}-->id out of defined, id:{e.ID}, max:{ContainerCapacity}");
+                    .Log($"entity:{e}-->id out of defined, id:{e.ObjID}, max:{ContainerCapacity}");
                 return;
             }
 
-            var container = _objContainers[e.ID];
+            var container = _objContainers[e.ObjID];
             if (container == null)
             {
                 container = new T_UObjectContainer();
@@ -56,7 +56,7 @@ namespace GameBase.Tools
             {
                 e.Obj = container.Get();
             }
-            _objContainers[e.ID] = container;
+            _objContainers[e.ObjID] = container;
             
             OnInstantiateUObject(e);
         }

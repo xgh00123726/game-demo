@@ -106,19 +106,19 @@ namespace GameBase.Tools
 
             if (level == LogLevel.Info)
             {
-                Debug.Log($"{colorTagBegin}[info] {info}{colorTagEnd}");
+                Debug.Log($"[info]{colorTagBegin} {info}{colorTagEnd}");
             }
             else if (level == LogLevel.Warning)
             {
-                Debug.LogWarning($"{colorTagBegin}[warning] {info}{colorTagEnd}");
+                Debug.LogWarning($"[warning]{colorTagBegin} {info}{colorTagEnd}");
             }
             else if (level == LogLevel.Error)
             {
-                Debug.LogError($"{colorTagBegin}[error] {info}{colorTagEnd}");
+                Debug.LogError($"[error]{colorTagBegin} {info}{colorTagEnd}");
             }
             else if (level == LogLevel.Fatal)
             {
-                Debug.LogError($"{colorTagBegin}[fatal] {info}{colorTagEnd}");
+                Debug.LogError($"[fatal]{colorTagBegin} {info}{colorTagEnd}");
             }
         }
 

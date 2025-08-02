@@ -83,7 +83,7 @@ namespace GameBase.UI
 
         public void SetIcon(string name)
         {
-            _iconGO.GetComponent<Image>().sprite = ResourceMgr.InstantiateSprite("Spell_ArrowRain");
+            //_iconGO.GetComponent<Image>().sprite = ResourceMgr.InstantiateSprite("Spell_ArrowRain");
         }
 
 

@@ -1,8 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using GameBase.Creature;
+using GameBase.Math;
 using GameBase.Resources;
 using GameBase.Tools;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CreatureSys : UObjEntitySys<Creature, CSObjectPool<Creature>, GameObject, UObjectPool<GameObject>>
@@ -11,7 +11,7 @@ public class CreatureSys : UObjEntitySys<Creature, CSObjectPool<Creature>, GameO
 
     public static float infDis = 9999f;
 
-    protected override int ContainerCapacity => ResourcesLoader.CreaturePrefabCount;
+    protected override int ContainerCapacity => ResourcesLoader.PrefabCount;
 
     /// <summary>
     /// 返回指定位置最近的游戏实体
@@ -38,7 +38,7 @@ public class CreatureSys : UObjEntitySys<Creature, CSObjectPool<Creature>, GameO
         {
             if (hasFilter && !filter(e)) continue; // 不满足过滤需求
 
-            if (id >= 0 && e.ID != id)
+            if (id >= 0 && e.ObjID != id)
             {
                 continue;
             }
@@ -57,9 +57,36 @@ public class CreatureSys : UObjEntitySys<Creature, CSObjectPool<Creature>, GameO
         return ret;
     }
 
-    protected override GameObject InstantiateObj(IEntity<GameObject> e)
+    /// <summary>
+    /// 返回指定范围内所有实体
+    /// <list type="bullet">
+    /// <item><param name="IShape2D"><paramref name="position"/>:范围</param></item>
+    /// <item><param name="filter"><paramref name="filter"/>:寻找过滤器</param></item>
+    /// </list></summary>
+    /// <returns>指定范围内所有实体，没有实体满足条件则返回null</returns>
+    public static LinkedList<Creature> CreaturesInShape(IShape2D shape, CreatureFilter filter = null)
     {
-        return GameObject.Instantiate(ResourcesLoader.GetCreaturePrefab(e.ID));
+        var ret = new LinkedList<Creature>();
+        var sys = Instance as CreatureSys;
+        bool hasFilter = filter != null;
+        foreach (var e in sys._activeEntities)
+        {
+            if (hasFilter && !filter(e)) continue;
+
+            float x = e.body.transform.position.x;
+            float y = e.body.transform.position.z;
+            if (shape.Contains(x, y))
+            {
+                ret.AddLast(e);
+            }
+        }
+
+        return ret;
+    }
+
+    protected override GameObject InstantiateObj(Creature e)
+    {
+        return GameObject.Instantiate(ResourcesLoader.GetPrefab(e.bodyID));
     }
 
     protected override void OnInstantiateUObject(Creature e)

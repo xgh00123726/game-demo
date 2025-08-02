@@ -5,8 +5,9 @@ namespace GameBase.Projectile
         public enum CurveType
         {
             None = 0,
-            Liner = 1,
-            Tracer = 2,
+            Liner,
+            Tracer,
+            Slower,
         }
 
         public static CurveBase CreateInstance(CurveType type, ICurveProjectile e)
@@ -22,6 +23,10 @@ namespace GameBase.Projectile
             if (type == CurveType.Tracer)
             {
                 return new Tracer(e);
+            }
+            if (type == CurveType.Slower)
+            {
+                return new Slower(e);
             }
 
             return null;

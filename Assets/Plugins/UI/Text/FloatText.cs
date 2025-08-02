@@ -1,9 +1,10 @@
 using GameBase.Tools;
+using TMPro;
 using UnityEngine;
 namespace GameBase.UI
 {
     public class FloatText : IPoolableObject,
-        IEntity<GameObject>
+        IUEntity<GameObject>
     {
         // 被抛出的text的y坐标随时间以二次函数曲线变化y = a*t*t+b*t+c
         public static float _yFactorAMin = -4f;
@@ -19,6 +20,7 @@ namespace GameBase.UI
         public string value;
         public Vector3 showPosition;
 
+        internal int id;
         internal float yFactorA = 0f;
         internal float yFactorB = 0f;
         internal float yFactorC = 0f;
@@ -30,10 +32,17 @@ namespace GameBase.UI
 
         internal GameObject body;
         internal RectTransform rectTransform;
+        internal TextMeshProUGUI textObj;
 
         public FloatText()
         {
 
+        }
+
+        public int ID
+        {
+            get => id;
+            set => id = value;
         }
 
         public GameObject Obj 
@@ -41,10 +50,12 @@ namespace GameBase.UI
             get => body;
             set => body = value;
         }
-        public int ID => bodyID;
+        public int ObjID => bodyID;
 
         void IPoolableObject.OnInstantiate()
         {
+            bodyID = 5;
+
             duration = 4f;
             instantiateTime = Time.time;
 

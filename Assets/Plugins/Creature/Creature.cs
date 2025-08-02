@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameBase.Creature
 {
-    public class Creature : IEntity<GameObject>,
+    public class Creature : IUEntity<GameObject>,
         IPoolableObject,
         IProjectileTarget
     {
@@ -12,22 +12,34 @@ namespace GameBase.Creature
         public int radius;
         public Vector3 genPos;
 
+        internal int id;
         internal GameObject body;
 
         Vector3 IProjectileTarget.Center => body.transform.position;
 
         float IProjectileTarget.Radius => radius;
 
+        public int ID
+        {
+            get => id;
+            set => id = value;
+        }
+
         public GameObject Obj
         {
             get => body;
             set => body = value;
         }
-        public int ID => bodyID;
+        public int ObjID => bodyID;
+
+        protected virtual void OnGetDamage(float damage)
+        {
+
+        }
 
         void IProjectileTarget.GetDamage(float damage)
         {
-            
+            OnGetDamage(damage);
         }
 
         void IPoolableObject.OnInstantiate()

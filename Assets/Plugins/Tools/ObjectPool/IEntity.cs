@@ -1,8 +1,7 @@
 namespace GameBase.Tools
 {
-    public interface IEntity<T>
+    public interface IEntity
     {
-        public T Obj { get; set; }
-        public int ID { get; }
+        int ID { get; set; }
     }
 }

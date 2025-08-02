@@ -1,21 +1,23 @@
 using GameBase.Resources;
 using GameBase.Tools;
+using TMPro;
 using UnityEngine;
 namespace GameBase.UI
 {
     public class TextSys : UObjEntitySys<FloatText, CSObjectPool<FloatText>, GameObject, UObjectPool<GameObject>>
     {
-        protected override int ContainerCapacity => ResourcesLoader.UIPrefabCount;
+        protected override int ContainerCapacity => ResourcesLoader.PrefabCount;
 
-        protected override GameObject InstantiateObj(IEntity<GameObject> e)
+        protected override GameObject InstantiateObj(FloatText e)
         {
-            var obj = GameObject.Instantiate(ResourcesLoader.GetUIPrefab(e.ID));
-            return obj;
+            return GameObject.Instantiate(ResourcesLoader.GetPrefab(e.bodyID));
         }
 
         protected override void OnInstantiateUObject(FloatText e)
         {
             e.rectTransform = e.body.GetComponent<RectTransform>();
+            e.textObj = e.body.GetComponent<TextMeshProUGUI>();
+            e.textObj.text = e.value;
             e.body.SetActive(true);
         }
 
