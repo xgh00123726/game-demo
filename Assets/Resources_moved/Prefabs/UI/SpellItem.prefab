@@ -85,7 +85,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3947530911010838835}
   - component: {fileID: 1477683074765255799}
-  - component: {fileID: 5317560128385349122}
   m_Layer: 0
   m_Name: SpellItem
   m_TagString: Untagged
@@ -140,23 +139,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &5317560128385349122
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1113355950749852505}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b1ec60ff4356db4bae5448dac0ab76c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _coolingTimeSet: 10
-  _coolingRemainPercent: 1
-  _coolingTimeRemain: 0
-  _charge: 0
-  _maxCharge: 1
 --- !u!1 &1909877759113416556
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,14 @@
-2
+13
 0,Prefabs/Entity/Player1
 1,Prefabs/Entity/Enemy1
+2,Prefabs/Projectile/Lighting
+3,Prefabs/Projectile/Frisbee
+
+5,Prefabs/UI/FloatText
+6,Prefabs/UI/HealthBar
+7,Prefabs/UI/AttrItem
+8,Prefabs/UI/AttrPanel
+9,Prefabs/UI/BuffItem
+10,Prefabs/UI/BuffPanel
+11,Prefabs/UI/SpellItem
+12,Prefabs/UI/SpellPanel

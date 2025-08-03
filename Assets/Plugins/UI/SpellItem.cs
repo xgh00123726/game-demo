@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using GameBase.Tools;
 using TMPro;
 using GameBase.Resources;
 
@@ -8,11 +7,7 @@ namespace GameBase.UI
 {
     public class SpellItem : BaseUI
     {
-        public float _coolingTimeSet = 10;           // 图标的冷却时间
-        public float _coolingRemainPercent = 1;      // 图标冷却时间百分比
-        public float _coolingTimeRemain = 0;         // 图标剩余冷却时间
-        public int _charge = 0;                      // 当前充能
-        public int _maxCharge = 1;                   // 最大充能
+        public Spell.Spell spell;
 
         private GameObject _iconGO;                  // 图标的gameobjcet
         private Transform _chargeGO;                 // 充能数字的gameobject
@@ -23,69 +18,10 @@ namespace GameBase.UI
         private TextMeshProUGUI _chargeTMP;          // 充能层数的text对象
 
 
-
-        public float CoolingTimeSet
+        public void SetIcon(int id)
         {
-            get => _coolingTimeSet;
-            set => _coolingTimeSet = value;
+            _iconGO.GetComponent<Image>().sprite = GameObject.Instantiate(ResourcesLoader.GetSprite(id));
         }
-        public float CoolingTimeRemain
-        {
-            get => _coolingTimeRemain;
-            set
-            {
-                _coolingTimeRemain = Mathf.Clamp(value, 0, _coolingTimeSet);
-                _coolingRemainPercent = _coolingTimeRemain / _coolingTimeSet;
-                SetCooling();
-            }
-        }
-        public int Charge
-        {
-            get => _charge;
-            set
-            {
-                _charge = value;
-                _chargeTMP.text = _charge.ToString();
-            }
-        }
-        public int MaxCharge
-        {
-            get => _maxCharge;
-            set
-            {
-                _maxCharge = value;
-                if (_maxCharge > 1)
-                {
-                    _chargeGO.gameObject.SetActive(true);
-                }
-                else
-                {
-                    _chargeGO.gameObject.SetActive(false);
-                }
-            }
-        }
-
-
-        private void SetCooling()
-        {
-            string _coolingText = string.Empty;
-            if (_coolingTimeRemain > 1)
-            {
-                _coolingText = ((int)_coolingTimeRemain).ToString();
-            }
-            else if (_coolingTimeRemain > 0)
-            {
-                _coolingText = $".{(int)(_coolingTimeRemain * 10)}";
-            }
-            _timeTMP.text = _coolingText;
-            _maskImage.fillAmount = _coolingRemainPercent;
-        }
-
-        public void SetIcon(string name)
-        {
-            //_iconGO.GetComponent<Image>().sprite = ResourceMgr.InstantiateSprite("Spell_ArrowRain");
-        }
-
 
         protected virtual void Awake()
         {
@@ -97,8 +33,23 @@ namespace GameBase.UI
             _maskImage = _coolingTimeMaskGO.GetComponent<Image>();
             _timeTMP = _coolingTimeTextGO.GetComponent<TextMeshProUGUI>();
             _chargeTMP = _chargeGO.GetComponent<TextMeshProUGUI>();
+        }
 
-            MaxCharge = _maxCharge;
+        private void Update()
+        {
+            float coolingTimeRemain = spell.CoolingTimeRemain;
+            _maskImage.fillAmount = coolingTimeRemain / spell.coolingTimeSet;
+
+            string coolingText = string.Empty;
+            if (coolingTimeRemain > 1)
+            {
+                coolingText = ((int)coolingTimeRemain).ToString();
+            }
+            else if (coolingTimeRemain > 0)
+            {
+                coolingText = $".{(int)(coolingTimeRemain * 10)}";
+            }
+            _timeTMP.text = coolingText;
         }
     }
 }

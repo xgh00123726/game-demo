@@ -9,11 +9,18 @@ namespace GameBase.Resources
     public partial class ResourcesLoader
     {
         public static GameObject[] _prefabs;
+        public static Sprite[] _sprites;
         public static int PrefabCount => _prefabs.Length;
+        public static int SpriteCount => _sprites.Length;
 
         public static GameObject GetPrefab(int id)
         {
             return _prefabs[id];
+        }
+
+        public static Sprite GetSprite(int id)
+        {
+            return _sprites[id];
         }
 
         private static void LoadCsvAsset<T>(string csvPath, out T[] container)
@@ -35,6 +42,7 @@ namespace GameBase.Resources
         public static void LoadAllAsset()
         {
             LoadCsvAsset($"{Application.streamingAssetsPath}/public/PrefabIDDictionary.csv", out _prefabs);
+            LoadCsvAsset($"{Application.streamingAssetsPath}/public/SpriteIDDictionary.csv", out _sprites);
         }
 
     }

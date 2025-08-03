@@ -25,7 +25,7 @@ namespace GameBase.Spell
                 {
                     acc = e.speller.Get().CoolingAccelerate * 0.01f + 1;
                 }
-                e.coolingTimeRemain -= Time.fixedDeltaTime * acc;
+                e.coolingTimeRemain -= Time.deltaTime * acc;
                 e.coolReady = e.coolingTimeRemain <= 0;
             }
 
@@ -54,6 +54,7 @@ namespace GameBase.Spell
                 else if (userReady && e.CastDelegate?.Invoke(e) == true)
                 {
                     e.coolReady = false;
+                    e.coolingTimeRemain = e.coolingTimeSet;
                     e.CastAction?.Invoke(e);
                 }
             }

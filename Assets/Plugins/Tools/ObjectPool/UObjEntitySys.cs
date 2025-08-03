@@ -4,7 +4,7 @@ using UnityEngine;
 namespace GameBase.Tools
 {
     public abstract class UObjEntitySys<T_entity, T_entityContainer, T_UObject, T_UObjectContainer> : SimplestEntitySys<T_entity, T_entityContainer>
-        where T_entity : IUEntity<T_UObject>
+        where T_entity : IUEntity<T_UObject>, new()
         where T_entityContainer : IEntityContainer<T_entity>, IEnumerable<T_entity>, new()
         where T_UObjectContainer : IEntityContainer<T_UObject>, IEnumerable<T_UObject>, new()
     {

@@ -2,15 +2,10 @@
     "name": "Entity",
     "rootNamespace": "",
     "references": [
-        "GUID:be0f8e26d249929468c1d75fbe0fa426",
-        "GUID:cc37166ee9957994687b515c6a9f5764",
-        "GUID:bb95100fcd0cc084ab58148aa14c5255",
         "GUID:d2d43e0db2807da49945b87c5300548d",
-        "GUID:c0b10d801494de949b8c51a768e1330f",
         "GUID:de7b92ba5f00d1b4a862c6eb909dc685",
         "GUID:a37901e73280e1142a0d40f62ccc5e41",
         "GUID:a0bb8d568f7dff8458fa59d5a8a702ae",
-        "GUID:6b3f7ad81260ea44ab938e5f6de598b3",
         "GUID:2b188ba47057da04f887cb974e1947e9"
     ],
     "includePlatforms": [],

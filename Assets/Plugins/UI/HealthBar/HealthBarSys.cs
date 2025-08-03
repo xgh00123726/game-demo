@@ -24,10 +24,10 @@ namespace GameBase.UI
             e.textComponent = e.textObj.GetComponent<TextMeshProUGUI>();
 
             e.current = e.body.transform.Find("Current").gameObject;
-            e.currentRectTransform = e.textObj.GetComponent<RectTransform>();
+            e.currentRectTransform = e.current.GetComponent<RectTransform>();
 
-            e.losing = e.body.transform.Find("Text").gameObject;
-            e.losingRectTransform = e.textObj.GetComponent<RectTransform>();
+            e.losing = e.body.transform.Find("Losing").gameObject;
+            e.losingRectTransform = e.losing.GetComponent<RectTransform>();
 
             e.widthMax = e.rectTransform.rect.width;
 
@@ -61,6 +61,7 @@ namespace GameBase.UI
             }
 
             e.HPChange = false;
+            e.currPercent = Mathf.Clamp01(e.currHP / e.maxHP);
             e.textComponent.text = $"{e.currHP} / {e.maxHP}";
             SetWidth(e.currentRectTransform, e.currPercent, e.widthMax);
         }

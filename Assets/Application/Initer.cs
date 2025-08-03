@@ -1,18 +1,92 @@
+using GameBase.GCamera;
+using GameBase.Instance;
+using GameBase.Math;
+using GameBase.Projectile;
+using GameBase.Spell;
 using GameBase.Tools;
-using GameBase.UI;
+using System;
 using UnityEngine;
+using XLua;
 public class Initer : MonoBehaviour
 {
-    AttrItem itemX;
-    AttrItem itemY;
-    AttrItem itemZ;
-    AttrItem entityMgrObjectNum;
+    private Projectile ProjectileGen_0()
+    {
+        var proj = new Projectile();
+        proj.bodyID = 2;
+        proj.curveType = CurveFactory.CurveType.Tracer;
+        proj.speed = 30f;
+        proj.damage = 10f;
+        proj.maxExistTime = 10f;
+        proj.penetrate = 1;
+
+        return proj;
+    }
+
+    private Projectile ProjectileGen_1()
+    {
+        var proj = new Projectile();
+        proj.bodyID = 3;
+        proj.dest = CameraSys.MouseHitPosition;
+        var curve = CurveFactory.CreateInstance(CurveFactory.CurveType.Slower, proj) as Slower;
+        curve.factor = 0f;
+        curve.slowDis = 1.5f;
+        proj.curve = curve;
+        proj.speed = 3f;
+        proj.damage = 10f;
+        proj.penetrate = 999;
+        proj.whiteEnable = true;
+        proj.maxExistTime = 10f;
+        proj.shape = new GMath.Circle(Vector2.zero, 1f);
+
+        return proj;
+    }
+
+    private Projectile ProjectileGen_2()
+    {
+        var proj = new Projectile();
+        proj.bodyID = 2;
+        proj.curveType = CurveFactory.CurveType.Tracer;
+        proj.speed = 30f;
+        proj.damage = 5f;
+        proj.maxExistTime = 10f;
+        proj.penetrate = 1;
+        proj.OnAliveFixed = (Projectile e) =>
+        {
+            if (ProjectileSys.Instance.FixedTick % 5 == 0 && !e.target.Exist)
+            {
+                e.target = PossibleObj<IProjectileTarget>.New(
+                    CreatureSys.NearestEntity<Enemy1>(e.Obj.transform.position, null, 0));
+            }
+        };
+
+        return proj;
+    }
+
+    private Projectile ProjectileGen_3()
+    {
+        var proj = new Projectile();
+        proj.bodyID = 3;
+        proj.dest = CameraSys.MouseHitPosition;
+        proj.curveType = CurveFactory.CurveType.Liner;
+        proj.speed = 3f;
+        proj.damage = 10f;
+        proj.penetrate = 999;
+        proj.maxExistTime = 10f;
+        proj.shape = new GMath.Circle(Vector2.zero, 1f);
+
+        return proj;
+    }
+
+    private void RegisterProjectileGenerator()
+    {
+        ProjectileSys.Instance.RegisterEntityGenerateDeletate(ProjectileGen_0);
+        ProjectileSys.Instance.RegisterEntityGenerateDeletate(ProjectileGen_1);
+        ProjectileSys.Instance.RegisterEntityGenerateDeletate(ProjectileGen_2);
+        ProjectileSys.Instance.RegisterEntityGenerateDeletate(ProjectileGen_3);
+    }
+
     void Start()
     {
-#if UNITY_EDITOR
-        itemX = AttrPanel.Instance.AddItem();
-        itemY = AttrPanel.Instance.AddItem();
-        itemZ = AttrPanel.Instance.AddItem();
 
         var builder = new BehaviorTreeBuilder();
 
@@ -23,21 +97,18 @@ public class Initer : MonoBehaviour
                 .End();
         builder.Tree.Tick();
 
-        entityMgrObjectNum = AttrPanel.Instance.AddItem();
-
-        AttrPanel.Instance.Hide();
-
         Physics.gravity = new Vector3(0, -100, 0);
 
-#endif
+
+        ProjectileSys.ProjectileTargetSys = new ProjectileTargetSys();
+
+        XLua.LuaEnv luaEnv = new XLua.LuaEnv();
+        luaEnv.DoString("print('hello world')");
+
+        RegisterProjectileGenerator();
     }
 
     private void Update()
     {
-#if UNITY_EDITOR
-        itemX.KeyText = "x";
-        itemY.KeyText = "y";
-        itemZ.KeyText = "z";
-#endif
     }
 }

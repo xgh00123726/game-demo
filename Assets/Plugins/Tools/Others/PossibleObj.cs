@@ -1,5 +1,12 @@
 namespace GameBase.Tools
 {
+    /// <summary>
+    /// <list type="bullet">
+    /// <item>unity object判空会带来额外的消耗</item>
+    /// <item>对于需要周期判空的unity object，使用possible object进行快捷判空</item>
+    /// </list>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public struct PossibleObj<T>
     {
         T obj;
@@ -10,6 +17,10 @@ namespace GameBase.Tools
         {
             var ret = new PossibleObj<T>();
             ret.Set(obj);
+            if (obj == null)
+            {
+                ret._objExist = false;
+            }
             return ret;
         }
 

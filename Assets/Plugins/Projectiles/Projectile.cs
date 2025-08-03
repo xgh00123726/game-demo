@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using GameBase.Math;
 using GameBase.Tools;
@@ -19,15 +20,19 @@ namespace GameBase.Projectile
         public CurveBase curve;
         public PossibleObj<IProjectileTarget> target;
         public PossibleObj<IProjectileOwner> owner;
-        public PossibleObj<IShape2D> shape;
+        public IShape2D shape;
         public bool isImmediately;
         public float speed;
         public int penetrate;
         public bool whiteEnable;
         public int tickRate;
+        public int hitInterval;
+        public Action<Projectile> OnAlive;
+        public Action<Projectile> OnAliveFixed;
 
         public CurveFactory.CurveType curveType;
 
+        internal int actualPenetrate;
         internal int id;
         internal int tick;
         internal GameObject body;
@@ -38,13 +43,15 @@ namespace GameBase.Projectile
 
         internal float instantiateTime;
 
+        public int Tick => tick;
+
         public float Size
         {
             set
             {
-                if (shape.Exist)
+                if (shape != null)
                 {
-                    shape.Get().Size = value;
+                    shape.Size = value;
                     body.transform.localScale = new Vector3(value, value, value);
                 }
             }
@@ -74,7 +81,7 @@ namespace GameBase.Projectile
 
         float ICurveProjectile.LifeTime => Time.time - instantiateTime;
 
-        GameObject IUEntity<GameObject>.Obj
+        public GameObject Obj
         {
             get => body;
             set => body = value;
@@ -101,6 +108,8 @@ namespace GameBase.Projectile
             {
                 src = owner.Get().HandPostion;
             }
+
+            actualPenetrate = 0;
         }
 
         void IPoolableObject.OnRelease()

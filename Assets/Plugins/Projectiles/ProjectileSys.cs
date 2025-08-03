@@ -7,10 +7,16 @@ namespace GameBase.Projectile
 {
     public class ProjectileSys : UObjEntitySys<Projectile, CSObjectPool<Projectile>, GameObject, UObjectPool<GameObject>>
     {
+        public float fixedFreq = 60;
+        public int actualFreq = 0;
+
         public static readonly float ProjectileHitDis = 0.1f;
+
         public static IProjectileTargetSys ProjectileTargetSys { set; get; }
 
         protected override int ContainerCapacity => ResourcesLoader.PrefabCount;
+
+        protected override float FixedFreq => fixedFreq;
 
         protected override GameObject InstantiateObj(Projectile e)
         {
@@ -42,15 +48,31 @@ namespace GameBase.Projectile
                 return;
             }
 
+            // 伤害间隔外无效果
+            if (e.hitInterval > 1 && fixedTick % e.hitInterval != 0)
+            {
+                return;
+            }
+
             var target = e.target.Get();
-            if (e.whites.Exist && !e.whites.Get().Contains(target.ID))
+            // 存在白名单
+            // 并且白名单中没有该射弹
+            // 并且射弹穿透没有到达上限
+            if (e.whites.Exist 
+                && !e.whites.Get().Contains(target.ID) 
+                && e.actualPenetrate < e.penetrate)
             {
                 e.whites.Get().Add(target.ID);
                 e.target.Get().GetDamage(e.damage);
+                e.actualPenetrate++;
             }
-            else if (!e.whites.Exist)
+            // 不存在白名单
+            // 并且射弹穿透没有到达上限
+            else if (!e.whites.Exist
+                && e.actualPenetrate < e.penetrate)
             {
                 e.target.Get().GetDamage(e.damage);
+                e.actualPenetrate++;
             }
         }
 
@@ -58,12 +80,27 @@ namespace GameBase.Projectile
         {
             if (targets == null) return;
 
+            // 伤害间隔外无效果
+            if (e.hitInterval > 1 && fixedTick % e.hitInterval != 0)
+            {
+                return;
+            }
+
             foreach (var target in targets)
             {
-                if (e.whites.Exist && !e.whites.Get().Contains(target.ID))
+                if (e.whites.Exist 
+                    && !e.whites.Get().Contains(target.ID)
+                    && e.actualPenetrate < e.penetrate)
                 {
                     e.whites.Get().Add(target.ID);
                     target.GetDamage(e.damage);
+                    e.actualPenetrate++;
+                }
+                else if (!e.whites.Exist
+                    && e.actualPenetrate < e.penetrate)
+                {
+                    target.GetDamage(e.damage);
+                    e.actualPenetrate++;
                 }
             }
         }
@@ -75,25 +112,6 @@ namespace GameBase.Projectile
         /// </list></summary>
         protected override void UpdateEntity(Projectile e)
         {
-            // tick逻辑
-            if (e.tick++ < e.tickRate)
-            {
-                return;
-            }
-            else
-            {
-                e.tick = 0;
-            }
-
-            // 瞬发型弹幕的逻辑
-            if (e.isImmediately)
-            {
-                e.body.transform.position = e.Dest;
-                OnProjectileHit(e);
-                RemoveEntity(e);
-                return;
-            }
-
             // 射弹超时
             if (Time.time > e.maxExistTime + e.instantiateTime)
             {
@@ -101,15 +119,41 @@ namespace GameBase.Projectile
                 return;
             }
 
-            // 范围型弹幕的逻辑
-            if (e.shape.Exist)
+            e.OnAlive?.Invoke(e);
+
+            // 具有轨迹的射弹逻辑
+            if (e.curve != null)
             {
-                e.Size = Time.time - e.instantiateTime + 1;
-                e.shape.Get().Center = new Vector2(e.body.transform.position.x, e.body.transform.position.z);
-                OnProjectileHitTargets(e, ProjectileTargetSys.TargetsInShape(e.shape.Get(), null));
+                e.curve.speed = e.speed;
+                e.curve.DirUpdate();
+                e.curve.PosUpdate();
+            }
+        }
+
+        protected override void FixedUpdateEntity(Projectile e)
+        {
+            // tick逻辑
+            if (e.tickRate > 1 && fixedTick % e.tickRate != 0)
+            {
+                return;
             }
 
-            // 正常逻辑
+            e.OnAliveFixed?.Invoke(e);
+
+            // 瞬发型弹幕的逻辑
+            if (e.isImmediately)
+            {
+                e.body.transform.position = e.Dest;
+            }
+
+            // 范围型弹幕的逻辑
+            if (e.shape != null)
+            {
+                e.shape.Center = new Vector2(e.body.transform.position.x, e.body.transform.position.z);
+                OnProjectileHitTargets(e, ProjectileTargetSys.TargetsInShape(e.shape));
+            }
+
+            // 击中逻辑
             e.DisToTarget = (e.Dest - e.body.transform.position).magnitude;
             float hitDis = ProjectileHitDis;
 
@@ -123,14 +167,6 @@ namespace GameBase.Projectile
                 OnProjectileHit(e);
                 RemoveEntity(e);
                 return;
-            }
-
-            // 具有轨迹的射弹逻辑
-            if (e.curve != null)
-            {
-                e.curve.speed = e.speed;
-                e.curve.DirUpdate();
-                e.curve.PosUpdate();
             }
         }
     }

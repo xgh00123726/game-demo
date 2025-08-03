@@ -5,6 +5,8 @@ using GameBase.Projectile;
 using GameBase.Spell;
 using GameBase.Tools;
 using UnityEngine;
+using GameBase.GCamera;
+using GameBase.UI;
 
 public class Player1 : MonoBehaviour,
     IProjectileOwner,
@@ -12,9 +14,6 @@ public class Player1 : MonoBehaviour,
 {
     public Mover mover;
     public Rotater rotater;
-    public Camera cam;
-    public GameObject projectileTargetObject;
-    public IProjectileTarget projectileTarget;
 
     Vector3 IProjectileOwner.HandPostion => transform.position + new Vector3(0, 2, 0);
 
@@ -36,29 +35,45 @@ public class Player1 : MonoBehaviour,
         rotater.body = gameObject;
         rotater.turnSpeed = 720;
 
-        projectileTarget = projectileTargetObject.GetComponent<ProjectileTestObj>();
+
 
         var spell_1 = SpellSys.Instance.NewEntity<PanelSpell>();
         spell_1.hotKey = KeyFunction.Spell1;
+        spell_1.coolingTimeSet = 5f;
+        spell_1.speller = PossibleObj<ISpeller>.New(this);
+        spell_1.CastAction = SpellActions.Frisbee;
+        var item_1 = SpellPanel.AddItem();
+        item_1.SetIcon(0);
+        item_1.spell = spell_1;
+
+        var spell_2 = SpellSys.Instance.NewEntity<PanelSpell>();
+        spell_2.hotKey = KeyFunction.Spell2;
+        spell_2.speller = PossibleObj<ISpeller>.New(this);
+        spell_2.CastAction = SpellActions.FrisbeeEmiter;
 
         var spell_3 = SpellSys.Instance.NewEntity<PanelSpell>();
         spell_3.hotKey = KeyFunction.Spell3;
         spell_3.speller = PossibleObj<ISpeller>.New(this);
         spell_3.CastAction = SpellActions.Ezreal_E;
+
+        var spell_4 = SpellSys.Instance.NewEntity<PanelSpell>();
+        spell_4.hotKey = KeyFunction.Spell4;
+        spell_4.speller = PossibleObj<ISpeller>.New(this);
+        spell_4.CastAction = SpellActions.Frisbeeing;
     }
 
     private void Update()
     {
         if (Inputs.GetKeyDown(KeyFunction.MoveTo))
         {
-            mover.Dest = Inputs.MouseHitPostion(cam);
-            rotater.Dir = Inputs.MouseHitPostion(cam) - rotater.body.transform.position;
+            mover.Dest = CameraSys.MouseHitPosition;
+            rotater.Dir = CameraSys.MouseHitPosition - rotater.body.transform.position;
         }
 
         if (Inputs.GetKeyDown(KeyFunction.Spell6))
         {
-            var c = CreatureSys.Instance.NewEntity<Creature>();
-            c.genPos = Inputs.MouseHitPostion(cam);
+            var c = CreatureSys.Instance.NewEntity<Enemy1>();
+            c.genPos = CameraSys.MouseHitPosition;
             c.bodyID = 0;
         }
     }

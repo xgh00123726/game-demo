@@ -1,5 +1,4 @@
 using GameBase.Modify;
-using GameBase.Object;
 using UnityEngine;
 
 namespace GameBase.Buff
@@ -7,7 +6,7 @@ namespace GameBase.Buff
     public class BuffModify : GBuff
     {
         private ModifyLite _modify;
-        public BuffModify(GObject caster, ModifyLite modify) : base(caster)
+        public BuffModify(MonoBehaviour caster, ModifyLite modify) : base(caster)
         {
             _modify = modify;
         }

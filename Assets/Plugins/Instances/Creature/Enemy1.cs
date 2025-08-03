@@ -1,9 +1,11 @@
+using GameBase.Projectile;
 using GameBase.UI;
 using UnityEngine;
 
 namespace GameBase.Instance
 {
     public class Enemy1 : Creature.Creature,
+        IProjectileTarget,
         IHealthBarOwner
     {
         public HealthBar healthbar;
@@ -21,9 +23,12 @@ namespace GameBase.Instance
 
         Vector3 IHealthBarOwner.HealthBarPosition => Obj.transform.position + new Vector3(0, 1, 1);
 
-        protected override void OnGetDamage(float damage)
+        Vector3 IProjectileTarget.Center => Obj.transform.position;
+
+        float IProjectileTarget.Radius => radius;
+
+        void IProjectileTarget.GetDamage(float damage)
         {
-            base.OnGetDamage(damage);
             currHP -= damage;
             healthbar.CurrHP = currHP;
             var text = TextSys.Instance.NewEntity<FloatText>();

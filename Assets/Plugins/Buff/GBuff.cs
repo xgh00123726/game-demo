@@ -1,5 +1,4 @@
 using GameBase.Modify;
-using GameBase.Object;
 using UnityEngine;
 
 namespace GameBase.Buff
@@ -7,7 +6,7 @@ namespace GameBase.Buff
     public class GBuff:
         IViewableBuff
     {
-        protected GObject _caster; // 施加者
+        protected MonoBehaviour _caster; // 施加者
         protected IModifyable _target; // 施加目标
         internal IModifyable Target => _target;
 
@@ -30,7 +29,7 @@ namespace GameBase.Buff
         #region public method
 
         // 创建一个buff，buff必须要有创建者
-        public GBuff(GObject caster)
+        public GBuff(MonoBehaviour caster)
         {
             _caster = caster;
         }

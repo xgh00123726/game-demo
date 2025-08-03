@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9178875693803698979}
-  - component: {fileID: 3592333358039535423}
   m_Layer: 0
   m_Name: AttrPanel
   m_TagString: Untagged
@@ -33,18 +32,6 @@ Transform:
   - {fileID: 1995582248125472596}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3592333358039535423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 341910680439753134}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 422fc435561a4ce409ab4e5c0ffb53c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &900729567708075247
 GameObject:
   m_ObjectHideFlags: 0

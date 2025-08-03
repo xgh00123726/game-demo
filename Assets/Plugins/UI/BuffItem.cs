@@ -7,71 +7,66 @@ using GameBase.Resources;
 
 namespace GameBase.UI
 {
-    public class BuffItem : BaseUI,
-        IPoolableObject
+    public class BuffItem : BaseUI
     {
-        private GameObject _iconGO;
-        private GameObject _maskGO;
-        private GameObject _stackNumGO;
+        internal GameObject iconGO;
+        internal GameObject maskGO;
+        internal GameObject stackNumGO;
 
-        private TextMeshProUGUI _stackNumTMP;
-        private Image _maskGOImage;
-        private PoolableMonoMgr<BuffItem> _buffItemMgr;
-        internal IViewableBuff _bindBuff;
-        internal bool _isReleased = false;
+        internal TextMeshProUGUI stackNumTMP;
+        internal Image maskGOImage;
+        internal IViewableBuff bindBuff;
+        internal bool isReleased = false;
         
 
         // 0: ÎÞmask
         // 1: ÌîÂú
         public float FillAmount
         {
-            get => _maskGOImage.fillAmount;
-            set => _maskGOImage.fillAmount = value;
+            get => maskGOImage.fillAmount;
+            set => maskGOImage.fillAmount = value;
         }
         private void Awake()
         {
-            _iconGO = transform.Find("Icon").gameObject;
-            _maskGO = transform.Find("Mask").gameObject;
-            _stackNumGO = transform.Find("StackNum").gameObject;
+            iconGO = transform.Find("Icon").gameObject;
+            maskGO = transform.Find("Mask").gameObject;
+            stackNumGO = transform.Find("StackNum").gameObject;
 
-            _maskGOImage = _maskGO.GetComponent<Image>();
-            _stackNumTMP = _stackNumGO.GetComponent<TextMeshProUGUI>();
-
-            _buffItemMgr = PoolableMonoMgr<BuffItem>.Instance(PrefabType.UI);
+            maskGOImage = maskGO.GetComponent<Image>();
+            stackNumTMP = stackNumGO.GetComponent<TextMeshProUGUI>();
         }
 
         private void Update()
         {
-            if (_isReleased) return;
-            if (_bindBuff.DurationRemain <= 0)
+            if (isReleased) return;
+            if (bindBuff.DurationRemain <= 0)
             {
-                _buffItemMgr.Release(this);
-                _isReleased = true;
+                isReleased = true;
             }
-            _maskGOImage.fillAmount = 1 - _bindBuff.DurationRemain / _bindBuff.DurationSet;
-            _stackNumTMP.text = _bindBuff.StackNum.ToString();
+            maskGOImage.fillAmount = 1 - bindBuff.DurationRemain / bindBuff.DurationSet;
+            stackNumTMP.text = bindBuff.StackNum.ToString();
         }
 
         public void Bind(IViewableBuff buff)
         {
-            _bindBuff = buff;
+            bindBuff = buff;
         }
 
-        void IPoolableObject.OnInstantiate()
+        internal static void OnInstantiate(BuffItem item)
         {
-            _maskGOImage.fillAmount = 0;
-            _iconGO.SetActive(true);
-            _maskGO.SetActive(true);
-            _stackNumGO.SetActive(true);
-            _isReleased = false;
+            item.maskGOImage.fillAmount = 0;
+            item.iconGO.SetActive(true);
+            item.maskGO.SetActive(true);
+            item.stackNumGO.SetActive(true);
+            item.isReleased = false;
         }
 
-        void IPoolableObject.OnRelease()
+        internal static void OnRelease(BuffItem item)
         {
-            _iconGO.SetActive(false);
-            _maskGO.SetActive(false);
-            _stackNumGO.SetActive(false);
-            _isReleased = true;
+            item.iconGO.SetActive(false);
+            item.maskGO.SetActive(false);
+            item.stackNumGO.SetActive(false);
+            item.isReleased = true;
         }
     }
 }

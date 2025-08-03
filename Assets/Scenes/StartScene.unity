@@ -169,8 +169,7 @@ MonoBehaviour:
   managerScene: Managers
   backgroundScenes:
   - Base
-  entityScenes:
-  - T_ProjText
+  entityScenes: []
   _sceneLoaded: 0
   managerNum: 0
   managerNames: []

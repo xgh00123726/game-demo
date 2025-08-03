@@ -5,37 +5,42 @@ using UnityEngine.Assertions;
 
 namespace GameBase.UI
 {
-    public class AttrPanel : BasePanel
+    public class AttrPanel : BaseUI
     {
-        internal static AttrPanel _instance;
-        public static AttrPanel Instance => _instance;
+        private static GameObject _UIComponents;
 
-        private List<AttrItem> _childs = new List<AttrItem>();
-        public List<AttrItem> Childs => _childs;
-        private GameObject _attrsField;
+        private static List<AttrItem> _childs = new List<AttrItem>();
+        public static List<AttrItem> Childs => _childs;
+        private static GameObject _attrsField;
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
+            _UIComponents = transform.Find("UIComponents").gameObject;
+            if (_UIComponents == null)
+            {
+                Debug.LogWarning("A panel must has a UIComponents");
+            }
+            Assert.IsNotNull(_UIComponents);
             _attrsField = _UIComponents.transform.Find("AttrsField").gameObject;
             Assert.IsNotNull(_attrsField);
         }
 
-        public void ToggleShow()
+        public static void ToggleShow()
         {
             _UIComponents.SetActive(!_UIComponents.activeSelf);
         }
-        public void Hide()
+        public static void Hide()
         {
             _UIComponents.SetActive(false);
         }
-        private int ItemY(int itemIndex)
+        private static int ItemY(int itemIndex)
         {
             return 500 - itemIndex * 50;
         }
-        public AttrItem AddItem()
+        public static AttrItem AddItem()
         {
-            var item = new AttrItem();
+            // 7,Prefabs/UI/AttrItem
+            var item = GameObject.Instantiate(ResourcesLoader.GetPrefab(7)).AddComponent<AttrItem>();
 
             item.transform.parent = _attrsField.transform;
             item.transform.localPosition = new Vector3(0, ItemY(_childs.Count), 0);

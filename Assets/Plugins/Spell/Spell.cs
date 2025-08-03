@@ -28,6 +28,8 @@ namespace GameBase.Spell
         internal float coolingTimeRemain;       // 剩余冷却时间
         internal bool hasTarget = false;       // 是否具有目标
 
+        public float CoolingTimeRemain => coolingTimeRemain;
+
         public int ID
         {
             get => id;
@@ -39,7 +41,6 @@ namespace GameBase.Spell
 
         void IPoolableObject.OnInstantiate()
         {
-            coolingTimeSet = 1f;
             OnInstantiate();
         }
 

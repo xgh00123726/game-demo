@@ -1,39 +1,64 @@
-using System.Collections;
-using System.Collections.Generic;
 using GameBase.Buff;
 using GameBase.Resources;
 using GameBase.Tools;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace GameBase.UI
 {
-    public class BuffPanel : BasePanel
+    public class BuffPanel : BaseUI
     {
-        public static BuffPanel Instance => _instance;
-        internal static BuffPanel _instance;
-        PoolableMonoMgr<BuffItem> _buffItemMgr;
-        public Vector3 BuffPositionDelta(int index)
+        private static GameObject _UIComponents;
+        private static UObjectPool<BuffItem> _buffItems = new UObjectPool<BuffItem>();
+        public static Vector3 BuffPositionDelta(int index)
         {
             return new Vector3(32 * index, 0, 0);
         }
-        public void ShowBuff(IViewableBuff buff)
+
+
+        private static BuffItem GetBuffItem(UObjectPool<BuffItem> pool)
         {
-            var buffItem = _buffItemMgr.Get();
-            buffItem.Bind(buff);
-            buffItem.transform.SetParent(_UIComponents.transform, false);
-            buffItem.transform.localPosition = BuffPositionDelta(_buffItemMgr.Pool.ActiveList.Count);
+            if (pool.Empty)
+            {
+                // 9,Prefabs/UI/BuffItem
+                var item = GameObject.Instantiate(ResourcesLoader.GetPrefab(9)).AddComponent<BuffItem>();
+                pool.Add(item);
+                return item;
+            }
+            else
+            {
+                return pool.Get();
+            }
         }
 
-        protected override void Awake()
+        public static void ShowBuff(IViewableBuff buff)
         {
-            base.Awake();
-            _buffItemMgr = PoolableMonoMgr<BuffItem>.Instance(PrefabType.UI);
+            var buffItem = GetBuffItem(_buffItems);
+            buffItem.Bind(buff);
+            buffItem.transform.SetParent(_UIComponents.transform, false);
+            buffItem.transform.localPosition = BuffPositionDelta(_buffItems.Count);
+        }
+
+        private void Awake()
+        {
+            _UIComponents = transform.Find("UIComponents").gameObject;
+            if (_UIComponents == null)
+            {
+                Debug.LogWarning("A panel must has a UIComponents");
+            }
+            Assert.IsNotNull(_UIComponents);
+
+            _buffItems.InstantiateAction = BuffItem.OnInstantiate;
+            _buffItems.ReleaseAction = BuffItem.OnRelease;
         }
 
         private void Update()
         {
             int idx = 0;
-            foreach (var buff in _buffItemMgr.Pool.ActiveList)
+            foreach (var buff in _buffItems)
             {
                 buff.transform.localPosition = BuffPositionDelta(idx++);
             }
