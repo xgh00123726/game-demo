@@ -55,7 +55,7 @@ public class Initer : MonoBehaviour
             if (ProjectileSys.Instance.FixedTick % 5 == 0 && !e.target.Exist)
             {
                 e.target = PossibleObj<IProjectileTarget>.New(
-                    CreatureSys.NearestEntity<Enemy1>(e.Obj.transform.position, null, 0));
+                    CreatureSys.Instance.NearestEntity<Enemy1>(e.Obj.transform.position, null, 0));
             }
         };
 

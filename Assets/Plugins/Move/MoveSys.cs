@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameBase.Move
 {
-    public class MoveSys : SimplestEntitySys<Mover, EntityList<Mover>>
+    public class MoveSys : SimplestEntitySys<Mover, EntityList<Mover>, MoveSys>
     {
         public static float moveStopDis = 0.1f;
 

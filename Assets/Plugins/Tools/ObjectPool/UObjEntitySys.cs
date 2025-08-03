@@ -3,14 +3,12 @@ using UnityEngine;
 
 namespace GameBase.Tools
 {
-    public abstract class UObjEntitySys<T_entity, T_entityContainer, T_UObject, T_UObjectContainer> : SimplestEntitySys<T_entity, T_entityContainer>
+    public abstract class UObjEntitySys<T_entity, T_entityContainer, T_UObject, T_UObjectContainer, T_instance> : SimplestEntitySys<T_entity, T_entityContainer, T_instance>
         where T_entity : IUEntity<T_UObject>, new()
         where T_entityContainer : IEntityContainer<T_entity>, IEnumerable<T_entity>, new()
         where T_UObjectContainer : IEntityContainer<T_UObject>, IEnumerable<T_UObject>, new()
+        where T_instance : UObjEntitySys<T_entity, T_entityContainer, T_UObject, T_UObjectContainer, T_instance>, new()
     {
-        private static UObjEntitySys<T_entity, T_entityContainer, T_UObject, T_UObjectContainer> _instance;
-        public new static UObjEntitySys<T_entity, T_entityContainer, T_UObject, T_UObjectContainer> Instance => _instance;
-
         protected T_UObjectContainer[] _objContainers;
 
         protected abstract int ContainerCapacity { get; }
@@ -61,11 +59,10 @@ namespace GameBase.Tools
             OnInstantiateUObject(e);
         }
 
-        protected override void Awake()
+        internal override void Awake()
         {
             base.Awake();
 
-            _instance = this;
             _objContainers = new T_UObjectContainer[ContainerCapacity];
         }
     }

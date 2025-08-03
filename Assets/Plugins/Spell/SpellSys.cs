@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameBase.Spell
 {
-    public class SpellSys : SimplestEntitySys<Spell, CSObjectPool<Spell>>
+    public class SpellSys : SimplestEntitySys<Spell, CSObjectPool<Spell>, SpellSys>
     {
         protected override void OnRegisterEntity(Spell e)
         {

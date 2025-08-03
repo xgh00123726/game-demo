@@ -7,6 +7,7 @@ using GameBase.Tools;
 using UnityEngine;
 using GameBase.GCamera;
 using GameBase.UI;
+using GameBase.Modify;
 
 public class Player1 : MonoBehaviour,
     IProjectileOwner,
@@ -15,9 +16,13 @@ public class Player1 : MonoBehaviour,
     public Mover mover;
     public Rotater rotater;
 
+
+    public Modifyable<float> coolingAccelerate;
+
+
     Vector3 IProjectileOwner.HandPostion => transform.position + new Vector3(0, 2, 0);
 
-    float ISpeller.CoolingAccelerate => 0f;
+    float ISpeller.CoolingAccelerate => coolingAccelerate.Value;
 
     GameObject ISpeller.GameObject => gameObject;
 
@@ -35,7 +40,8 @@ public class Player1 : MonoBehaviour,
         rotater.body = gameObject;
         rotater.turnSpeed = 720;
 
-
+        coolingAccelerate = ModifySys<float>.Instance.NewEntity<Modifyable<float>>();
+        coolingAccelerate.AddModify((float val) => { return val + 100f; });
 
         var spell_1 = SpellSys.Instance.NewEntity<PanelSpell>();
         spell_1.hotKey = KeyFunction.Spell1;

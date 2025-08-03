@@ -5,7 +5,7 @@ using GameBase.Tools;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreatureSys : UObjEntitySys<Creature, CSObjectPool<Creature>, GameObject, UObjectPool<GameObject>>
+public class CreatureSys : UObjEntitySys<Creature, CSObjectPool<Creature>, GameObject, UObjectPool<GameObject>, CreatureSys>
 {
     public delegate bool CreatureFilter(Creature e);
 
@@ -22,7 +22,7 @@ public class CreatureSys : UObjEntitySys<Creature, CSObjectPool<Creature>, GameO
     /// <item><param name="rangeLimit"><paramref name="rangeLimit"/>:只会寻找到rangeLimit距离内的实体，负数表示无穷</param></item>
     /// </list></summary>
     /// <returns>符合条件最近的实体，没有实体满足条件则返回null</returns>
-    public static T NearestEntity<T>(Vector3 position, CreatureFilter filter = null, int id = -1, float rangeLimit = -1) where T : Creature
+    public T NearestEntity<T>(Vector3 position, CreatureFilter filter = null, int id = -1, float rangeLimit = -1) where T : Creature
     {
         Creature ret = null;
         var sys = Instance as CreatureSys;
@@ -64,7 +64,7 @@ public class CreatureSys : UObjEntitySys<Creature, CSObjectPool<Creature>, GameO
     /// <item><param name="filter"><paramref name="filter"/>:寻找过滤器</param></item>
     /// </list></summary>
     /// <returns>指定范围内所有实体，没有实体满足条件则返回null</returns>
-    public static LinkedList<Creature> CreaturesInShape(IShape2D shape, CreatureFilter filter = null)
+    public LinkedList<Creature> CreaturesInShape(IShape2D shape, CreatureFilter filter = null)
     {
         var ret = new LinkedList<Creature>();
         var sys = Instance as CreatureSys;

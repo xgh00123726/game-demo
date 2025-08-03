@@ -5,7 +5,7 @@ using GameBase.Tools;
 using UnityEngine;
 namespace GameBase.Projectile
 {
-    public class ProjectileSys : UObjEntitySys<Projectile, CSObjectPool<Projectile>, GameObject, UObjectPool<GameObject>>
+    public class ProjectileSys : UObjEntitySys<Projectile, CSObjectPool<Projectile>, GameObject, UObjectPool<GameObject>, ProjectileSys>
     {
         public float fixedFreq = 60;
         public int actualFreq = 0;

@@ -9,9 +9,10 @@ namespace GameBase.Tools
     /// <list type="bullet">
     /// <item><typeparam name="T_entity"><typeparamref name="T_entity"/>:实体类型</typeparam></item>
     /// </list></summary>
-    public abstract class SimplestEntitySys<T_entity, T_container> : MonoBehaviour
+    public abstract class SimplestEntitySys<T_entity, T_container, T_instance> : IBaseSys
         where T_entity : IEntity, new()
         where T_container : IEntityContainer<T_entity>, IEnumerable<T_entity>, new()
+        where T_instance : SimplestEntitySys<T_entity, T_container, T_instance>, new()
     {
         public int sysID = 0;
         public int entityCount = 0;
@@ -21,9 +22,20 @@ namespace GameBase.Tools
         protected int fixedTick = 0;
         protected virtual float FixedFreq => 60f;
         private float _updateTimeAccumulate = 0;
-        private float _lastUpdateTime;
-        private static SimplestEntitySys<T_entity, T_container> _instance;
-        public static SimplestEntitySys<T_entity, T_container> Instance => _instance;
+        private static T_instance _instance;
+        public static T_instance Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new T_instance();
+                    SysMgr.AddSys(_instance);
+                }
+
+                return _instance;
+            }
+        }
 
         protected LinkedList<T_entity> _entityNeedRegister = new LinkedList<T_entity>();
         protected LinkedList<T_entity> _entitiesNeedRemove = new LinkedList<T_entity>();
@@ -122,11 +134,8 @@ namespace GameBase.Tools
             return entityGenerateDelegates.Count - 1;
         }
 
-        protected virtual void Awake()
+        internal virtual void Awake()
         {
-            DontDestroyOnLoad(gameObject);
-            _instance = this;
-
             StaticInfo.entitySysNum++;
             sysID = StaticInfo.entitySysNum;
             Tools.XLogger.Instance.Color(Color.green).
@@ -157,7 +166,7 @@ namespace GameBase.Tools
             entityCount = _activeEntities.Count;
         }
 
-        protected void Update()
+        internal void Update()
         {
             SysUpdate();
             tick++;
@@ -172,6 +181,16 @@ namespace GameBase.Tools
                 _updateTimeAccumulate -= fixedPeriod;
                 fixedTick++;
             }
+        }
+
+        void IBaseSys.Awake()
+        {
+            Awake();
+        }
+
+        void IBaseSys.Update()
+        {
+            Update();
         }
     }
 }

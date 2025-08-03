@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 namespace GameBase.UI
 {
-    public class TextSys : UObjEntitySys<FloatText, CSObjectPool<FloatText>, GameObject, UObjectPool<GameObject>>
+    public class TextSys : UObjEntitySys<FloatText, CSObjectPool<FloatText>, GameObject, UObjectPool<GameObject>, TextSys>
     {
         protected override int ContainerCapacity => ResourcesLoader.PrefabCount;
 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GameBase.UI
 {
-    public class HealthBarSys : UObjEntitySys<HealthBar, CSObjectPool<HealthBar>, GameObject, UObjectPool<GameObject>>
+    public class HealthBarSys : UObjEntitySys<HealthBar, CSObjectPool<HealthBar>, GameObject, UObjectPool<GameObject>, HealthBarSys>
     {
         public static float losingSpeed = 1f;
 

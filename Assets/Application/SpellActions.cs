@@ -49,7 +49,7 @@ public class SpellActions
     {
         var projOwner = spell.speller.Get() as IProjectileOwner;
 
-        var target = CreatureSys.NearestEntity<Enemy1>(projOwner.HandPostion, null, 0);
+        var target = CreatureSys.Instance.NearestEntity<Enemy1>(projOwner.HandPostion, null, 0);
         if (target == null)
         {
             var text = TextSys.Instance.NewEntity<FloatText>();

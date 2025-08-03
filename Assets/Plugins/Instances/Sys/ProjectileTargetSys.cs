@@ -9,7 +9,7 @@ namespace GameBase.Instance
         LinkedList<IProjectileTarget> IProjectileTargetSys.TargetsInShape(IShape2D shape)
         {
             LinkedList<Creature.Creature> cs;
-            cs = CreatureSys.CreaturesInShape(shape, null);
+            cs = CreatureSys.Instance.CreaturesInShape(shape, null);
 
             var ret = new LinkedList<IProjectileTarget>();
             foreach (var e in cs)
