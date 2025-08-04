@@ -12,11 +12,12 @@ namespace GameBase.UI
         private GameObject _iconGO;                  // 图标的gameobjcet
         private Transform _chargeGO;                 // 充能数字的gameobject
         private Transform _coolingTimeTextGO;        // 冷却时间文本的object
-        private Transform _coolingTimeMaskGO;        // 冷却时间遮罩的object
-        private Image _maskImage;                    // 遮罩的image对象
         private TextMeshProUGUI _timeTMP;            // 冷却时间的text对象
         private TextMeshProUGUI _chargeTMP;          // 充能层数的text对象
 
+        internal CanvasRenderer canvasRenderer;
+        internal MeshRenderer meshRenderer;
+        internal Image image;
 
         public void SetIcon(int id)
         {
@@ -28,17 +29,23 @@ namespace GameBase.UI
             _chargeGO = transform.Find("Charge");
             _iconGO = transform.Find("Icon").gameObject;
             _coolingTimeTextGO = transform.Find("CoolingDownText");
-            _coolingTimeMaskGO = transform.Find("CoolingDownMask");
 
-            _maskImage = _coolingTimeMaskGO.GetComponent<Image>();
             _timeTMP = _coolingTimeTextGO.GetComponent<TextMeshProUGUI>();
             _chargeTMP = _chargeGO.GetComponent<TextMeshProUGUI>();
+            image = _iconGO.GetComponent<Image>();
+
+            canvasRenderer = _iconGO.GetComponent<CanvasRenderer>();
+            
+            image.material  = new Material(image.material);
         }
 
         private void Update()
         {
             float coolingTimeRemain = spell.CoolingTimeRemain;
-            _maskImage.fillAmount = coolingTimeRemain / spell.coolingTimeSet;
+
+            //_maskImage.fillAmount = coolingTimeRemain / spell.coolingTimeSet;
+            float fullVal = coolingTimeRemain / spell.coolingTimeSet;
+            image.material.SetFloat("_MaskFull", fullVal);
 
             string coolingText = string.Empty;
             if (coolingTimeRemain > 1)

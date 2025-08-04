@@ -232,6 +232,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 525a83d1d2b9bd3469e6b36cc71dd0e0
+    m_Address: Assets/Resources_moved/Textures/UIShader.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 53f8c774bbf4aaa409d0f46a7a312f5c
     m_Address: Prefabs/Effect/Hits and explosions/Default
     m_ReadOnly: 0
@@ -462,6 +467,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ad33436d3a6b5f14c9d19b9b322da601
+    m_Address: Assets/Resources_moved/Materials/Mask.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ad3c804766a4f964f9289265ddc5fb04
     m_Address: Materials/CardSuit
     m_ReadOnly: 0
@@ -489,6 +499,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b565a3ba281c99441a0d8394015f36e8
     m_Address: Textures/Concrete slab_Normal
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b5b815654030df947877040b5282d0c8
+    m_Address: Assets/Resources_moved/Shader/SpellIcon.shadergraph
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
