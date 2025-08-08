@@ -1,11 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using GameBase.Resources;
 using GameBase.Tools;
+using System.Collections;
+using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
+using static GameBase.Projectile.CurveFactory;
+using static UnityEngine.UI.GridLayoutGroup;
 namespace GameBase.Projectile
 {
-    public class ProjectileSys : UObjEntitySys<Projectile, CSObjectPool<Projectile>, GameObject, UObjectPool<GameObject>, ProjectileSys>
+    public class ProjectileSys : UObjEntitySys<Projectile, SimpleEntityContainer, GameObject, ProjectileSys>
     {
         public float fixedFreq = 60;
         public int actualFreq = 0;
@@ -14,26 +17,51 @@ namespace GameBase.Projectile
 
         public static IProjectileTargetSys ProjectileTargetSys { set; get; }
 
-        protected override int ContainerCapacity => ResourcesLoader.PrefabCount;
-
         protected override float FixedFreq => fixedFreq;
 
         protected override GameObject InstantiateObj(Projectile e)
         {
-            return GameObject.Instantiate(ResourcesLoader.GetPrefab(e.bodyID));
+            return GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
         }
 
-        protected override void OnInstantiateUObject(Projectile e)
+        protected override void AfterInstantiateEUObject(Projectile e)
         {
+            if (e.curveType != CurveFactory.CurveType.None)
+            {
+                e.curve = CurveFactory.CreateInstance(e.curveType, e);
+            }
+
+            // 如果射弹是穿透性的，才给射弹设置白名单
+            if (e.whiteEnable && e.penetrate > 1)
+            {
+                e.whites = PossibleObj<HashSet<int>>.New(new HashSet<int>());
+            }
+
+            if (e.owner.Exist)
+            {
+                e.src = e.owner.Get().HandPostion;
+            }
+
+            // 记录射弹生成时刻
+            e.instantiateTime = Time.time;
+
             // 如果射弹存在主人，则射弹生成位置是其主人的手部位置
-            e.body.transform.position = e.Src;
+            e.Obj.transform.position = e.Src;
 
-            e.body.SetActive(true);
+            e.actualPenetrate = 0;
+
+            e.Obj.SetActive(true);
         }
 
-        protected override void OnReleaseUObject(Projectile e)
+        protected override void BeforeReleaseEUObject(Projectile e)
         {
-            e.body.SetActive(false);
+            e.Obj.SetActive(false);
+
+            if (e.whites.Exist)
+            {
+                e.whites.Get().Clear();
+            }
+            e.Obj.transform.localScale = Vector3.one;
         }
 
         /// <summary>
@@ -59,10 +87,10 @@ namespace GameBase.Projectile
             // 并且白名单中没有该射弹
             // 并且射弹穿透没有到达上限
             if (e.whites.Exist 
-                && !e.whites.Get().Contains(target.ID) 
+                && !e.whites.Get().Contains(target.InstanceID) 
                 && e.actualPenetrate < e.penetrate)
             {
-                e.whites.Get().Add(target.ID);
+                e.whites.Get().Add(target.InstanceID);
                 e.target.Get().GetDamage(e.damage);
                 e.actualPenetrate++;
             }
@@ -89,10 +117,10 @@ namespace GameBase.Projectile
             foreach (var target in targets)
             {
                 if (e.whites.Exist 
-                    && !e.whites.Get().Contains(target.ID)
+                    && !e.whites.Get().Contains(target.InstanceID)
                     && e.actualPenetrate < e.penetrate)
                 {
-                    e.whites.Get().Add(target.ID);
+                    e.whites.Get().Add(target.InstanceID);
                     target.GetDamage(e.damage);
                     e.actualPenetrate++;
                 }
@@ -143,18 +171,18 @@ namespace GameBase.Projectile
             // 瞬发型弹幕的逻辑
             if (e.isImmediately)
             {
-                e.body.transform.position = e.Dest;
+                e.Obj.transform.position = e.Dest;
             }
 
             // 范围型弹幕的逻辑
             if (e.shape != null)
             {
-                e.shape.Center = new Vector2(e.body.transform.position.x, e.body.transform.position.z);
+                e.shape.Center = new Vector2(e.Obj.transform.position.x, e.Obj.transform.position.z);
                 OnProjectileHitTargets(e, ProjectileTargetSys.TargetsInShape(e.shape));
             }
 
             // 击中逻辑
-            e.DisToTarget = (e.Dest - e.body.transform.position).magnitude;
+            e.DisToTarget = (e.Dest - e.Obj.transform.position).magnitude;
             float hitDis = ProjectileHitDis;
 
             if (e.target.Exist)

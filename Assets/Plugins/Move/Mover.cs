@@ -13,13 +13,8 @@ namespace GameBase.Move
         internal PossibleObj<Rigidbody> rigidbody;
         internal Vector3 dest;
         internal PossibleObj<GameObject> target;
-        internal int id;
 
-        public int ID
-        {
-            get => id;
-            set => id = value;
-        }
+        public int InstanceID { get; set; }
 
         public Rigidbody RigidyBody
         {

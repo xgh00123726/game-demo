@@ -1,29 +1,47 @@
 using GameBase.Resources;
 using GameBase.Tools;
+using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
 namespace GameBase.UI
 {
-    public class TextSys : UObjEntitySys<FloatText, CSObjectPool<FloatText>, GameObject, UObjectPool<GameObject>, TextSys>
+    public class TextSys : UObjEntitySys<FloatText, SimpleEntityContainer, GameObject, TextSys>
     {
-        protected override int ContainerCapacity => ResourcesLoader.PrefabCount;
-
         protected override GameObject InstantiateObj(FloatText e)
         {
-            return GameObject.Instantiate(ResourcesLoader.GetPrefab(e.bodyID));
+            var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
+            e.rectTransform = obj.GetComponent<RectTransform>();
+            e.textObj = obj.GetComponent<TextMeshProUGUI>();
+
+            return obj;
         }
 
-        protected override void OnInstantiateUObject(FloatText e)
+        protected override void BeforeInstantiateEUObject(FloatText e)
         {
-            e.rectTransform = e.body.GetComponent<RectTransform>();
-            e.textObj = e.body.GetComponent<TextMeshProUGUI>();
+
+        }
+
+        protected override void AfterInstantiateEUObject(FloatText e)
+        {
+            e.duration = 1.5f;
+            e.instantiateTime = Time.time;
+
+            e.yFactorA = Random.Range(FloatText._yFactorAMin, FloatText._yFactorAMax);
+            e.yFactorB = Random.Range(FloatText._yFactorBMin, FloatText._yFactorBMax);
+            e.yFactorC = Random.Range(FloatText._yFactorCMin, FloatText._yFactorCMax);
+            e.horizontalSpeed = Random.Range(FloatText._horizontalSpeedMin, FloatText._horizontalSpeedMax);
+            float rad = Random.Range(0f, Mathf.PI * 2);
+            e.xFactor = Mathf.Sin(rad) * e.horizontalSpeed;
+            e.zFactor = Mathf.Cos(rad) * e.horizontalSpeed;
+
             e.textObj.text = e.value;
-            e.body.SetActive(true);
+
+            e.Obj.SetActive(true);
         }
 
-        protected override void OnReleaseUObject(FloatText e)
+        protected override void BeforeReleaseEUObject(FloatText e)
         {
-            e.body.SetActive(false);
+            e.Obj.SetActive(false);
         }
 
         protected override void UpdateEntity(FloatText e)

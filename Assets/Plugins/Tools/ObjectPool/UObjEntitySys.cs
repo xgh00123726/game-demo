@@ -1,69 +1,70 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameBase.Tools
 {
-    public abstract class UObjEntitySys<T_entity, T_entityContainer, T_UObject, T_UObjectContainer, T_instance> : SimplestEntitySys<T_entity, T_entityContainer, T_instance>
-        where T_entity : IUEntity<T_UObject>, new()
-        where T_entityContainer : IEntityContainer<T_entity>, IEnumerable<T_entity>, new()
-        where T_UObjectContainer : IEntityContainer<T_UObject>, IEnumerable<T_UObject>, new()
-        where T_instance : UObjEntitySys<T_entity, T_entityContainer, T_UObject, T_UObjectContainer, T_instance>, new()
+    public abstract class UObjEntitySys<T_Entity, T_Container, T_UObject, T_Instance> : SimplestEntitySys<T_Entity, T_Container, T_Instance>
+        where T_Entity : class, IUEntity<T_UObject>, new()
+        where T_Container : IEContainer, new()
+        where T_UObject : new()
+        where T_Instance : UObjEntitySys<T_Entity, T_Container, T_UObject, T_Instance>, new()
     {
-        protected T_UObjectContainer[] _objContainers;
+        protected Dictionary<int, EUObjectPool<T_Entity, T_UObject>> _objPools;
 
-        protected abstract int ContainerCapacity { get; }
+        protected abstract T_UObject InstantiateObj(T_Entity e);
 
-        protected abstract T_UObject InstantiateObj(T_entity e);
-        protected abstract void OnInstantiateUObject(T_entity e);
+        protected virtual void BeforeInstantiateEUObject(T_Entity e) { }
 
-        protected abstract void OnReleaseUObject(T_entity e);
+        protected abstract void AfterInstantiateEUObject(T_Entity e);
 
-        protected override void OnRemoveEntity(T_entity e)
+        protected abstract void BeforeReleaseEUObject(T_Entity e);
+
+        protected virtual void AfterReleaseEUObject(T_Entity e) { }
+
+        protected override void OnRemoveEntityFromActives(T_Entity e)
         {
-            if (e.ObjID >= ContainerCapacity || e.ObjID < 0)
+            BeforeReleaseEUObject(e);
+
+            if (e.ObjID < 0)
             {
                 Tools.XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log($"entity:{e}-->id out of defined, id:{e.ObjID}, max:{ContainerCapacity}");
+                    .Log($"entity:{e}-->id out of defined, id:{e.ObjID}");
                 return;
             }
-
-            OnReleaseUObject(e);
-            _objContainers[e.ObjID].Release(e.Obj);
-        }
-
-        protected override void OnRegisterEntity(T_entity e)
-        {
-            if (e.ObjID >= ContainerCapacity || e.ObjID < 0)
-            {
-                Tools.XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log($"entity:{e}-->id out of defined, id:{e.ObjID}, max:{ContainerCapacity}");
-                return;
-            }
-
-            var container = _objContainers[e.ObjID];
-            if (container == null)
-            {
-                container = new T_UObjectContainer();
-            }
-            if (container.Empty)
-            {
-                e.Obj = InstantiateObj(e);
-                container.Add(e.Obj);
-            }
-            else
-            {
-                e.Obj = container.Get();
-            }
-            _objContainers[e.ObjID] = container;
             
-            OnInstantiateUObject(e);
+            _objPools[e.ObjID].Release(e.Obj);
+            AfterReleaseEUObject(e);
         }
 
-        internal override void Awake()
+        protected override void OnRegisterEntityToActives(T_Entity e)
+        {
+            BeforeInstantiateEUObject(e);
+
+            if (e.ObjID < 0)
+            {
+                Tools.XLogger.Instance.Level(XLogger.LogLevel.Error)
+                    .Log($"entity:{e}-->id out of defined, id:{e.ObjID}");
+                return;
+            }
+
+            
+            if (!_objPools.ContainsKey(e.ObjID))
+            {
+                _objPools[e.ObjID] = new EUObjectPool<T_Entity, T_UObject>();
+                _objPools[e.ObjID].InstantiateFunc = InstantiateObj;
+            }
+
+            e.Obj = _objPools[e.ObjID].Get(e);
+            
+            AfterInstantiateEUObject(e);
+        }
+
+        internal protected override void Awake()
         {
             base.Awake();
 
-            _objContainers = new T_UObjectContainer[ContainerCapacity];
+            _objPools = new Dictionary<int, EUObjectPool<T_Entity, T_UObject>>();
         }
     }
 }

@@ -1,34 +1,41 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using GameBase.Modify;
 
-namespace GameBase.Buff
+namespace GameBase.Buffs
 {
-    internal class BuffContainer
+    public class BuffContainer : IEnumerable<Buff>
     {
-        internal BuffContainer() { }
-        private Dictionary<IModifyable, Dictionary<Type, GBuff>> _objectBuffs = new Dictionary<IModifyable, Dictionary<Type, GBuff>> { };
-        internal Dictionary<IModifyable, Dictionary<Type, GBuff>> ObjectBuffs => _objectBuffs;
+        private LinkedList<Buff> _buffs = new LinkedList<Buff>();
 
-        internal bool HasBuff(IModifyable o, GBuff buff)
+        public bool HasBuff(Buff buff)
         {
-            return _objectBuffs.ContainsKey(o) && _objectBuffs[o].ContainsKey(buff.GetType());
+            return _buffs.Contains(buff);
         }
 
-        internal void Add(IModifyable o, GBuff buff)
+        public void AddBuff(Buff buff)
         {
-            if (!_objectBuffs.ContainsKey(o))
-            {
-                _objectBuffs[o] = new Dictionary<Type, GBuff> { { buff.GetType(), buff } };
-                return;
-            }
-            _objectBuffs[o][buff.GetType()] = buff;
+            _buffs.AddLast(buff);
         }
 
-        internal void Remove(GBuff buff)
+        public void RemoveBuff(Buff buff)
         {
-            _objectBuffs[buff.Target].Remove(buff.GetType());
+            _buffs.Remove(buff);
+        }
+
+        public void ClearBuff(Buff buff)
+        {
+            _buffs.Clear();
+        }
+
+
+        public IEnumerator<Buff> GetEnumerator()
+        {
+            return ((IEnumerable<Buff>)_buffs).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable)_buffs).GetEnumerator();
         }
     }
 }

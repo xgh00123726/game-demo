@@ -10,8 +10,7 @@ namespace GameBase.Resources
     {
         public static GameObject[] _prefabs;
         public static Sprite[] _sprites;
-        public static int PrefabCount => _prefabs.Length;
-        public static int SpriteCount => _sprites.Length;
+        public static Texture2D[] _textures;
 
         public static GameObject GetPrefab(int id)
         {
@@ -21,6 +20,11 @@ namespace GameBase.Resources
         public static Sprite GetSprite(int id)
         {
             return _sprites[id];
+        }
+
+        public static Texture2D GetTexture2D(int id)
+        {
+            return _textures[id];
         }
 
         private static void LoadCsvAsset<T>(string csvPath, out T[] container)
@@ -43,6 +47,7 @@ namespace GameBase.Resources
         {
             LoadCsvAsset($"{Application.streamingAssetsPath}/public/PrefabIDDictionary.csv", out _prefabs);
             LoadCsvAsset($"{Application.streamingAssetsPath}/public/SpriteIDDictionary.csv", out _sprites);
+            LoadCsvAsset($"{Application.streamingAssetsPath}/public/Texture2DIDDictionary.csv", out _textures);
         }
 
     }

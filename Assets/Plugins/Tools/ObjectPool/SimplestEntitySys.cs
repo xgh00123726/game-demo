@@ -7,44 +7,47 @@ namespace GameBase.Tools
     /// <summary>
     /// 基本的实体系统
     /// <list type="bullet">
-    /// <item><typeparam name="T_entity"><typeparamref name="T_entity"/>:实体类型</typeparam></item>
+    /// <item><typeparam name="T_Entity"><typeparamref name="T_Entity"/>:实体类型</typeparam></item>
     /// </list></summary>
-    public abstract class SimplestEntitySys<T_entity, T_container, T_instance> : IBaseSys
-        where T_entity : IEntity, new()
-        where T_container : IEntityContainer<T_entity>, IEnumerable<T_entity>, new()
-        where T_instance : SimplestEntitySys<T_entity, T_container, T_instance>, new()
+    public abstract class SimplestEntitySys<T_Entity, T_Container, T_Instance> : IBaseSys
+        where T_Entity : class, IEntity, new()
+        where T_Container : IEContainer, new()
+        where T_Instance : SimplestEntitySys<T_Entity, T_Container, T_Instance>, new()
     {
         public int sysID = 0;
         public int entityCount = 0;
-        public int allocatedID = 0;
+        public int entityNewTimes = 0;
 
         protected int tick = 0;
         protected int fixedTick = 0;
         protected virtual float FixedFreq => 60f;
         private float _updateTimeAccumulate = 0;
-        private static T_instance _instance;
-        public static T_instance Instance
+
+        internal static PossibleObj<T_Instance> instance;
+
+        public static T_Instance Instance
         {
             get
             {
-                if (_instance == null)
+                if (!instance.Exist)
                 {
-                    _instance = new T_instance();
-                    SysMgr.AddSys(_instance);
+                    instance = PossibleObj<T_Instance>.New(new T_Instance());
+                    ShadowMono.CreateShadowMono(instance.Get());
                 }
 
-                return _instance;
+                return instance.Get();
             }
         }
 
-        protected LinkedList<T_entity> _entityNeedRegister = new LinkedList<T_entity>();
-        protected LinkedList<T_entity> _entitiesNeedRemove = new LinkedList<T_entity>();
-        protected T_container _activeEntities = new T_container();
+        protected LinkedList<T_Entity> _entityNeedRegister = new LinkedList<T_Entity>();
+        protected LinkedList<T_Entity> _entitiesNeedRemove = new LinkedList<T_Entity>();
+        protected T_Container _entityContainer = new T_Container();
+        protected LinkedList<T_Entity> _entities = new LinkedList<T_Entity>();
         protected List<Delegate> entityGenerateDelegates = new List<Delegate>();
         /// <summary>
         /// 将实体标记为删除
         /// </summary>
-        protected void RemoveEntity(T_entity e)
+        protected void RemoveEntity(T_Entity e)
         {
             if (e == null) return;
 
@@ -60,7 +63,7 @@ namespace GameBase.Tools
         /// 注册实体，在下个周期前实例化实体
         /// </summary>
         /// <param name="e"></param>
-        protected void Register(T_entity e)
+        protected void Register(T_Entity e)
         {
             if (e == null) return;
 
@@ -72,28 +75,25 @@ namespace GameBase.Tools
         /// <list type="bullet">
         /// <item><param name="e"><paramref name="e"/>:实体引用</param></item>
         /// </list></summary>
-        protected abstract void UpdateEntity(T_entity e);
+        protected abstract void UpdateEntity(T_Entity e);
 
-        protected virtual void FixedUpdateEntity(T_entity e) { }
+        protected virtual void FixedUpdateEntity(T_Entity e) { }
 
-        protected abstract void OnRegisterEntity(T_entity e);
+        protected virtual void OnRegisterEntityToActives(T_Entity e) { }
 
-        protected abstract void OnRemoveEntity(T_entity e);
+        protected virtual void OnRemoveEntityFromActives(T_Entity e) { }
 
         public int Tick => tick;
         public int FixedTick => fixedTick;
 
-        public T_entityType NewEntity<T_entityType>() where T_entityType : T_entity, new()
+        public T_EntityType NewEntity<T_EntityType>() where T_EntityType : class, T_Entity, new()
         {
-            var e = new T_entityType();
-            e.ID = allocatedID++;
-            Register(e);
-            return e;
-        }
+            ++entityNewTimes;
 
-        public T_entityType NewEntity<T_entityType>(T_entityType e) where T_entityType : T_entity
-        {
-            e.ID = allocatedID++;
+            _entityContainer.RegisterType<T_EntityType>();
+
+            var e = _entityContainer.GetEntity<T_EntityType>();
+            e.InstanceID = PoolInfo.allocatedID++;
             Register(e);
             return e;
         }
@@ -101,10 +101,10 @@ namespace GameBase.Tools
         /// <summary>
         /// 使用生成器id创建实体
         /// </summary>
-        /// <typeparam name="T_entityType"></typeparam>
+        /// <typeparam name="T_EntityType"></typeparam>
         /// <param name="id"></param>
         /// <returns></returns>
-        public T_entityType NewEntity<T_entityType>(int id) where T_entityType : T_entity
+        public T_EntityType NewEntity<T_EntityType>(int id) where T_EntityType : class, T_Entity, new()
         {
             if (id >= entityGenerateDelegates.Count || id < 0)
             {
@@ -114,13 +114,22 @@ namespace GameBase.Tools
             if (entityGenerateDelegates[id] == null)
             {
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log("null entity generator generator");
+                    .Log("null entity generator");
             }
-            var func = entityGenerateDelegates[id] as Func<T_entityType>;
-            var e = func();
-            e.ID = allocatedID++;
-            Register(e);
-            return e;
+
+            if (entityGenerateDelegates[id] is Func<T_EntityType> func)
+            {
+                _entityContainer.RegisterType<T_EntityType>();
+
+                var e = func();
+                return e;
+            }
+            else
+            {
+                XLogger.Instance.Level(XLogger.LogLevel.Error)
+                    .Log("entity generator get error type");
+                return default;
+            }
         }
 
         /// <summary>
@@ -128,45 +137,48 @@ namespace GameBase.Tools
         /// </summary>
         /// <param name="eGen"></param>
         /// <returns>快速实体生成器的id</returns>
-        public int RegisterEntityGenerateDeletate<T_entityType>(Func<T_entityType> eGen) where T_entityType : T_entity
+        public int RegisterEntityGenerateDeletate<T_entityType>(Func<T_entityType> eGen) where T_entityType : T_Entity
         {
             entityGenerateDelegates.Add(eGen);
             return entityGenerateDelegates.Count - 1;
         }
 
-        internal virtual void Awake()
+        internal protected virtual void Awake()
         {
-            StaticInfo.entitySysNum++;
-            sysID = StaticInfo.entitySysNum;
+            PoolInfo.entitySysNum++;
+            sysID = PoolInfo.entitySysNum;
             Tools.XLogger.Instance.Color(Color.green).
-                Log($"entity sys: {this.GetType().Name} has awaken, entitySys id: {sysID}, instance hash:{_instance.GetHashCode()}");
+                Log($"entity sys: {this.GetType().Name} has awaken, entitySys id: {sysID}, instance hash:{instance.GetHashCode()}");
         }
 
         private void SysUpdate()
         {
-            foreach (T_entity e in _entityNeedRegister)
+            foreach (T_Entity e in _entityNeedRegister)
             {
-                _activeEntities.Add(e);
-                OnRegisterEntity(e);
+                _entities.AddLast(e);
+
+                OnRegisterEntityToActives(e);
             }
             _entityNeedRegister.Clear();
 
-            foreach (var e in _activeEntities)
+            foreach (var e in _entities)
             {
                 UpdateEntity(e);
             }
 
             foreach (var e in _entitiesNeedRemove)
             {
-                OnRemoveEntity(e);
-                _activeEntities.Release(e);
+                OnRemoveEntityFromActives(e);
+                _entities.Remove(e);
+                _entityContainer.ReleaseEntity(e);
             }
             _entitiesNeedRemove.Clear();
-
-            entityCount = _activeEntities.Count;
         }
 
-        internal void Update()
+        /// <summary>
+        /// 不推荐重写Update
+        /// </summary>
+        internal protected virtual void Update()
         {
             SysUpdate();
             tick++;
@@ -174,7 +186,7 @@ namespace GameBase.Tools
             _updateTimeAccumulate += Time.deltaTime;
             while (_updateTimeAccumulate > fixedPeriod)
             {
-                foreach (var e in _activeEntities)
+                foreach (var e in _entities)
                 {
                     FixedUpdateEntity(e);
                 }
@@ -191,6 +203,21 @@ namespace GameBase.Tools
         void IBaseSys.Update()
         {
             Update();
+        }
+
+        int IBaseSys.GetEntityCount()
+        {
+            return _entities.Count;
+        }
+
+        int IBaseSys.GetReleasedCount()
+        {
+            return _entityContainer.Count;
+        }
+
+        int IBaseSys.GetActiveCount()
+        {
+            return 0;
         }
     }
 }

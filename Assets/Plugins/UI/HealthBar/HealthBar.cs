@@ -4,10 +4,8 @@ using UnityEngine;
 
 namespace GameBase.UI
 {
-    public class HealthBar : IUEntity<GameObject>,
-        IPoolableObject
+    public class HealthBar : IUEntity<GameObject>
     {
-        public int bodyID;
         public IHealthBarOwner owner;
 
         internal float currHP;
@@ -16,8 +14,6 @@ namespace GameBase.UI
         internal float widthMax;
         internal float currPercent;
         internal float losingPercent;
-        internal int id;
-        internal GameObject body;
         internal RectTransform rectTransform;
         internal GameObject textObj;
         internal TextMeshProUGUI textComponent;
@@ -47,36 +43,10 @@ namespace GameBase.UI
             }
         }
 
-        public GameObject Obj
-        {
-            get => body;
-            set => body = value;
-        }
+        public GameObject Obj { get; set; }
 
-        public int ObjID => bodyID;
+        public int ObjID { get; set; }
 
-        public int ID
-        {
-            get => id;
-            set => id = value;
-        }
-
-        void IPoolableObject.OnInstantiate()
-        {
-            currPercent = 1f;
-            losingPercent = 1f;
-            HPChange = true;
-
-            if (owner == null)
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log("health bar must has a owner");
-            }
-        }
-
-        void IPoolableObject.OnRelease()
-        {
-            
-        }
+        public int InstanceID { get; set; }
     }
 }

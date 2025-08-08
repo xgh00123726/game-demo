@@ -15,7 +15,7 @@ namespace GameBase.Instance
         public Enemy1()
         {
             healthbar = HealthBarSys.Instance.NewEntity<HealthBar>();
-            healthbar.bodyID = 6;
+            healthbar.ObjID = 6;
             healthbar.MaxHP = maxHP;
             healthbar.CurrHP = currHP;
             healthbar.owner = this;
@@ -33,7 +33,6 @@ namespace GameBase.Instance
             healthbar.CurrHP = currHP;
             var text = TextSys.Instance.NewEntity<FloatText>();
             text.value = damage.ToString();
-            text.bodyID = 1;
             text.showPosition = Obj.transform.position;
         }
     }

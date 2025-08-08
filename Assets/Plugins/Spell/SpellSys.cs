@@ -3,14 +3,14 @@ using UnityEngine;
 
 namespace GameBase.Spell
 {
-    public class SpellSys : SimplestEntitySys<Spell, CSObjectPool<Spell>, SpellSys>
+    public class SpellSys : SimplestEntitySys<Spell, SimpleEntityContainer, SpellSys>
     {
-        protected override void OnRegisterEntity(Spell e)
+        protected override void OnRegisterEntityToActives(Spell e)
         {
             
         }
 
-        protected override void OnRemoveEntity(Spell e)
+        protected override void OnRemoveEntityFromActives(Spell e)
         {
             
         }

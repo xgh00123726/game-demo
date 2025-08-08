@@ -3,16 +3,16 @@ using UnityEngine;
 
 namespace GameBase.Move
 {
-    public class MoveSys : SimplestEntitySys<Mover, EntityList<Mover>, MoveSys>
+    public class MoveSys : SimplestEntitySys<Mover, SimpleEntityContainer, MoveSys>
     {
         public static float moveStopDis = 0.1f;
 
-        protected override void OnRegisterEntity(Mover e)
+        protected override void OnRegisterEntityToActives(Mover e)
         {
             
         }
 
-        protected override void OnRemoveEntity(Mover e)
+        protected override void OnRemoveEntityFromActives(Mover e)
         {
             
         }

@@ -28,9 +28,8 @@ namespace GameBase.UI
         {
             _chargeGO = transform.Find("Charge");
             _iconGO = transform.Find("Icon").gameObject;
-            _coolingTimeTextGO = transform.Find("CoolingDownText");
 
-            _timeTMP = _coolingTimeTextGO.GetComponent<TextMeshProUGUI>();
+            _timeTMP = transform.Find("CoolingDownText").GetComponent<TextMeshProUGUI>();
             _chargeTMP = _chargeGO.GetComponent<TextMeshProUGUI>();
             image = _iconGO.GetComponent<Image>();
 

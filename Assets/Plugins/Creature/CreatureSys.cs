@@ -5,13 +5,11 @@ using GameBase.Tools;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreatureSys : UObjEntitySys<Creature, CSObjectPool<Creature>, GameObject, UObjectPool<GameObject>, CreatureSys>
+public class CreatureSys : UObjEntitySys<Creature, SimpleEntityContainer, GameObject, CreatureSys>
 {
     public delegate bool CreatureFilter(Creature e);
 
     public static float infDis = 9999f;
-
-    protected override int ContainerCapacity => ResourcesLoader.PrefabCount;
 
     /// <summary>
     /// 返回指定位置最近的游戏实体
@@ -34,7 +32,7 @@ public class CreatureSys : UObjEntitySys<Creature, CSObjectPool<Creature>, GameO
             rangeLimit = infDis;
         }
 
-        foreach (var e in sys._activeEntities)
+        foreach (var e in sys._entities)
         {
             if (hasFilter && !filter(e)) continue; // 不满足过滤需求
 
@@ -69,12 +67,12 @@ public class CreatureSys : UObjEntitySys<Creature, CSObjectPool<Creature>, GameO
         var ret = new LinkedList<Creature>();
         var sys = Instance as CreatureSys;
         bool hasFilter = filter != null;
-        foreach (var e in sys._activeEntities)
+        foreach (var e in sys._entities)
         {
             if (hasFilter && !filter(e)) continue;
 
-            float x = e.body.transform.position.x;
-            float y = e.body.transform.position.z;
+            float x = e.Obj.transform.position.x;
+            float y = e.Obj.transform.position.z;
             if (shape.Contains(x, y))
             {
                 ret.AddLast(e);
@@ -86,19 +84,19 @@ public class CreatureSys : UObjEntitySys<Creature, CSObjectPool<Creature>, GameO
 
     protected override GameObject InstantiateObj(Creature e)
     {
-        return GameObject.Instantiate(ResourcesLoader.GetPrefab(e.bodyID));
+        return GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
     }
 
-    protected override void OnInstantiateUObject(Creature e)
+    protected override void AfterInstantiateEUObject(Creature e)
     {
-        e.body.transform.position = e.genPos;
+        e.Obj.transform.position = e.genPos;
 
-        e.body.SetActive(true);
+        e.Obj.SetActive(true);
     }
 
-    protected override void OnReleaseUObject(Creature e)
+    protected override void BeforeReleaseEUObject(Creature e)
     {
-        e.body.SetActive(false);
+        e.Obj.SetActive(false);
     }
 
     protected override void UpdateEntity(Creature e)

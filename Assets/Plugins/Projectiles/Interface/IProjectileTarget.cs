@@ -3,7 +3,7 @@ namespace GameBase.Projectile
 {
     public interface IProjectileTarget
     {
-        int ID { get; }
+        int InstanceID { get; }
         Vector3 Center { get; }
         float Radius { get; }
 

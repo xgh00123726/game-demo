@@ -106,7 +106,7 @@ namespace GameBase.Tools
 
             if (level == LogLevel.Info)
             {
-                Debug.Log($"[info]{colorTagBegin} {info}{colorTagEnd}");
+                Debug.Log($"<color=#00ff00>[info]</color>{colorTagBegin} {info}{colorTagEnd}");
             }
             else if (level == LogLevel.Warning)
             {
@@ -114,11 +114,11 @@ namespace GameBase.Tools
             }
             else if (level == LogLevel.Error)
             {
-                Debug.LogError($"[error]{colorTagBegin} {info}{colorTagEnd}");
+                Debug.LogError($"<color=#ff0000>[error]</color>{colorTagBegin} {info}{colorTagEnd}");
             }
             else if (level == LogLevel.Fatal)
             {
-                Debug.LogError($"[fatal]{colorTagBegin} {info}{colorTagEnd}");
+                Debug.LogError($"<color=#ff0000>[fatal]</color>{colorTagBegin} {info}{colorTagEnd}");
             }
         }
 

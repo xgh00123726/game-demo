@@ -1,16 +1,16 @@
 using GameBase.Tools;
 namespace GameBase.Modify
 {
-    public class ModifySys<T> : SimplestEntitySys<Modifyable<T>, CSObjectPool<Modifyable<T>>, ModifySys<T>>
+    public class ModifySys<T> : SimplestEntitySys<Modifyable<T>, SimpleEntityContainer, ModifySys<T>>
     {
-        protected override void OnRegisterEntity(Modifyable<T> e)
+        protected override void OnRegisterEntityToActives(Modifyable<T> e)
         {
             
         }
 
-        protected override void OnRemoveEntity(Modifyable<T> e)
+        protected override void OnRemoveEntityFromActives(Modifyable<T> e)
         {
-            
+            e.modifyBehaviors.Clear();
         }
 
         protected override void UpdateEntity(Modifyable<T> e)

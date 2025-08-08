@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class StaticInfo
 {
-    internal static int entitySysNum = 0;
+
 }

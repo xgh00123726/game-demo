@@ -2,41 +2,53 @@ using GameBase.Resources;
 using GameBase.Tools;
 using TMPro;
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 
 namespace GameBase.UI
 {
-    public class HealthBarSys : UObjEntitySys<HealthBar, CSObjectPool<HealthBar>, GameObject, UObjectPool<GameObject>, HealthBarSys>
+    public class HealthBarSys : UObjEntitySys<HealthBar, SimpleEntityContainer, GameObject, HealthBarSys>
     {
         public static float losingSpeed = 1f;
 
-        protected override int ContainerCapacity => ResourcesLoader.PrefabCount;
-
         protected override GameObject InstantiateObj(HealthBar e)
         {
-            return GameObject.Instantiate(ResourcesLoader.GetPrefab(e.bodyID));
-        }
+            var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
 
-        protected override void OnInstantiateUObject(HealthBar e)
-        {
-            e.rectTransform = e.body.GetComponent<RectTransform>();
-
-            e.textObj = e.body.transform.Find("Text").gameObject;
-            e.textComponent = e.textObj.GetComponent<TextMeshProUGUI>();
-
-            e.current = e.body.transform.Find("Current").gameObject;
-            e.currentRectTransform = e.current.GetComponent<RectTransform>();
-
-            e.losing = e.body.transform.Find("Losing").gameObject;
-            e.losingRectTransform = e.losing.GetComponent<RectTransform>();
-
+            e.rectTransform = obj.GetComponent<RectTransform>();
             e.widthMax = e.rectTransform.rect.width;
 
-            e.body.SetActive(true);
+            e.textObj = obj.transform.Find("Text").gameObject;
+            e.textComponent = e.textObj.GetComponent<TextMeshProUGUI>();
+
+            e.current = obj.transform.Find("Current").gameObject;
+            e.currentRectTransform = e.current.GetComponent<RectTransform>();
+
+            e.losing = obj.transform.Find("Losing").gameObject;
+            e.losingRectTransform = e.losing.GetComponent<RectTransform>();
+
+            return obj;
         }
 
-        protected override void OnReleaseUObject(HealthBar e)
+
+
+        protected override void AfterInstantiateEUObject(HealthBar e)
         {
-            e.body.SetActive(false);
+            if (e.owner == null)
+            {
+                XLogger.Instance.Level(XLogger.LogLevel.Error)
+                    .Log("health bar must has a owner");
+            }
+
+            e.currPercent = 1f;
+            e.losingPercent = 1f;
+            e.HPChange = true;
+
+            e.Obj.SetActive(true);
+        }
+
+        protected override void BeforeReleaseEUObject(HealthBar e)
+        {
+            e.Obj.SetActive(false);
         }
 
         private void SetWidth(RectTransform bar, float percent, float widthMax)
@@ -46,7 +58,7 @@ namespace GameBase.UI
 
         protected override void UpdateEntity(HealthBar e)
         {
-            e.body.transform.position = e.owner.HealthBarPosition;
+            e.Obj.transform.position = e.owner.HealthBarPosition;
 
             if (e.losingPercent > e.currPercent)
             {

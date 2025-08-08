@@ -2,6 +2,6 @@ namespace GameBase.Tools
 {
     public interface IEntity
     {
-        int ID { get; set; }
+        int InstanceID { get; set; }
     }
 }

@@ -4,8 +4,7 @@ using System.Collections.Generic;
 
 namespace GameBase.Modify
 {
-    public class Modifyable<T> : IEntity,
-        IPoolableObject
+    public class Modifyable<T> : IEntity
     {
         internal int id;
         internal T valueSet;
@@ -26,21 +25,8 @@ namespace GameBase.Modify
             }
         }
 
-        int IEntity.ID
-        {
-            get => id;
-            set => id = value;
-        }
+        int IEntity.InstanceID { get; set; }
 
         public T Get() => value;
-
-        void IPoolableObject.OnInstantiate()
-        {
-        }
-
-        void IPoolableObject.OnRelease()
-        {
-            modifyBehaviors.Clear();
-        }
     }
 }

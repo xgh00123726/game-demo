@@ -7,10 +7,13 @@ using UnityEngine;
 namespace GameBase.Projectile
 {
     public class Projectile : ICurveProjectile,
-        IPoolableObject,
         IUEntity<GameObject>
     {
-        public int bodyID;
+        public Projectile()
+        {
+            XLogger.Instance.Log("proj constructror");
+        }
+
         public int hitEffectID;
         public int trailID;
         public float maxExistTime;
@@ -33,9 +36,7 @@ namespace GameBase.Projectile
         public CurveFactory.CurveType curveType;
 
         internal int actualPenetrate;
-        internal int id;
         internal int tick;
-        internal GameObject body;
         internal GameObject hitEffect;
         internal GameObject trail;
         public PossibleObj<HashSet<int>> whites;
@@ -52,28 +53,24 @@ namespace GameBase.Projectile
                 if (shape != null)
                 {
                     shape.Size = value;
-                    body.transform.localScale = new Vector3(value, value, value);
+                    Obj.transform.localScale = new Vector3(value, value, value);
                 }
             }
         }
 
-        public int ID
-        {
-            get => id;
-            set => id = value;
-        }
+        public int InstanceID { get; set; }
         public Vector3 Dest => target.Exist ? target.Get().Center : dest;
         public Vector3 Src => src;
         public float DisToTarget { get; internal set; }
         Vector3 ICurveProjectile.Position
         {
-            get => body.transform.position;
-            set => body.transform.position = value;
+            get => Obj.transform.position;
+            set => Obj.transform.position = value;
         }
         Vector3 ICurveProjectile.Dir
         {
-            get => body.transform.forward;
-            set => body.transform.forward = value;
+            get => Obj.transform.forward;
+            set => Obj.transform.forward = value;
         }
         Vector3 ICurveProjectile.Dest => Dest;
 
@@ -81,44 +78,7 @@ namespace GameBase.Projectile
 
         float ICurveProjectile.LifeTime => Time.time - instantiateTime;
 
-        public GameObject Obj
-        {
-            get => body;
-            set => body = value;
-        }
-        int IUEntity<GameObject>.ObjID => bodyID;
-
-        void IPoolableObject.OnInstantiate()
-        {
-            // 记录射弹生成时刻
-            instantiateTime = Time.time;
-
-            if (curveType != CurveFactory.CurveType.None)
-            {
-                curve = CurveFactory.CreateInstance(curveType, this);
-            }
-
-            // 如果射弹是穿透性的，才给射弹设置白名单
-            if (whiteEnable && penetrate > 1)
-            {
-                whites = PossibleObj<HashSet<int>>.New(new HashSet<int>());
-            }
-
-            if (owner.Exist)
-            {
-                src = owner.Get().HandPostion;
-            }
-
-            actualPenetrate = 0;
-        }
-
-        void IPoolableObject.OnRelease()
-        {
-            if (whites.Exist)
-            {
-                whites.Get().Clear();
-            }
-            body.transform.localScale = Vector3.one;
-        }
+        public GameObject Obj { get; set; }
+        public int ObjID { get; set; }
     }
 }
