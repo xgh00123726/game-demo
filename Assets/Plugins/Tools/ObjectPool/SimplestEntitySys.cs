@@ -147,7 +147,7 @@ namespace GameBase.Tools
         {
             PoolInfo.entitySysNum++;
             sysID = PoolInfo.entitySysNum;
-            Tools.XLogger.Instance.Color(Color.green).
+            Tools.XLogger.Instance.Color(Color.green).IF(false).
                 Log($"entity sys: {this.GetType().Name} has awaken, entitySys id: {sysID}, instance hash:{instance.GetHashCode()}");
         }
 

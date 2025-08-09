@@ -41,7 +41,6 @@ namespace GameBase.Tools
             }
 
             InstantiateAction?.Invoke(ret);
-            XLogger.Instance.Log($"pool count:{_objects.Count}");
 
             return ret;
         }

@@ -38,7 +38,6 @@ namespace Constructor.Projectiles
             proj.whiteEnable = true;
             proj.maxExistTime = 10f;
             proj.shape = new GMath.Circle(Vector2.zero, 1f);
-            XLogger.Instance.Log("proj 1 gen");
 
             return proj;
         }

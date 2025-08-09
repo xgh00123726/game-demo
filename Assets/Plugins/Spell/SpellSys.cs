@@ -7,12 +7,12 @@ namespace GameBase.Spell
     {
         protected override void OnRegisterEntityToActives(Spell e)
         {
-            
+            e.RegistertoActivesDelegate?.Invoke(e);
         }
 
         protected override void OnRemoveEntityFromActives(Spell e)
         {
-            
+            e.RemoveFromActiveDelegate?.Invoke(e);
         }
 
         protected override void UpdateEntity(Spell e)

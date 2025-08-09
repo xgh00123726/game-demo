@@ -11,7 +11,7 @@ namespace GameBase.Projectile
         {
         }
 
-        public override void PosUpdate()
+        protected override Vector3 GetPosDelta()
         {
             float disToDest = (_projectile.Position - _projectile.Dest).magnitude;
 
@@ -24,17 +24,7 @@ namespace GameBase.Projectile
                 speedActual = speed;
             }
 
-                Vector3 delta = _projectile.Dir * speedActual * Time.deltaTime;
-            float deltaMag = delta.magnitude;
-
-            if (disToDest < deltaMag)
-            {
-                _projectile.Position = _projectile.Dest;
-            }
-            else
-            {
-                _projectile.Position = _projectile.Position + delta;
-            }
+            return _projectile.Dir * speedActual * Time.deltaTime;
         }
     }
 }

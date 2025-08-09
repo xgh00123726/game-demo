@@ -9,24 +9,23 @@ namespace GameBase.Modify
         internal int id;
         internal T valueSet;
         internal T value;
-        public LinkedList<Func<T, T>> modifyBehaviors = new LinkedList<Func<T, T>>();
-        public T Value => value;
+        internal LinkedList<Modifyer<T>> modifyersNeedAdd = new();
+        internal LinkedList<Modifyer<T>> modifyersNeedRemove = new();
 
-        public void AddModify(Func<T, T> func)
+        public LinkedList<Modifyer<T>> modifyers = new ();
+        public T Value => value;
+        public T ValueSet => valueSet;
+
+        public void AddModify(Modifyer<T> modifyer)
         {
-            modifyBehaviors.AddLast(func);
+            modifyersNeedAdd.AddLast(modifyer);
         }
 
-        public void RemoveModify(Func<T, T> func)
+        public void RemoveModify(Modifyer<T> modifyer)
         {
-            if (modifyBehaviors.Contains(func))
-            {
-                modifyBehaviors.Remove(func);
-            }
+            modifyersNeedRemove.AddLast(modifyer);
         }
 
         int IEntity.InstanceID { get; set; }
-
-        public T Get() => value;
     }
 }

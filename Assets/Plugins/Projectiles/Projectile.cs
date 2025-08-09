@@ -9,11 +9,6 @@ namespace GameBase.Projectile
     public class Projectile : ICurveProjectile,
         IUEntity<GameObject>
     {
-        public Projectile()
-        {
-            XLogger.Instance.Log("proj constructror");
-        }
-
         public int hitEffectID;
         public int trailID;
         public float maxExistTime;

@@ -20,6 +20,9 @@ namespace GameBase.Spell
         public SpellDelegate CancelDelegate;
         public SpellDelegate ReadyDelegate;
 
+        public Action<Spell> RegistertoActivesDelegate;
+        public Action<Spell> RemoveFromActiveDelegate;
+
         internal bool userReady;
         internal bool coolReady;
         internal float spellMoment;             // Ê©·¨Ê±¿Ì

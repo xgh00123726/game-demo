@@ -8,7 +8,10 @@ namespace GameBase.Buffs
     {
         protected override void OnRegisterEntityToActives(Buff e)
         {
-            e.InstantiateDelegate?.Invoke(e);
+            foreach (var func in e.RegistertoActivesDelegate)
+            {
+                func?.Invoke(e);
+            }
             e.durationRemain = e.durationSet;
             e.alive = true;
         }
@@ -16,7 +19,10 @@ namespace GameBase.Buffs
         protected override void OnRemoveEntityFromActives(Buff e)
         {
             e.alive = false;
-            e.ReleaseDelegate?.Invoke(e);
+            foreach (var func in e.RemoveFromActiveDelegate)
+            {
+                func?.Invoke(e);
+            }
         }
 
         protected override void UpdateEntity(Buff e)

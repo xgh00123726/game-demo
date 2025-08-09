@@ -34,7 +34,6 @@ namespace GameBase.LifeTime
             DontDestroyOnLoad(gameObject);
 
             ResourcesLoader.LoadAllAsset();
-            Tools.XLogger.Instance.Log($"id 0:{ResourcesLoader._prefabs[0]}, id 1:{ResourcesLoader._prefabs[1]}");
 
             SceneManager.LoadScene(managerScene);
             if (backgroundScenes.Count > 0)

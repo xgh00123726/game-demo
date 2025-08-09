@@ -2,6 +2,7 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.AddressableAssets;
 using NReco.Csv;
+using GameBase.Tools;
 
 namespace GameBase.Resources
 {
@@ -14,16 +15,31 @@ namespace GameBase.Resources
 
         public static GameObject GetPrefab(int id)
         {
+            if (id >= _prefabs.Length)
+            {
+                XLogger.Instance.Level(XLogger.LogLevel.Error)
+                    .Log($"resource id out of the bound, id:{id}, max:{_prefabs.Length}");
+            }
             return _prefabs[id];
         }
 
         public static Sprite GetSprite(int id)
         {
+            if (id >= _sprites.Length)
+            {
+                XLogger.Instance.Level(XLogger.LogLevel.Error)
+                    .Log($"resource id out of the bound, id:{id}, max:{_sprites.Length}");
+            }
             return _sprites[id];
         }
 
         public static Texture2D GetTexture2D(int id)
         {
+            if (id >= _textures.Length)
+            {
+                XLogger.Instance.Level(XLogger.LogLevel.Error)
+                    .Log($"resource id out of the bound, id:{id}, max:{_textures.Length}");
+            }
             return _textures[id];
         }
 

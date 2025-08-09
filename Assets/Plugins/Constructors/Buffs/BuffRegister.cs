@@ -1,22 +1,22 @@
 using GameBase.Projectile;
 using GameBase.Buffs;
 using GameBase.Modify;
-using System;
 using Instance.Buffs;
 
 namespace Constructor.Buffs
 {
     public class BuffRegister
     {
-        private static float Modify_0(float v)
+        private static float Modify_0(float val, float valSet)
         {
-            return v + 100;
+            return val + 100;
         }
 
         private static ViewableBuff BuffGen_0()
         {
             var buff = BuffSys.Instance.NewEntity<ViewableBuff>();
-            buff.InstantiateDelegate = static (Buff b) =>
+            buff.textureID = 0;
+            buff.RegistertoActivesDelegate.Add(static (Buff b) =>
             {
                 if (b.owner.Exist)
                 {
@@ -24,24 +24,14 @@ namespace Constructor.Buffs
                     {
                         if (mOwner.Modifyables.Contains(0))
                         {
-                            mOwner.Modifyables[0].AddModify(Modify_0);
+                            var modifyer = ModifyerSys<float>.Instance.NewEntity<Modifyer<float>>();
+                            modifyer.duration = b.durationSet;
+                            modifyer.ModifyFunc = Modify_0;
+                            mOwner.Modifyables[0].AddModify(modifyer);
                         }
                     }
                 }
-            };
-            buff.ReleaseDelegate = static (Buff b) =>
-            {
-                if (b.owner.Exist)
-                {
-                    if (b.owner.Get() is IModifyOwner <float> mOwner)
-                    {
-                        if (mOwner.Modifyables.Contains(0))
-                        {
-                            mOwner.Modifyables[0].RemoveModify(Modify_0);
-                        }
-                    }
-                }
-            };
+            });
 
             return buff;
         }

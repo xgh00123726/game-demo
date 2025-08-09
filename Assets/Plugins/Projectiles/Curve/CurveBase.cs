@@ -15,10 +15,16 @@ namespace GameBase.Projectile
         /// 方向更新
         /// </summary>
         public abstract void DirUpdate();
+
+        protected virtual Vector3 GetPosDelta()
+        {
+            return _projectile.Dir * speed * Time.deltaTime;
+        }
         public virtual void PosUpdate()
         {
+            Vector3 delta = GetPosDelta();
+            delta.y = 0f;
             float disToDest = (_projectile.Position - _projectile.Dest).magnitude;
-            Vector3 delta = _projectile.Dir * speed * Time.deltaTime;
             float deltaMag = delta.magnitude;
 
             if (disToDest < deltaMag)

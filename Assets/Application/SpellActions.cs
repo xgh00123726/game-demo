@@ -1,3 +1,4 @@
+using GameBase.Buffs;
 using GameBase.GCamera;
 using GameBase.Instance;
 using GameBase.Math;
@@ -5,6 +6,7 @@ using GameBase.Projectile;
 using GameBase.Spell;
 using GameBase.Tools;
 using GameBase.UI;
+using Instance.Buffs;
 using UnityEngine;
 
 public class SpellActions
@@ -53,7 +55,6 @@ public class SpellActions
         if (target == null)
         {
             var text = TextSys.Instance.NewEntity<FloatText>();
-            text.bodyID = 4;
             text.value = "No Target";
             text.showPosition = projOwner.HandPostion;
         }
@@ -61,5 +62,13 @@ public class SpellActions
         var proj = ProjectileSys.Instance.NewEntity<Projectile>(0);
         proj.target = PossibleObj<IProjectileTarget>.New(target);
         proj.owner = PossibleObj<IProjectileOwner>.New(projOwner);
+    }
+
+    public static void Faster(Spell spell)
+    {
+        var buffOwner = spell.speller.Get() as IBuffOwner;
+
+        var buff = BuffSys.Instance.NewEntity<ViewableBuff>(0);
+        buff.owner = PossibleObj<IBuffOwner>.New(buffOwner);
     }
 }
