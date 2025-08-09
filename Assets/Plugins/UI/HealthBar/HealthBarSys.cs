@@ -9,13 +9,13 @@ namespace GameBase.UI
     public class HealthBarSys : UObjEntitySys<HealthBar, SimpleEntityContainer, GameObject, HealthBarSys>
     {
         public static float losingSpeed = 1f;
+        public static float healthBarWidth = 0.9f;
 
         protected override GameObject InstantiateObj(HealthBar e)
         {
             var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
 
-            e.rectTransform = obj.GetComponent<RectTransform>();
-            e.widthMax = e.rectTransform.rect.width;
+            obj.transform.SetParent(WorldCanvs.Instance.transform, false);
 
             e.textObj = obj.transform.Find("Text").gameObject;
             e.textComponent = e.textObj.GetComponent<TextMeshProUGUI>();
@@ -53,7 +53,11 @@ namespace GameBase.UI
 
         private void SetWidth(RectTransform bar, float percent, float widthMax)
         {
-            bar.offsetMax = new Vector2(percent * widthMax - widthMax, bar.offsetMax.y);
+            float width = percent * widthMax;
+            float widthloss = widthMax - width;
+            bar.sizeDelta = new Vector2(widthMax - widthloss, bar.sizeDelta.y);
+            bar.localPosition = new Vector3(-widthloss / 2, bar.localPosition.y, bar.localPosition.z);
+            //bar.offsetMax = new Vector2(percent * widthMax - widthMax, bar.offsetMax.y);
         }
 
         protected override void UpdateEntity(HealthBar e)
@@ -63,7 +67,7 @@ namespace GameBase.UI
             if (e.losingPercent > e.currPercent)
             {
                 e.losingPercent -= losingSpeed * Time.deltaTime;
-                SetWidth(e.losingRectTransform, e.losingPercent, e.widthMax);
+                SetWidth(e.losingRectTransform, e.losingPercent, healthBarWidth);
             }
 
 
@@ -75,7 +79,7 @@ namespace GameBase.UI
             e.HPChange = false;
             e.currPercent = Mathf.Clamp01(e.currHP / e.maxHP);
             e.textComponent.text = $"{e.currHP} / {e.maxHP}";
-            SetWidth(e.currentRectTransform, e.currPercent, e.widthMax);
+            SetWidth(e.currentRectTransform, e.currPercent, healthBarWidth);
         }
     }
 }

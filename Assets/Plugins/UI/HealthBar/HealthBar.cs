@@ -11,10 +11,8 @@ namespace GameBase.UI
         internal float currHP;
         internal float maxHP;
         internal bool HPChange;
-        internal float widthMax;
         internal float currPercent;
         internal float losingPercent;
-        internal RectTransform rectTransform;
         internal GameObject textObj;
         internal TextMeshProUGUI textComponent;
         internal GameObject current;
