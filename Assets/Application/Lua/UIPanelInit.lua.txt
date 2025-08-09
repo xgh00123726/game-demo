@@ -1,0 +1,35 @@
+Buff_panelObjID = 10
+Buff_maskTexureID = 3
+Buff_itemAlign = 0
+
+Spell_panelObjID = 12
+Spell_maskTexureID = 3
+Spell_itemAlign = 0
+
+Passive_panelObjID = 14
+Passive_maskTexureID = 2
+Passive_itemAlign = 2
+
+Buff_itemWidth = 30.0
+Buff_itemHeight = 30.0
+Buff_xInterval = 1.5
+Buff_yInterval = 1.5
+Buff_maxPanelWidth = 1000.0
+Buff_panelX = -450
+Buff_panelY = -355
+
+Spell_itemWidth = 100.0
+Spell_itemHeight = 100.0
+Spell_xInterval = 1.5
+Spell_yInterval = 1.5
+Spell_maxPanelWidth = 1000
+Spell_panelX = -420
+Spell_panelY = -450
+
+Passive_itemWidth = 100
+Passive_itemHeight = 100
+Passive_xInterval = 20
+Passive_yInterval = -30
+Passive_maxPanelWidth = 250
+Passive_panelX = 850
+Passive_panelY = -370
