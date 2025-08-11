@@ -21,6 +21,7 @@ namespace GameBase.Tools
         TestPosKey,
         ToggleAttrPanel,
         SummonEnemy, SummonAllies,
+        ChooseText,
     }
 
     internal struct InputKey

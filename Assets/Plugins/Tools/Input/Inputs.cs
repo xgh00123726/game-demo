@@ -38,7 +38,7 @@ namespace GameBase.Tools
             {new List<KeyCode> {KeyCode.Backspace}, new List<KeyFunction>{KeyFunction.CmdDelete} },
             {new List<KeyCode>{KeyCode.Escape}, new List<KeyFunction>{ KeyFunction.Cancel} },
             {new List<KeyCode>{KeyCode.Mouse0}, new List<KeyFunction>{KeyFunction.MouseConfirm, KeyFunction.TestPosKey} },
-            {new List<KeyCode>{KeyCode.Tab}, new List<KeyFunction> { KeyFunction.ToggleAttrPanel} }, // «–ªª Ù–‘œ‘ æ¿∏œ‘ æ
+            {new List<KeyCode>{KeyCode.Tab}, new List<KeyFunction> { KeyFunction.ToggleAttrPanel, KeyFunction.ChooseText} }, // «–ªª Ù–‘œ‘ æ¿∏œ‘ æ
             {new List<KeyCode>{KeyCode.LeftControl, KeyCode.LeftShift, KeyCode.A }, new List<KeyFunction>{ KeyFunction.SummonEnemy} },
             {new List<KeyCode>{ KeyCode.LeftControl, KeyCode.LeftShift, KeyCode.C },new List<KeyFunction>{ KeyFunction.SummonAllies }  }
         };
