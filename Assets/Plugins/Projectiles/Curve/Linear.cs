@@ -10,9 +10,9 @@ namespace GameBase.Projectile
         {
         }
 
-        public override void DirUpdate()
+        protected override Vector3 GetDirDelta()
         {
-            _projectile.Dir = _projectile.Dest - _projectile.Src;
+            return _projectile.Dest - _projectile.Src;
         }
     }
 }
