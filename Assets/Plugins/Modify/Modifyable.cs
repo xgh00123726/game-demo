@@ -12,6 +12,9 @@ namespace GameBase.Modify
         internal LinkedList<Modifyer<T>> modifyersNeedAdd = new();
         internal LinkedList<Modifyer<T>> modifyersNeedRemove = new();
 
+        public List<Action<Modifyable<T>>> RegistertoActivesDelegate = new();
+        public List<Action<Modifyable<T>>> RemoveFromActiveDelegate = new();
+
         public LinkedList<Modifyer<T>> modifyers = new ();
         public T Value => value;
         public T ValueSet => valueSet;

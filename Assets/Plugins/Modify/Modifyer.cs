@@ -5,13 +5,17 @@ namespace GameBase.Modify
 {
     public enum ModifyType
     {
-        Aways,
-        Periodoic,
+        Aways     = 1 << 0 ,
+        Periodoic = 1 << 1 ,
+        Once      = 1 << 2 ,
+
+        Temporary = 1 << 13,
+        Forever   = 1 << 14,
     }
 
     public class Modifyer<T> : IEntity
     {
-        public ModifyType type = ModifyType.Aways;
+        public ModifyType type = ModifyType.Aways | ModifyType.Temporary;
         public bool trigOnGive;
 
         public float duration;
@@ -22,6 +26,7 @@ namespace GameBase.Modify
         internal float instantiateTime;
         internal float lastEnableTime;
         internal bool enable;
+        internal bool modifyableRelease;
         internal bool isRelease;
         int IEntity.InstanceID { get; set; }
     }

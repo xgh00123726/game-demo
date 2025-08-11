@@ -5,13 +5,21 @@ namespace GameBase.Modify
     {
         protected override void OnRegisterEntityToActives(Modifyable<T> e)
         {
-            
+            foreach (var func in e.RegistertoActivesDelegate)
+            {
+                func?.Invoke(e);
+            }
         }
 
         protected override void OnRemoveEntityFromActives(Modifyable<T> e)
         {
+            foreach (var func in e.RemoveFromActiveDelegate)
+            {
+                func?.Invoke(e);
+            }
             e.modifyers.Clear();
         }
+
 
         protected override void UpdateEntity(Modifyable<T> e)
         {
@@ -41,10 +49,32 @@ namespace GameBase.Modify
 
                 if (modifyer.ModifyFunc == null) continue;
 
-                finnalVal = modifyer.ModifyFunc(finnalVal, e.valueSet);
+                if ((modifyer.type & ModifyType.Temporary) != 0)
+                {
+                    finnalVal = modifyer.ModifyFunc(finnalVal, e.valueSet);
+                }
+                else if ((modifyer.type & ModifyType.Forever) != 0)
+                {
+                    e.valueSet = modifyer.ModifyFunc(finnalVal, e.valueSet);
+                }
+
+                modifyer.enable = false;
+
+                if ((modifyer.type & ModifyType.Once) != 0)
+                {
+                    modifyer.modifyableRelease = true;
+                }
             }
 
             e.value = finnalVal;
+        }
+
+        public T_Return NewEntity<T_Return>(T initValue) where T_Return : Modifyable<T>, new()
+        {
+            var ret = Instance.NewEntity<T_Return>();
+            ret.valueSet = initValue;
+
+            return ret;
         }
     }
 }
