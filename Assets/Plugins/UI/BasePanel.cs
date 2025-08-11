@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public abstract class BasePanel<T, T_Instance> : UObjEntitySys<T, SimpleEntityContainer, GameObject, T_Instance>
+    public abstract class BasePanel<T, T_Instance> : UObjEntitySys<T, SimpleEntityContainer, BaseUI, T_Instance>
         where T : BasePanelItem, new()
         where T_Instance : BasePanel<T, T_Instance>, new()
     {
@@ -17,7 +17,6 @@ namespace GameBase.UI
 
 
         public GameObject panel;
-        public PanelShadow shadow;
         private int itemIterIdx = 0;
 
         internal abstract float ItemWidth { get; }
@@ -28,7 +27,8 @@ namespace GameBase.UI
         internal abstract float PanelX { get; }
         internal abstract float PanelY { get; }
         internal abstract int PanelObjID {  get; }
-        internal abstract int MaskTexureID { get; }
+        internal abstract int ShapeTexureID { get; }
+        internal abstract int ContourTexureID { get; }
         internal abstract int ItemAlign { get; }
         internal int ItemIterIdx => itemIterIdx;
 
@@ -63,21 +63,39 @@ namespace GameBase.UI
         protected override void AfterInstantiateEUObject(T e)
         {
             var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.IconTexureID));
-            var mask = GameObject.Instantiate(ResourcesLoader.GetTexture2D(MaskTexureID));
+            var shape = GameObject.Instantiate(ResourcesLoader.GetTexture2D(ShapeTexureID));
+            var contour = GameObject.Instantiate(ResourcesLoader.GetTexture2D(ContourTexureID));
 
-            e.iconMaterial.SetTexture("_Shape", mask);
+            e.iconMaterial.SetTexture("_Shape", shape);
+            e.iconMaterial.SetTexture("_Contour", contour);
             e.iconMaterial.SetTexture("_Target", texture);
-            e.Obj.SetActive(true);
+
+            e.AfterInstantiateUObjectDelegate?.Invoke(e);
+            
+            e.Obj.gameObject.SetActive(true);
         }
 
         protected override void BeforeReleaseEUObject(T e)
         {
-            e.Obj.SetActive(false);
+            e.Obj.gameObject.SetActive(false);
         }
 
-        protected override GameObject InstantiateObj(T e)
+        protected override BaseUI InstantiateObj(T e)
         {
             var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
+            var ui = obj.AddComponent<BaseUI>();
+
+            if (e is IEnterExist eee)
+            {
+                ui.OnPointerEnter = eee.OnPointerEnter;
+                ui.OnPointerExit = eee.OnPointerExist;
+            }
+
+            if (e is ISwitchable se)
+            {
+                ui.OnSwitchOn = se.OnSwitchOn;
+                ui.OnSwitchOff = se.OnSwitchOff;
+            }
 
             obj.transform.SetParent(panel.transform, false);
 
@@ -91,7 +109,10 @@ namespace GameBase.UI
             e.iconMaterial = new Material(image.material);
             image.material = e.iconMaterial;
 
-            return obj;
+            e.iconMaterial.SetFloat("_Dir1", -1f);
+            e.iconMaterial.SetFloat("_Dir2", -1f);
+
+            return ui;
         }
 
         protected override void UpdateEntity(T e)
@@ -103,14 +124,6 @@ namespace GameBase.UI
             {
                 itemIterIdx = 0;
             }
-
-            shadow.panelObjID = PanelObjID;
-            shadow.maskTexureID = MaskTexureID;
-            shadow.itemHeight = ItemHeight;
-            shadow.itemWidth = ItemWidth;
-            shadow.maxPanelWidth = MaxPanelWidth;
-            shadow.xInterval = XInterval;
-            shadow.yInterval = YInterval;
         }
 
         protected override void Awake()
@@ -119,7 +132,6 @@ namespace GameBase.UI
 
             panel = GameObject.Instantiate(ResourcesLoader.GetPrefab(PanelObjID));
             panel.transform.SetParent(RootCanvas.Instance.transform, false);
-            shadow = panel.AddComponent<PanelShadow>();
         }
     }
 }

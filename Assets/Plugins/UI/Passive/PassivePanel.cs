@@ -16,21 +16,15 @@ namespace GameBase.UI
         public static float maxPanelWidth = 1000f;
 
         internal override int PanelObjID => UIPanelConfig.Int.Passive_panelObjID;
-
-        internal override int MaskTexureID => UIPanelConfig.Int.Passive_maskTexureID;
-
+        internal override int ShapeTexureID => UIPanelConfig.Int.Passive_shapeTexureID;
+        internal override int ContourTexureID => UIPanelConfig.Int.Passive_contourTexureID;
         internal override float ItemWidth => UIPanelConfig.Float.Passive_itemWidth;
-
         internal override float ItemHeight => UIPanelConfig.Float.Passive_itemHeight;
-
         internal override float XInterval => UIPanelConfig.Float.Passive_xInterval;
-
         internal override float YInterval => UIPanelConfig.Float.Passive_yInterval;
         internal override float PanelX => UIPanelConfig.Float.Passive_panelX;
         internal override float PanelY => UIPanelConfig.Float.Passive_panelY;
-
         internal override float MaxPanelWidth => UIPanelConfig.Float.Passive_maxPanelWidth;
-
         internal override int ItemAlign => UIPanelConfig.Int.Passive_itemAlign;
 
         protected override void GetItemNumXYStyle(int index, out int itemPerLine, out int x, out int y)
@@ -45,7 +39,7 @@ namespace GameBase.UI
             x = reMainX == 0 ? 0 : reMainX - 1;
         }
 
-        protected override GameObject InstantiateObj(PassiveItem e)
+        protected override BaseUI InstantiateObj(PassiveItem e)
         {
             var obj = base.InstantiateObj(e);
 

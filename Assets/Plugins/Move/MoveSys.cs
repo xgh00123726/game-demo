@@ -21,11 +21,11 @@ namespace GameBase.Move
         {
             if (!e.destCommand && !e.targetCommand) return;
 
-            Vector3 dir = e.Dest - e.body.transform.position;
-            Vector3 delta = dir.normalized * e.speed * Time.deltaTime;
-            Vector3 dest = e.body.transform.position + delta;
+            Vector3 dir = e.Dest - e.owner.GO.transform.position;
+            Vector3 delta = dir.normalized * e.owner.moveSpeed * Time.deltaTime;
+            Vector3 dest = e.owner.GO.transform.position + delta;
 
-            if ((e.Dest - e.body.transform.position).magnitude < moveStopDis)
+            if ((e.Dest - e.owner.GO.transform.position).magnitude < moveStopDis)
             {
 
                 return;
@@ -37,7 +37,7 @@ namespace GameBase.Move
             }
             else
             {
-                e.body.transform.position = dest;
+                e.owner.GO.transform.position = dest;
             }
         }
     }

@@ -7,24 +7,18 @@ namespace GameBase.UI
     public class BuffPanel : BasePanel<BuffItem, BuffPanel>
     {
         internal override int PanelObjID => UIPanelConfig.Int.Buff_panelObjID;
-
-        internal override int MaskTexureID => UIPanelConfig.Int.Buff_maskTexureID;
-
+        internal override int ShapeTexureID => UIPanelConfig.Int.Buff_shapeTexureID;
+        internal override int ContourTexureID => UIPanelConfig.Int.Buff_contourTexureID;
         internal override float ItemWidth => UIPanelConfig.Float.Buff_itemWidth;
-
         internal override float ItemHeight => UIPanelConfig.Float.Buff_itemHeight;
-
         internal override float XInterval => UIPanelConfig.Float.Buff_xInterval;
-
         internal override float YInterval => UIPanelConfig.Float.Buff_yInterval;
-
         internal override float MaxPanelWidth => UIPanelConfig.Float.Buff_maxPanelWidth;
         internal override float PanelX => UIPanelConfig.Float.Buff_panelX;
         internal override float PanelY => UIPanelConfig.Float.Buff_panelY;
-
         internal override int ItemAlign => UIPanelConfig.Int.Buff_itemAlign;
 
-        protected override GameObject InstantiateObj(BuffItem e)
+        protected override BaseUI InstantiateObj(BuffItem e)
         {
             var obj = base.InstantiateObj(e);
 
@@ -42,7 +36,7 @@ namespace GameBase.UI
                 RemoveEntity(e);
             }
 
-            e.iconMaterial.SetFloat("_MaskFull", e.bindBuff.DurationRemain / e.bindBuff.DurationSet);
+            e.iconMaterial.SetFloat("_MaskFull", 1 - e.bindBuff.DurationRemain / e.bindBuff.DurationSet);
         }
     }
 }

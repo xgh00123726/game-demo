@@ -5,16 +5,29 @@ namespace GameBase.Config
         public static class Int
         {
             public static int Buff_panelObjID = 10;
-            public static int Buff_maskTexureID = 3;
+            public static int Buff_shapeTexureID = 3;
+            public static int Buff_contourTexureID = 6;
             public static int Buff_itemAlign = 0;
 
             public static int Spell_panelObjID = 12;
-            public static int Spell_maskTexureID = 3;
+            public static int Spell_shapeTexureID = 3;
+            public static int Spell_contourTexureID = 6;
             public static int Spell_itemAlign = 0;
 
             public static int Passive_panelObjID = 14;
-            public static int Passive_maskTexureID = 2;
+            public static int Passive_shapeTexureID = 2;
+            public static int Passive_contourTexureID = 5;
             public static int Passive_itemAlign = 0;
+
+            public static int Equipment_panelObjID = 14;
+            public static int Equipment_shapeTexureID = 2;
+            public static int Equipment_contourTexureID = 5;
+            public static int Equipment_itemAlign = 0;
+
+            public static int Attr_panelObjID = 15;
+            public static int Attr_shapeTexureID = 4;
+            public static int Attr_contourTexureID = 7;
+            public static int Attr_itemAlign = 0;
         }
 
         public static class Float
@@ -42,6 +55,22 @@ namespace GameBase.Config
             public static float Passive_maxPanelWidth = 1000f;
             public static float Passive_panelX = 850;
             public static float Passive_panelY = -370;
+
+            public static float Equipment_itemWidth = 80;
+            public static float Equipment_itemHeight = 80;
+            public static float Equipment_xInterval = 15f;
+            public static float Equipment_yInterval = 10f;
+            public static float Equipment_maxPanelWidth = 315f;
+            public static float Equipment_panelX = 690;
+            public static float Equipment_panelY = -495;
+
+            public static float Attr_itemWidth = 200f;
+            public static float Attr_itemHeight = 0f;
+            public static float Attr_xInterval = 0f;
+            public static float Attr_yInterval = 35f;
+            public static float Attr_maxPanelWidth = 460f;
+            public static float Attr_panelX = -920;
+            public static float Attr_panelY = -510;
         }
     }
 }

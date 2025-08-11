@@ -8,6 +8,12 @@ namespace GameBase.Instance
         IViewableSpell
     {
         public int textureID = 0;
+        private static DetailUI detailUI;
+
+        static ViewableSpell()
+        {
+            detailUI = DetailUISys.Instance.NewEntity<DetailUI>();
+        }
 
         public ViewableSpell()
         {
@@ -38,8 +44,13 @@ namespace GameBase.Instance
 
             CancelDelegate = SpellCancel;
 
-            var item = SpellPanel.Instance.NewEntity<SpellItem>();
-            item.bindSpell = this;
+            var spellItem = SpellPanel.Instance.NewEntity<SpellItem>();
+            spellItem.bindSpell = this;
+
+            spellItem.AfterInstantiateUObjectDelegate = (BasePanelItem item) =>
+            {
+                detailUI.detailables.Add(spellItem);
+            };
         }
 
         private bool SpellReady(Spell.Spell spell)

@@ -1,8 +1,9 @@
 using TMPro;
+using UnityEngine.EventSystems;
 
 namespace GameBase.UI
 {
-    public class SpellItem : BasePanelItem
+    public class SpellItem : DetailableBaseItem
     {
         public SpellItem()
         {

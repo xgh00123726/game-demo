@@ -6,8 +6,14 @@ namespace Instance.Buffs
     public class ViewablePassive : Buff,
         IViewablePassive
     {
-        public int textureID = 0;
+        public int textureID = 0; 
+        private static DetailUI detailUI;
         int IViewablePassive.TextureID => textureID;
+
+        static ViewablePassive()
+        {
+            detailUI = DetailUISys.Instance.NewEntity<DetailUI>();
+        }
 
         public ViewablePassive()
         {
@@ -18,6 +24,11 @@ namespace Instance.Buffs
         {
             var buffUI = PassivePanel.Instance.NewEntity<PassiveItem>();
             buffUI.bindPassive = this;
+
+            buffUI.AfterInstantiateUObjectDelegate = (BasePanelItem item) =>
+            {
+                detailUI.detailables.Add(buffUI);
+            };
         }
     }
 }

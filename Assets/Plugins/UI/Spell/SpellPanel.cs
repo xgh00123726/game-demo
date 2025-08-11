@@ -11,24 +11,18 @@ namespace GameBase.UI
     public class SpellPanel : BasePanel<SpellItem, SpellPanel>
     {
         internal override int PanelObjID => UIPanelConfig.Int.Spell_panelObjID;
-
-        internal override int MaskTexureID => UIPanelConfig.Int.Spell_maskTexureID;
-
+        internal override int ShapeTexureID => UIPanelConfig.Int.Spell_shapeTexureID;
+        internal override int ContourTexureID => UIPanelConfig.Int.Spell_contourTexureID;
         internal override float ItemWidth => UIPanelConfig.Float.Spell_itemWidth;
-
         internal override float ItemHeight => UIPanelConfig.Float.Spell_itemHeight;
-
         internal override float XInterval => UIPanelConfig.Float.Spell_xInterval;
-
         internal override float YInterval => UIPanelConfig.Float.Spell_yInterval;
-
         internal override float MaxPanelWidth => UIPanelConfig.Float.Spell_maxPanelWidth;
         internal override float PanelX => UIPanelConfig.Float.Spell_panelX;
         internal override float PanelY =>  UIPanelConfig.Float.Spell_panelY;
-
         internal override int ItemAlign =>  UIPanelConfig.Int.Spell_itemAlign;
 
-        protected override GameObject InstantiateObj(SpellItem e)
+        protected override BaseUI InstantiateObj(SpellItem e)
         {
             var obj = base.InstantiateObj(e);
 

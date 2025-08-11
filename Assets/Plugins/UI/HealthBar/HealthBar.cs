@@ -7,10 +7,9 @@ namespace GameBase.UI
     public class HealthBar : IUEntity<GameObject>
     {
         public IHealthBarOwner owner;
+        public float width = 0.9f;
+        public bool healthBarFollow = true;
 
-        internal float currHP;
-        internal float maxHP;
-        internal bool HPChange;
         internal float currPercent;
         internal float losingPercent;
         internal GameObject textObj;
@@ -20,31 +19,8 @@ namespace GameBase.UI
         internal GameObject losing;
         internal RectTransform losingRectTransform;
 
-
-        public float CurrHP
-        {
-            get => currHP;
-            set
-            {
-                currHP = value;
-                HPChange = true;
-            }
-        }
-
-        public float MaxHP
-        {
-            get => maxHP;
-            set
-            {
-                maxHP = value;
-                HPChange = true;
-            }
-        }
-
         public GameObject Obj { get; set; }
-
         public int ObjID { get; set; }
-
         public int InstanceID { get; set; }
     }
 }

@@ -86,6 +86,11 @@ namespace GameBase.Tools
         public int Tick => tick;
         public int FixedTick => fixedTick;
 
+        /// <summary>
+        /// 立刻创建一个对象，可以在对象被遍历时使用，会在下一帧将对象的unity对象创建出来
+        /// </summary>
+        /// <typeparam name="T_EntityType"></typeparam>
+        /// <returns></returns>
         public T_EntityType NewEntity<T_EntityType>() where T_EntityType : class, T_Entity, new()
         {
             ++entityNewTimes;
@@ -97,6 +102,7 @@ namespace GameBase.Tools
             Register(e);
             return e;
         }
+
 
         /// <summary>
         /// 使用生成器id创建实体

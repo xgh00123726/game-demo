@@ -2,14 +2,12 @@ using GameBase.Resources;
 using GameBase.Tools;
 using TMPro;
 using UnityEngine;
-using static UnityEngine.UI.GridLayoutGroup;
 
 namespace GameBase.UI
 {
     public class HealthBarSys : UObjEntitySys<HealthBar, SimpleEntityContainer, GameObject, HealthBarSys>
     {
         public static float losingSpeed = 1f;
-        public static float healthBarWidth = 0.9f;
 
         protected override GameObject InstantiateObj(HealthBar e)
         {
@@ -41,7 +39,7 @@ namespace GameBase.UI
 
             e.currPercent = 1f;
             e.losingPercent = 1f;
-            e.HPChange = true;
+            e.owner.HPChange = true;
 
             e.Obj.SetActive(true);
         }
@@ -62,24 +60,27 @@ namespace GameBase.UI
 
         protected override void UpdateEntity(HealthBar e)
         {
-            e.Obj.transform.position = e.owner.HealthBarPosition;
+            if (e.healthBarFollow)
+            {
+                e.Obj.transform.position = e.owner.HealthBarPosition;
+            }
 
             if (e.losingPercent > e.currPercent)
             {
                 e.losingPercent -= losingSpeed * Time.deltaTime;
-                SetWidth(e.losingRectTransform, e.losingPercent, healthBarWidth);
+                SetWidth(e.losingRectTransform, e.losingPercent, e.width);
             }
 
 
-            if (!e.HPChange)
+            if (!e.owner.HPChange)
             {
                 return;
             }
 
-            e.HPChange = false;
-            e.currPercent = Mathf.Clamp01(e.currHP / e.maxHP);
-            e.textComponent.text = $"{e.currHP} / {e.maxHP}";
-            SetWidth(e.currentRectTransform, e.currPercent, healthBarWidth);
+            e.owner.HPChange = false;
+            e.currPercent = Mathf.Clamp01(e.owner.CurrHP / e.owner.MaxHP);
+            e.textComponent.text = $"{e.owner.CurrHP} / {e.owner.MaxHP}";
+            SetWidth(e.currentRectTransform, e.currPercent, e.width);
         }
     }
 }

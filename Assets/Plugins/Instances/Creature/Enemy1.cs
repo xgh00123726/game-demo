@@ -16,8 +16,6 @@ namespace GameBase.Instance
         {
             healthbar = HealthBarSys.Instance.NewEntity<HealthBar>();
             healthbar.ObjID = 6;
-            healthbar.MaxHP = maxHP;
-            healthbar.CurrHP = currHP;
             healthbar.owner = this;
         }
 
@@ -27,10 +25,16 @@ namespace GameBase.Instance
 
         float IProjectileTarget.Radius => radius;
 
+        public bool HPChange { get; set; }
+
+        float IHealthBarOwner.CurrHP => currHP;
+
+        float IHealthBarOwner.MaxHP => maxHP;
+
         void IProjectileTarget.GetDamage(float damage)
         {
             currHP -= damage;
-            healthbar.CurrHP = currHP;
+            HPChange = true;
             var text = TextSys.Instance.NewEntity<FloatText>();
             text.value = damage.ToString();
             text.showPosition = Obj.transform.position;

@@ -27,7 +27,12 @@ namespace Constructor.Buffs
                             var modifyer = ModifyerSys<float>.Instance.NewEntity<Modifyer<float>>();
                             modifyer.duration = b.durationSet;
                             modifyer.ModifyFunc = Modify_0;
-                            mOwner.Modifyables[0].AddModify(modifyer);
+                            mOwner.Modifyables.AddModify(12, modifyer);
+
+                            var msModifyer = ModifyerSys<float>.Instance.NewEntity<Modifyer<float>>();
+                            msModifyer.duration = b.durationSet;
+                            msModifyer.ModifyFunc = static (float val, float valSet) => { return val + valSet * 0.5f; };
+                            mOwner.Modifyables.AddModify(1, msModifyer);
                         }
                     }
                 }

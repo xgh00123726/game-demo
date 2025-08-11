@@ -1,0 +1,105 @@
+using GameBase.Resources;
+using GameBase.Tools;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace GameBase.UI
+{
+    public class EpicBarSys : UObjEntitySys<EpicBar, SimpleEntityContainer, GameObject, EpicBarSys>
+    {
+        public static float losingSpeed = 1f;
+
+        protected override GameObject InstantiateObj(EpicBar e)
+        {
+            var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
+
+            obj.transform.SetParent(RootCanvas.Instance.transform, false);
+
+            e.textObj = obj.transform.Find("Text").gameObject;
+            e.textComponent = e.textObj.GetComponent<TextMeshProUGUI>();
+
+            e.current = obj.transform.Find("Current").gameObject;
+            e.currentRectTransform = e.current.GetComponent<RectTransform>();
+
+            e.losing = obj.transform.Find("Losing").gameObject;
+            e.losingRectTransform = e.losing.GetComponent<RectTransform>();
+
+            var image = e.current.transform.GetComponent<Image>();
+            if (image == null)
+            {
+                XLogger.Instance.Level(XLogger.LogLevel.Error)
+                    .Log("panel item must has icon object");
+            }
+
+            e.iconMaterial = new Material(image.material);
+            image.material = e.iconMaterial;
+
+            if (e.targetTexureID >= 0)
+            {
+                var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.targetTexureID));
+                e.iconMaterial.SetTexture("_Target", texture);
+            }
+            if (e.shapeTexureID >= 0)
+            {
+                var shape = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.shapeTexureID));
+                e.iconMaterial.SetTexture("_Shape", shape);
+            }
+            if (e.contourTexureID >= 0)
+            {
+                var contour = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.contourTexureID));
+                e.iconMaterial.SetTexture("_Contour", contour);
+            }
+
+
+            return obj;
+        }
+
+
+
+        protected override void AfterInstantiateEUObject(EpicBar e)
+        {
+            e.currPercent = 1f;
+            e.losingPercent = 1f;
+            e.hpChange = true;
+
+            e.Obj.SetActive(true);
+        }
+
+        protected override void BeforeReleaseEUObject(EpicBar e)
+        {
+            e.Obj.SetActive(false);
+        }
+
+        private void SetWidth(RectTransform bar, float percent, float widthMax)
+        {
+            float width = percent * widthMax;
+            float widthloss = widthMax - width;
+            bar.sizeDelta = new Vector2(widthMax - widthloss, bar.sizeDelta.y);
+            bar.localPosition = new Vector3(-widthloss / 2, bar.localPosition.y, bar.localPosition.z);
+        }
+
+        protected override void UpdateEntity(EpicBar e)
+        {
+            if (e.losingPercent > e.currPercent)
+            {
+                e.losingPercent -= losingSpeed * Time.deltaTime;
+                SetWidth(e.losingRectTransform, e.losingPercent, e.width);
+            }
+
+
+            if (!e.hpChange)
+            {
+                return;
+            }
+
+            e.hpChange = false;
+
+            if (e.maxHP < Mathf.Epsilon) return;
+
+            e.currPercent = Mathf.Clamp01(e.currHP / e.maxHP);
+            e.textComponent.text = $"{e.currHP} / {e.maxHP}";
+            SetWidth(e.currentRectTransform, e.currPercent, e.width);
+        }
+    }
+}

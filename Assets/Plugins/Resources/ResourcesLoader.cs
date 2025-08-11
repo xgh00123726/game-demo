@@ -57,6 +57,8 @@ namespace GameBase.Resources
                 path = csvReader[1];
                 container[id] = Addressables.LoadAssetAsync<T>(path).WaitForCompletion();
             }
+
+            reader.Close();
         }
 
         public static void LoadAllAsset()

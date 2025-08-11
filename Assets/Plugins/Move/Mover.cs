@@ -5,8 +5,7 @@ namespace GameBase.Move
 {
     public class Mover : IEntity
     {
-        public GameObject body;
-        public float speed;
+        public IMover owner;
 
         internal bool targetCommand;
         internal bool destCommand;

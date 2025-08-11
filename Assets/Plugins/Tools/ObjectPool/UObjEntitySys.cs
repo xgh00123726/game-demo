@@ -10,7 +10,8 @@ namespace GameBase.Tools
         where T_UObject : new()
         where T_Instance : UObjEntitySys<T_Entity, T_Container, T_UObject, T_Instance>, new()
     {
-        protected Dictionary<int, EUObjectPool<T_Entity, T_UObject>> _objPools;
+        protected Dictionary<int, EUObjectPool<T_Entity, T_UObject>> _objPools = new();
+        protected Dictionary<T_Entity, Action> _afterInstantiateDelegates = new();
 
         protected abstract T_UObject InstantiateObj(T_Entity e);
 
@@ -56,15 +57,32 @@ namespace GameBase.Tools
             }
 
             e.Obj = _objPools[e.ObjID].Get(e);
+
+            if (_afterInstantiateDelegates.ContainsKey(e))
+            {
+                _afterInstantiateDelegates[e]?.Invoke();
+                _afterInstantiateDelegates.Remove(e);
+            }
             
             AfterInstantiateEUObject(e);
         }
 
-        internal protected override void Awake()
+        /// <summary>
+        /// 立刻创建一个对象，可以在对象被遍历时使用，会在下一帧将对象的unity对象创建出来
+        /// </summary>
+        /// <typeparam name="T_EntityType"></typeparam>
+        /// <returns></returns>
+        public T_EntityType NewEntity<T_EntityType>(Action AfterInstantiateUObjectDelegate) where T_EntityType : class, T_Entity, new()
         {
-            base.Awake();
+            ++entityNewTimes;
 
-            _objPools = new Dictionary<int, EUObjectPool<T_Entity, T_UObject>>();
+            _entityContainer.RegisterType<T_EntityType>();
+
+            var e = _entityContainer.GetEntity<T_EntityType>();
+            e.InstanceID = PoolInfo.allocatedID++;
+            Register(e);
+            _afterInstantiateDelegates[e] = AfterInstantiateUObjectDelegate;
+            return e;
         }
     }
 }

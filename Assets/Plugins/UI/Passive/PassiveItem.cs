@@ -2,7 +2,7 @@ using TMPro;
 
 namespace GameBase.UI
 {
-    public class PassiveItem : BasePanelItem
+    public class PassiveItem : DetailableBaseItem
     {
         public PassiveItem()
         {

@@ -8,6 +8,12 @@ namespace Instance.Buffs
         IViewableBuff
     {
         public int textureID = 0;
+        private static DetailUI detailUI;
+
+        static ViewableBuff()
+        {
+            detailUI = DetailUISys.Instance.NewEntity<DetailUI>();
+        }
 
         public ViewableBuff()
         {
@@ -18,6 +24,11 @@ namespace Instance.Buffs
         {
             var buffUI = BuffPanel.Instance.NewEntity<BuffItem>();
             buffUI.bindBuff = this;
+
+            buffUI.AfterInstantiateUObjectDelegate = (BasePanelItem item) =>
+            {
+                detailUI.detailables.Add(buffUI);
+            };
         }
 
         float IViewableBuff.DurationRemain => durationRemain;
