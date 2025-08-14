@@ -7,8 +7,7 @@ using UnityEngine;
 namespace Instance.Spells
 {
     public class ViewableSpell : Spell,
-        IViewableSpell,
-        IIndicatorOwner
+        IViewableSpell
     {
         public int textureID = 0;
         private static DetailUI detailUI;
@@ -32,12 +31,6 @@ namespace Instance.Spells
         int IViewableSpell.Charge => 0;
 
         int IViewableSpell.TextureID => textureID;
-
-        Vector3 IIndicatorOwner.ShowPosition => Vector3.zero;
-
-        bool IIndicatorOwner.IndicatorVisble => false;
-
-        Vector3 IIndicatorOwner.Size => Vector3.one;
 
         private void InitSpellConfig(Spell e)
         {

@@ -70,6 +70,11 @@ namespace GameBase.Modify
             return _modifyables.ContainsKey(id);
         }
 
+        public bool Contains(string id)
+        {
+            return _modifyables.ContainsKey(attrIDDict[id]);
+        }
+
         public Modifyable<T> this[int i]
         {
             get => _modifyables[i];

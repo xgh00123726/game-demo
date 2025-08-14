@@ -8,6 +8,11 @@ namespace GameBase.Spells
         protected override void OnRegisterEntityToActives(Spell e)
         {
             e.RegistertoActivesDelegate?.Invoke(e);
+
+            if (e.speller != null)
+            {
+                e.acceletate = e.speller.CoolingAccelerate;
+            }
         }
 
         protected override void OnRemoveEntityFromActives(Spell e)
@@ -17,14 +22,19 @@ namespace GameBase.Spells
 
         protected override void UpdateEntity(Spell e)
         {
+            if (e.speller == null)
+            {
+                XLogger.Instance.Level(XLogger.LogLevel.Warning).EditorOnly(true)
+                    .Log("spell must have speller");
+                RemoveEntity(e);
+                return;
+            }
+
             // 冷却时间更新
             if (!e.coolReady)
             {
                 float acc = 1;
-                if (e.speller.Exist)
-                {
-                    acc = e.speller.Get().CoolingAccelerate * 0.01f + 1;
-                }
+                acc = e.acceletate * 0.01f + 1;
                 e.coolingTimeRemain -= Time.deltaTime * acc;
                 e.coolReady = e.coolingTimeRemain <= 0;
             }
@@ -35,9 +45,9 @@ namespace GameBase.Spells
                 {
                     e.userReady = e.ReadyJugDelegate?.Invoke(e) == true;
 
-                    if (e.userReady)
+                    if (e.userReady && e.indicator != null)
                     {
-                        e.SpellToReadyDelegate?.Invoke();
+                        e.indicator.Show();
                     }
                 }
                 else if (!e.targetable)
@@ -48,7 +58,10 @@ namespace GameBase.Spells
                 if (e.userReady && e.CancelJugDelegate?.Invoke(e) == true)
                 {
                     e.userReady = false;
-                    e.SpellExitReadyDelegate?.Invoke();
+                    if (e.indicator != null)
+                    {
+                        e.indicator.Hide();
+                    }
                 }
                 else if (e.userReady && e.CastJugDelegate?.Invoke(e) == true)
                 {
@@ -56,7 +69,10 @@ namespace GameBase.Spells
                     e.userReady = false;
                     e.coolingTimeRemain = e.coolingTimeSet;
                     e.CastAction?.Invoke(e);
-                    e.SpellExitReadyDelegate?.Invoke();
+                    if (e.indicator != null)
+                    {
+                        e.indicator.Hide();
+                    }
                 }
             }
 

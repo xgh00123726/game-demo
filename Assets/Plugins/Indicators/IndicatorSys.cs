@@ -35,11 +35,28 @@ namespace GameBase.Indicators
 
         protected override void UpdateEntity(Indicator e)
         {
+            if (!e.visible && e.Obj.activeSelf)
+            {
+                e.Obj.SetActive(false);
+                return;
+            }
+            if (e.visible && !e.Obj.activeSelf)
+            {
+                e.Obj.SetActive(true);
+            }
+
             if (e.setSize)
             {
                 e.setSize = false;
+                e.size.z = e.urpProjector.size.z;
                 e.urpProjector.size = e.size;
             }
+            if (e.setPivot)
+            {
+                e.setPivot = false;
+                e.urpProjector.pivot = e.pivot;
+            }
+
             e.Obj.transform.position = e.position;
         }
 

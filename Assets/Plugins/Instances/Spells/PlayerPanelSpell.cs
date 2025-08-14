@@ -9,47 +9,42 @@ namespace Instance.Spells
 {
     public class PlayerPanelSpell : ViewableSpell
     {
-        private Indicator _indicator;
+        public enum IndicatorType
+        {
+            Circle,
+            Rect,
+            Linear,
+            Sector
+        }
         public PlayerPanelSpell()
         {
             RegistertoActivesDelegate += InitCastIndicator;
         }
 
+        public IndicatorType type;
+        public float indicatorLength;
+
         private void InitCastIndicator(Spell spell)
         {
-            if (spell.shape.Exist)
+            if (type == IndicatorType.Circle)
             {
-                if (spell.shape.Get() is GMath.Circle)
+                var indicator = IndicatorSys.Instance.NewEntity<CircleIndicator>();
+                spell.indicator = indicator;
+                spell.SpellReadyingDelegate = () =>
                 {
-                    spell.SpellToReadyDelegate = () =>
-                    {
-                        _indicator = IndicatorSys.Instance.NewEntity<CircleIndicator>();
-                    };
-                    spell.SpellReadyingDelegate = () =>
-                    {
-                        _indicator.position = CameraSys.MouseHitPosition;
-                    };
-                    spell.SpellExitReadyDelegate = () =>
-                    {
-                        IndicatorSys.Instance.RemoveIndicator(_indicator);
-                    };
-                }
-
-                if (spell.shape.Get() is GMath.Rect2D)
+                    indicator.position = CameraSys.MouseHitPosition;
+                };
+            }
+            if (type == IndicatorType.Linear)
+            {
+                var indicator = IndicatorSys.Instance.NewEntity<LinearIndicator>();
+                spell.indicator = indicator;
+                spell.SpellReadyingDelegate = () =>
                 {
-                    spell.SpellToReadyDelegate = () =>
-                    {
-                        _indicator = IndicatorSys.Instance.NewEntity<RectIndicator>();
-                    };
-                    spell.SpellReadyingDelegate = () =>
-                    {
-                        _indicator.position = CameraSys.MouseHitPosition;
-                    };
-                    spell.SpellExitReadyDelegate = () =>
-                    {
-                        IndicatorSys.Instance.RemoveIndicator(_indicator);
-                    };
-                }
+                    indicator.position = spell.speller.Position;
+                    indicator.Dir = CameraSys.MouseHitPosition - spell.speller.Position;
+                    indicator.Length = indicatorLength;
+                };
             }
         }
     }

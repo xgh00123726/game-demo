@@ -7,13 +7,15 @@ namespace GameBase.Indicators
 {
     public class Indicator : IUEntity<GameObject>
     {
-        public PossibleObj<IIndicatorOwner> owner;
         public Vector3 position;
+        public bool visible;
         public int textureID;
 
         internal Material decalMaterial;
         internal bool setSize;
+        internal bool setPivot;
         internal Vector3 size;
+        internal Vector3 pivot;
         internal protected DecalProjector urpProjector;
 
         public Vector3 Size
@@ -21,7 +23,16 @@ namespace GameBase.Indicators
             set
             {
                 setSize = true;
-                size = value;
+                size.x = value.x;
+                size.y = value.y;
+            }
+        }
+        public Vector3 Pivot
+        {
+            set
+            {
+                setPivot = true;
+                pivot = value;
             }
         }
         public GameObject Obj { get; set; }
