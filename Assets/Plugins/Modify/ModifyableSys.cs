@@ -39,15 +39,15 @@ namespace GameBase.Modify
             T finnalVal = e.valueSet;
             foreach (var modifyer in e.modifyers)
             {
-                if (modifyer.isRelease)
+                if (modifyer.isRelease) // modifyer触发自身的移除条件后，也要从modifyerable的列表中移除
                 {
                     e.RemoveModify(modifyer);
                     continue;
                 }
 
-                if (!modifyer.enable) continue;
+                if (!modifyer.enable) continue;  // modifyer不使能则不生效
 
-                if (modifyer.ModifyFunc == null) continue;
+                if (modifyer.ModifyFunc == null) continue;  // 没有modifyerfunc也不生效
 
                 if ((modifyer.type & ModifyType.Temporary) != 0)
                 {

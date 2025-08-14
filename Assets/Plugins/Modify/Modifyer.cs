@@ -5,17 +5,17 @@ namespace GameBase.Modify
 {
     public enum ModifyType
     {
-        Aways     = 1 << 0 ,
-        Periodoic = 1 << 1 ,
-        Once      = 1 << 2 ,
+        Aways     = 1 << 0 ,    // 常驻生效，每个modify周期都会触发一次modify
+        Periodoic = 1 << 1 ,    // 周期生效，当达到dt时，触发modify
+        Once      = 1 << 2 ,    // 生效一次
 
-        Temporary = 1 << 13,
-        Forever   = 1 << 14,
+        Temporary = 1 << 13,    // 属性永久变更，常用于掉血掉蓝，吃永久增益等
+        Forever   = 1 << 14,    // 属性暂时变更，用于buff，装备等
     }
 
     public class Modifyer<T> : IEntity
     {
-        public ModifyType type = ModifyType.Aways | ModifyType.Temporary;
+        public ModifyType type = ModifyType.Once | ModifyType.Forever;
         public bool trigOnGive;
 
         public float duration;
