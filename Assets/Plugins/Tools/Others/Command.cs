@@ -7,6 +7,7 @@ namespace GameBase.Tools
     {
         private static Dictionary<string, Action> _commands = new();
         private static Dictionary<string, Action<string>> _commandsWithPara = new();
+        private static Dictionary<string, Action<int>> _commandsWithIntPara = new();
         private static List<string> _commandKeys = new();
 
         public static List<string> CommandKeys => _commandKeys;
@@ -20,6 +21,12 @@ namespace GameBase.Tools
         public static void Register(string key, Action<string> action)
         {
             _commandsWithPara[key] = action;
+            _commandKeys.Add(key);
+        }
+
+        public static void Register(string key, Action<int> action)
+        {
+            _commandsWithIntPara[key] = action;
             _commandKeys.Add(key);
         }
 
@@ -42,6 +49,12 @@ namespace GameBase.Tools
                 if (_commandsWithPara.ContainsKey(cmd))
                 {
                     _commandsWithPara[cmd]?.Invoke(para);
+                }
+                else if (_commandsWithIntPara.ContainsKey(cmd))
+                {
+                    int intPara = int.Parse(para);
+
+                    _commandsWithIntPara[cmd]?.Invoke(intPara);
                 }
             }
         }

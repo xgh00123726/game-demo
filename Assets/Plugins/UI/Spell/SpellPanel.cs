@@ -1,4 +1,4 @@
-using GameBase.Config;
+using GameBase.Infos;
 using GameBase.Resources;
 using GameBase.Tools;
 using System.Collections.Generic;

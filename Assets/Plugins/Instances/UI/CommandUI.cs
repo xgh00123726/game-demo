@@ -11,6 +11,8 @@ namespace Instance.UI
     {
         public int maxTipNum = 10;
 
+        private int _currTipNum = 0;
+
         private bool _lastInCmdMode = false;
         public bool _inCmdMode = false;
         private GameObject _tipText;
@@ -30,18 +32,18 @@ namespace Instance.UI
             var keys = Command.CommandKeys;
 
             _tipTextTMP.text = "";
-            int currTipNum = 0;
+            _currTipNum = 0;
             foreach (var key in keys)
             {
-                if (currTipNum >= maxTipNum)
+                if (_currTipNum >= maxTipNum)
                 {
                     break;
                 }
 
                 if (currInput == null || currInput.Length <= 1 || key.StartsWith(currInput))
                 {
-                    _tipTexts[currTipNum] = key;
-                    currTipNum++;
+                    _tipTexts[_currTipNum] = key;
+                    _currTipNum++;
                     _tipTextTMP.text += $"{key}\n";
                 }
             }
@@ -53,6 +55,7 @@ namespace Instance.UI
         private void Awake()
         {
             transform.SetParent(RootCanvas.Instance.transform, false);
+
             _tipText = transform.Find("Text").gameObject;
             _tipTextTMP = _tipText.GetComponent<TextMeshProUGUI>();
             _inputText = transform.Find("Input").gameObject;
@@ -80,13 +83,24 @@ namespace Instance.UI
 
             if (!_inCmdMode && _lastInCmdMode)
             {
-                Command.Exec(_inputTextField.text);
+                string text = _inputTextField.text;
+                string[] inputs = text.Split(" ");
+                
+                if (inputs.Length == 2)
+                {
+                    Command.Exec(inputs[0], inputs[1]);
+                }
+                else if (inputs.Length == 1)
+                {
+                    Command.Exec(inputs[0]);
+                }
                 _inputTextField.text = "";
             }
 
             if (_inCmdMode && Inputs.GetKeyDown(KeyFunction.ChooseText))
             {
-                _inputTextField.text = _tipTexts[0];
+                _inputTextField.text = _tipTexts[_currTipNum - 1];
+                _inputTextField.caretPosition = _inputTextField.text.Length + 1;
             }
 
             _lastInCmdMode = _inCmdMode;

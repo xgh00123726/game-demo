@@ -13,6 +13,7 @@ namespace GameBase.Tools
         private bool _objExist;
         public bool Exist => _objExist;
 
+        public static implicit operator PossibleObj<T>(T obj) => New(obj);
         public static PossibleObj<T> New(T obj)
         {
             var ret = new PossibleObj<T>();

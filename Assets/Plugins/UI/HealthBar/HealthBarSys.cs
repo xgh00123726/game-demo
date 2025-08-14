@@ -39,7 +39,6 @@ namespace GameBase.UI
 
             e.currPercent = 1f;
             e.losingPercent = 1f;
-            e.owner.HPChange = true;
 
             e.Obj.SetActive(true);
         }
@@ -60,6 +59,12 @@ namespace GameBase.UI
 
         protected override void UpdateEntity(HealthBar e)
         {
+            if (!e.owner.ALive)
+            {
+                RemoveEntity(e);
+                return;
+            }
+
             if (e.healthBarFollow)
             {
                 e.Obj.transform.position = e.owner.HealthBarPosition;
@@ -71,16 +76,21 @@ namespace GameBase.UI
                 SetWidth(e.losingRectTransform, e.losingPercent, e.width);
             }
 
+            int currHP = (int)e.owner.CurrHP;
+            int maxHP = (int)e.owner.MaxHP;
 
-            if (!e.owner.HPChange)
+            if (currHP == e.lastCurrHP && maxHP == e.lastMaxHP)
             {
                 return;
             }
+            XLogger.Instance.Log($"curr:{currHP}, max:{maxHP}");
 
-            e.owner.HPChange = false;
             e.currPercent = Mathf.Clamp01(e.owner.CurrHP / e.owner.MaxHP);
-            e.textComponent.text = $"{e.owner.CurrHP} / {e.owner.MaxHP}";
+            e.textComponent.text = $"{currHP} / {maxHP}";
             SetWidth(e.currentRectTransform, e.currPercent, e.width);
+
+            e.lastCurrHP = currHP;
+            e.lastMaxHP = maxHP;
         }
     }
 }

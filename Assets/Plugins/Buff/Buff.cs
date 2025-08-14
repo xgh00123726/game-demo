@@ -11,7 +11,7 @@ namespace GameBase.Buffs
         internal protected bool alive = false;
 
         public float durationSet = 2;
-        public PossibleObj<IBuffOwner> owner;
+        public IBuffOwner owner;
         public List<Action<Buff>> RegistertoActivesDelegate = new();
         public List<Action<Buff>> RemoveFromActiveDelegate = new();
 

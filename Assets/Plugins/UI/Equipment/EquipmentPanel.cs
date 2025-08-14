@@ -1,6 +1,6 @@
 using UnityEngine;
 using GameBase.Tools;
-using GameBase.Config;
+using GameBase.Infos;
 
 namespace GameBase.UI
 {

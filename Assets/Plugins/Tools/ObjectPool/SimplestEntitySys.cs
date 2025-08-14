@@ -17,6 +17,7 @@ namespace GameBase.Tools
         public int sysID = 0;
         public int entityCount = 0;
         public int entityNewTimes = 0;
+        public IEnumerable<T_Entity> Entities => _entities;
 
         protected int tick = 0;
         protected int fixedTick = 0;

@@ -1,4 +1,4 @@
-namespace GameBase.Config
+namespace GameBase.Infos
 {
     public static class UIPanelConfig
     {

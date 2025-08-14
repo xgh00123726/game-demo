@@ -6,7 +6,9 @@ namespace GameBase.Move
     public class Mover : IEntity
     {
         public IMover owner;
+        public bool IsMoving => isMoveing;
 
+        internal bool isMoveing;
         internal bool targetCommand;
         internal bool destCommand;
         internal PossibleObj<Rigidbody> rigidbody;
@@ -27,6 +29,7 @@ namespace GameBase.Move
             set
             {
                 destCommand = true;
+                isMoveing = true;
                 targetCommand = false;
                 dest = value;
             }
@@ -37,6 +40,7 @@ namespace GameBase.Move
             set
             {
                 destCommand = false;
+                isMoveing = true;
                 targetCommand = true;
                 target.Set(value);
             }

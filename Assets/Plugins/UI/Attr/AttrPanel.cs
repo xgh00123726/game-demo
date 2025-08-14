@@ -1,4 +1,4 @@
-using GameBase.Config;
+using GameBase.Infos;
 using TMPro;
 using UnityEngine;
 

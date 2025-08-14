@@ -90,17 +90,35 @@ public class CreatureSys : UObjEntitySys<Creature, SimpleEntityContainer, GameOb
     protected override void AfterInstantiateEUObject(Creature e)
     {
         e.Obj.transform.position = e.genPos;
+        e.Alive = true;
+        e.AfterInstantiateFromPoolDelegate?.Invoke();
 
         e.Obj.SetActive(true);
     }
 
     protected override void BeforeReleaseEUObject(Creature e)
     {
+        e.Alive = false;
+
         e.Obj.SetActive(false);
     }
 
     protected override void UpdateEntity(Creature e)
     {
-        
+        if (e.ReleaseTrigger)
+        {
+            RemoveEntity(e);
+        }
+    }
+
+    public void RemoveAll<T_EntityType>() where T_EntityType : Creature
+    {
+        foreach (var c in _entities)
+        {
+            if (c.GetType() == typeof(T_EntityType))
+            {
+                RemoveEntity(c);
+            }
+        }
     }
 }

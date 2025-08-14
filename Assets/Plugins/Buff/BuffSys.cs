@@ -27,14 +27,19 @@ namespace GameBase.Buffs
 
         protected override void UpdateEntity(Buff e)
         {
+            if (e.owner == null)
+            {
+                return;
+            }
+
             if (e.durationRemain > 0)
             {
                 e.durationRemain -= Time.deltaTime;
             }
 
-            if (e.durationRemain <= 0 && e.owner.Exist)
+            if (e.durationRemain <= 0)
             {
-                e.owner.Get().Buffs.RemoveBuff(e);
+                e.owner.Buffs.RemoveBuff(e);
                 RemoveEntity(e);
             }
         }

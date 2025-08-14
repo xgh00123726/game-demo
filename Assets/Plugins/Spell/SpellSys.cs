@@ -1,7 +1,7 @@
 using GameBase.Tools;
 using UnityEngine;
 
-namespace GameBase.Spell
+namespace GameBase.Spells
 {
     public class SpellSys : SimplestEntitySys<Spell, SimpleEntityContainer, SpellSys>
     {
@@ -29,34 +29,40 @@ namespace GameBase.Spell
                 e.coolReady = e.coolingTimeRemain <= 0;
             }
 
-            bool coolReady = e.coolReady;
+            if (e.coolReady)
+            {
+                if (e.targetable && !e.userReady)
+                {
+                    e.userReady = e.ReadyJugDelegate?.Invoke(e) == true;
 
-            bool userReady;
-            if (!e.targetable)
-            {
-                userReady = true;
-            }
-            else
-            {
-                userReady = e.userReady = e.ReadyDelegate?.Invoke(e) == true;
-            }
-
-            if (coolReady)
-            {
-                if (!userReady && e.ReadyDelegate?.Invoke(e) == true)
+                    if (e.userReady)
+                    {
+                        e.SpellToReadyDelegate?.Invoke();
+                    }
+                }
+                else if (!e.targetable)
                 {
                     e.userReady = true;
                 }
-                else if (userReady && e.CancelDelegate?.Invoke(e) == true)
+
+                if (e.userReady && e.CancelJugDelegate?.Invoke(e) == true)
                 {
                     e.userReady = false;
+                    e.SpellExitReadyDelegate?.Invoke();
                 }
-                else if (userReady && e.CastDelegate?.Invoke(e) == true)
+                else if (e.userReady && e.CastJugDelegate?.Invoke(e) == true)
                 {
                     e.coolReady = false;
+                    e.userReady = false;
                     e.coolingTimeRemain = e.coolingTimeSet;
                     e.CastAction?.Invoke(e);
+                    e.SpellExitReadyDelegate?.Invoke();
                 }
+            }
+
+            if (e.userReady)
+            {
+                e.SpellReadyingDelegate?.Invoke();
             }
         }
     }

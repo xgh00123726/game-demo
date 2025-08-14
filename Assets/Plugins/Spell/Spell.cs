@@ -1,8 +1,9 @@
 using System;
 using UnityEngine;
 using GameBase.Tools;
+using GameBase.Math;
 
-namespace GameBase.Spell
+namespace GameBase.Spells
 {
     public class Spell : IEntity
     {
@@ -11,14 +12,19 @@ namespace GameBase.Spell
         public PossibleObj<ISpellTarget> target;
         public PossibleObj<Vector3> dest;
         public PossibleObj<ISpeller> speller;
+        public PossibleObj<IShape2D> shape;
         public Action<Spell> CastAction;         // 技能动作
         public float point;      // 前摇
         public float backswing;  // 后摇
         public float duration;   // 持续时间
-        public delegate bool SpellDelegate(Spell spell);
-        public SpellDelegate CastDelegate;
-        public SpellDelegate CancelDelegate;
-        public SpellDelegate ReadyDelegate;
+
+        public Func<Spell, bool> CastJugDelegate;
+        public Func<Spell, bool> CancelJugDelegate;
+        public Func<Spell, bool> ReadyJugDelegate;
+
+        public Action SpellReadyingDelegate;
+        public Action SpellToReadyDelegate;
+        public Action SpellExitReadyDelegate;
 
         public Action<Spell> RegistertoActivesDelegate;
         public Action<Spell> RemoveFromActiveDelegate;

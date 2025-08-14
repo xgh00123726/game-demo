@@ -65,6 +65,7 @@ namespace GameBase.Tools
             }
             
             AfterInstantiateEUObject(e);
+            e.AfterInstantiateObj?.Invoke();
         }
 
         /// <summary>

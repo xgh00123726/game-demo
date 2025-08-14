@@ -1,4 +1,5 @@
 using Constructor.Buffs;
+using Constructor.Flyings;
 using Constructor.Projectiles;
 using UnityEngine;
 namespace Constructor
@@ -9,6 +10,7 @@ namespace Constructor
         {
             ProjectileRegister.RegisterProjectileGenerator();
             BuffRegister.RegisterBuffGenerator();
+            FlyingRegister.RegisterGenerator();
         }
     }
 }

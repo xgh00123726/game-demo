@@ -1,6 +1,6 @@
 using TMPro;
 using UnityEngine;
-using GameBase.Config;
+using GameBase.Infos;
 
 namespace GameBase.UI
 {

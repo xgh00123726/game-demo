@@ -27,7 +27,7 @@ namespace GameBase.Move
 
             if ((e.Dest - e.owner.GO.transform.position).magnitude < moveStopDis)
             {
-
+                e.isMoveing = false;
                 return;
             }
 

@@ -10,7 +10,9 @@
         "Entity",
         "Instance",
         "UI",
-        "Modify"
+        "Modify",
+        "ConbineSys",
+        "GEffect"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

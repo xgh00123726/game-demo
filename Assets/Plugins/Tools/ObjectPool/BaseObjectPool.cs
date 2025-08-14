@@ -40,6 +40,11 @@ namespace GameBase.Tools
                 _objects.RemoveFirst();
             }
 
+            if (ret is IPoolable iret)
+            {
+                iret.AfterGet();
+            }
+
             InstantiateAction?.Invoke(ret);
 
             return ret;
@@ -52,13 +57,12 @@ namespace GameBase.Tools
         /// </list></summary>
         public virtual void Release(T obj)
         {
-            ReleaseAction?.Invoke(obj);
-            _objects.AddLast(obj);
-        }
+            if (obj is IPoolable iobj)
+            {
+                iobj.BeforeRelease();
+            }
 
-        public virtual void Add(T obj)
-        {
-            InstantiateAction?.Invoke(obj);
+            ReleaseAction?.Invoke(obj);
             _objects.AddLast(obj);
         }
     }

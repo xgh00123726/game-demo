@@ -1,4 +1,5 @@
 using GameBase.Tools;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -29,6 +30,7 @@ namespace GameBase.UI
         public GameObject Obj { get; set; }
         public int ObjID { get; set; } = 7;
         public int InstanceID { get; set; }
+        public virtual Action AfterInstantiateObj { get; set; } = null;
         public float CurrHP
         {
             set

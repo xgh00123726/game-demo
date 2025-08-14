@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameBase.Spell
+namespace GameBase.Spells
 {
     public interface ISpeller
     {

@@ -1,11 +1,14 @@
 using GameBase.Tools;
-using GameBase.Spell;
+using GameBase.Spells;
 using GameBase.UI;
+using GameBase.Indicators;
+using UnityEngine;
 
-namespace GameBase.Instance
+namespace Instance.Spells
 {
-    public class ViewableSpell : Spell.Spell,
-        IViewableSpell
+    public class ViewableSpell : Spell,
+        IViewableSpell,
+        IIndicatorOwner
     {
         public int textureID = 0;
         private static DetailUI detailUI;
@@ -30,19 +33,25 @@ namespace GameBase.Instance
 
         int IViewableSpell.TextureID => textureID;
 
-        private void InitSpellConfig(Spell.Spell e)
+        Vector3 IIndicatorOwner.ShowPosition => Vector3.zero;
+
+        bool IIndicatorOwner.IndicatorVisble => false;
+
+        Vector3 IIndicatorOwner.Size => Vector3.one;
+
+        private void InitSpellConfig(Spell e)
         {
             if (targetable)
             {
-                ReadyDelegate = SpellReady;
-                CastDelegate = SpellCast;
+                ReadyJugDelegate = SpellReady;
+                CastJugDelegate = SpellCast;
             }
             else
             {
-                CastDelegate = SpellReady;
+                CastJugDelegate = SpellReady;
             }
 
-            CancelDelegate = SpellCancel;
+            CancelJugDelegate = SpellCancel;
 
             var spellItem = SpellPanel.Instance.NewEntity<SpellItem>();
             spellItem.bindSpell = this;
@@ -53,17 +62,17 @@ namespace GameBase.Instance
             };
         }
 
-        private bool SpellReady(Spell.Spell spell)
+        private bool SpellReady(Spell spell)
         {
             return Inputs.GetKeyDown(hotKey);
         }
 
-        private bool SpellCast(Spell.Spell spell)
+        private bool SpellCast(Spell spell)
         {
             return Inputs.GetKeyDown(KeyFunction.MouseConfirm);
         }
 
-        private bool SpellCancel(Spell.Spell spell)
+        private bool SpellCancel(Spell spell)
         {
             return Inputs.GetKeyDown(KeyFunction.Cancel);
         }
