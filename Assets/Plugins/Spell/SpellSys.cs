@@ -1,10 +1,14 @@
 using GameBase.Tools;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameBase.Spells
 {
     public class SpellSys : SimplestEntitySys<Spell, SimpleEntityContainer, SpellSys>
     {
+        private Dictionary<int, Action<Spell>> _spellActionDict = new(); 
+
         protected override void OnRegisterEntityToActives(Spell e)
         {
             e.RegistertoActivesDelegate?.Invoke(e);
@@ -80,6 +84,26 @@ namespace GameBase.Spells
             {
                 e.SpellReadyingDelegate?.Invoke();
             }
+        }
+    
+        public Action<Spell> GetSpellAction(int id)
+        {
+            if (!_spellActionDict.ContainsKey(id))
+            {
+                XLogger.Instance.Log($"invalid generator id:{id}");
+                return null;
+            }
+            return _spellActionDict[id];
+        }
+
+        public void RegisterSpellAction(int id, Action<Spell> spell)
+        {
+            if (_spellActionDict.ContainsKey(id))
+            {
+                XLogger.Instance.Log($"duplicate generator id:{id}");
+                return;
+            }
+            _spellActionDict.Add(id, spell);
         }
     }
 }

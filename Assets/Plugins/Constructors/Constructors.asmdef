@@ -12,7 +12,8 @@
         "UI",
         "Modify",
         "ConbineSys",
-        "GEffect"
+        "GEffect",
+        "GSpell"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

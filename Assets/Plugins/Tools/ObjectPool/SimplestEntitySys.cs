@@ -44,7 +44,7 @@ namespace GameBase.Tools
         protected LinkedList<T_Entity> _entitiesNeedRemove = new LinkedList<T_Entity>();
         protected T_Container _entityContainer = new T_Container();
         protected LinkedList<T_Entity> _entities = new LinkedList<T_Entity>();
-        protected List<Delegate> entityGenerateDelegates = new List<Delegate>();
+        protected Dictionary<int, Delegate> entityGenerateDelegates = new();
         /// <summary>
         /// 将实体标记为删除
         /// </summary>
@@ -113,15 +113,17 @@ namespace GameBase.Tools
         /// <returns></returns>
         public T_EntityType NewEntity<T_EntityType>(int id) where T_EntityType : class, T_Entity, new()
         {
-            if (id >= entityGenerateDelegates.Count || id < 0)
+            if (!entityGenerateDelegates.ContainsKey(id))
             {
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log("invalid entity generator id");
+                    .Log($"invalid entity generator id:{id}");
+                return null;
             }
             if (entityGenerateDelegates[id] == null)
             {
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
                     .Log("null entity generator");
+                return null;
             }
 
             if (entityGenerateDelegates[id] is Func<T_EntityType> func)
@@ -144,10 +146,13 @@ namespace GameBase.Tools
         /// </summary>
         /// <param name="eGen"></param>
         /// <returns>快速实体生成器的id</returns>
-        public int RegisterEntityGenerateDeletate<T_entityType>(Func<T_entityType> eGen) where T_entityType : T_Entity
+        public void RegisterEntityGenerateDeletate<T_entityType>(int id, Func<T_entityType> eGen) where T_entityType : T_Entity
         {
-            entityGenerateDelegates.Add(eGen);
-            return entityGenerateDelegates.Count - 1;
+            if (entityGenerateDelegates.ContainsKey(id))
+            {
+                XLogger.Instance.Log($"register duplulicate generator id:{id}");
+            }
+            entityGenerateDelegates.Add(id, eGen);
         }
 
         internal protected virtual void Awake()

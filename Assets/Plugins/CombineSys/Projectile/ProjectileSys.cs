@@ -2,9 +2,7 @@ using GameBase.Flyings;
 using GameBase.GEffects;
 using GameBase.Tools;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 namespace Combines.Projectiles
 {
@@ -12,6 +10,14 @@ namespace Combines.Projectiles
     {
         protected override void UpdateEntity(Projectile e)
         { 
+        }
+
+        protected override void OnRegisterEntityToActives(Projectile e)
+        {
+            e.flying.src = e.owner.HandPosition;
+            e.flying.dest = e.target.Center;
+
+            e.flying.AfterInstantiateObj = () => e.flyingGeneratedObj = true;
         }
 
         private void EffectTarget(Func<GEffect<IProjectileOwner, IProjectileTarget>> effectConstructor, IProjectileOwner owner, IProjectileTarget target)
@@ -28,18 +34,18 @@ namespace Combines.Projectiles
 
         protected override void FixedUpdateEntity(Projectile e)
         {
-            if (e.owner == null || e.effectConstructor == null || e.flying == null)
+            if (e.owner == null || e.flying == null)
             {
+                XLogger.Instance.Level(XLogger.LogLevel.Warning)
+                    .Log("null owner/flying");
                 RemoveEntity(e);
                 return;
             }
             if (e.target == null && (e.shape == null && e.targetsSet == null))
             {
+                XLogger.Instance.Level(XLogger.LogLevel.Warning)
+                    .Log("projectile has null target");
                 RemoveEntity(e);
-                return;
-            }
-            if (!e.updateEnable)
-            {
                 return;
             }
             if (!e.flying.Alive)
@@ -47,8 +53,13 @@ namespace Combines.Projectiles
                 RemoveEntity(e);
                 return;
             }
+            if (!e.flyingGeneratedObj)
+            {
+                return;
+            }
 
             var objTransform = e.flying.Obj.transform;
+            e.flying.dest = e.target.Center;
 
             if (e.shape != null)
             {

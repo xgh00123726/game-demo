@@ -1,8 +1,9 @@
-using GameBase.Creature;
+using GameBase.Creatures;
 using GameBase.Math;
 using GameBase.Flyings;
 using System.Collections.Generic;
 using Combines.Projectiles;
+using UnityEngine;
 
 
 namespace Instance.GameSys
@@ -18,7 +19,7 @@ namespace Instance.GameSys
                 return _instance;
             }
         }
-        IEnumerable<IProjectileTarget> IProjectileTargetsSet.TargetsInShape(IShape2D shape)
+        public IEnumerable<IProjectileTarget> TargetsInShape(IShape2D shape)
         {
             LinkedList<IProjectileTarget> ret = new();
             foreach(var c in CreatureSys.Instance.Entities)
@@ -28,6 +29,26 @@ namespace Instance.GameSys
                     if (shape.Contains(tar.Center.x, tar.Center.z))
                     {
                         ret.AddLast(tar);
+                    }
+                }
+            }
+
+            return ret;
+        }
+
+        public IProjectileTarget NearestTarget(Vector3 center, float radius)
+        {
+            float minDis = radius;
+            IProjectileTarget ret = null;
+            foreach (var c in CreatureSys.Instance.Entities)
+            {
+                if (c is IProjectileTarget tar)
+                {
+                    float dis = GMath.GameDistance(center, tar.Center);
+                    if (dis <= minDis)
+                    {
+                        minDis = dis;
+                        ret = tar;
                     }
                 }
             }

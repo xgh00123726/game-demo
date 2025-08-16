@@ -1,6 +1,7 @@
 using Constructor.Buffs;
 using Constructor.Flyings;
 using Constructor.Projectiles;
+using GameBase.Spells;
 using UnityEngine;
 namespace Constructor
 {
@@ -11,6 +12,7 @@ namespace Constructor
             ProjectileRegister.RegisterProjectileGenerator();
             BuffRegister.RegisterBuffGenerator();
             FlyingRegister.RegisterGenerator();
+            SpellActionRegister.RegisterGenerator();
         }
     }
 }

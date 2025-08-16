@@ -21,13 +21,14 @@ namespace GameBase.Flyings
         public CurveFactory.CurveType curveType;
 
         internal bool alive;
-        internal GameObject releaseEffect;
+        internal ParticleSystem releaseEffect;
         internal GameObject trail;
         internal float instantiateTime;
 
         public virtual void AfterGet()
         {
             releaseDistance = 0.1f;
+            releaseEffectID = -1;
             alive = true;
         }
 

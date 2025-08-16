@@ -21,6 +21,17 @@ namespace GameBase.Math
                 ) * Mathf.Rad2Deg;
         }
 
+        public static float GameDistance(Vector3 c1, Vector3 c2)
+        {
+            float x1 = c1.x;
+            float y1 = c1.z;
+            float x2 = c2.x;
+            float y2 = c2.z;
+            float dx = x1 - x2;
+            float dy = y1 - y2;
+            return Mathf.Sqrt(dx * dx + dy * dy);
+        }
+
 
         public static bool FloatEqualZero(float val)
         {

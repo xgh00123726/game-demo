@@ -1,6 +1,7 @@
 using UnityEngine;
 using GameBase.GCamera;
 using GameBase.Flyings;
+using GameBase.Tools;
 
 namespace Constructor.Flyings
 {
@@ -8,25 +9,22 @@ namespace Constructor.Flyings
     {
         private static Flying FlyingGen_0()
         {
-            var proj = FlyingSys.Instance.NewEntity<Flying>();
-            proj.ObjID = 2;
-            proj.curveType = CurveFactory.CurveType.Tracer;
-            proj.speed = 30f;
-            proj.maxExistTime = 10f;
+            var e = FlyingSys.Instance.NewEntity<Flying>();
+            e.ObjID = 22; // Prefabs/Projectile/Sword12_Green
+            e.maxExistTime = 10f;
+            e.speed = 30f;
 
-            return proj;
+            return e;
         }
 
         private static Flying FlyingGen_1()
         {
             var proj = FlyingSys.Instance.NewEntity<Flying>();
             proj.ObjID = 3;
-            proj.dest = CameraSys.MouseHitPosition;
             var curve = CurveFactory.CreateInstance(CurveFactory.CurveType.Slower, proj) as Slower;
             curve.factor = 0f;
             curve.slowDis = 1.5f;
             proj.curve = curve;
-            proj.speed = 3f;
             proj.maxExistTime = 10f;
 
             return proj;
@@ -36,8 +34,6 @@ namespace Constructor.Flyings
         {
             var proj = FlyingSys.Instance.NewEntity<Flying>();
             proj.ObjID = 2;
-            proj.curveType = CurveFactory.CurveType.Tracer;
-            proj.speed = 30f;
             proj.maxExistTime = 10f;
 
             return proj;
@@ -47,9 +43,6 @@ namespace Constructor.Flyings
         {
             var proj = FlyingSys.Instance.NewEntity<Flying>();
             proj.ObjID = 3;
-            proj.dest = CameraSys.MouseHitPosition;
-            proj.curveType = CurveFactory.CurveType.Liner;
-            proj.speed = 3f;
             proj.maxExistTime = 10f;
 
             return proj;
@@ -60,22 +53,19 @@ namespace Constructor.Flyings
             var proj = FlyingSys.Instance.NewEntity<Flying>();
 
             proj.ObjID = 20;
-            proj.srcOffset = new Vector3(0, 10, 0);
-            proj.dest = CameraSys.MouseHitPosition;
-            proj.curveType = CurveFactory.CurveType.Fall;
-            proj.speed = 10f;
             proj.maxExistTime = 10f;
+            XLogger.Instance.Log("flying gen 4");
 
             return proj;
         }
 
         public static void RegisterGenerator()
         {
-            FlyingSys.Instance.RegisterEntityGenerateDeletate(FlyingGen_0);
-            FlyingSys.Instance.RegisterEntityGenerateDeletate(FlyingGen_1);
-            FlyingSys.Instance.RegisterEntityGenerateDeletate(FlyingGen_2);
-            FlyingSys.Instance.RegisterEntityGenerateDeletate(FlyingGen_3);
-            FlyingSys.Instance.RegisterEntityGenerateDeletate(FlyingGen_4);
+            FlyingSys.Instance.RegisterEntityGenerateDeletate(0, FlyingGen_0);
+            FlyingSys.Instance.RegisterEntityGenerateDeletate(1, FlyingGen_1);
+            FlyingSys.Instance.RegisterEntityGenerateDeletate(2, FlyingGen_2);
+            FlyingSys.Instance.RegisterEntityGenerateDeletate(3, FlyingGen_3);
+            FlyingSys.Instance.RegisterEntityGenerateDeletate(4, FlyingGen_4);
         }
     }
 }

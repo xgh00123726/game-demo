@@ -1,6 +1,6 @@
 using UnityEngine;
 using GameBase.Tools;
-using GameBase.Creature;
+using GameBase.Creatures;
 using GameBase.GCamera;
 using GameBase.Flyings;
 using GameBase.Math;
@@ -15,11 +15,17 @@ namespace Constructor.Projectiles
     {
         private static Projectile ProjectileGen_0()
         {
-            var proj = ProjectileSys.Instance.NewEntity<Projectile>();
+            var ep = ProjectileSys.Instance.NewEntity<Projectile>();
+            ep.maxeffectTimes = 1;
+            ep.hasWhite = false;
 
-            proj.maxeffectTimes = 1;
+            var ef = FlyingSys.Instance.NewEntity<Flying>(0);
+            ef.srcOffset = new Vector3(0, 1f, 0);
+            ef.releaseEffectID = 25;
+            ef.curveType = CurveFactory.CurveType.Tracer;
+            ep.flying = ef;
 
-            return proj;
+            return ep;
         }
 
         private static Projectile ProjectileGen_1()
@@ -27,7 +33,6 @@ namespace Constructor.Projectiles
             var proj = ProjectileSys.Instance.NewEntity<Projectile>();
 
             proj.maxeffectTimes = 999;
-            proj.hasWhite = true;
             proj.shape = new GMath.Circle(Vector2.zero, 1f);
             proj.targetsSet = SimplestProjectileTargetSys.Instance;
 
@@ -69,11 +74,11 @@ namespace Constructor.Projectiles
 
         public static void RegisterProjectileGenerator()
         {
-            ProjectileSys.Instance.RegisterEntityGenerateDeletate(ProjectileGen_0);
-            ProjectileSys.Instance.RegisterEntityGenerateDeletate(ProjectileGen_1);
-            ProjectileSys.Instance.RegisterEntityGenerateDeletate(ProjectileGen_2);
-            ProjectileSys.Instance.RegisterEntityGenerateDeletate(ProjectileGen_3);
-            ProjectileSys.Instance.RegisterEntityGenerateDeletate(ProjectileGen_4);
+            ProjectileSys.Instance.RegisterEntityGenerateDeletate(0, ProjectileGen_0);
+            ProjectileSys.Instance.RegisterEntityGenerateDeletate(1, ProjectileGen_1);
+            ProjectileSys.Instance.RegisterEntityGenerateDeletate(2, ProjectileGen_2);
+            ProjectileSys.Instance.RegisterEntityGenerateDeletate(3, ProjectileGen_3);
+            ProjectileSys.Instance.RegisterEntityGenerateDeletate(4, ProjectileGen_4);
         }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Instance.Spells
 {
-    public class ViewableSpell : Spell,
+    public class ViewableSpell : IndicatorSpell,
         IViewableSpell
     {
         public int textureID = 0;
@@ -17,12 +17,10 @@ namespace Instance.Spells
             detailUI = DetailUISys.Instance.NewEntity<DetailUI>();
         }
 
-        public ViewableSpell()
+        public ViewableSpell() : base()
         {
             RegistertoActivesDelegate += InitSpellConfig;
         }
-
-        public KeyFunction hotKey;
 
         float IViewableSpell.CoolingRemain => CoolingTimeRemain;
 
@@ -34,18 +32,6 @@ namespace Instance.Spells
 
         private void InitSpellConfig(Spell e)
         {
-            if (targetable)
-            {
-                ReadyJugDelegate = SpellReady;
-                CastJugDelegate = SpellCast;
-            }
-            else
-            {
-                CastJugDelegate = SpellReady;
-            }
-
-            CancelJugDelegate = SpellCancel;
-
             var spellItem = SpellPanel.Instance.NewEntity<SpellItem>();
             spellItem.bindSpell = this;
 
@@ -53,21 +39,6 @@ namespace Instance.Spells
             {
                 detailUI.detailables.Add(spellItem);
             };
-        }
-
-        private bool SpellReady(Spell spell)
-        {
-            return Inputs.GetKeyDown(hotKey);
-        }
-
-        private bool SpellCast(Spell spell)
-        {
-            return Inputs.GetKeyDown(KeyFunction.MouseConfirm);
-        }
-
-        private bool SpellCancel(Spell spell)
-        {
-            return Inputs.GetKeyDown(KeyFunction.Cancel);
         }
     }
 }

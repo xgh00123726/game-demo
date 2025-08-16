@@ -7,7 +7,7 @@ using Instance.Indicators;
 
 namespace Instance.Spells
 {
-    public class PlayerPanelSpell : ViewableSpell
+    public class IndicatorSpell : KeySpell
     {
         public enum IndicatorType
         {
@@ -16,7 +16,7 @@ namespace Instance.Spells
             Linear,
             Sector
         }
-        public PlayerPanelSpell()
+        public IndicatorSpell()
         {
             RegistertoActivesDelegate += InitCastIndicator;
         }

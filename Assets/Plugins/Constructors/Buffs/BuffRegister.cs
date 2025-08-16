@@ -40,7 +40,7 @@ namespace Constructor.Buffs
 
         public static void RegisterBuffGenerator()
         {
-            BuffSys.Instance.RegisterEntityGenerateDeletate(BuffGen_0);
+            BuffSys.Instance.RegisterEntityGenerateDeletate(0, BuffGen_0);
         }
     }
 }

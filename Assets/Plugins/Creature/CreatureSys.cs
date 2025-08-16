@@ -1,4 +1,4 @@
-using GameBase.Creature;
+using GameBase.Creatures;
 using GameBase.Math;
 using GameBase.Resources;
 using GameBase.Tools;
@@ -91,7 +91,6 @@ public class CreatureSys : UObjEntitySys<Creature, SimpleEntityContainer, GameOb
     {
         e.Obj.transform.position = e.genPos;
         e.Alive = true;
-        e.AfterInstantiateFromPoolDelegate?.Invoke();
 
         e.Obj.SetActive(true);
     }

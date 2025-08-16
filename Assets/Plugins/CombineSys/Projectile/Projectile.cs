@@ -11,19 +11,21 @@ namespace Combines.Projectiles
     public class Projectile : IEntity,
         IPoolable
     {
+        // require
+        public Flying flying;
         public int maxeffectTimes;
-        public bool hasWhite;
-
+        public IProjectileTarget target;
         public IShape2D shape;
         public IProjectileTargetsSet targetsSet;
-        public Func<GEffect<IProjectileOwner, IProjectileTarget>> effectConstructor;
-        public IProjectileTarget target;
         public IProjectileOwner owner;
+        public Func<GEffect<IProjectileOwner, IProjectileTarget>> effectConstructor;
 
-        internal Flying flying;
+        // optional
+        public bool hasWhite;
+
+        internal bool flyingGeneratedObj;
         internal int actualEffectTimes;
         internal HashSet<int> whites;
-        internal bool updateEnable;
 
         public int InstanceID { get; set; }
 
@@ -42,14 +44,13 @@ namespace Combines.Projectiles
         void IPoolable.AfterGet()
         {
             actualEffectTimes = 0;
-            flying = FlyingSys.Instance.NewEntity<Flying>(4);
-            flying.AfterInstantiateObj = () => updateEnable = true;
+            maxeffectTimes = 1;
+            hasWhite = false;
+            flyingGeneratedObj = false;
         }
 
         void IPoolable.BeforeRelease()
         {
-            maxeffectTimes = 1;
-            hasWhite = false;
             whites = null;
             flying = null;
             shape = null;
@@ -57,7 +58,6 @@ namespace Combines.Projectiles
             target = null;
             owner = null;
             effectConstructor = null;
-            updateEnable = false;
         }
     }
 }

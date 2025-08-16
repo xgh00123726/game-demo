@@ -12,7 +12,12 @@ namespace GameBase.Flyings
 
         protected override GameObject InstantiateObj(Flying e)
         {
-            return GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
+            var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
+
+            var effectObj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.releaseEffectID));
+            e.releaseEffect = effectObj.GetComponent<ParticleSystem>();
+
+            return obj;
         }
 
         protected override void AfterInstantiateEUObject(Flying e)
@@ -20,6 +25,7 @@ namespace GameBase.Flyings
             if (e.curveType != CurveFactory.CurveType.None)
             {
                 e.curve = CurveFactory.CreateInstance(e.curveType, e);
+                e.curve.speed = e.speed;
             }
 
             e.instantiateTime = Time.time;
@@ -27,7 +33,7 @@ namespace GameBase.Flyings
             // 射弹生成位置 = 主位置 + 位置偏移
             // 主位置 = 如果有主人：主人手部，否则：0
             // 位置偏移 = 自行赋值更改
-            e.Obj.transform.position = e.Src;
+            e.Obj.transform.position = e.src + e.srcOffset;
 
             e.Obj.SetActive(true);
         }
@@ -46,9 +52,18 @@ namespace GameBase.Flyings
         /// </list></summary>
         protected override void UpdateEntity(Flying e)
         {
+            if (e.curve == null)
+            {
+                XLogger.Instance.Level(XLogger.LogLevel.Warning)
+                    .Log("flying has no curve");
+                RemoveEntity(e);
+            }
+
             // 射弹超时
             if (Time.time > e.maxExistTime + e.instantiateTime)
             {
+                e.releaseEffect.transform.position = e.Obj.transform.position;
+                e.releaseEffect.Play();
                 RemoveEntity(e);
             }
 
@@ -62,6 +77,8 @@ namespace GameBase.Flyings
 
             if ((e.dest - e.Obj.transform.position).magnitude <= e.releaseDistance)
             {
+                e.releaseEffect.transform.position = e.Obj.transform.position;
+                e.releaseEffect.Play();
                 RemoveEntity(e);
             }
         }
