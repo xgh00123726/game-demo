@@ -8,8 +8,6 @@ using XLua.LuaDLL;
 [System.Serializable]
 public class LuaLoadConfig
 {
-    public bool load;
-    public bool loaded;
     public TextAsset asset;
     public string methodName;
 }
@@ -31,18 +29,13 @@ public partial class LuaEntry : MonoBehaviour
 
     private void LoadLua(LuaLoadConfig cfg)
     {
-        if (!cfg.load) return;
-
         luaEnv.DoString(cfg.asset.text, cfg.asset.name, scriptScopeTable);
-        XLogger.Instance.Log($"lua load:{cfg.asset.name}");
+
         if (cfg.methodName != null && cfg.methodName.Length > 0)
         {
             var method = GetType().GetMethod(cfg.methodName);
-            XLogger.Instance.Log(method);
             method.Invoke(this, null);
         }
-        cfg.loaded = true;
-        cfg.load = false;
     }
 
     void Awake()
@@ -68,6 +61,10 @@ public partial class LuaEntry : MonoBehaviour
         foreach (var lua in luaLoads)
         {
             LoadLua(lua);
+            Command.Register($"loadlua-{lua.asset.name}", () =>
+            {
+                LoadLua(lua);
+            });
         }
 
         // 从 Lua 脚本域中获取定义的函数
@@ -102,12 +99,6 @@ public partial class LuaEntry : MonoBehaviour
         {
             luaUpdate();
         }
-
-        foreach (var lua in luaLoads)
-        {
-            LoadLua(lua);
-        }
-
 
         if (Time.time - LuaEntry.lastGCTime > GCInterval)
         {
