@@ -23,7 +23,7 @@ namespace GameBase.Spells
                 XLogger.Instance.Log("owner null");
                 return;
             }
-            if (!mOwner.Modifyables.Contains("attackRange"))
+            if (!mOwner.Modifyables.ContainsValueWith("attackRange"))
             {
                 XLogger.Instance.Log("no attack range");
                 return;

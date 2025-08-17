@@ -13,7 +13,8 @@ namespace GameBase.Modify
         Forever   = 1 << 14,    // 属性暂时变更，用于buff，装备等
     }
 
-    public class Modifyer<T> : IEntity
+    public class Modifyer<T> : IEntity,
+        IPoolable
     {
         public ModifyType type = ModifyType.Once | ModifyType.Forever;
         public bool trigOnGive;
@@ -21,7 +22,7 @@ namespace GameBase.Modify
         public float duration;
         public float dt;
         public Func<T, T, T> ModifyFunc;
-        public Func<bool> ClearTrigger;
+        public bool externalClear;
 
         internal float instantiateTime;
         internal float lastEnableTime;
@@ -29,5 +30,15 @@ namespace GameBase.Modify
         internal bool modifyableRelease;
         internal bool isRelease;
         int IEntity.InstanceID { get; set; }
+
+        void IPoolable.AfterGet()
+        {
+            isRelease = false;
+        }
+
+        void IPoolable.BeforeRelease()
+        {
+            
+        }
     }
 }

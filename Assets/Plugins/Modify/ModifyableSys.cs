@@ -73,6 +73,7 @@ namespace GameBase.Modify
         {
             var ret = Instance.NewEntity<T_Return>();
             ret.valueSet = initValue;
+            ret.value = initValue;
 
             return ret;
         }

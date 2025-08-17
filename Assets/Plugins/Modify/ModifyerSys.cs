@@ -9,7 +9,7 @@ namespace GameBase.Modify
         {
             e.instantiateTime = Time.time;
             e.lastEnableTime = Time.time;
-            e.isRelease = false;
+            e.externalClear = false;
 
             if (e.trigOnGive)
             {
@@ -25,8 +25,7 @@ namespace GameBase.Modify
         protected override void OnRemoveEntityFromActives(Modifyer<T> e)
         {
             e.enable = false;
-            e.isRelease = true;
-            e.ClearTrigger = null;
+            e.externalClear = false;
             e.ModifyFunc = null;
             e.modifyableRelease = false;
         }
@@ -47,10 +46,11 @@ namespace GameBase.Modify
                 }
             }
 
-            if (e.ClearTrigger?.Invoke() == true // 外部触发
+            if (e.externalClear // 外部触发
                 || e.modifyableRelease // 被modifyable内部触发，ModifyType.Once内部处理
                 || Time.time - e.instantiateTime > e.duration) // 超时
             {
+                e.isRelease = true;
                 RemoveEntity(e);
             }
         }

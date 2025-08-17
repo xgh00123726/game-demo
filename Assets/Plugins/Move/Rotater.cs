@@ -5,18 +5,8 @@ namespace GameBase.Move
 {
     public class Rotater : IEntity
     {
-        public float turnSpeed;
-        public GameObject body;
-
-        internal Vector3 dirSet;
-        internal Vector3 dir;
+        public IRotater owner;
 
         public int InstanceID { get; set; }
-
-        public Vector3 Dir
-        {
-            get => dir;
-            set => dirSet = value;
-        }
     }
 }

@@ -4,41 +4,26 @@ using GameBase.UI;
 
 namespace Instance.Buffs
 {
-    public class ViewableBuff : Buff,
+    public class ViewableBuff :
         IViewableBuff
     {
-        public int textureID = 0;
-        private static DetailUI detailUI;
-
-        static ViewableBuff()
+        public ViewableBuff(Buff buff, int textureID)
         {
-            detailUI = DetailUISys.Instance.NewEntity<DetailUI>();
+            this.buff = buff;
+            this.textureID = textureID;
         }
 
-        public ViewableBuff()
-        {
-            RegistertoActivesDelegate.Add(ShowBuffUI);
-        }
+        private int textureID;
+        private Buff buff;
 
-        private void ShowBuffUI(Buff b)
-        {
-            var buffUI = BuffPanel.Instance.NewEntity<BuffItem>();
-            buffUI.bindBuff = this;
+        float IViewableBuff.DurationRemain => buff.DurationRemain;
 
-            buffUI.AfterInstantiateUObjectDelegate = (BasePanelItem item) =>
-            {
-                detailUI.detailables.Add(buffUI);
-            };
-        }
+        float IViewableBuff.DurationSet => buff.durationSet;
 
-        float IViewableBuff.DurationRemain => durationRemain;
-
-        float IViewableBuff.DurationSet => durationSet;
-
-        int IViewableBuff.StackNum => stackNum;
+        int IViewableBuff.StackNum => 0;
 
         int IViewableBuff.TextureID => textureID;
 
-        bool IViewableBuff.Alive => alive;
+        bool IViewableBuff.Alive => buff.ALive;
     }
 }

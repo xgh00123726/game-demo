@@ -5,34 +5,17 @@ using System;
 
 namespace Instance.Modify
 {
-    public class ViewableAttr<T> : Modifyable<T>,
-        IViewableAttr
+    public class ViewableAttr<T> : IViewableAttr
     {
-        private static DetailUI detailUI;
+        public ViewableAttr(Modifyable<T> attr, int texureID)
+        {
+            this.textureID = texureID;
+            this.attr = attr;
+        }
 
-        public int textureID = 0;
+        private int textureID = 0;
+        private Modifyable<T> attr;
         int IViewableAttr.TextureID => textureID;
-        string IViewableAttr.Value =>  Value.ToString();
-
-        static ViewableAttr()
-        {
-            detailUI = DetailUISys.Instance.NewEntity<DetailUI>();
-        }
-
-        public ViewableAttr()
-        {
-            RegistertoActivesDelegate.Add(ShowAttrUI);
-        }
-
-        private void ShowAttrUI(Modifyable<T> modifyable)
-        {
-            var attrUI = AttrPanel.Instance.NewEntity<AttrItem>();
-            attrUI.bindAttr = this;
-
-            attrUI.AfterInstantiateUObjectDelegate = (BasePanelItem item) =>
-            {
-                detailUI.detailables.Add(attrUI);
-            };
-        }
+        string IViewableAttr.Value =>  attr.Value.ToString();
     }
 }

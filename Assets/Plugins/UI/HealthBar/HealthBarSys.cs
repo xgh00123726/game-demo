@@ -83,7 +83,6 @@ namespace GameBase.UI
             {
                 return;
             }
-            XLogger.Instance.Log($"curr:{currHP}, max:{maxHP}");
 
             e.currPercent = Mathf.Clamp01(e.owner.CurrHP / e.owner.MaxHP);
             e.textComponent.text = $"{currHP} / {maxHP}";

@@ -24,6 +24,8 @@ namespace Instance.GameSys
             LinkedList<IProjectileTarget> ret = new();
             foreach(var c in CreatureSys.Instance.Entities)
             {
+                if (c.tag != Tag.CommonCreature) continue;
+
                 if (c is IProjectileTarget tar)
                 {
                     if (shape.Contains(tar.Center.x, tar.Center.z))
@@ -42,6 +44,8 @@ namespace Instance.GameSys
             IProjectileTarget ret = null;
             foreach (var c in CreatureSys.Instance.Entities)
             {
+                if (c.tag != Tag.CommonCreature) continue;
+
                 if (c is IProjectileTarget tar)
                 {
                     float dis = GMath.GameDistance(center, tar.Center);

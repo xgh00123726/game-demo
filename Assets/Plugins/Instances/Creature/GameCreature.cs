@@ -1,10 +1,13 @@
 using Combines.Projectiles;
+using GameBase.Animations;
 using GameBase.Buffs;
 using GameBase.Creatures;
 using GameBase.Modify;
 using GameBase.Move;
 using GameBase.Spells;
+using GameBase.Tools;
 using GameBase.UI;
+using System;
 using UnityEngine;
 
 namespace Instance.Creatures
@@ -16,26 +19,28 @@ namespace Instance.Creatures
         IModifyOwner<float>,
         ISpeller,
         IBuffOwner,
-        IMover
+        IMover,
+        IRotater,
+        IPlayerAnimable
     {
         public GameCreature()
         {
-            _container["currHP"] = ModifyableSys<float>.Instance.NewEntity<Modifyable<float>>(100f);
-            _container["maxHP"] = ModifyableSys<float>.Instance.NewEntity<Modifyable<float>>(100f);
-
-            AfterInstantiateObj = () =>
-            {
-                healthbar = HealthBarSys.Instance.NewEntity<HealthBar>();
-                healthbar.ObjID = 6;
-                healthbar.owner = this;
-            };
+            AfterInstantiateObj += AfterInstantitate;
+        }
+        private void AfterInstantitate()
+        {
+            _animator = Obj.GetComponent<Animator>();
         }
 
-
-        public HealthBar healthbar;
-        protected ModifyableContainer<float> _container = new();
+        protected ModifyableContainer<float> _modifyableContainer = new();
+        protected SpellContainer _spellContainer = new();
         protected BuffContainer _buffContainer = new();
-        public override bool ReleaseTrigger => _container["currHP"].Value <= 0f;
+        protected Animator _animator;
+
+        public ModifyableContainer<float> ModifyableContainer => _modifyableContainer;
+        public BuffContainer BuffContainer => _buffContainer;
+
+        public override bool ReleaseTrigger => _modifyableContainer["currHP"].Value <= 0f;
 
         Vector3 IHealthBarOwner.HealthBarPosition => Obj.transform.position + new Vector3(0, 1, 1);
 
@@ -43,24 +48,49 @@ namespace Instance.Creatures
 
         float IProjectileTarget.Radius => radius;
 
-        float IHealthBarOwner.CurrHP => _container["currHP"].Value;
+        float IHealthBarOwner.CurrHP => _modifyableContainer["currHP"].Value;
 
-        float IHealthBarOwner.MaxHP => _container["maxHP"].Value;
+        float IHealthBarOwner.MaxHP => _modifyableContainer["maxHP"].Value;
 
         bool IHealthBarOwner.ALive => Alive;
 
-        ModifyableContainer<float> IModifyOwner<float>.Modifyables => _container;
+        ModifyableContainer<float> IModifyOwner<float>.Modifyables => _modifyableContainer;
 
         Vector3 IProjectileOwner.HandPosition => Obj.transform.position + new Vector3(0, 1, 0);
 
-        float ISpeller.CoolingAccelerate => throw new System.NotImplementedException();
+        float ISpeller.CoolingAccelerate => _modifyableContainer["coolingAccelerate"].Value;
 
         Vector3 ISpeller.Position => Obj.transform.position;
 
         BuffContainer IBuffOwner.Buffs => _buffContainer;
 
-        float IMover.moveSpeed => _container["moveSpeed"].Value;
+        float IMover.Speed => _modifyableContainer["moveSpeed"].Value;
 
         GameObject IMover.GO => Obj;
+
+        float IRotater.Speed => _modifyableContainer["rotateSpeed"].Value;
+
+        GameObject IRotater.GO => Obj;
+
+        public bool IsMoving { get; set; }
+        public bool IsRotating { get; set; }
+
+        Animator IPlayerAnimable.Animator => _animator;
+
+        public Vector3 Dest { get; set; }
+
+        public Vector3 Dir { get; set; }
+
+        public SpellContainer SpellContainer => _spellContainer;
+
+        bool IPlayerAnimable.IsMoving()
+        {
+            return IsMoving;
+        }
+
+        bool IPlayerAnimable.IsIdle()
+        {
+            return !IsMoving;
+        }
     }
 }

@@ -4,41 +4,27 @@ using System;
 
 namespace Instance.Buffs
 {
-    public class ViewableEquipment : Buff,
+    public class ViewableEquipment :
         IViewableEquipment
     {
-        public int textureID;
-        private static DetailUI detailUI;
+        public ViewableEquipment(Buff equipment, int textureID)
+        {
+            this.equipment = equipment;
+            this.textureID = textureID;
+        }
 
-        public float DurationRemain => durationRemain;
 
-        public float DurationSet => durationSet;
+        private int textureID;
+        private Buff equipment;
 
-        public int StackNum => stackNum;
+        public float DurationRemain => equipment.DurationRemain;
+
+        public float DurationSet => equipment.durationSet;
+
+        public int StackNum => 0;
 
         public int TextureID => textureID;
 
         int IViewableEquipment.Position => 0;
-
-        static ViewableEquipment()
-        {
-            detailUI = DetailUISys.Instance.NewEntity<DetailUI>();
-        }
-
-        public ViewableEquipment()
-        {
-            RegistertoActivesDelegate.Add(ShowBuffUI);
-        }
-
-        private void ShowBuffUI(Buff b)
-        {
-            var equipmentUI = EquipmentPanel.Instance.NewEntity<EquipmentItem>();
-            equipmentUI.bindEquipment = this;
-
-            equipmentUI.AfterInstantiateUObjectDelegate = (BasePanelItem item) =>
-            {
-                detailUI.detailables.Add(equipmentUI);
-            };
-        }
     }
 }

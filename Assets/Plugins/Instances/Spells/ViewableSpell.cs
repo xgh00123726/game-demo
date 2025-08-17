@@ -6,39 +6,24 @@ using UnityEngine;
 
 namespace Instance.Spells
 {
-    public class ViewableSpell : IndicatorSpell,
+    public class ViewableSpell :
         IViewableSpell
     {
-        public int textureID = 0;
-        private static DetailUI detailUI;
-
-        static ViewableSpell()
+        public ViewableSpell(Spell spell, int texureID)
         {
-            detailUI = DetailUISys.Instance.NewEntity<DetailUI>();
+            this.spell = spell;
+            this.textureID = texureID;
         }
 
-        public ViewableSpell() : base()
-        {
-            RegistertoActivesDelegate += InitSpellConfig;
-        }
+        private int textureID;
+        private Spell spell;
 
-        float IViewableSpell.CoolingRemain => CoolingTimeRemain;
+        float IViewableSpell.CoolingRemain => spell.CoolingTimeRemain;
 
-        float IViewableSpell.CoolingSet => coolingTimeSet;
+        float IViewableSpell.CoolingSet => spell.coolingTimeSet;
 
         int IViewableSpell.Charge => 0;
 
         int IViewableSpell.TextureID => textureID;
-
-        private void InitSpellConfig(Spell e)
-        {
-            var spellItem = SpellPanel.Instance.NewEntity<SpellItem>();
-            spellItem.bindSpell = this;
-
-            spellItem.AfterInstantiateUObjectDelegate = (BasePanelItem item) =>
-            {
-                detailUI.detailables.Add(spellItem);
-            };
-        }
     }
 }

@@ -19,17 +19,19 @@ namespace GameBase.Move
 
         protected override void UpdateEntity(Rotater e)
         {
-            e.dir = e.body.transform.forward;
-            Vector3 dirSetTemp = new Vector3(e.dirSet.x, 0, e.dirSet.z);
-            float angle = Vector3.Angle(e.dir, dirSetTemp);
-            float crossY = Vector3.Cross(e.dir, dirSetTemp).y;
+            var currDir = e.owner.GO.transform.forward;
+            Vector3 dirSetTemp = new Vector3(e.owner.Dir.x, 0, e.owner.Dir.z);
+            float angle = Vector3.Angle(currDir, dirSetTemp);
+            float crossY = Vector3.Cross(currDir, dirSetTemp).y;
             
             if (angle < turnStopAngle)
             {
+                e.owner.IsRotating = false;
                 return;
             }
 
-            e.body.transform.Rotate(Vector3.up, e.turnSpeed * Time.deltaTime * Mathf.Sign(crossY), Space.Self);
+            e.owner.IsRotating = true;
+            e.owner.GO.transform.Rotate(Vector3.up, e.owner.Speed * Time.deltaTime * Mathf.Sign(crossY), Space.Self);
         }
     }
 }

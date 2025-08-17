@@ -1,20 +1,52 @@
+using GameBase.Modify;
 using GameBase.Tools;
 using System;
 using System.Collections.Generic;
 
 namespace GameBase.Buffs
 {
-    public class Buff : IEntity
+    public enum UIStyle
+    {
+        None = 0,
+
+        Buff = 1 << 0,
+        Passive = 1 << 1,
+        Spell = 1 << 2,
+        Equipment = 1 << 3,
+    }
+
+    public class Buff : IEntity,
+        IPoolable
     {
         internal protected float durationRemain;
         internal protected int stackNum = 1;
-        internal protected bool alive = false;
+        internal protected bool alive;
 
+        public UIStyle uiStyle = UIStyle.None;
+        public int textureID;
         public float durationSet = 2;
         public IBuffOwner owner;
-        public List<Action<Buff>> RegistertoActivesDelegate = new();
-        public List<Action<Buff>> RemoveFromActiveDelegate = new();
+        public Action RegistertoActivesDelegate;
+        public Action RemoveFromActiveDelegate;
 
         int IEntity.InstanceID { get; set; }
+
+        public bool ALive => alive;
+        public float DurationRemain => durationRemain;
+
+        void IPoolable.AfterGet()
+        {
+            textureID = 0;
+            alive = true;
+            uiStyle = UIStyle.None;
+        }
+
+        void IPoolable.BeforeRelease()
+        {
+            RegistertoActivesDelegate = null;
+            RemoveFromActiveDelegate = null;
+            textureID = 0;
+            alive = false;
+        }
     }
 }

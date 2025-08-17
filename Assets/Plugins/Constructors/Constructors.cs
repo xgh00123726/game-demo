@@ -13,6 +13,7 @@ namespace Constructor
             BuffRegister.RegisterBuffGenerator();
             FlyingRegister.RegisterGenerator();
             SpellActionRegister.RegisterGenerator();
+            CreatureRegister.RegisterGenerator();
         }
     }
 }

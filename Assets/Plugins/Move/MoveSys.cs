@@ -9,7 +9,7 @@ namespace GameBase.Move
 
         protected override void OnRegisterEntityToActives(Mover e)
         {
-            
+            e.owner.Dest = e.owner.GO.transform.position;
         }
 
         protected override void OnRemoveEntityFromActives(Mover e)
@@ -19,26 +19,18 @@ namespace GameBase.Move
 
         protected override void UpdateEntity(Mover e)
         {
-            if (!e.destCommand && !e.targetCommand) return;
-
-            Vector3 dir = e.Dest - e.owner.GO.transform.position;
-            Vector3 delta = dir.normalized * e.owner.moveSpeed * Time.deltaTime;
+            Vector3 dir = e.owner.Dest - e.owner.GO.transform.position;
+            Vector3 delta = dir.normalized * e.owner.Speed * Time.deltaTime;
             Vector3 dest = e.owner.GO.transform.position + delta;
 
-            if ((e.Dest - e.owner.GO.transform.position).magnitude < moveStopDis)
+            if ((e.owner.Dest - e.owner.GO.transform.position).magnitude < moveStopDis)
             {
-                e.isMoveing = false;
+                e.owner.IsMoving = false;
                 return;
             }
 
-            if (e.rigidbody.Exist)
-            {
-                e.rigidbody.Get().MovePosition(dest);
-            }
-            else
-            {
-                e.owner.GO.transform.position = dest;
-            }
+            e.owner.IsMoving = true;
+            e.owner.GO.transform.position = dest;
         }
     }
 }

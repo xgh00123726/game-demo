@@ -1,6 +1,5 @@
 using GameBase.Tools;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace GameBase.Buffs
 {
@@ -8,21 +7,13 @@ namespace GameBase.Buffs
     {
         protected override void OnRegisterEntityToActives(Buff e)
         {
-            foreach (var func in e.RegistertoActivesDelegate)
-            {
-                func?.Invoke(e);
-            }
+            e.RegistertoActivesDelegate?.Invoke();
             e.durationRemain = e.durationSet;
-            e.alive = true;
         }
 
         protected override void OnRemoveEntityFromActives(Buff e)
         {
-            e.alive = false;
-            foreach (var func in e.RemoveFromActiveDelegate)
-            {
-                func?.Invoke(e);
-            }
+            e.RemoveFromActiveDelegate?.Invoke();
         }
 
         protected override void UpdateEntity(Buff e)

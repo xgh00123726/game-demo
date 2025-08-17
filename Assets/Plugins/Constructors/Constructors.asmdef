@@ -13,7 +13,9 @@
         "Modify",
         "ConbineSys",
         "GEffect",
-        "GSpell"
+        "GSpell",
+        "Move",
+        "Animations"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -110,6 +110,17 @@ public class CreatureSys : UObjEntitySys<Creature, SimpleEntityContainer, GameOb
         }
     }
 
+    public void RemoveAll(Tag tag)
+    {
+        foreach (var e in _entities)
+        {
+            if (e.tag == tag)
+            {
+                RemoveEntity(e);
+            }
+        }
+    }
+
     public void RemoveAll<T_EntityType>() where T_EntityType : Creature
     {
         foreach (var c in _entities)
