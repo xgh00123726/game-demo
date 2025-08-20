@@ -1,4 +1,4 @@
-using GameBase.Tools;
+using GameBase.EntitySystem;
 using System;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -7,8 +7,6 @@ namespace GameBase.Indicators
 {
     public class Indicator : IUEntity<GameObject>
     {
-        public Vector3 position;
-        public bool visible;
         public int textureID;
 
         internal Material decalMaterial;

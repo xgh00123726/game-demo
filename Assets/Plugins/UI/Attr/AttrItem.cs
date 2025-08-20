@@ -9,10 +9,11 @@ namespace GameBase.UI
         {
             ObjID = 16;
         }
+        public int iconTextureID;
         public IViewableAttr bindAttr;
 
         internal TextMeshProUGUI valueTMP;
-        internal override int IconTexureID => bindAttr.TextureID;
+        internal override int IconTexureID => iconTextureID;
 
         public override void OnPointerEnter()
         {

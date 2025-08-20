@@ -7,7 +7,7 @@ namespace GameBase.UI
     {
         public DetailContent detailContent = new();
 
-        public virtual int TexureID { get; } = 0;
+        public virtual int DetailUITexureID { get; } = 0;
 
         DetailContent IDetailable.Content => detailContent;
 

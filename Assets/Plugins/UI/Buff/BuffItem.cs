@@ -9,8 +9,9 @@ namespace GameBase.UI
         {
             ObjID = 9;
         }
+        public int iconTextureID;
         public IViewableBuff bindBuff;
         internal TextMeshProUGUI stackNumTMP;
-        internal override int IconTexureID => bindBuff.TextureID;
+        internal override int IconTexureID => iconTextureID;
     }
 }

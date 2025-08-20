@@ -1,7 +1,7 @@
 using GameBase.Modify;
 using GameBase.Tools;
 using System;
-using System.Collections.Generic;
+using GameBase.EntitySystem;
 
 namespace GameBase.Buffs
 {

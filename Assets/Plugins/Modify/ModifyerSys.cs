@@ -1,4 +1,4 @@
-using GameBase.Tools;
+using GameBase.EntitySystem;
 using UnityEngine;
 
 namespace GameBase.Modify

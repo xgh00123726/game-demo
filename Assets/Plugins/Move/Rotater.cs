@@ -1,5 +1,4 @@
-using GameBase.Tools;
-using UnityEngine;
+using GameBase.EntitySystem;
 
 namespace GameBase.Move
 {

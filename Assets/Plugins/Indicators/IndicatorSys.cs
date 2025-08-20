@@ -1,5 +1,5 @@
+using GameBase.EntitySystem;
 using GameBase.Resources;
-using GameBase.Tools;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -35,14 +35,9 @@ namespace GameBase.Indicators
 
         protected override void UpdateEntity(Indicator e)
         {
-            if (!e.visible && e.Obj.activeSelf)
+            if (!e.Obj.activeSelf)
             {
-                e.Obj.SetActive(false);
                 return;
-            }
-            if (e.visible && !e.Obj.activeSelf)
-            {
-                e.Obj.SetActive(true);
             }
 
             if (e.setSize)
@@ -56,8 +51,6 @@ namespace GameBase.Indicators
                 e.setPivot = false;
                 e.urpProjector.pivot = e.pivot;
             }
-
-            e.Obj.transform.position = e.position;
         }
 
         public void RemoveIndicator(Indicator indicator)

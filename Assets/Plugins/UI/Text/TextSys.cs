@@ -1,6 +1,5 @@
+using GameBase.EntitySystem;
 using GameBase.Resources;
-using GameBase.Tools;
-using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
 namespace GameBase.UI
@@ -14,11 +13,6 @@ namespace GameBase.UI
             e.textObj = obj.GetComponent<TextMeshProUGUI>();
 
             return obj;
-        }
-
-        protected override void BeforeInstantiateEUObject(FloatText e)
-        {
-
         }
 
         protected override void AfterInstantiateEUObject(FloatText e)

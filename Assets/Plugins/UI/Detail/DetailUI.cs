@@ -11,7 +11,7 @@ namespace GameBase.UI
             ObjID = 4;
         }
 
-        internal override int IconTexureID => detailables[0].TexureID;
+        internal override int IconTexureID => detailables[0].DetailUITexureID;
 
         public List<IDetailable> detailables = new List<IDetailable>();
         

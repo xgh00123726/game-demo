@@ -1,6 +1,5 @@
 using GameBase.Resources;
-using GameBase.Tools;
-using System.Collections.Generic;
+using GameBase.EntitySystem;
 using UnityEngine;
 namespace GameBase.Flyings
 {
@@ -13,9 +12,6 @@ namespace GameBase.Flyings
         protected override GameObject InstantiateObj(Flying e)
         {
             var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
-
-            var effectObj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.releaseEffectID));
-            e.releaseEffect = effectObj.GetComponent<ParticleSystem>();
 
             return obj;
         }
@@ -30,18 +26,13 @@ namespace GameBase.Flyings
 
             e.instantiateTime = Time.time;
 
-            // 射弹生成位置 = 主位置 + 位置偏移
-            // 主位置 = 如果有主人：主人手部，否则：0
-            // 位置偏移 = 自行赋值更改
-            e.Obj.transform.position = e.src + e.srcOffset;
-
             e.Obj.SetActive(true);
         }
 
         protected override void BeforeReleaseEUObject(Flying e)
         {
             e.Obj.SetActive(false);
-
+            e.OnReleased?.Invoke();
             e.Obj.transform.localScale = Vector3.one;
         }
 
@@ -52,18 +43,9 @@ namespace GameBase.Flyings
         /// </list></summary>
         protected override void UpdateEntity(Flying e)
         {
-            if (e.curve == null)
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Warning)
-                    .Log("flying has no curve");
-                RemoveEntity(e);
-            }
-
             // 射弹超时
             if (Time.time > e.maxExistTime + e.instantiateTime)
             {
-                e.releaseEffect.transform.position = e.Obj.transform.position;
-                e.releaseEffect.Play();
                 RemoveEntity(e);
             }
 
@@ -75,10 +57,9 @@ namespace GameBase.Flyings
                 e.curve.PosUpdate();
             }
 
-            if ((e.dest - e.Obj.transform.position).magnitude <= e.releaseDistance)
+            if ((e.dest - e.Obj.transform.position).magnitude <= e.releaseDistance
+                && Time.time > e.minExistTime + e.instantiateTime)
             {
-                e.releaseEffect.transform.position = e.Obj.transform.position;
-                e.releaseEffect.Play();
                 RemoveEntity(e);
             }
         }

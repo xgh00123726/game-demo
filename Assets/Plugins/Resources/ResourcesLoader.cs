@@ -15,7 +15,7 @@ namespace GameBase.Resources
 
         public static GameObject GetPrefab(int id)
         {
-            if (id >= _prefabs.Length)
+            if (id >= _prefabs.Length || id < 0)
             {
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
                     .Log($"resource id out of the bound, id:{id}, max:{_prefabs.Length}");
@@ -25,7 +25,7 @@ namespace GameBase.Resources
 
         public static Sprite GetSprite(int id)
         {
-            if (id >= _sprites.Length)
+            if (id >= _sprites.Length || id < 0)
             {
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
                     .Log($"resource id out of the bound, id:{id}, max:{_sprites.Length}");
@@ -35,7 +35,7 @@ namespace GameBase.Resources
 
         public static Texture2D GetTexture2D(int id)
         {
-            if (id >= _textures.Length)
+            if (id >= _textures.Length || id < 0)
             {
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
                     .Log($"resource id out of the bound, id:{id}, max:{_textures.Length}");

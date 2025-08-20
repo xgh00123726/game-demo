@@ -1,21 +1,19 @@
+using GameBase.EntitySystem;
 using GameBase.Tools;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameBase.Spells
 {
     public class SpellSys : SimplestEntitySys<Spell, SimpleEntityContainer, SpellSys>
     {
-        private Dictionary<int, Action<Spell>> _spellActionDict = new(); 
-
         protected override void OnRegisterEntityToActives(Spell e)
         {
             e.RegistertoActivesDelegate?.Invoke(e);
 
-            if (e.speller != null)
+            if (e.speller == null)
             {
-                e.acceletate = e.speller.CoolingAccelerate;
+                XLogger.Instance.Level(XLogger.LogLevel.Error)
+                    .Log("null speller");
             }
         }
 
@@ -28,8 +26,6 @@ namespace GameBase.Spells
         {
             if (e.speller == null)
             {
-                XLogger.Instance.Level(XLogger.LogLevel.Warning).EditorOnly(true)
-                    .Log("spell must have speller");
                 RemoveEntity(e);
                 return;
             }
@@ -38,72 +34,42 @@ namespace GameBase.Spells
             if (!e.coolReady)
             {
                 float acc = 1;
-                acc = e.acceletate * 0.01f + 1;
+                acc = e.speller.CoolingAccelerate * 0.01f + 1;
                 e.coolingTimeRemain -= Time.deltaTime * acc;
                 e.coolReady = e.coolingTimeRemain <= 0;
             }
 
             if (e.coolReady)
             {
-                if (e.targetable && !e.userReady)
-                {
-                    e.userReady = e.ReadyJugDelegate?.Invoke(e) == true;
-
-                    if (e.userReady && e.indicator != null)
-                    {
-                        e.indicator.Show();
-                    }
-                }
-                else if (!e.targetable)
+                if (!e.userReady && e.interactive.ReadyTrig)
                 {
                     e.userReady = true;
+                    e.interactive.OnReady();
                 }
 
-                if (e.userReady && e.CancelJugDelegate?.Invoke(e) == true)
+
+                if (e.userReady && e.interactive.CancelTrig)
                 {
                     e.userReady = false;
-                    if (e.indicator != null)
-                    {
-                        e.indicator.Hide();
-                    }
+                    e.interactive.OnCancel();
                 }
-                else if (e.userReady && e.CastJugDelegate?.Invoke(e) == true)
+                else if (e.userReady && e.interactive.CastTrig)
                 {
                     e.coolReady = false;
                     e.userReady = false;
                     e.coolingTimeRemain = e.coolingTimeSet;
-                    e.CastAction?.Invoke(e);
-                    if (e.indicator != null)
+                    if (e.actionInterface != null)
                     {
-                        e.indicator.Hide();
+                        e.actionInterface.CastAction(e);
                     }
+                    e.interactive.OnCast();
                 }
             }
 
             if (e.userReady)
             {
-                e.SpellReadyingDelegate?.Invoke();
+                e.interactive.OnReadying(e.speller);
             }
-        }
-    
-        public Action<Spell> GetSpellAction(int id)
-        {
-            if (!_spellActionDict.ContainsKey(id))
-            {
-                XLogger.Instance.Log($"invalid generator id:{id}");
-                return null;
-            }
-            return _spellActionDict[id];
-        }
-
-        public void RegisterSpellAction(int id, Action<Spell> spell)
-        {
-            if (_spellActionDict.ContainsKey(id))
-            {
-                XLogger.Instance.Log($"duplicate generator id:{id}");
-                return;
-            }
-            _spellActionDict.Add(id, spell);
         }
     }
 }

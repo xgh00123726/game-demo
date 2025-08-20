@@ -1,5 +1,4 @@
-using GameBase.Math;
-using GameBase.Tools;
+using GameBase.EntitySystem;
 using UnityEngine;
 
 namespace GameBase.Move
@@ -7,15 +6,6 @@ namespace GameBase.Move
     public class RotateSys : SimplestEntitySys<Rotater, SimpleEntityContainer, RotateSys>
     {
         public static float turnStopAngle = 1f;
-        protected override void OnRegisterEntityToActives(Rotater e)
-        {
-            
-        }
-
-        protected override void OnRemoveEntityFromActives(Rotater e)
-        {
-            
-        }
 
         protected override void UpdateEntity(Rotater e)
         {

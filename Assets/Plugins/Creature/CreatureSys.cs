@@ -1,14 +1,11 @@
 using GameBase.Creatures;
-using GameBase.Math;
+using GameBase.EntitySystem;
 using GameBase.Resources;
-using GameBase.Tools;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class CreatureSys : UObjEntitySys<Creature, SimpleEntityContainer, GameObject, CreatureSys>
 {
-    public delegate bool CreatureFilter(Creature e);
-
     public static float infDis = 9999f;
 
     /// <summary>
@@ -20,7 +17,7 @@ public class CreatureSys : UObjEntitySys<Creature, SimpleEntityContainer, GameOb
     /// <item><param name="rangeLimit"><paramref name="rangeLimit"/>:只会寻找到rangeLimit距离内的实体，负数表示无穷</param></item>
     /// </list></summary>
     /// <returns>符合条件最近的实体，没有实体满足条件则返回null</returns>
-    public T NearestEntity<T>(Vector3 position, CreatureFilter filter = null, int id = -1, float rangeLimit = -1) where T : Creature
+    public T NearestEntity<T>(Vector3 position, Func<Creature, bool> filter = null, int id = -1, float rangeLimit = -1) where T : Creature
     {
         Creature ret = null;
         var sys = Instance as CreatureSys;
@@ -55,33 +52,6 @@ public class CreatureSys : UObjEntitySys<Creature, SimpleEntityContainer, GameOb
         return ret as T;
     }
 
-    /// <summary>
-    /// 返回指定范围内所有实体
-    /// <list type="bullet">
-    /// <item><param name="IShape2D"><paramref name="position"/>:范围</param></item>
-    /// <item><param name="filter"><paramref name="filter"/>:寻找过滤器</param></item>
-    /// </list></summary>
-    /// <returns>指定范围内所有实体，没有实体满足条件则返回null</returns>
-    public LinkedList<Creature> CreaturesInShape(IShape2D shape, CreatureFilter filter = null)
-    {
-        var ret = new LinkedList<Creature>();
-        var sys = Instance as CreatureSys;
-        bool hasFilter = filter != null;
-        foreach (var e in sys._entities)
-        {
-            if (hasFilter && !filter(e)) continue;
-
-            float x = e.Obj.transform.position.x;
-            float y = e.Obj.transform.position.z;
-            if (shape.Contains(x, y))
-            {
-                ret.AddLast(e);
-            }
-        }
-
-        return ret;
-    }
-
     protected override GameObject InstantiateObj(Creature e)
     {
         return GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
@@ -89,7 +59,6 @@ public class CreatureSys : UObjEntitySys<Creature, SimpleEntityContainer, GameOb
 
     protected override void AfterInstantiateEUObject(Creature e)
     {
-        e.Obj.transform.position = e.genPos;
         e.Alive = true;
 
         e.Obj.SetActive(true);

@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using static GameBase.Tools.TimeLimitTask;
 
 namespace GameBase.Tools
@@ -12,7 +10,7 @@ namespace GameBase.Tools
         private static List<TimeLimitTask> _tasksAdd = new List<TimeLimitTask>();
         private static List<TimeLimitTask> _tasksRemove = new List<TimeLimitTask>();
 
-        internal static void AddTask(float beginTime, float duration, TimeLimitTaskDelegate callback)
+        internal static void AddTask(float beginTime, float duration, Action<float> callback)
         {
             _tasksAdd.Add(new TimeLimitTask(beginTime, duration, callback));
         }

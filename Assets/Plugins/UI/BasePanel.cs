@@ -1,6 +1,6 @@
+using GameBase.EntitySystem;
 using GameBase.Resources;
 using GameBase.Tools;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 

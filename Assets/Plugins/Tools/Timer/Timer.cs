@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using static GameBase.Tools.TimeLimitTask;
 
 namespace GameBase.Tools
 {
@@ -52,7 +51,7 @@ namespace GameBase.Tools
         /// <item><param name="duration"><paramref name="duration"/>:持续时间</param></item>
         /// <item><param name="callback"><paramref name="callback"/>:回调</param></item>
         /// </list></summary>
-        public static void DO(float beginTime, float duration, TimeLimitTaskDelegate callback)
+        public static void DO(float beginTime, float duration, Action<float> callback)
         {
             TimeLimitTaskManager.AddTask(beginTime, duration, callback);
         }
@@ -63,7 +62,7 @@ namespace GameBase.Tools
         /// <item><param name="duration"><paramref name="duration"/>:持续时间</param></item>
         /// <item><param name="callback"><paramref name="duration"/>:回调</param></item>
         /// </list></summary>
-        public static void DO(float duration, TimeLimitTaskDelegate callback)
+        public static void DO(float duration, Action<float> callback)
         {
             DO(Time.time, duration, callback);
         }

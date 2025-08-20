@@ -8,14 +8,15 @@
         "Tools",
         "GMath",
         "Entity",
-        "Instance",
         "UI",
         "Modify",
-        "ConbineSys",
         "GEffect",
         "GSpell",
         "Move",
-        "Animations"
+        "Animations",
+        "Flying",
+        "EntitySystem",
+        "Effects"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

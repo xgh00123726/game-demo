@@ -1,10 +1,12 @@
 using GameBase.Indicators;
 using GameBase.Spells;
+using GameBase.Tools;
+using UnityEngine;
 
 namespace Instance.Indicators
 {
     public class CircleIndicator : Indicator,
-        IIndicator
+        ISpellIndicator
     {
         public CircleIndicator()
         {
@@ -12,14 +14,17 @@ namespace Instance.Indicators
             textureID = 10;
         }
 
-        void IIndicator.Hide()
+        void ISpellIndicator.Hide()
         {
-            visible = false;
+            Obj.SetActive(false);
         }
-
-        void IIndicator.Show()
+        void ISpellIndicator.Update(ISpeller speller, Vector3 position)
         {
-            visible = true;
+            Obj.transform.position = position;
+        }
+        void ISpellIndicator.Show()
+        {
+            Obj.SetActive(true);
         }
     }
 }

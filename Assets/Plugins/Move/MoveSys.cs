@@ -1,4 +1,4 @@
-using GameBase.Tools;
+using GameBase.EntitySystem;
 using UnityEngine;
 
 namespace GameBase.Move
@@ -10,11 +10,6 @@ namespace GameBase.Move
         protected override void OnRegisterEntityToActives(Mover e)
         {
             e.owner.Dest = e.owner.GO.transform.position;
-        }
-
-        protected override void OnRemoveEntityFromActives(Mover e)
-        {
-            
         }
 
         protected override void UpdateEntity(Mover e)

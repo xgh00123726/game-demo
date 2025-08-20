@@ -9,11 +9,11 @@ namespace GameBase.UI
         {
             ObjID = 11;
         }
-
+        public int iconTextureID;
         public IViewableSpell bindSpell;
         internal TextMeshProUGUI timeTMP;
         internal TextMeshProUGUI chargeTMP;
 
-        internal override int IconTexureID => bindSpell.TextureID;
+        internal override int IconTexureID => iconTextureID;
     }
 }

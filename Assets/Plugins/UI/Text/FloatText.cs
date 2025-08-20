@@ -1,4 +1,4 @@
-using GameBase.Tools;
+using GameBase.EntitySystem;
 using System;
 using TMPro;
 using UnityEngine;

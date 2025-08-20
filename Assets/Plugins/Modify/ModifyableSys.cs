@@ -1,3 +1,4 @@
+using GameBase.EntitySystem;
 using GameBase.Tools;
 namespace GameBase.Modify
 {

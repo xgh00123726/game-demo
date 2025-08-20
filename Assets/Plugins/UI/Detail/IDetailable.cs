@@ -4,7 +4,7 @@ namespace GameBase.UI
 {
     public interface IDetailable : IEnterExist
     {
-        public int TexureID { get; }
+        public int DetailUITexureID { get; }
         public DetailContent Content { get; }
         public bool IsPointerOn { get; }
 

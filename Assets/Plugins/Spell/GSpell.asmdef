@@ -2,13 +2,10 @@
     "name": "GSpell",
     "rootNamespace": "",
     "references": [
-        "GUID:be0f8e26d249929468c1d75fbe0fa426",
         "GUID:d2d43e0db2807da49945b87c5300548d",
         "GUID:a37901e73280e1142a0d40f62ccc5e41",
         "GUID:de7b92ba5f00d1b4a862c6eb909dc685",
-        "GUID:0d4035669d73f3147b6456ef4f099499",
-        "GUID:6b3f7ad81260ea44ab938e5f6de598b3",
-        "GUID:12d4eac0cbc0bc24f82fe18e8e190470"
+        "GUID:d8c19839516efdd488fd8a930bde0e4b"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
