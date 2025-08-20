@@ -1,0 +1,4 @@
+3,objID,releaseEffectID,speed,minExistTime,curveType
+0,22,0,30,0,2
+1,20,1,10,0,4
+2,28,1,0,0.1,0

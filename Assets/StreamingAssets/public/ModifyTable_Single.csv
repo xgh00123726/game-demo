@@ -1,0 +1,19 @@
+this is a Modify table
+ModifyContainer is a Dictionary that save modifyables by id
+the table defines the id reflections
+
+-,0,universal
+-,1,moveSpeed
+-,2,strength
+-,3,attackSpeed
+-,4,agility
+-,5,defense
+-,6,intelligence
+-,7,damage
+-,8,currHP
+-,9,maxHP
+-,10,currMana
+-,11,maxMana       
+-,12,coolingAccelerate
+-,13,rotateSpeed
+-,14,attackRange
