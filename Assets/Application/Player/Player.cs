@@ -1,28 +1,20 @@
-using GameBase.Creatures;
-using GameBase.Move;
 using GameBase.Spells;
-using GameBase.Flyings;
 using GameBase.Tools;
 using UnityEngine;
 using GameBase.GCamera;
 using GameBase.UI;
-using GameBase.Modify;
 using GameBase.Buffs;
-using Instance.Buffs;
-using Instance.Modify;
 using Instance.Spells;
 using GameBase.Infos;
 using GameBase.Animations;
-using GameBase.Math;
 using GameBase.Indicators;
 using Instance.Indicators;
-using Combines.Projectiles;
-using Instance.Creatures;
+using GameBase.Creatures;
 
 public partial class Player : MonoBehaviour,
     IPlayerGlobal
 {
-    public GameCreature charater;
+    public Creature charater;
     public PlayerAnimController2 animCtrler2;
 
     Vector3 IPlayerGlobal.Position => transform.position;
@@ -31,46 +23,30 @@ public partial class Player : MonoBehaviour,
 
     private void SpellInit()
     {
-        var spell_1 = SpellSys.Instance.NewEntity<IndicatorSpell>();
-        spell_1.readyKey = KeyFunction.Spell1;
-        spell_1.coolingTimeSet = 5f;
-        spell_1.targetable = true;
-        spell_1.type = IndicatorSpell.IndicatorType.Circle;
-        spell_1.speller = charater;
-        spell_1.CastAction += SpellActions.FallingStone;
-        charater.SpellContainer[0] = spell_1;
+        charater.SpellContainer[0] = SpellSys.Instance.NewEntity((Spell e) =>
+        {
+            e.interactive = new CommonInteractive(KeyFunction.Spell1, IndicatorSys.Instance.NewEntity<CircleIndicator>());
+            e.coolingTimeSet = 5f;
+            e.speller = charater;
+            e.actionInterface = new AreaProjAction();
+        });
 
-        var spell_2 = SpellSys.Instance.NewEntity<IndicatorSpell>();
-        spell_2.readyKey = KeyFunction.Spell2;
-        spell_2.coolingTimeSet = 5f;
-        spell_2.speller = charater;
-        spell_2.targetable = true;
-        spell_2.type = IndicatorSpell.IndicatorType.Linear;
-        spell_2.indicatorLength = 6;
-        spell_2.CastAction += SpellActions.FrisbeeEmiter;
-        charater.SpellContainer[1] = spell_2;
+        charater.SpellContainer[1] = SpellSys.Instance.NewEntity((Spell e) =>
+        {
+            e.interactive = new CommonInteractive(KeyFunction.Spell2, IndicatorSys.Instance.NewEntity<LinearIndicator>());
+            e.coolingTimeSet = 5f;
+            e.speller = charater;
+            e.actionInterface = new TraceProjAction();
+        });
 
-        var spell_3 = SpellSys.Instance.NewEntity<IndicatorSpell>();
-        spell_3.readyKey = KeyFunction.Spell3;
-        spell_3.coolingTimeSet = 5f;
-        spell_3.speller = charater;
-        spell_3.CastAction += SpellActions.Frisbeeing;
-        charater.SpellContainer[2] = spell_3;
+        SpellSys.Instance.NewEntity((Spell e) =>
+        {
+            e.interactive = new CommonInteractive(KeyFunction.Aim, IndicatorSys.Instance.NewEntity<CircleIndicator>());
+            e.coolingTimeSet = 1f;
+            e.speller = charater;
+            e.actionInterface = new TraceProjAction();
+        });
 
-        var spell_4 = SpellSys.Instance.NewEntity<IndicatorSpell>();
-        spell_4.readyKey = KeyFunction.Spell4;
-        spell_4.coolingTimeSet = 0f;
-        spell_4.speller = charater;
-        spell_4.CastAction += SpellActions.Faster;
-        charater.SpellContainer[3] = spell_4;
-
-        var spell_a = SpellSys.Instance.NewEntity<IndicatorSpell>();
-        spell_a.targetable = true;
-        spell_a.coolingTimeSet = 1f;
-        spell_a.speller = charater;
-        spell_a.readyKey = KeyFunction.Aim;
-        spell_a.type = IndicatorSpell.IndicatorType.Circle;
-        spell_a.CastAction += SpellSys.Instance.GetSpellAction(1);
     }
 
     private void EpicBarInit()

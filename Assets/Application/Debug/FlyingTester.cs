@@ -22,7 +22,7 @@ public class FlyingTester : MonoBehaviour
             Vector3 src = srcObj.transform.position;
             Vector3 dest = destObj.transform.position;
             var flying = FlyingSys.Instance.NewEntity<Flying>();
-            flying.src = src;
+            flying.Src = src;
             flying.dest = dest;
             flying.ObjID = 22;
             enable = false;

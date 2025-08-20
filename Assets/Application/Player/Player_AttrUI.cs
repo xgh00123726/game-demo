@@ -8,14 +8,13 @@ public partial class Player
 
     private void ShowAttrUI(Modifyable<float> attr, int texureID)
     {
-        var attrUI = AttrPanel.Instance.NewEntity<AttrItem>();
-        var viewable = new ViewableAttr<float>(attr, texureID);
-        attrUI.bindAttr = viewable;
-
-        attrUI.AfterInstantiateUObjectDelegate = (BasePanelItem item) =>
+        var attrUI = AttrPanel.Instance.NewEntity((AttrItem e) =>
         {
-            attrDetailUI.detailables.Add(attrUI);
-        };
+            e.iconTextureID = texureID;
+            e.bindAttr = new ViewableAttr<float>(attr);
+        });
+
+        attrDetailUI.detailables.Add(attrUI);
     }
 
     public void AttrUIInit()

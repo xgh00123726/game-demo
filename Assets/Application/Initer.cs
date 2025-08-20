@@ -1,15 +1,7 @@
 using GameBase.Creatures;
-using GameBase.Flyings;
 using GameBase.GCamera;
-using GameBase.Instance;
-using GameBase.Math;
-using GameBase.Spells;
 using GameBase.Tools;
-using Instance.Creatures;
-using System;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
-using XLua;
 public class Initer : MonoBehaviour
 {
     void Start()
@@ -28,25 +20,23 @@ public class Initer : MonoBehaviour
 
         Command.Register("generate-enermy", () =>
         {
-            var c = CreatureSys.Instance.NewEntity<GameCreature>(0);
-            c.genPos = CameraSys.MouseHitPosition;
-            c.ObjID = 0;
+            var c = CreatureSys.Instance.NewEntity<Creature>(0);
+            c.Position = CameraSys.MouseHitPosition;
         });
 
         Command.Register("generate-enermy", (int id) =>
         {
-            var c = CreatureSys.Instance.NewEntity<GameCreature>(0);
-            c.genPos = CameraSys.MouseHitPosition;
-            c.ObjID = id;
+            var c = CreatureSys.Instance.NewEntity<Creature>(0);
+            c.Position = CameraSys.MouseHitPosition;
         });
 
         Command.Register("generate-many-enermy", (int num) =>
         {
             for (int i = 0; i < num; i++)
             {
-                var c = CreatureSys.Instance.NewEntity<GameCreature>(0);
-                c.genPos = CameraSys.MouseHitPosition + new Vector3(i, 0, 0);
-                c.ObjID = 1;
+                var c = CreatureSys.Instance.NewEntity<Creature>(0);
+                c.Position = CameraSys.MouseHitPosition + new Vector3(i, 0, 0);
+                c.tag = Tag.CommonCreature;
             }
         });
 
@@ -57,15 +47,10 @@ public class Initer : MonoBehaviour
 
         Timer.AddTask(1, () =>
         {
-            var charater = CreatureSys.Instance.NewEntity<GameCreature>(0);
-            charater.ObjID = 27;
-            charater.tag = GameBase.Creatures.Tag.Player;
-            charater.AfterInstantiateObj += () =>
-            {
-                var player = charater.Obj.AddComponent<Player>();
-                player.charater = charater;
-                player.transform.position = new Vector3(-6, -7, 4);
-            };
+            var charater = CreatureSys.Instance.NewEntity<Creature>(0);
+            var player = charater.Obj.AddComponent<Player>();
+            player.charater = charater;
+            charater.Position = new Vector3(-6, -7, 4);
         });
     }
 

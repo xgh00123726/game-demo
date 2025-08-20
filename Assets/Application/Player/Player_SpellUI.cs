@@ -8,14 +8,12 @@ public partial class Player
 
     private void ShowSpellUI(Spell spell, int texureID)
     {
-        var sitem = SpellPanel.Instance.NewEntity<SpellItem>();
-        var viewable = new ViewableSpell(spell, texureID);
-        sitem.bindSpell = viewable;
-
-        sitem.AfterInstantiateUObjectDelegate = (BasePanelItem item) =>
+        var item = SpellPanel.Instance.NewEntity((SpellItem e) =>
         {
-            spellDetailUI.detailables.Add(sitem);
-        };
+            e.bindSpell = new ViewableSpell(spell);
+        });
+
+        spellDetailUI.detailables.Add(item);
     }
 
     public void SpellUIInit()
