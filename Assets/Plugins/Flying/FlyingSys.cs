@@ -60,6 +60,7 @@ namespace GameBase.Flyings
             if ((e.dest - e.Obj.transform.position).magnitude <= e.releaseDistance
                 && Time.time > e.minExistTime + e.instantiateTime)
             {
+                e.OnHit?.Invoke();
                 RemoveEntity(e);
             }
         }

@@ -16,6 +16,16 @@ namespace GameBase.Projectiles
             {
                 e.whites = new System.Collections.Generic.HashSet<int>();
             }
+
+            e.flying.OnHit = () => HitTarget(e);
+        }
+
+        private void HitTarget(Projectile e)
+        {
+            if (e.target != null && e.actualEffectTimes < e.maxeffectTimes)
+            {
+                EffectTarget(e, e.target);
+            }
         }
 
         private void EffectTarget(Projectile e, IProjectileTarget target)
@@ -49,13 +59,6 @@ namespace GameBase.Projectiles
                 RemoveEntity(e);
                 return;
             }
-            if (e.target == null && (e.shape == null || e.targetsSet == null))
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Warning)
-                    .Log("projectile has null target");
-                RemoveEntity(e);
-                return;
-            }
             if (!e.flying.Alive)
             {
                 RemoveEntity(e);
@@ -78,16 +81,6 @@ namespace GameBase.Projectiles
                         break;
                     }
                     EffectTarget(e, target);
-                }
-            }
-
-            if (e.target != null && e.actualEffectTimes < e.maxeffectTimes)
-            {
-                float distoTarget = (objTransform.position - e.target.Center).magnitude;
-                
-                if (distoTarget < e.target.Radius)
-                {
-                    EffectTarget(e, e.target);
                 }
             }
         }

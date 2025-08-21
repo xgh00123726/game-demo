@@ -39,7 +39,7 @@ namespace GameBase.Creatures
         protected SpellContainer _spellContainer = new();
         protected BuffContainer _buffContainer = new();
 
-        public Animator animator;
+        internal Animator animator;
 
         public ModifyableContainer<float> ModifyableContainer => _modifyableContainer;
         public BuffContainer BuffContainer => _buffContainer;

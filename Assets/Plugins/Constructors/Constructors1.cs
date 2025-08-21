@@ -10,7 +10,6 @@ namespace Constructor
         private void Awake()
         {
             BuffRegister.RegisterBuffGenerator();
-            CreatureRegister.RegisterGenerator();
             TargetSetFactorary.RegisterTargetSet("Common", CommonTargetSet.Instance);
         }
     }

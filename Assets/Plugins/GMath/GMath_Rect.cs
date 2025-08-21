@@ -13,6 +13,13 @@ namespace GameBase.Math
                 _size = 1f;
                 this.rect = rect;
             }
+
+            public Rect2D(float width, float height)
+            {
+                _size = 1f;
+                rect = Rect.MinMaxRect(0, 0, width, height);
+            }
+
             public Rect2D(float xmin, float ymin, float xmax, float ymax)
             {
                 _size = 1f;

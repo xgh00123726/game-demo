@@ -17,7 +17,7 @@ namespace Constructor.Projectiles
         public int damage;
         public int flyingID;
     }
-    public class Area1 : BaseConstructor<Area1Data, Projectile, SimpleEntityContainer, ProjectileSys, Area1>
+    public class Area1 : EntityConstructor<Area1Data, Projectile, SimpleEntityContainer, ProjectileSys, Area1>
     {
         protected override string RelativePath => "Projectile/Area1.csv";
 

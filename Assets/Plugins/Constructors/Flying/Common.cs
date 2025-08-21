@@ -12,7 +12,7 @@ namespace Constructor.Flyings
         public float minExistTime;
         public CurveFactory.CurveType curveType;
     }
-    public class Common : BaseConstructor<CommonData, Flying, SimpleEntityContainer, FlyingSys, Common>
+    public class Common : EntityConstructor<CommonData, Flying, SimpleEntityContainer, FlyingSys, Common>
     {
         protected override string RelativePath => "Flyings/Common.csv";
 

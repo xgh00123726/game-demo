@@ -20,6 +20,7 @@ namespace GameBase.Flyings
         public float speed;
         public CurveFactory.CurveType curveType;
 
+        public Action OnHit;
         public Action OnReleased;
 
         internal Vector3 src;

@@ -1,16 +1,15 @@
 using GameBase.Tools;
 using NReco.Csv;
+using System;
 using System.IO;
 using UnityEngine;
 
 namespace GameBase.EntitySystem
 {
-    public abstract class BaseConstructor<T_Data, T_Entity, T_Container, T_EntitySys, T_Constructor>
+    public abstract class BaseConstructor<T_Data, T_Entity, T_Constructor>
         where T_Data : struct
-        where T_Entity : class, IEntity, new()
-        where T_Container : IEContainer, new()
-        where T_Constructor : BaseConstructor<T_Data, T_Entity, T_Container, T_EntitySys, T_Constructor>, new()
-        where T_EntitySys: SimplestEntitySys<T_Entity, T_Container,  T_EntitySys>, new()
+        where T_Entity : class, new()
+        where T_Constructor : BaseConstructor<T_Data, T_Entity, T_Constructor>, new()
     {
         private T_Data[] _datas;
         private static T_Constructor _instance;
@@ -28,15 +27,17 @@ namespace GameBase.EntitySystem
         }
         protected abstract void Parse(CsvReader line, ref T_Data data);
         protected abstract string RelativePath { get; }
-        protected abstract T_EntitySys SysInstance { get; }
         protected abstract void Set(T_Entity e, in T_Data data);
+        protected abstract T_Entity Get(Action<T_Entity> Init);
+
+
         public T_Entity Get(int index)
         {
             if (index >= _datas.Length || index < 0)
             {
                 XLogger.Instance.Log($"index out off array:{index}");
             }
-            return SysInstance.NewEntity((T_Entity e) =>
+            return Get((T_Entity e) =>
             {
                 Set(e, in _datas[index]);
             });

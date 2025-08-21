@@ -1,6 +1,8 @@
 using GameBase.Creatures;
 using GameBase.EntitySystem;
+using GameBase.Move;
 using GameBase.Resources;
+using GameBase.UI;
 using System;
 using UnityEngine;
 
@@ -54,7 +56,26 @@ public class CreatureSys : UObjEntitySys<Creature, SimpleEntityContainer, GameOb
 
     protected override GameObject InstantiateObj(Creature e)
     {
-        return GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
+        var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
+
+        e.animator = obj.GetComponent<Animator>();
+        e.Obj = obj;
+
+        MoveSys.Instance.NewEntity((Mover em) =>
+        {
+            em.owner = e;
+        });
+        RotateSys.Instance.NewEntity((Rotater er) =>
+        {
+            er.owner = e;
+        });
+        HealthBarSys.Instance.NewEntity((HealthBar eh) =>
+        {
+            eh.ObjID = 6;
+            eh.owner = e;
+        });
+
+        return obj;
     }
 
     protected override void AfterInstantiateEUObject(Creature e)
@@ -69,6 +90,11 @@ public class CreatureSys : UObjEntitySys<Creature, SimpleEntityContainer, GameOb
         e.Alive = false;
 
         e.Obj.SetActive(false);
+    }
+
+    protected override void BeforeFirstUpdate(Creature e)
+    {
+
     }
 
     protected override void UpdateEntity(Creature e)
