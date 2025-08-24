@@ -23,30 +23,24 @@ public partial class Player : MonoBehaviour,
 
     private void SpellInit()
     {
-        charater.SpellContainer[0] = SpellSys.Instance.NewEntity((Spell e) =>
-        {
-            e.interactive = new CommonInteractive(KeyFunction.Spell1, IndicatorSys.Instance.NewEntity<CircleIndicator>());
-            e.coolingTimeSet = 5f;
-            e.speller = charater;
-            e.actionInterface = new AreaProjAction();
-        });
+        var spell1 = Constructor.Spells.Main.Common.Instance.Get(0);
+        spell1.speller = charater;
+        ((Constructor.Spells.Interactive.KeyInteractive)spell1.interactive).readyKey = KeyFunction.Spell1;
+        charater.SpellContainer[0] = spell1;
 
-        charater.SpellContainer[1] = SpellSys.Instance.NewEntity((Spell e) =>
-        {
-            e.interactive = new CommonInteractive(KeyFunction.Spell2, IndicatorSys.Instance.NewEntity<LinearIndicator>());
-            e.coolingTimeSet = 5f;
-            e.speller = charater;
-            e.actionInterface = new TraceProjAction();
-        });
+        var spell2 = Constructor.Spells.Main.Common.Instance.Get(1);
+        spell2.speller = charater;
+        ((Constructor.Spells.Interactive.KeyInteractive)spell2.interactive).readyKey = KeyFunction.Spell2;
+        charater.SpellContainer[1] = spell2;
 
-        SpellSys.Instance.NewEntity((Spell e) =>
-        {
-            e.interactive = new CommonInteractive(KeyFunction.Aim, IndicatorSys.Instance.NewEntity<CircleIndicator>());
-            e.coolingTimeSet = 1f;
-            e.speller = charater;
-            e.actionInterface = new TraceProjAction();
-        });
+        var spell3 = Constructor.Spells.Main.Common.Instance.Get(3);
+        spell3.speller = charater;
+        ((Constructor.Spells.Interactive.KeyInteractive)spell3.interactive).readyKey = KeyFunction.Spell3;
+        charater.SpellContainer[2] = spell3;
 
+        var spella = Constructor.Spells.Main.Common.Instance.Get(2);
+        spella.speller = charater;
+        ((Constructor.Spells.Interactive.KeyInteractive)spella.interactive).readyKey = KeyFunction.Aim;
     }
 
     private void EpicBarInit()

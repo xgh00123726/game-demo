@@ -1,6 +1,7 @@
 using GameBase.Creatures;
 using GameBase.GCamera;
 using GameBase.Tools;
+using System;
 using UnityEngine;
 public class Initer : MonoBehaviour
 {
@@ -20,13 +21,13 @@ public class Initer : MonoBehaviour
 
         Command.Register("generate-enermy", () =>
         {
-            var c = CreatureSys.Instance.NewEntity<Creature>(0);
+            var c = Constructor.Creatures.Factory.Instance.Get(Constructor.Creatures.Type.Common, 1);
             c.Position = CameraSys.MouseHitPosition;
         });
 
         Command.Register("generate-enermy", (int id) =>
         {
-            var c = CreatureSys.Instance.NewEntity<Creature>(0);
+            var c = Constructor.Creatures.Factory.Instance.Get(Constructor.Creatures.Type.Common, 1);
             c.Position = CameraSys.MouseHitPosition;
         });
 
@@ -34,9 +35,8 @@ public class Initer : MonoBehaviour
         {
             for (int i = 0; i < num; i++)
             {
-                var c = CreatureSys.Instance.NewEntity<Creature>(0);
+                var c = Constructor.Creatures.Factory.Instance.Get(Constructor.Creatures.Type.Common, 1);
                 c.Position = CameraSys.MouseHitPosition + new Vector3(i, 0, 0);
-                c.tag = Tag.CommonCreature;
             }
         });
 
@@ -47,7 +47,7 @@ public class Initer : MonoBehaviour
 
         Timer.AddTask(1, () =>
         {
-            var charater = CreatureSys.Instance.NewEntity<Creature>(0);
+            var charater = Constructor.Creatures.Factory.Instance.Get(Constructor.Creatures.Type.Common, 0);
             var player = charater.Obj.AddComponent<Player>();
             player.charater = charater;
             charater.Position = new Vector3(-6, -7, 4);

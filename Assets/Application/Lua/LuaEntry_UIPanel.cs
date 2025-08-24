@@ -1,7 +1,4 @@
 using GameBase.Infos;
-using GameBase.Tools;
-using UnityEngine;
-using XLua;
 
 public partial class LuaEntry
 {
