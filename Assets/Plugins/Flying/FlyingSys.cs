@@ -1,6 +1,7 @@
 using GameBase.Resources;
 using GameBase.EntitySystem;
 using UnityEngine;
+using GameBase.Tools;
 namespace GameBase.Flyings
 {
     public class FlyingSys : UObjEntitySys<Flying, SimpleEntityContainer, GameObject, FlyingSys>
@@ -57,11 +58,15 @@ namespace GameBase.Flyings
                 e.curve.PosUpdate();
             }
 
-            if ((e.dest - e.Obj.transform.position).magnitude <= e.releaseDistance
-                && Time.time > e.minExistTime + e.instantiateTime)
+            if (e.hitFlag && Time.time > e.minExistTime + e.instantiateTime)
             {
-                e.OnHit?.Invoke();
                 RemoveEntity(e);
+            }
+
+            if (!e.hitFlag && (e.dest - e.Obj.transform.position).magnitude <= e.releaseDistance)
+            {
+                e.hitFlag = true;
+                e.OnHit?.Invoke();
             }
         }
     }

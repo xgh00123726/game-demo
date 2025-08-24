@@ -10,5 +10,6 @@ namespace GameBase.Math
         bool Contains(float x, float y);
         float Size { get; set; }
         Vector2 Center { set; get; }
+        Vector2 Dir { set; get; }
     }
 }

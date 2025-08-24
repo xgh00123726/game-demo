@@ -17,7 +17,7 @@ namespace GameBase.Projectiles
                 e.whites = new System.Collections.Generic.HashSet<int>();
             }
 
-            e.flying.OnHit = () => HitTarget(e);
+            e.flying.OnHit += () => HitTarget(e);
         }
 
         private void HitTarget(Projectile e)
@@ -30,7 +30,7 @@ namespace GameBase.Projectiles
 
         private void EffectTarget(Projectile e, IProjectileTarget target)
         {
-            if (e.hasWhite && e.whites.Contains(e.InstanceID))
+            if (e.hasWhite && e.whites.Contains(target.InstanceID))
             {
                 return;
             }
@@ -46,7 +46,7 @@ namespace GameBase.Projectiles
             e.actualEffectTimes++;
             if (e.hasWhite)
             {
-                e.whites.Add(e.InstanceID);
+                e.whites.Add(target.InstanceID);
             }
         }
 

@@ -51,8 +51,9 @@ namespace GameBase.Resources
             string path;
             csvReader.Read();
             container = new T[int.Parse(csvReader[0])];
-            while (csvReader.Read())
+            for (int i = 0; i < container.Length; i++)
             {
+                csvReader.Read();
                 id = int.Parse(csvReader[0]);
                 path = csvReader[1];
                 container[id] = Addressables.LoadAssetAsync<T>(path).WaitForCompletion();

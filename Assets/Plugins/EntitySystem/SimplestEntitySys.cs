@@ -20,9 +20,9 @@ namespace GameBase.EntitySystem
         public int entityNewTimes = 0;
         public IEnumerable<T_Entity> Entities => _entities;
 
-        protected int tick = 0;
-        protected int fixedTick = 0;
-        protected virtual float FixedFreq => 60f;
+        protected internal int tick = 0;
+        protected internal int fixedTick = 0;
+        protected internal virtual float FixedFreq => 60f;
         private float _updateTimeAccumulate = 0;
 
         internal static T_Instance instance;
@@ -41,11 +41,11 @@ namespace GameBase.EntitySystem
             }
         }
 
-        protected LinkedList<T_Entity> _entityNeedRegister = new LinkedList<T_Entity>();
-        protected LinkedList<T_Entity> _entitiesNeedRemove = new LinkedList<T_Entity>();
-        protected T_Container _entityContainer = new T_Container();
-        protected LinkedList<T_Entity> _entities = new LinkedList<T_Entity>();
-        protected Dictionary<int, Delegate> entityGenerateDelegates = new();
+        protected internal LinkedList<T_Entity> _entityNeedRegister = new LinkedList<T_Entity>();
+        protected internal LinkedList<T_Entity> _entitiesNeedRemove = new LinkedList<T_Entity>();
+        protected internal T_Container _entityContainer = new T_Container();
+        protected internal LinkedList<T_Entity> _entities = new LinkedList<T_Entity>();
+        protected internal Dictionary<int, Delegate> entityGenerateDelegates = new();
         /// <summary>
         /// 将实体标记为删除
         /// </summary>

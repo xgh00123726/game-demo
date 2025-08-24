@@ -1,10 +1,7 @@
-using GameBase.Tools;
-using NReco.Csv;
+using GameBase.EntitySystem;
 using System;
-using System.IO;
-using UnityEngine;
 
-namespace GameBase.EntitySystem
+namespace Constructor
 {
     public abstract class EntityConstructor<T_Data, T_Entity, T_Container, T_EntitySys, T_Constructor> : BaseConstructor<T_Data, T_Entity, T_Constructor>
         where T_Data : struct

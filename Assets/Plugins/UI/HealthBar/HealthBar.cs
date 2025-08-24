@@ -16,8 +16,6 @@ namespace GameBase.UI
         internal int lastMaxHP;
         internal float currPercent;
         internal float losingPercent;
-        internal GameObject textObj;
-        internal TextMeshProUGUI textComponent;
         internal GameObject current;
         internal RectTransform currentRectTransform;
         internal GameObject losing;

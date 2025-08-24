@@ -5,42 +5,40 @@ using GameBase.Math;
 using GameBase.Projectiles;
 using GameBase.Tools;
 using NReco.Csv;
+using System;
 using UnityEngine;
 
 namespace Constructor.Projectiles
 {
-    public struct Area1Data
+    public struct AreaCircleTriggerData
     {
         public int maxEffectTimes;
         public bool hasWhite;
         public float radius;
         public int damage;
-        public int flyingID;
     }
-    public class Area1 : EntityConstructor<Area1Data, Projectile, SimpleEntityContainer, ProjectileSys, Area1>
+    public class AreaCircleTrigger : EntityConstructor<AreaCircleTriggerData, Projectile, SimpleEntityContainer, ProjectileSys, AreaCircleTrigger>
     {
-        protected override string RelativePath => "Projectile/Area1.csv";
+        protected override string RelativePath => "Projectile/AreaCircleTrigger.csv";
 
         protected override ProjectileSys SysInstance => ProjectileSys.Instance;
 
-        protected override void Parse(CsvReader line, ref Area1Data data)
+        protected override void Parse(CsvReader line, ref AreaCircleTriggerData data)
         {
             data.maxEffectTimes = int.Parse(line[1]);
             data.hasWhite = bool.Parse(line[2]);
             data.radius = float.Parse(line[3]);
             data.damage = int.Parse(line[4]);
-            data.flyingID = int.Parse(line[5]);
         }
 
-        protected override void Set(Projectile e, in Area1Data data)
+        protected override void Set(Projectile e, in AreaCircleTriggerData data)
         {
             e.maxeffectTimes = data.maxEffectTimes;
             e.hasWhite = data.hasWhite;
             e.shape = new GMath.Circle(Vector2.zero, data.radius);
             e.targetsSet = TargetSetFactorary.GetTargetSet("Common");
             var damage = data.damage;
-            e.effectConstructor = () => GEDamage.New(-damage);
-            e.flying = Flyings.Common.Instance.Get(data.flyingID);
+            e.effectConstructor = () => GEffects.Factory.Instance.Get(GEffects.Type.Damage, damage);
         }
     }
 }

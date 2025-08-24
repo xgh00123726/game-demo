@@ -2,13 +2,17 @@ using GameBase.Creatures;
 using GameBase.EntitySystem;
 using GameBase.Modify;
 using NReco.Csv;
+using System;
 
 namespace Constructor.Creatures
 {
     public struct CommonData
     {
         public int ObjID;
-        public int tag;
+        public GameBase.Creatures.Tag tag;
+        public float healthBarXOffset;
+        public float healthBarYOffset;
+        public float healthBarZOffset;
     }
     public class Common : EntityConstructor<CommonData, Creature, SimpleEntityContainer, CreatureSys, Common>
     {
@@ -19,13 +23,21 @@ namespace Constructor.Creatures
         protected override void Parse(CsvReader line, ref CommonData data)
         {
             data.ObjID = int.Parse(line[1]);
-            data.tag = int.Parse(line[2]);
+            Enum.TryParse(line[2], out data.tag);
+            data.healthBarXOffset = float.Parse(line[3]);
+            data.healthBarYOffset = float.Parse(line[4]);
+            data.healthBarZOffset = float.Parse(line[5]);
         }
 
         protected override void Set(Creature e, in CommonData data)
         {
             e.ObjID = data.ObjID;
-            e.tag = (GameBase.Creatures.Tag)(data.tag);
+            e.tag = data.tag;
+            e.healthBarOffset = new UnityEngine.Vector3(
+                data.healthBarXOffset,
+                data.healthBarYOffset,
+                data.healthBarZOffset
+                );
 
             e.ModifyableContainer["universal"] = ModifyableSys<float>.Instance.NewEntity<Modifyable<float>>(0f);   // 0£¬universal
             e.ModifyableContainer["moveSpeed"] = ModifyableSys<float>.Instance.NewEntity<Modifyable<float>>(5f);   // 1, moveSpeed

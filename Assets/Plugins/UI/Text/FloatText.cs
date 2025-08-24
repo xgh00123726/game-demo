@@ -11,10 +11,10 @@ namespace GameBase.UI
         public static float _yFactorAMax = -5f;
         public static float _yFactorBMin = 1f;
         public static float _yFactorBMax = 1.2f;
-        public static float _yFactorCMin = 4f;
-        public static float _yFactorCMax = 4f;
-        public static float _horizontalSpeedMin = 1.1f;
-        public static float _horizontalSpeedMax = 1.4f;
+        public static float _yFactorCMin = 5f;
+        public static float _yFactorCMax = 5f;
+        public static float _horizontalSpeedMin = 0.3f;
+        public static float _horizontalSpeedMax = 0.4f;
 
         public string value;
         public Vector3 showPosition;

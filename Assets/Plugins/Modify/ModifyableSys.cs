@@ -59,6 +59,7 @@ namespace GameBase.Modify
                     e.valueSet = modifyer.ModifyFunc(finnalVal, e.valueSet);
                 }
 
+                modifyer.OnModify?.Invoke();
                 modifyer.enable = false;
 
                 if ((modifyer.type & ModifyType.Once) != 0)

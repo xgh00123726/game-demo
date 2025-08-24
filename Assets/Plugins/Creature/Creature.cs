@@ -29,6 +29,7 @@ namespace GameBase.Creatures
     {
         public int radius;
         public Tag tag;
+        public Vector3 healthBarOffset = new Vector3(0, 1.6f, 0);
         public bool Alive { get; internal protected set; }
         public int InstanceID { get; set; }
         public GameObject Obj { get; set; }
@@ -44,7 +45,8 @@ namespace GameBase.Creatures
         public ModifyableContainer<float> ModifyableContainer => _modifyableContainer;
         public BuffContainer BuffContainer => _buffContainer;
 
-        Vector3 IHealthBarOwner.HealthBarPosition => Obj.transform.position + new Vector3(0, 1, 1);
+        Vector3 IHealthBarOwner.HealthBarPosition => Obj.transform.position 
+            + (CreatureGizmosDraw.Instance.healthBarDebugMode ? CreatureGizmosDraw.Instance.healthbarOffset : healthBarOffset);
 
         Vector3 IProjectileTarget.Center => Obj.transform.position;
 

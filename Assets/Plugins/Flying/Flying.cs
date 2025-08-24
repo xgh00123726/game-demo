@@ -9,7 +9,6 @@ namespace GameBase.Flyings
         IPoolable
     {
         public float releaseDistance;
-        public int releaseEffectID;
         public int trailID;
         public float maxExistTime;
         public float minExistTime;
@@ -23,6 +22,7 @@ namespace GameBase.Flyings
         public Action OnHit;
         public Action OnReleased;
 
+        internal bool hitFlag;
         internal Vector3 src;
         internal bool alive;
         internal GameObject trail;
@@ -31,11 +31,11 @@ namespace GameBase.Flyings
         public virtual void AfterGet()
         {
             releaseDistance = 0.1f;
-            releaseEffectID = -1;
             maxExistTime = 10f;
             minExistTime = 0f;
             speed = 5f;
             alive = true;
+            hitFlag = false;
         }
 
         public virtual void BeforeRelease()
@@ -45,6 +45,7 @@ namespace GameBase.Flyings
             curve = null;
             alive = false;
             OnReleased = null;
+            OnHit = null;
             ObjID = -1;
         }
 

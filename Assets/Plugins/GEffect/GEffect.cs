@@ -31,6 +31,7 @@ namespace GameBase.GEffects
             owner = default;
             target = default;
             EffectAction = null;
+            EffectCallback = null;
             interval = 0;
         }
     }

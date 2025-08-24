@@ -52,7 +52,7 @@ namespace GameBase.Tools
                 }
                 else if (_commandsWithIntPara.ContainsKey(cmd))
                 {
-                    int intPara = int.Parse(para);
+                    int.TryParse(para, out var intPara);
 
                     _commandsWithIntPara[cmd]?.Invoke(intPara);
                 }

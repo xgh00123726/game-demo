@@ -27,6 +27,11 @@ namespace GameBase.Math
                 get => c;
                 set => c = value;
             }
+            Vector2 IShape2D.Dir
+            {
+                get => Vector2.zero;
+                set { }
+            }
 
             public Circle(Vector2 c, float r)
             {

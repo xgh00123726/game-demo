@@ -1,0 +1,18 @@
+using GameBase.Creatures;
+using System.Collections.Generic;
+
+namespace Constructor.Creatures
+{
+    public enum Type
+    {
+        Common,
+    }
+    public class Factory : ConstructorFactory<Type, Creature, Factory>
+    {
+        protected override Dictionary<Type, System.Func<int, Creature>> ConstructorGetDict =>
+            new()
+            {
+                {Type.Common, Common.Instance.Get }
+            };
+    }
+}

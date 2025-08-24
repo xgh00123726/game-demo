@@ -8,16 +8,13 @@ namespace GameBase.UI
 {
     public class HealthBarSys : UObjEntitySys<HealthBar, SimpleEntityContainer, GameObject, HealthBarSys>
     {
-        public static float losingSpeed = 1f;
+        public static float losingSpeed = 0.2f;
 
         protected override GameObject InstantiateObj(HealthBar e)
         {
             var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
 
             obj.transform.SetParent(WorldCanvs.Instance.transform, false);
-
-            e.textObj = obj.transform.Find("Text").gameObject;
-            e.textComponent = e.textObj.GetComponent<TextMeshProUGUI>();
 
             e.current = obj.transform.Find("Current").gameObject;
             e.currentRectTransform = e.current.GetComponent<RectTransform>();
@@ -86,7 +83,6 @@ namespace GameBase.UI
             }
 
             e.currPercent = Mathf.Clamp01(e.owner.CurrHP / e.owner.MaxHP);
-            e.textComponent.text = $"{currHP} / {maxHP}";
             SetWidth(e.currentRectTransform, e.currPercent, e.width);
 
             e.lastCurrHP = currHP;

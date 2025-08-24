@@ -1,4 +1,5 @@
 using GameBase.EntitySystem;
+using GameBase.Infos;
 using GameBase.Resources;
 using TMPro;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace GameBase.UI
         protected override GameObject InstantiateObj(FloatText e)
         {
             var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
+            obj.transform.SetParent(WorldCanvs.Instance.transform, false);
             e.rectTransform = obj.GetComponent<RectTransform>();
             e.textObj = obj.GetComponent<TextMeshProUGUI>();
 
@@ -17,13 +19,13 @@ namespace GameBase.UI
 
         protected override void AfterInstantiateEUObject(FloatText e)
         {
-            e.duration = 1.5f;
+            e.duration = FloatTextConfig.Float.existTime;
             e.instantiateTime = Time.time;
 
-            e.yFactorA = Random.Range(FloatText._yFactorAMin, FloatText._yFactorAMax);
-            e.yFactorB = Random.Range(FloatText._yFactorBMin, FloatText._yFactorBMax);
-            e.yFactorC = Random.Range(FloatText._yFactorCMin, FloatText._yFactorCMax);
-            e.horizontalSpeed = Random.Range(FloatText._horizontalSpeedMin, FloatText._horizontalSpeedMax);
+            e.yFactorA = Random.Range(FloatTextConfig.Float.yFactorAMin, FloatTextConfig.Float.yFactorAMax);
+            e.yFactorB = Random.Range(FloatTextConfig.Float.yFactorBMin, FloatTextConfig.Float.yFactorBMax);
+            e.yFactorC = Random.Range(FloatTextConfig.Float.yFactorCMin, FloatTextConfig.Float.yFactorCMax);
+            e.horizontalSpeed = Random.Range(FloatTextConfig.Float.horizontalSpeedMin, FloatTextConfig.Float.horizontalSpeedMax);
             float rad = Random.Range(0f, Mathf.PI * 2);
             e.xFactor = Mathf.Sin(rad) * e.horizontalSpeed;
             e.zFactor = Mathf.Cos(rad) * e.horizontalSpeed;

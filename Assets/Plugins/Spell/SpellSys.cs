@@ -9,17 +9,20 @@ namespace GameBase.Spells
         protected override void OnRegisterEntityToActives(Spell e)
         {
             e.RegistertoActivesDelegate?.Invoke(e);
-
-            if (e.speller == null)
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log("null speller");
-            }
         }
 
         protected override void OnRemoveEntityFromActives(Spell e)
         {
             e.RemoveFromActiveDelegate?.Invoke(e);
+        }
+
+        protected override void BeforeFirstUpdate(Spell e)
+        {
+            if (e.speller == null)
+            {
+                XLogger.Instance.Level(XLogger.LogLevel.Error)
+                    .Log("null speller");
+            }
         }
 
         protected override void UpdateEntity(Spell e)

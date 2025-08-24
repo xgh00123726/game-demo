@@ -44,6 +44,15 @@ namespace GameBase.Math
                 get => rect.center;
                 set => rect.center = value;
             }
+            Vector2 IShape2D.Dir
+            {
+                get => Vector2.zero;
+                set
+                {
+                    Vector2 dir1 = value.normalized * rect.height / 2;
+                    Vector2 dir2 = GMath.VerticalVector2(dir1).normalized * rect.width / 2;
+                }
+            }
 
             public bool Contains(float x, float y)
             {

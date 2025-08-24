@@ -7,7 +7,6 @@
         "Camera",
         "Tools",
         "GMath",
-        "Entity",
         "UI",
         "Modify",
         "GEffect",
@@ -16,7 +15,9 @@
         "Animations",
         "Flying",
         "EntitySystem",
-        "Effects"
+        "Effects",
+        "Indicators",
+        "Creature"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

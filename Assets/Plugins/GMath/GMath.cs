@@ -21,6 +21,11 @@ namespace GameBase.Math
                 ) * Mathf.Rad2Deg;
         }
 
+        public static Vector2 VerticalVector2(Vector2 v)
+        {
+            return new Vector2(-v.y, v.x);
+        }
+
         public static float GameDistance(Vector3 c1, Vector3 c2)
         {
             float x1 = c1.x;

@@ -24,6 +24,7 @@ namespace GameBase.Modify
         public float dt;
         public Func<T, T, T> ModifyFunc;
         public bool externalClear;
+        public Action OnModify;
 
         internal float instantiateTime;
         internal float lastEnableTime;
@@ -39,7 +40,8 @@ namespace GameBase.Modify
 
         void IPoolable.BeforeRelease()
         {
-            
+            OnModify = null;
+            ModifyFunc = null;
         }
     }
 }

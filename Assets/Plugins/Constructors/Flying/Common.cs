@@ -1,16 +1,20 @@
 using NReco.Csv;
 using GameBase.Flyings;
 using GameBase.EntitySystem;
+using System;
 
 namespace Constructor.Flyings
 {
     public struct CommonData
     {
         public int objID;
+        public Effects.Type releaseEffectType;
         public int releaseEffectID;
         public float speed;
         public float minExistTime;
         public CurveFactory.CurveType curveType;
+        public Effects.Type hitEffectType;
+        public int hitEffectID;
     }
     public class Common : EntityConstructor<CommonData, Flying, SimpleEntityContainer, FlyingSys, Common>
     {
@@ -20,17 +24,14 @@ namespace Constructor.Flyings
 
         protected override void Parse(CsvReader line, ref CommonData data)
         {
-            int objID = int.Parse(line[1]);
-            int releaseEffectID = int.Parse(line[2]);
-            float speed = float.Parse(line[3]);
-            float minExistTime = float.Parse(line[4]);
-            CurveFactory.CurveType curveType = (CurveFactory.CurveType)int.Parse(line[5]);
-
-            data.objID = objID;
-            data.releaseEffectID = releaseEffectID;
-            data.speed = speed;
-            data.minExistTime = minExistTime;
-            data.curveType = curveType;
+            data.objID = int.Parse(line[1]);
+            Enum.TryParse(line[2], out data.releaseEffectType);
+            data.releaseEffectID = int.Parse(line[3]);
+            data.speed = float.Parse(line[4]);
+            data.minExistTime = float.Parse(line[5]);
+            Enum.TryParse(line[6], out data.curveType);
+            Enum.TryParse(line[7], out data.hitEffectType);
+            data.hitEffectID = int.Parse(line[8]);
         }
 
         protected override void Set(Flying e, in CommonData data)
@@ -45,12 +46,21 @@ namespace Constructor.Flyings
 
             e.speed = data.speed;
             e.minExistTime = data.minExistTime;
-            e.releaseEffectID = data.releaseEffectID;
-            if (e.releaseEffectID >= 0)
+            var releaseEffectID = data.releaseEffectID;
+            if (releaseEffectID >= 0)
             {
-                e.OnReleased = () =>
+                e.OnReleased += () =>
                 {
-                    var er = Constructor.Effects.Common.Instance.Get(e.releaseEffectID);
+                    var er = Constructor.Effects.Common.Instance.Get(releaseEffectID);
+                    er.Position = e.Obj.transform.position;
+                };
+            }
+            var hitEffectID = data.hitEffectID;
+            if ( hitEffectID >= 0)
+            {
+                e.OnHit += () =>
+                {
+                    var er = Effects.Common.Instance.Get(hitEffectID);
                     er.Position = e.Obj.transform.position;
                 };
             }
