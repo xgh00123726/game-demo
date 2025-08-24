@@ -1,4 +1,4 @@
-29
+34
 0,Prefabs/Entity/Player1
 1,Prefabs/Entity/Enemy1
 2,Prefabs/Projectile/Lighting
@@ -25,6 +25,11 @@
 23,Prefabs/Projectile/Sword12_Purple
 24,Prefabs/Projectile/Sword12_Red
 25,Prefabs/Effect/Hit/Hit2
-26,Prefabs/Effect/Hit/Hit1
+26,Prefabs/Effect/Hit/Explosion
 27,Prefabs/Entity/PicoChan
 28,Prefabs/Projectile/Empty
+29,Prefabs/Projectile/Sword15_Earth
+30,Prefabs/Projectile/Sword15_Frost
+31,Prefabs/Projectile/Sword15_Iron
+32,Prefabs/Projectile/Sword15_Lava
+33,Prefabs/Projectile/FallingStone2

@@ -1,0 +1,8 @@
+1,flyingType,flyingID,projectileType,projectileID,distance
+0,Common,1,AreaCircleTrigger,1,6
+
+
+// 技能效果：一个范围伤害的冲击波，参考DOTA2中龙破斩，各种范围技能等
+// 发射一个projectile飞向targetPosition，projectile会造成接触伤害
+// projectile：由projectileType, projectileID生成
+// targetPosition：鼠标方向的distance
