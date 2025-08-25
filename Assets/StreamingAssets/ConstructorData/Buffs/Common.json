@@ -1,0 +1,19 @@
+{
+    "0": {
+        "moveSpeed": {
+            "setPer": "50"
+        }
+    },
+    "1": {
+        "coolingAccelerate": {
+            "fixed": "100"
+        }
+    },
+    "2": {
+        "moveSpeed": {
+            "fixed": "1",
+            "setPer": "10",
+            "currPer": "10"
+        }
+    }
+}
