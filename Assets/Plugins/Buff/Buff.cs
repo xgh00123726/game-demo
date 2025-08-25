@@ -24,8 +24,9 @@ namespace GameBase.Buffs
 
         public UIStyle uiStyle = UIStyle.None;
         public int textureID;
-        public float durationSet = 2;
+        public float durationSet;
         public IBuffOwner owner;
+        public BuffModifyers modifyers = new ();
         public Action RegistertoActivesDelegate;
         public Action RemoveFromActiveDelegate;
 
@@ -39,6 +40,7 @@ namespace GameBase.Buffs
             textureID = 0;
             alive = true;
             uiStyle = UIStyle.None;
+            durationRemain = 0;
         }
 
         void IPoolable.BeforeRelease()
@@ -47,6 +49,7 @@ namespace GameBase.Buffs
             RemoveFromActiveDelegate = null;
             textureID = 0;
             alive = false;
+            owner = null;
         }
     }
 }

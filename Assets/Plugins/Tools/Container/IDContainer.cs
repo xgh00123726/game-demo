@@ -9,6 +9,8 @@ namespace GameBase.Tools
         private Dictionary<int, T> _items = new();
         protected static Dictionary<string, int> _nameIDDict = new();
 
+        public static Dictionary<string, int> NameIDDict => _nameIDDict;
+
         static IDContainer()
         {
             var _instance = new T_Container();

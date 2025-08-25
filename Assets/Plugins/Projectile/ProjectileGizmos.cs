@@ -7,14 +7,16 @@ namespace GameBase.Projectiles
     {
         public bool isInit = false;
         public bool drawGizmos = false;
-        public ProjectileSys sysInstance;
+        public static ProjectileSys sysInstance;
+        public static ProjectileGizmos Instance => _instance;
+        public static ProjectileGizmos _instance;
 
         private void Init()
         {
             sysInstance = ProjectileSys.Instance;
         }
 
-        private void ToggleShow()
+        public void ToggleShow()
         {
             if (!isInit)
             {
@@ -27,6 +29,7 @@ namespace GameBase.Projectiles
 
         private void Awake()
         {
+            _instance = this;
             Command.Register("toggle-projectile-gizmos", ToggleShow);
         }
 

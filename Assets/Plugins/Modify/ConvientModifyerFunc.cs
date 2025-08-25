@@ -1,3 +1,4 @@
+using GameBase.Tools;
 using System;
 using System.Collections.Generic;
 
@@ -7,7 +8,7 @@ namespace GameBase.Modify
     {
         private static Dictionary<int, Func<float, float, float>> _floatCurrPercentDict = new();
         private static Dictionary<int, Func<float, float, float>> _floatSetPercentDict = new();
-        private static Dictionary<int, Func<float, float, float>> _floatFixedPercentDict = new();
+        private static Dictionary<int, Func<float, float, float>> _floatFixedValueDict = new();
 
         public static Func<float, float, float> FloatCurrPercent(float percent)
         {
@@ -61,15 +62,15 @@ namespace GameBase.Modify
 
         public static Func<float, float, float> FloatFixedValue(int value)
         {
-            if (!_floatFixedPercentDict.ContainsKey(value))
+            if (!_floatFixedValueDict.ContainsKey(value))
             {
-                _floatFixedPercentDict.Add(value, (float curr, float vset) =>
+                _floatFixedValueDict.Add(value, (float curr, float vset) =>
                 {
                     return curr + value;
                 });
             }
 
-            return _floatFixedPercentDict[value];
+            return _floatFixedValueDict[value];
         }
     }
 }

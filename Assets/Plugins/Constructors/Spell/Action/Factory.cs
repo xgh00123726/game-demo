@@ -9,6 +9,7 @@ namespace Constructor.Spells.Action
         TrigOnRelease,
         TrigNearestTarget,
         AreaFixedDis,
+        BuffSelf
     }
     public class Factory : ConstructorFactory<Type, IAction, Factory>
     {
@@ -18,6 +19,7 @@ namespace Constructor.Spells.Action
                 {Type.TrigOnRelease, TrigOnRelease.Instance.Get },
                 {Type.TrigNearestTarget, TrigNearestTarget.Instance.Get },
                 {Type.AreaFixedDis, AreaFixedDis.Instance.Get },
+                {Type.BuffSelf, BuffSelf.Instance.Get },
             };
     }
 }

@@ -21,7 +21,7 @@ namespace GameBase.Buffs
             _buffs.AddLast(buff);
         }
 
-        public void RemoveBuff(Buff buff)
+        internal void RemoveBuff(Buff buff)
         {
             OnRemoveBuff?.Invoke(buff);
             _buffs.Remove(buff);
