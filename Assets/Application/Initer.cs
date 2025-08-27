@@ -1,8 +1,14 @@
 using GameBase.Creatures;
 using GameBase.GCamera;
+using GameBase.Projectiles;
 using GameBase.Tools;
+using Instance.UI;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.IO;
 using UnityEngine;
+using UnityEngine.Analytics;
 public class Initer : MonoBehaviour
 {
     void Start()
@@ -45,16 +51,23 @@ public class Initer : MonoBehaviour
             CreatureSys.Instance.RemoveAll(GameBase.Creatures.Tag.CommonCreature);
         });
 
-        Timer.AddTask(1, () =>
+        var charater = Constructor.Creatures.Factory.Instance.Get(Constructor.Creatures.Type.Common, 0);
+        var player = charater.Obj.AddComponent<Player>();
+        player.charater = charater;
+        charater.Position = new Vector3(-6, -7, 4);
+
+        ProjectileGizmos.Instance.ToggleShow();
+        for (int i = 0; i < 10; ++i)
         {
-            var charater = Constructor.Creatures.Factory.Instance.Get(Constructor.Creatures.Type.Common, 0);
-            var player = charater.Obj.AddComponent<Player>();
-            player.charater = charater;
-            charater.Position = new Vector3(-6, -7, 4);
-        });
+            var e = InventoryUI.Instance;
+        }
     }
 
     private void Update()
     {
+        if (Inputs.GetKeyDown(KeyFunction.ToggleAttrPanel))
+        {
+            InventoryUI.Instance.Toggle();
+        }
     }
 }

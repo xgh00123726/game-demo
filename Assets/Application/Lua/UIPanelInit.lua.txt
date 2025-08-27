@@ -23,6 +23,11 @@ Attr_shapeTexureID = 4;
 Attr_contourTexureID = 7;
 Attr_itemAlign = 0;
 
+Inventory_panelObjID = 35
+Inventory_shapeTexureID = 4
+Inventory_contourTexureID = 7
+Inventory_itemAlign = 0
+
 Buff_itemWidth = 30.0
 Buff_itemHeight = 30.0
 Buff_xInterval = 1.5
@@ -62,3 +67,11 @@ Attr_yInterval = 35
 Attr_maxPanelWidth = 460
 Attr_panelX = -920
 Attr_panelY = -510
+
+Inventory_itemWidth = 80;
+Inventory_itemHeight = 80;
+Inventory_xInterval = 35;
+Inventory_yInterval = 35;
+Inventory_maxPanelWidth = 1200;
+Inventory_panelX = -600;
+Inventory_panelY = -200;

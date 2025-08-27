@@ -19,6 +19,7 @@ public partial class Player
 
     public void AttrUIInit()
     {
+        var e = AttrPanel.Instance;
         attrDetailUI = DetailUISys.Instance.NewEntity<DetailUI>();
 
         ShowAttrUI(charater.ModifyableContainer["universal"], 19);

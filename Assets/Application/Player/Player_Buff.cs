@@ -1,4 +1,5 @@
 using GameBase.Buffs;
+using GameBase.Tools;
 using GameBase.UI;
 using Instance.Buffs;
 
@@ -22,6 +23,7 @@ public partial class Player
 
     private void BuffUIInit()
     {
+        var e = BuffPanel.Instance;
         charater.BuffContainer.OnAddBuff = OnAddBuff;
         charater.BuffContainer.OnRemoveBuff = OnRemoveBuff;
     }

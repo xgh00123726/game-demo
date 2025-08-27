@@ -38,6 +38,11 @@ public partial class Player : MonoBehaviour,
         ((Constructor.Spells.Interactive.KeyInteractive)spell3.interactive).readyKey = KeyFunction.Spell3;
         charater.SpellContainer[2] = spell3;
 
+        var spell4 = Constructor.Spells.Main.Common.Instance.Get(4);
+        spell4.speller = charater;
+        ((Constructor.Spells.Interactive.KeyInteractive)spell4.interactive).readyKey = KeyFunction.Spell4;
+        charater.SpellContainer[3] = spell4;
+
         var spella = Constructor.Spells.Main.Common.Instance.Get(2);
         spella.speller = charater;
         ((Constructor.Spells.Interactive.KeyInteractive)spella.interactive).readyKey = KeyFunction.Aim;
@@ -49,10 +54,12 @@ public partial class Player : MonoBehaviour,
         epicHealthBar.CurrHP = charater.ModifyableContainer["currHP"].Value;
         epicHealthBar.MaxHP = charater.ModifyableContainer["maxHP"].Value;
 
-        var epicManaBar = EpicBarSys.Instance.NewEntity<EpicBar>();
+        var epicManaBar = EpicBarSys.Instance.NewEntity((EpicBar e) =>
+        {
+            e.ObjID = 8;
+        });
         epicManaBar.CurrHP = charater.ModifyableContainer["currMana"].Value;
         epicManaBar.MaxHP = charater.ModifyableContainer["maxMana"].Value;
-        epicManaBar.ObjID = 8;
     }
 
     private void PassiveInit()
@@ -72,6 +79,7 @@ public partial class Player : MonoBehaviour,
             var equipment = BuffSys.Instance.NewEntity<Buff>();
             equipment.owner = charater;
             equipment.durationSet = 9999;
+            ShowEquipmentUI(equipment);
         }
     }
 
@@ -90,13 +98,16 @@ public partial class Player : MonoBehaviour,
         SpellInit();
         EpicBarInit();
         PassiveInit();
-        EquipmentInit();
         AnimatorInit();
         GlobalInfoInit();
 
         AttrUIInit();
         SpellUIInit();
         BuffUIInit();
+        EquipmentUIInit();
+
+
+        EquipmentInit();
     }
 
     private void Update()
