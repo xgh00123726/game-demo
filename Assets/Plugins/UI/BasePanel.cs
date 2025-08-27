@@ -54,7 +54,7 @@ namespace GameBase.UI
                 float remainWidth = itemPerLine * (ItemWidth + XInterval);
                 vx -= remainWidth / 2;
             }
-                float vy = (ItemHeight + YInterval) * y;
+            float vy = (ItemHeight + YInterval) * y;
 
 
             return new Vector3(vx, vy, 0);

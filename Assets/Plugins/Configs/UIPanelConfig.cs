@@ -28,6 +28,11 @@ namespace GameBase.Infos
             public static int Attr_shapeTexureID = 4;
             public static int Attr_contourTexureID = 7;
             public static int Attr_itemAlign = 0;
+
+            public static int Inventory_panelObjID = 15;
+            public static int Inventory_shapeTexureID = 4;
+            public static int Inventory_contourTexureID = 7;
+            public static int Inventory_itemAlign = 0;
         }
 
         public static class Float
@@ -71,6 +76,14 @@ namespace GameBase.Infos
             public static float Attr_maxPanelWidth = 460f;
             public static float Attr_panelX = -920;
             public static float Attr_panelY = -510;
+
+            public static float Inventory_itemWidth = 80;
+            public static float Inventory_itemHeight = 80;
+            public static float Inventory_xInterval = 15f;
+            public static float Inventory_yInterval = 10f;
+            public static float Inventory_maxPanelWidth = 1000f;
+            public static float Inventory_panelX = 690;
+            public static float Inventory_panelY = -495;
         }
     }
 }
