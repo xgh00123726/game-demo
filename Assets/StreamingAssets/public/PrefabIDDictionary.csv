@@ -1,4 +1,4 @@
-34
+36
 0,Prefabs/Entity/Player1
 1,Prefabs/Entity/Enemy1
 2,Prefabs/Projectile/Lighting
@@ -33,3 +33,5 @@
 31,Prefabs/Projectile/Sword15_Iron
 32,Prefabs/Projectile/Sword15_Lava
 33,Prefabs/Projectile/FallingStone2
+34,Prefabs/UI/InventoryItem
+35,Prefabs/UI/InventoryPanel
