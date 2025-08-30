@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public abstract class BasePanel<T, T_Instance> : UObjEntitySys<T, SimpleEntityContainer, BaseUI, T_Instance>
+    public abstract class BasePanel<T, T_Instance> : UObjEntitySys<T, BaseUI, T_Instance>
         where T : BasePanelItem, new()
         where T_Instance : BasePanel<T, T_Instance>, new()
     {

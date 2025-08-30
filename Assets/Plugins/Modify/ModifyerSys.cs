@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameBase.Modify
 {
-    public class ModifyerSys<T> : SimplestEntitySys<Modifyer<T>, SimpleEntityContainer, ModifyerSys<T>>
+    public class ModifyerSys<T> : CommonEntitySys<Modifyer<T>, ModifyerSys<T>>
     {
         protected override void OnRegisterEntityToActives(Modifyer<T> e)
         {

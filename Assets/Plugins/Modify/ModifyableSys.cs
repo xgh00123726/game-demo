@@ -2,7 +2,7 @@ using GameBase.EntitySystem;
 using GameBase.Tools;
 namespace GameBase.Modify
 {
-    public class ModifyableSys<T> : SimplestEntitySys<Modifyable<T>, SimpleEntityContainer, ModifyableSys<T>>
+    public class ModifyableSys<T> : CommonEntitySys<Modifyable<T>, ModifyableSys<T>>
     {
         protected override void OnRegisterEntityToActives(Modifyable<T> e)
         {
@@ -71,9 +71,9 @@ namespace GameBase.Modify
             e.value = finnalVal;
         }
 
-        public T_Return NewEntity<T_Return>(T initValue) where T_Return : Modifyable<T>, new()
+        public Modifyable<T> NewEntity(T initValue)
         {
-            var ret = Instance.NewEntity<T_Return>();
+            var ret = Instance.NewEntity();
             ret.valueSet = initValue;
             ret.value = initValue;
 

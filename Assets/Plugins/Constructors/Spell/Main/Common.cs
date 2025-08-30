@@ -15,7 +15,7 @@ namespace Constructor.Spells.Main
         public int coolingTime;
     }
 
-    public class Common : EntityConstructor<CommonData, Spell, SimpleEntityContainer, SpellSys, Common>
+    public class Common : EntityConstructor<CommonData, Spell, SpellSys, Common>
     {
         protected override string RelativePath => "Spell/Main/Common.csv";
 

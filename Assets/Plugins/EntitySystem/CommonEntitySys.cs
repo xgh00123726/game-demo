@@ -10,15 +10,25 @@ namespace GameBase.EntitySystem
     /// <list type="bullet">
     /// <item><typeparam name="T_Entity"><typeparamref name="T_Entity"/>:实体类型</typeparam></item>
     /// </list></summary>
-    public abstract class SimplestEntitySys<T_Entity, T_Container, T_Instance> : IBaseSys
+    public abstract class CommonEntitySys<T_Entity, T_Instance> : IBaseSys
         where T_Entity : class, IEntity, new()
-        where T_Container : IEContainer, new()
-        where T_Instance : SimplestEntitySys<T_Entity, T_Container, T_Instance>, new()
+        where T_Instance : CommonEntitySys<T_Entity, T_Instance>, new()
     {
         public int sysID = 0;
         public int entityCount = 0;
         public int entityNewTimes = 0;
         public IEnumerable<T_Entity> Entities => _entities;
+        public IEContainer<T_Entity> Container
+        {
+            set => _entityContainer = value;
+            get => _entityContainer;
+        }
+
+        protected internal LinkedList<T_Entity> _entityNeedRegister = new LinkedList<T_Entity>();
+        protected internal LinkedList<T_Entity> _entitiesNeedRemove = new LinkedList<T_Entity>();
+        protected internal IEContainer<T_Entity> _entityContainer = new CommonEntityContainer<T_Entity>();
+        protected internal LinkedList<T_Entity> _entities = new LinkedList<T_Entity>();
+        protected internal Dictionary<int, Delegate> entityGenerateDelegates = new();
 
         protected internal int tick = 0;
         protected internal int fixedTick = 0;
@@ -41,11 +51,7 @@ namespace GameBase.EntitySystem
             }
         }
 
-        protected internal LinkedList<T_Entity> _entityNeedRegister = new LinkedList<T_Entity>();
-        protected internal LinkedList<T_Entity> _entitiesNeedRemove = new LinkedList<T_Entity>();
-        protected internal T_Container _entityContainer = new T_Container();
-        protected internal LinkedList<T_Entity> _entities = new LinkedList<T_Entity>();
-        protected internal Dictionary<int, Delegate> entityGenerateDelegates = new();
+
         /// <summary>
         /// 将实体标记为删除
         /// </summary>
@@ -91,69 +97,16 @@ namespace GameBase.EntitySystem
         /// </summary>
         /// <typeparam name="T_EntityType"></typeparam>
         /// <returns></returns>
-        public T_EntityType NewEntity<T_EntityType>(Action<T_EntityType> Init = null) where T_EntityType : class, T_Entity, new()
+        public T_Entity NewEntity(Action<T_Entity> Init = null)
         {
             ++entityNewTimes;
 
-            _entityContainer.RegisterType<T_EntityType>();
-
-            var e = _entityContainer.GetEntity<T_EntityType>();
+            var e = _entityContainer.GetEntity();
             e.InstanceID = PoolInfo.allocatedID++;
             Init?.Invoke(e);
             RegisterImmediately(e);
             OnRegisterEntityToActives(e);
             return e;
-        }
-
-
-        /// <summary>
-        /// 使用生成器id创建实体
-        /// </summary>
-        /// <typeparam name="T_EntityType"></typeparam>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public T_EntityType NewEntity<T_EntityType>(int id) where T_EntityType : class, T_Entity, new()
-        {
-            if (!entityGenerateDelegates.ContainsKey(id))
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log($"invalid entity generator id:{id}");
-                return null;
-            }
-            if (entityGenerateDelegates[id] == null)
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log("null entity generator");
-                return null;
-            }
-
-            if (entityGenerateDelegates[id] is Func<T_EntityType> func)
-            {
-                _entityContainer.RegisterType<T_EntityType>();
-
-                var e = func();
-                return e;
-            }
-            else
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log("entity generator get error type");
-                return default;
-            }
-        }
-
-        /// <summary>
-        /// 将快速实体生成器注册进系统
-        /// </summary>
-        /// <param name="eGen"></param>
-        /// <returns>快速实体生成器的id</returns>
-        public void RegisterEntityGenerateDeletate<T_entityType>(int id, Func<T_entityType> eGen) where T_entityType : T_Entity
-        {
-            if (entityGenerateDelegates.ContainsKey(id))
-            {
-                XLogger.Instance.Log($"register duplulicate generator id:{id}");
-            }
-            entityGenerateDelegates.Add(id, eGen);
         }
 
         internal protected virtual void Awake()

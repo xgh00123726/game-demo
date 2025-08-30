@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameBase.Spells
 {
-    public class SpellSys : SimplestEntitySys<Spell, SimpleEntityContainer, SpellSys>
+    public class SpellSys : CommonEntitySys<Spell, SpellSys>
     {
         protected override void OnRegisterEntityToActives(Spell e)
         {

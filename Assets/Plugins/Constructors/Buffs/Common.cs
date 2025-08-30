@@ -98,7 +98,7 @@ namespace Constructor.Buffs
             {
                 return null;
             }
-            var e = BuffSys.Instance.NewEntity<Buff>();
+            var e = BuffSys.Instance.NewEntity();
             var buffData = _datas[id];
             foreach (var mData in buffData)
             {
@@ -106,7 +106,7 @@ namespace Constructor.Buffs
                 var mv = mData.Value;
                 if (mv.setPercent != int.MinValue)
                 {
-                    var ems = ModifyerSys<float>.Instance.NewEntity<Modifyer<float>>();
+                    var ems = ModifyerSys<float>.Instance.NewEntity();
                     ems.ModifyFunc = ConvientModifyerFunc.FloatSetPercent(mv.setPercent);
                     ems.type = ModifyType.Temporary | ModifyType.Aways;
                     ems.duration = 9999;
@@ -114,7 +114,7 @@ namespace Constructor.Buffs
                 }
                 if (mv.currentPercent != int.MinValue)
                 {
-                    var emc = ModifyerSys<float>.Instance.NewEntity<Modifyer<float>>();
+                    var emc = ModifyerSys<float>.Instance.NewEntity();
                     emc.ModifyFunc = ConvientModifyerFunc.FloatCurrPercent(mv.currentPercent);
                     emc.type = ModifyType.Temporary | ModifyType.Aways;
                     emc.duration = 9999;
@@ -122,7 +122,7 @@ namespace Constructor.Buffs
                 }
                 if (mv.fixedValue != int.MinValue)
                 {
-                    var emf = ModifyerSys<float>.Instance.NewEntity<Modifyer<float>>();
+                    var emf = ModifyerSys<float>.Instance.NewEntity();
                     emf.ModifyFunc = ConvientModifyerFunc.FloatFixedValue(mv.fixedValue);
                     emf.type = ModifyType.Temporary | ModifyType.Aways;
                     emf.duration = 9999;

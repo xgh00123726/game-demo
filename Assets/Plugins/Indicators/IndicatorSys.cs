@@ -5,7 +5,7 @@ using UnityEngine.Rendering.Universal;
 
 namespace GameBase.Indicators
 {
-    public class IndicatorSys : UObjEntitySys<Indicator, SimpleEntityContainer, GameObject, IndicatorSys>
+    public class IndicatorSys : UObjEntitySys<Indicator, GameObject, IndicatorSys>
     {
         protected override void AfterInstantiateEUObject(Indicator e)
         {

@@ -8,7 +8,7 @@ namespace Constructor.Spells.Interactive
 {
     public struct CommonData
     {
-        public ISpellIndicator.Type indicatorType;
+        public Indicators.Type indicatorType;
         public float radius;
         public float length;
     }
@@ -18,7 +18,7 @@ namespace Constructor.Spells.Interactive
         public KeyFunction readyKey;
         public KeyFunction castKey;
         public KeyFunction cancelKey;
-        public ISpellIndicator indicator;
+        public IInteractiveIndicator indicator;
         public bool fastCast;
 
         bool IInteractive.ReadyTrig => fastCast ? true : Inputs.GetKeyDown(readyKey);
@@ -71,22 +71,10 @@ namespace Constructor.Spells.Interactive
             e.cancelKey = KeyFunction.Cancel;
             e.castKey = KeyFunction.MouseConfirm;
 
-
-            switch (data.indicatorType)
-            {
-                default:
-                case ISpellIndicator.Type.Circle:
-                    e.indicator = IndicatorSys.Instance.NewEntity<CircleIndicator>();
-                    break;
-                case ISpellIndicator.Type.Linear:
-                    e.indicator = IndicatorSys.Instance.NewEntity<LinearIndicator>();
-                    break;
-                case ISpellIndicator.Type.FixedLinear:
-                    var indicator = IndicatorSys.Instance.NewEntity<LinearIndicator>();
-                    indicator.Length = data.length;
-                    e.indicator = indicator;
-                    break;
-            }
+            var idata = new Indicators.IndicatorData();
+            idata.radius = data.radius;
+            idata.length = data.length;
+            e.indicator = Constructor.Spells.Indicators.Factory.Get(data.indicatorType, idata);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Constructor.Effects
         public int ObjID;
         public float existTime;
     }
-    public class Common : EntityConstructor<CommonData, Effect, SimpleEntityContainer, EffectSys, Common>
+    public class Common : EntityConstructor<CommonData, Effect, EffectSys, Common>
     {
         protected override string RelativePath => "Effect/Common.csv";
 

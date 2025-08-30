@@ -6,7 +6,7 @@ using GameBase.UI;
 using System;
 using UnityEngine;
 
-public class CreatureSys : UObjEntitySys<Creature, SimpleEntityContainer, GameObject, CreatureSys>
+public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
 {
     public static float infDis = 9999f;
 

@@ -9,7 +9,6 @@ namespace Constructor
     {
         private void Awake()
         {
-            BuffRegister.RegisterBuffGenerator();
             TargetSetFactorary.RegisterTargetSet("Common", CommonTargetSet.Instance);
         }
     }

@@ -18,7 +18,7 @@ namespace GameBase.Projectiles
         public IShape2D shape;
         public IProjectileTargetsSet targetsSet;
         public IProjectileOwner owner;
-        public Func<GEffect<IProjectileOwner, IProjectileTarget>> effectConstructor;
+        public IProjectileAction action;
 
         // optional
         public bool hasWhite;
@@ -55,7 +55,7 @@ namespace GameBase.Projectiles
             targetsSet = null;
             target = null;
             owner = null;
-            effectConstructor = null;
+            action = null;
         }
     }
 }

@@ -1,12 +1,10 @@
 namespace GameBase.EntitySystem
 {
-    public interface IEContainer
+    public interface IEContainer<T>
     {
-        T_Entity GetEntity<T_Entity>() where T_Entity : class, IEntity, new();
+        T GetEntity();
 
-        void RegisterType<T_Entity>() where T_Entity : class, IEntity, new();
-
-        void ReleaseEntity(IEntity e);
+        void ReleaseEntity(T e);
 
         int Count { get; }
     }

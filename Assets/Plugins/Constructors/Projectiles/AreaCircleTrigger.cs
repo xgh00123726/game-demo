@@ -1,5 +1,3 @@
-using Constructor.GEffects;
-using GameBase.EntitySystem;
 using GameBase.Flyings;
 using GameBase.Math;
 using GameBase.Projectiles;
@@ -17,7 +15,7 @@ namespace Constructor.Projectiles
         public float radius;
         public int damage;
     }
-    public class AreaCircleTrigger : EntityConstructor<AreaCircleTriggerData, Projectile, SimpleEntityContainer, ProjectileSys, AreaCircleTrigger>
+    public class AreaCircleTrigger : EntityConstructor<AreaCircleTriggerData, Projectile, ProjectileSys, AreaCircleTrigger>
     {
         protected override string RelativePath => "Projectile/AreaCircleTrigger.csv";
 
@@ -37,8 +35,7 @@ namespace Constructor.Projectiles
             e.hasWhite = data.hasWhite;
             e.shape = new GMath.Circle(Vector2.zero, data.radius);
             e.targetsSet = TargetSetFactorary.GetTargetSet("Common");
-            var damage = data.damage;
-            e.effectConstructor = () => GEffects.Factory.Instance.Get(GEffects.Type.Damage, damage);
+            e.action = Constructor.Projectiles.Action.Factory.Instance.Get(Projectiles.Action.Type.Damage, data.damage);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Constructor.Flyings
         public Effects.Type hitEffectType;
         public int hitEffectID;
     }
-    public class Common : EntityConstructor<CommonData, Flying, SimpleEntityContainer, FlyingSys, Common>
+    public class Common : EntityConstructor<CommonData, Flying, FlyingSys, Common>
     {
         protected override string RelativePath => "Flyings/Common.csv";
 

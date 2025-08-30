@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameBase.Projectiles
 {
-    public class ProjectileSys : SimplestEntitySys<Projectile, SimpleEntityContainer, ProjectileSys>
+    public class ProjectileSys : CommonEntitySys<Projectile, ProjectileSys>
     {
         protected override void UpdateEntity(Projectile e)
         { 
@@ -35,14 +35,7 @@ namespace GameBase.Projectiles
                 return;
             }
 
-            var effect = e.effectConstructor?.Invoke();
-            if (effect == null)
-            {
-                return;
-            }
-
-            effect.owner = e.owner;
-            effect.target = target;
+            e.action?.Action(e);
             e.actualEffectTimes++;
             if (e.hasWhite)
             {

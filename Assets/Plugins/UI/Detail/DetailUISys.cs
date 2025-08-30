@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public class DetailUISys : UObjEntitySys<DetailUI, SimpleEntityContainer, BaseUI, DetailUISys>
+    public class DetailUISys : UObjEntitySys<DetailUI, BaseUI, DetailUISys>
     {
         protected override void AfterInstantiateEUObject(DetailUI e)
         {

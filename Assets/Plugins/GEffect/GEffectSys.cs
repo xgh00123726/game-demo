@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameBase.GEffects
 {
-    public class GEffectSys<T_Owner, T_Target> : SimplestEntitySys<GEffect<T_Owner, T_Target>, SimpleEntityContainer, GEffectSys<T_Owner, T_Target>>
+    public class GEffectSys<T_Owner, T_Target> : CommonEntitySys<GEffect<T_Owner, T_Target>, GEffectSys<T_Owner, T_Target>>
     {
         protected override void OnRegisterEntityToActives(GEffect<T_Owner, T_Target> e)
         {

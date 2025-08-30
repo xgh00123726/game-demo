@@ -1,17 +1,14 @@
 using GameBase.Indicators;
 using GameBase.Spells;
+using NReco.Csv;
+using System;
 using UnityEngine;
 
-namespace Instance.Indicators
+namespace Constructor.Spells.Indicators
 {
-    public class LinearIndicator : Indicator,
-        ISpellIndicator
+    public class LinearIndicator: IInteractiveIndicator
     {
-        public LinearIndicator()
-        {
-            ObjID = 21;
-            textureID = 11;
-        }
+        public Indicator indicator;
 
         protected bool _fixedLength = false;
         public float Length
@@ -25,32 +22,32 @@ namespace Instance.Indicators
 
         private void SetLength(float value)
         {
-            Size = new Vector3(0.2f, value);
-            Pivot = new Vector3(0f, value / 2, 0f);
+            indicator.Size = new Vector3(0.2f, value);
+            indicator.Pivot = new Vector3(0f, value / 2, 0f);
         }
 
-        void ISpellIndicator.Hide()
+        void IInteractiveIndicator.Hide()
         {
-            Obj.SetActive(false);
+            indicator.Obj.SetActive(false);
         }
 
-        void ISpellIndicator.Update(ISpeller speller, Vector3 position)
+        void IInteractiveIndicator.Update(ISpeller speller, Vector3 position)
         {
-            Obj.transform.position = speller.Position;
+            indicator.Obj.transform.position = speller.Position;
             Vector3 dir = position - speller.Position;
             float x = dir.x;
             float z = dir.z;
             float angle = Vector2.SignedAngle(new Vector2(x, z), new Vector2(0, 1));
-            Obj.transform.rotation = Quaternion.Euler(90, angle, 0);
+            indicator.Obj.transform.rotation = Quaternion.Euler(90, angle, 0);
             if (!_fixedLength)
             {
                 SetLength(dir.magnitude);
             }
         }
 
-        void ISpellIndicator.Show()
+        void IInteractiveIndicator.Show()
         {
-            Obj.SetActive(true);
+            indicator.Obj.SetActive(true);
         }
     }
 }

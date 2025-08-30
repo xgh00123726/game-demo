@@ -4,11 +4,10 @@ using GameBase.Tools;
 
 namespace GameBase.EntitySystem
 {
-    public abstract class UObjEntitySys<T_Entity, T_Container, T_UObject, T_Instance> : SimplestEntitySys<T_Entity, T_Container, T_Instance>
+    public abstract class UObjEntitySys<T_Entity, T_UObject, T_Instance> : CommonEntitySys<T_Entity, T_Instance>
         where T_Entity : class, IUEntity<T_UObject>, new()
-        where T_Container : IEContainer, new()
         where T_UObject : new()
-        where T_Instance : UObjEntitySys<T_Entity, T_Container, T_UObject, T_Instance>, new()
+        where T_Instance : UObjEntitySys<T_Entity, T_UObject, T_Instance>, new()
     {
         protected Dictionary<int, EUObjectPool<T_Entity, T_UObject>> _objPools = new();
         protected Dictionary<T_Entity, Action> _afterInstantiateDelegates = new();

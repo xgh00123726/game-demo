@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameBase.Buffs
 {
-    public class BuffSys : SimplestEntitySys<Buff, SimpleEntityContainer, BuffSys>
+    public class BuffSys : CommonEntitySys<Buff, BuffSys>
     {
         protected override void OnRegisterEntityToActives(Buff e)
         {

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GameBase.Effects
 {
-    public class EffectSys : UObjEntitySys<Effect, SimpleEntityContainer, ParticleSystem, EffectSys>
+    public class EffectSys : UObjEntitySys<Effect, ParticleSystem, EffectSys>
     {
         protected override void AfterInstantiateEUObject(Effect e)
         {

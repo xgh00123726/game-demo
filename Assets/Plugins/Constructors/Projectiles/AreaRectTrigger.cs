@@ -1,10 +1,6 @@
-using Constructor.GEffects;
-using GameBase.EntitySystem;
 using GameBase.Math;
 using GameBase.Projectiles;
 using NReco.Csv;
-using System;
-using UnityEngine;
 
 namespace Constructor.Projectiles
 {
@@ -13,7 +9,7 @@ namespace Constructor.Projectiles
         public int width;
         public int damage;
     }
-    public class AreaRectTrigger : EntityConstructor<AreaRectTriggerData, Projectile, SimpleEntityContainer, ProjectileSys, AreaRectTrigger>
+    public class AreaRectTrigger : EntityConstructor<AreaRectTriggerData, Projectile, ProjectileSys, AreaRectTrigger>
     {
         protected override string RelativePath => "Projectile/AreaRectTrigger.csv";
 
@@ -32,7 +28,7 @@ namespace Constructor.Projectiles
             e.shape = new GMath.Rect2D(data.width, 1f);
             e.targetsSet = TargetSetFactorary.GetTargetSet("Common");
             var damage = data.damage;
-            e.effectConstructor = () => GEffects.Factory.Instance.Get(GEffects.Type.Damage, damage);
+            e.action = Constructor.Projectiles.Action.Factory.Instance.Get(Projectiles.Action.Type.Damage, data.damage);
         }
     }
 }

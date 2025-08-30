@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public class EpicBarSys : UObjEntitySys<EpicBar, SimpleEntityContainer, GameObject, EpicBarSys>
+    public class EpicBarSys : UObjEntitySys<EpicBar, GameObject, EpicBarSys>
     {
         public static float losingSpeed = 1f;
 

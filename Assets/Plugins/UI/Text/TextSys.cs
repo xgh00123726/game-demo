@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 namespace GameBase.UI
 {
-    public class TextSys : UObjEntitySys<FloatText, SimpleEntityContainer, GameObject, TextSys>
+    public class TextSys : UObjEntitySys<FloatText, GameObject, TextSys>
     {
         protected override GameObject InstantiateObj(FloatText e)
         {

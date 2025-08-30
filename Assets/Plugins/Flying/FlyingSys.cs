@@ -4,7 +4,7 @@ using UnityEngine;
 using GameBase.Tools;
 namespace GameBase.Flyings
 {
-    public class FlyingSys : UObjEntitySys<Flying, SimpleEntityContainer, GameObject, FlyingSys>
+    public class FlyingSys : UObjEntitySys<Flying, GameObject, FlyingSys>
     {
         public static readonly float ProjectileHitDis = 0.1f;
 

@@ -1,9 +1,5 @@
-using Constructor.GEffects;
-using GameBase.EntitySystem;
 using GameBase.Projectiles;
-using GameBase.Tools;
 using NReco.Csv;
-using System;
 
 namespace Constructor.Projectiles
 {
@@ -11,7 +7,7 @@ namespace Constructor.Projectiles
     {
         public int damage;
     }
-    public class SingleTrigger : EntityConstructor<SingleTriggerData, Projectile, SimpleEntityContainer, ProjectileSys, SingleTrigger>
+    public class SingleTrigger : EntityConstructor<SingleTriggerData, Projectile, ProjectileSys, SingleTrigger>
     {
         protected override string RelativePath => "Projectile/SingleTrigger.csv";
 
@@ -27,7 +23,7 @@ namespace Constructor.Projectiles
             e.maxeffectTimes = 1;
             e.hasWhite = false;
             var damage = data.damage;
-            e.effectConstructor = () => GEffects.Factory.Instance.Get(GEffects.Type.Damage, damage);
+            e.action = Constructor.Projectiles.Action.Factory.Instance.Get(Projectiles.Action.Type.Damage, data.damage);
         }
     }
 }
