@@ -20,7 +20,7 @@ public partial class Player
     public void AttrUIInit()
     {
         var e = AttrPanel.Instance;
-        attrDetailUI = DetailUISys.Instance.NewEntity<DetailUI>();
+        attrDetailUI = DetailUISys.Instance.NewEntity();
 
         ShowAttrUI(charater.ModifyableContainer["universal"], 19);
         ShowAttrUI(charater.ModifyableContainer["moveSpeed"], 20);

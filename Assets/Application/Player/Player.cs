@@ -8,7 +8,6 @@ using Instance.Spells;
 using GameBase.Infos;
 using GameBase.Animations;
 using GameBase.Indicators;
-using Instance.Indicators;
 using GameBase.Creatures;
 
 public partial class Player : MonoBehaviour,
@@ -50,7 +49,7 @@ public partial class Player : MonoBehaviour,
 
     private void EpicBarInit()
     {
-        var epicHealthBar = EpicBarSys.Instance.NewEntity<EpicBar>();
+        var epicHealthBar = EpicBarSys.Instance.NewEntity();
         epicHealthBar.CurrHP = charater.ModifyableContainer["currHP"].Value;
         epicHealthBar.MaxHP = charater.ModifyableContainer["maxHP"].Value;
 
@@ -66,7 +65,7 @@ public partial class Player : MonoBehaviour,
     {
         for (int i = 0; i < 10; ++i)
         {
-            var buff = BuffSys.Instance.NewEntity<Buff>();
+            var buff = BuffSys.Instance.NewEntity();
             buff.durationSet = 9999;
             buff.owner = charater;
         }
@@ -76,7 +75,7 @@ public partial class Player : MonoBehaviour,
     {
         for (int i = 0; i < 6; ++i)
         {
-            var equipment = BuffSys.Instance.NewEntity<Buff>();
+            var equipment = BuffSys.Instance.NewEntity();
             equipment.owner = charater;
             equipment.durationSet = 9999;
             ShowEquipmentUI(equipment);

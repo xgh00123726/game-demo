@@ -23,6 +23,6 @@ public partial class Player
     public void EquipmentUIInit()
     {
         var e = EquipmentPanel.Instance;
-        equipmentDetailUI = DetailUISys.Instance.NewEntity<DetailUI>();
+        equipmentDetailUI = DetailUISys.Instance.NewEntity();
     }
 }

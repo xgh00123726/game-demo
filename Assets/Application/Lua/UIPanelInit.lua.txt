@@ -74,4 +74,4 @@ Inventory_xInterval = 35;
 Inventory_yInterval = 35;
 Inventory_maxPanelWidth = 1200;
 Inventory_panelX = -600;
-Inventory_panelY = -200;
+Inventory_panelY = 160;

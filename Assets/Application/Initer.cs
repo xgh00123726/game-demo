@@ -2,13 +2,13 @@ using GameBase.Creatures;
 using GameBase.GCamera;
 using GameBase.Projectiles;
 using GameBase.Tools;
+using Instance.Inventory;
 using Instance.UI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using UnityEngine;
-using UnityEngine.Analytics;
 public class Initer : MonoBehaviour
 {
     void Start()
@@ -59,15 +59,17 @@ public class Initer : MonoBehaviour
         ProjectileGizmos.Instance.ToggleShow();
         for (int i = 0; i < 10; ++i)
         {
-            var e = InventoryUI.Instance;
+            var e = CommonInventory.Instance;
         }
+        CommonInventory.Instance.Hide();
+        CommonInventory.Instance[0].IconImageID = 0;
     }
 
     private void Update()
     {
         if (Inputs.GetKeyDown(KeyFunction.ToggleAttrPanel))
         {
-            InventoryUI.Instance.Toggle();
+            CommonInventory.Instance.Toggle();
         }
     }
 }

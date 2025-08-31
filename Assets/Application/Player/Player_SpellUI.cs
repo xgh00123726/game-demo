@@ -19,7 +19,7 @@ public partial class Player
     public void SpellUIInit()
     {
         var e = SpellPanel.Instance;
-        spellDetailUI = DetailUISys.Instance.NewEntity<DetailUI>();
+        spellDetailUI = DetailUISys.Instance.NewEntity();
 
         foreach (var s in charater.SpellContainer)
         {
