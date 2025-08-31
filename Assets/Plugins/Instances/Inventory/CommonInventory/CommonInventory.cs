@@ -11,15 +11,22 @@ namespace Instance.Inventory
         public static CommonInventory Instance => _instance;
         private Inventory<CommonItem, CommonDataBase> _inventory;
         private InventoryPanel _panel;
+        private LinearNonReleaseEntityContainer<InventoryItem> _container = new();
 
 
         private CommonInventory()
         {
             _panel = InventoryPanel.Instance;
+            _panel.Container = _container;
             for (int i = 0; i < ITEM_NUM; i++)
             {
                 _panel.NewEntity();
             }
+        }
+
+        public InventoryItem this[int i]
+        {
+            get => _container[i];
         }
 
         public void AddItem(CommonItem item)

@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace GameBase.EntitySystem
 {
     public class CommonEntityContainer<T> : IEContainer<T>
