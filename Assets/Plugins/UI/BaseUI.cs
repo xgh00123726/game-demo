@@ -4,26 +4,42 @@ using UnityEngine.EventSystems;
 
 namespace GameBase.UI
 {
-    public class BaseUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
-    {
-        public static Func<bool> SwitchTrigger;
-
+    public class BaseUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
+    {        
+        internal float enterTime;
+        internal float pointerDownTime;
         internal bool isPointerOn;
-        internal Action OnPointerEnter;
-        internal Action OnPointerExit;
-        internal Action OnSwitchOn;
-        internal Action OnSwitchOff;
+        internal bool isPointerDown;
+        internal IEnterExist enterExist;
+
+        public float EnterTime => enterTime;
+        public float PointerDownTime => pointerDownTime;
+
+        void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
+        {
+            if (isPointerOn)
+            {
+                isPointerDown = true;
+            }
+        }
 
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
         {
             isPointerOn = true;
-            OnPointerEnter?.Invoke();
+            enterExist?.OnPointerEnter();
         }
 
         void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
         {
+            enterTime = 0;
             isPointerOn = false;
-            OnPointerExit?.Invoke();
+            enterExist?.OnPointerExist();
+        }
+
+        void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
+        {
+            isPointerDown = false;
+            pointerDownTime = 0;
         }
     }
 }

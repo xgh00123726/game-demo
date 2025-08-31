@@ -85,18 +85,6 @@ namespace GameBase.UI
             var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
             var ui = obj.AddComponent<BaseUI>();
 
-            if (e is IEnterExist eee)
-            {
-                ui.OnPointerEnter = eee.OnPointerEnter;
-                ui.OnPointerExit = eee.OnPointerExist;
-            }
-
-            if (e is ISwitchable se)
-            {
-                ui.OnSwitchOn = se.OnSwitchOn;
-                ui.OnSwitchOff = se.OnSwitchOff;
-            }
-
             obj.transform.SetParent(panel.transform, false);
 
             var image = obj.transform.Find("Icon").GetComponent<Image>();
@@ -124,6 +112,15 @@ namespace GameBase.UI
             {
                 itemIterIdx = 0;
             }
+
+            if (e.Obj.isPointerOn)
+            {
+                e.Obj.enterTime += Time.deltaTime;
+            }
+            if (e.Obj.isPointerDown)
+            {
+                e.Obj.pointerDownTime += Time.deltaTime;
+            }    
         }
 
         protected override void Awake()

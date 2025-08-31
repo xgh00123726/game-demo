@@ -18,9 +18,9 @@ namespace GameBase.UI
 
         internal override float MaxPanelWidth => UIPanelConfig.Float.Inventory_maxPanelWidth;
 
-        internal override float PanelX => UIPanelConfig.Float.Inventory_panelX;
+        internal override float PanelX => UIPanelConfig.Float.Inventory_panelX + panelXOffset;
 
-        internal override float PanelY => UIPanelConfig.Float.Inventory_panelY;
+        internal override float PanelY => UIPanelConfig.Float.Inventory_panelY + panelYOffset;
 
         internal override int PanelObjID => UIPanelConfig.Int.Inventory_panelObjID;
 
@@ -29,6 +29,13 @@ namespace GameBase.UI
         internal override int ContourTexureID => UIPanelConfig.Int.Inventory_contourTexureID;
 
         internal override int ItemAlign => UIPanelConfig.Int.Inventory_itemAlign;
+
+        protected float panelXOffset = 0f;
+        protected float panelYOffset = 0f;
+        public float panelXMoveSpeed = 100f;
+        public float panelYMoveSpeed = 100f;
+        public float panelXOffsetTarget = 0f;
+        public float panelYOffsetTarget = 0f;
 
         protected override void AfterInstantiateEUObject(InventoryItem e)
         {
@@ -68,10 +75,11 @@ namespace GameBase.UI
             var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
             var ui = obj.AddComponent<BaseUI>();
 
-            ui.OnPointerEnter = e.OnPointerEnter;
-            ui.OnPointerExit = e.OnPointerExist;
-
             obj.transform.SetParent(panel.transform, false);
+
+            e.iconObject = obj.transform.Find("Icon").gameObject;
+
+            e.rectTransform = obj.transform.Find("Icon").GetComponent<RectTransform>();
 
             e.iconImage = obj.transform.Find("Icon").GetComponent<Image>();
             if (e.iconImage == null)
@@ -81,6 +89,52 @@ namespace GameBase.UI
             }
 
             return ui;
+        }
+
+        protected override void UpdateEntity(InventoryItem e)
+        {
+            base.UpdateEntity(e);
+
+            if (e.dragable == null)
+            {
+                return;
+            }
+            var isDrag = e.dragable.IsDrag(e);
+            if (isDrag && !e.lastDrag)
+            {
+                e.dragable.OnEnterDrag(e);
+            }
+            else if (!isDrag && e.lastDrag)
+            {
+                e.dragable.OnExitDrag(e);
+            }
+
+            if (isDrag)
+            {
+                e.dragable.OnDrag(e);
+            }
+
+            e.lastDrag = isDrag;
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+
+            var delta = panelXOffset - panelXOffsetTarget;
+            var xMoveDis = panelXMoveSpeed * Time.deltaTime;
+            if (delta > xMoveDis)
+            {
+                panelXOffset -= xMoveDis;
+            }
+            else if (-delta > xMoveDis)
+            {
+                panelXOffset += xMoveDis;
+            }
+            else
+            {
+                panelXOffset = panelXOffsetTarget;
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 using GameBase.Indicators;
 using GameBase.Spells;
+using System;
 using UnityEngine;
 
 namespace Constructor.Spells.Indicators
@@ -8,10 +9,8 @@ namespace Constructor.Spells.Indicators
     {
         public Indicator indicator;
 
-        void IInteractiveIndicator.Hide()
-        {
-            indicator.Obj.SetActive(false);
-        }
+        public System.Action OnShow { get; set; }
+
         void IInteractiveIndicator.Update(ISpeller speller, Vector3 position)
         {
             indicator.Obj.transform.position = position;
@@ -19,6 +18,12 @@ namespace Constructor.Spells.Indicators
         void IInteractiveIndicator.Show()
         {
             indicator.Obj.SetActive(true);
+            OnShow?.Invoke();
+        }
+
+        void IMutexIndicator.Hide()
+        {
+            indicator.Obj.SetActive(false);
         }
     }
 }

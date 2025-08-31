@@ -20,15 +20,12 @@ namespace Constructor.Spells.Indicators
             }
         }
 
+        public System.Action OnShow { get; set; }
+
         private void SetLength(float value)
         {
             indicator.Size = new Vector3(0.2f, value);
             indicator.Pivot = new Vector3(0f, value / 2, 0f);
-        }
-
-        void IInteractiveIndicator.Hide()
-        {
-            indicator.Obj.SetActive(false);
         }
 
         void IInteractiveIndicator.Update(ISpeller speller, Vector3 position)
@@ -48,6 +45,12 @@ namespace Constructor.Spells.Indicators
         void IInteractiveIndicator.Show()
         {
             indicator.Obj.SetActive(true);
+            OnShow?.Invoke();
+        }
+
+        void IMutexIndicator.Hide()
+        {
+            indicator.Obj.SetActive(false);
         }
     }
 }

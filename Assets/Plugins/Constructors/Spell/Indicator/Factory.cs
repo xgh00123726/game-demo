@@ -1,6 +1,4 @@
 using GameBase.Indicators;
-using GameBase.Tools;
-using System.Collections.Generic;
 
 namespace Constructor.Spells.Indicators
 {

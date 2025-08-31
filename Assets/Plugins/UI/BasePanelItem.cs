@@ -13,6 +13,5 @@ namespace GameBase.UI
         public BaseUI Obj { get; set; }
         public int ObjID { get; set; }
         public int InstanceID { get; set; }
-        public virtual Action AfterInstantiateObj { get; set; } = null;
     }
 }

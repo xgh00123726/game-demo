@@ -26,7 +26,9 @@ namespace Constructor.Spells.Indicators
             }
         }
 
-        void IInteractiveIndicator.Hide()
+        public System.Action OnShow { get; set; }
+
+        void IMutexIndicator.Hide()
         {
             indicator.Obj.SetActive(false);
         }
@@ -34,6 +36,7 @@ namespace Constructor.Spells.Indicators
         void IInteractiveIndicator.Show()
         {
             indicator.Obj.SetActive(true);
+            OnShow?.Invoke();
         }
 
         void IInteractiveIndicator.Update(ISpeller speller, Vector3 position)

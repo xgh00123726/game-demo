@@ -9,6 +9,7 @@ namespace GameBase.Indicators
     {
         public int textureID;
 
+        internal bool lastActive;
         internal Material decalMaterial;
         internal bool setSize;
         internal bool setPivot;
@@ -36,7 +37,6 @@ namespace GameBase.Indicators
         public GameObject Obj { get; set; }
         public int ObjID { get; set; }
         int IEntity.InstanceID { get; set; }
-        public virtual Action AfterInstantiateObj { get; set; } = null;
     }
 }
 

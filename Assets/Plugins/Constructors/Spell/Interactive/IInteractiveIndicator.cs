@@ -1,9 +1,9 @@
+using GameBase.Indicators;
 using GameBase.Spells;
 using UnityEngine;
 
-public interface IInteractiveIndicator
+public interface IInteractiveIndicator : IMutexIndicator
 {
     void Show();
-    void Hide();
     void Update(ISpeller speller, Vector3 position);
 }

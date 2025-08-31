@@ -1,21 +1,32 @@
 using GameBase.EntitySystem;
 using GameBase.Tools;
+using System.Collections;
 using System.Collections.Generic;
 
-public class LinearNonReleaseEntityContainer<T> : IEContainer<T>
+public class LinearNonReleaseEntityContainer<T> : IEContainer<T>, IEnumerable<T>
     where T : new()
 {
     private List<T> _entities = new();
 
     public T this[int i] => _entities[i];
 
-    int IEContainer<T>.Count => _entities.Count;
+    public int Count => _entities.Count;
+
+    public IEnumerator<T> GetEnumerator()
+    {
+        return ((IEnumerable<T>)_entities).GetEnumerator();
+    }
 
     T IEContainer<T>.GetEntity()
     {
         var ret = new T();
         _entities.Add(ret);
         return ret;
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return ((IEnumerable)_entities).GetEnumerator();
     }
 
     void IEContainer<T>.ReleaseEntity(T e)

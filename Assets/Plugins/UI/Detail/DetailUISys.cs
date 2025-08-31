@@ -26,12 +26,6 @@ namespace GameBase.UI
 
             e.textTMP = obj.transform.Find("Text").GetComponent<TextMeshProUGUI>();
 
-            if (e is ISwitchable se)
-            {
-                ui.OnSwitchOn = se.OnSwitchOn;
-                ui.OnSwitchOff = se.OnSwitchOff;
-            }
-
             obj.transform.SetParent(RootCanvas.instance.transform, false);
 
             var image = obj.transform.Find("Icon").GetComponent<Image>();
