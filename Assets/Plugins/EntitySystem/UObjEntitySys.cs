@@ -10,15 +10,22 @@ namespace GameBase.EntitySystem
         where T_Instance : UObjEntitySys<T_Entity, T_UObject, T_Instance>, new()
     {
         protected Dictionary<int, EUObjectPool<T_Entity, T_UObject>> _objPools = new();
-        protected Dictionary<T_Entity, Action> _afterInstantiateDelegates = new();
 
         protected abstract T_UObject InstantiateObj(T_Entity e);
 
-        protected abstract void AfterInstantiateEUObject(T_Entity e);
+        /// <summary>
+        /// 从对象池中获取UObject时调用
+        /// </summary>
+        /// <param name="e"></param>
+        protected virtual void AfterInstantiateEUObject(T_Entity e) { }
 
-        protected abstract void BeforeReleaseEUObject(T_Entity e);
+        /// <summary>
+        /// 释放UObject回对象池时调用
+        /// </summary>
+        /// <param name="e"></param>
+        protected virtual void BeforeReleaseEUObject(T_Entity e) { }
 
-        protected override void OnRemoveEntityFromActives(T_Entity e)
+        protected sealed override void OnRemoveEntityFromActives(T_Entity e)
         {
             BeforeReleaseEUObject(e);
 
@@ -32,7 +39,7 @@ namespace GameBase.EntitySystem
             _objPools[e.ObjID].Release(e.Obj);
         }
 
-        protected override void OnRegisterEntityToActives(T_Entity e)
+        protected sealed override void OnRegisterEntityToActives(T_Entity e)
         {
             if (e.ObjID < 0)
             {
@@ -50,12 +57,6 @@ namespace GameBase.EntitySystem
 
             e.Obj = _objPools[e.ObjID].Get(e);
 
-            if (_afterInstantiateDelegates.ContainsKey(e))
-            {
-                _afterInstantiateDelegates[e]?.Invoke();
-                _afterInstantiateDelegates.Remove(e);
-            }
-            
             AfterInstantiateEUObject(e);
         }
     }

@@ -37,18 +37,6 @@ namespace GameBase.UI
         public float panelXOffsetTarget = 0f;
         public float panelYOffsetTarget = 0f;
 
-        protected override void AfterInstantiateEUObject(InventoryItem e)
-        {
-            if (e.IconTexureID >= 0)
-            {
-                var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.IconTexureID));
-            }
-
-            e.AfterInstantiateUObjectDelegate?.Invoke(e);
-
-            e.Obj.gameObject.SetActive(true);
-        }
-
         protected override Vector3 GetItemLocalPosition(int index)
         {
             GetItemNumXYStyle(index, out int itemPerLine, out int x, out int y);
@@ -70,18 +58,16 @@ namespace GameBase.UI
             return new Vector3(vx, PanelY - vy, 0);
         }
 
+        protected override void SetRectTransform(InventoryItem e, ref RectTransform rectTransform)
+        {
+            rectTransform = e.Obj.transform.Find("Icon").GetComponent<RectTransform>();
+        }
+
         protected override BaseUI InstantiateObj(InventoryItem e)
         {
-            var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
-            var ui = obj.AddComponent<BaseUI>();
+            var ui = base.InstantiateObj(e);
 
-            obj.transform.SetParent(panel.transform, false);
-
-            e.iconObject = obj.transform.Find("Icon").gameObject;
-
-            e.rectTransform = obj.transform.Find("Icon").GetComponent<RectTransform>();
-
-            e.iconImage = obj.transform.Find("Icon").GetComponent<Image>();
+            e.iconImage = e.Obj.transform.Find("Icon").GetComponent<Image>();
             if (e.iconImage == null)
             {
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
@@ -89,32 +75,6 @@ namespace GameBase.UI
             }
 
             return ui;
-        }
-
-        protected override void UpdateEntity(InventoryItem e)
-        {
-            base.UpdateEntity(e);
-
-            if (e.dragable == null)
-            {
-                return;
-            }
-            var isDrag = e.dragable.IsDrag(e);
-            if (isDrag && !e.lastDrag)
-            {
-                e.dragable.OnEnterDrag(e);
-            }
-            else if (!isDrag && e.lastDrag)
-            {
-                e.dragable.OnExitDrag(e);
-            }
-
-            if (isDrag)
-            {
-                e.dragable.OnDrag(e);
-            }
-
-            e.lastDrag = isDrag;
         }
 
         protected override void Update()

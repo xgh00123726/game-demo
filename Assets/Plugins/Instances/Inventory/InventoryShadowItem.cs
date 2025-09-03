@@ -6,10 +6,13 @@ using UnityEngine.UI;
 
 namespace Instance.Inventory
 {
-    public class CommonShadowItem
+    public class InventoryShadowItem
     {
         private static Image _iconImage;
-        static CommonShadowItem()
+
+        public static InventoryItem storedItem;
+
+        static InventoryShadowItem()
         {
             var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(37));
 
@@ -29,9 +32,9 @@ namespace Instance.Inventory
             _iconImage.transform.position = position;
         }
 
-        public static void SetImageIcon(InventoryItem other)
+        public static void SetIconSprite(InventoryItem other)
         {
-            _iconImage.sprite = other.iconSprite;
+            _iconImage.sprite = other.IconSprite;
         }
 
         public static void Hide()

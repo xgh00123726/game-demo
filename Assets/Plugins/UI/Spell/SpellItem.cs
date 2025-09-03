@@ -1,19 +1,20 @@
 using TMPro;
-using UnityEngine.EventSystems;
+using UnityEngine;
 
 namespace GameBase.UI
 {
-    public class SpellItem : DetailableBaseItem
+    public class SpellItem : BasePanelItem
     {
+        internal Material iconMaterial;
+        internal TextMeshProUGUI timeTMP;
+        internal TextMeshProUGUI chargeTMP;
+
+        public IViewableSpell bindSpell;
+
+        internal override int IconTexureID => bindSpell.IconTextureID;
         public SpellItem()
         {
             ObjID = 11;
         }
-        public int iconTextureID;
-        public IViewableSpell bindSpell;
-        internal TextMeshProUGUI timeTMP;
-        internal TextMeshProUGUI chargeTMP;
-
-        internal override int IconTexureID => iconTextureID;
     }
 }

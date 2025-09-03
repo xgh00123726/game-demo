@@ -10,7 +10,8 @@ namespace GameBase.UI
         internal float pointerDownTime;
         internal bool isPointerOn;
         internal bool isPointerDown;
-        internal IEnterExist enterExist;
+        internal Action enterAction;
+        internal Action exitAction;
 
         public float EnterTime => enterTime;
         public float PointerDownTime => pointerDownTime;
@@ -26,14 +27,14 @@ namespace GameBase.UI
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
         {
             isPointerOn = true;
-            enterExist?.OnPointerEnter();
+            enterAction?.Invoke();
         }
 
         void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
         {
             enterTime = 0;
             isPointerOn = false;
-            enterExist?.OnPointerExist();
+            exitAction?.Invoke();
         }
 
         void IPointerUpHandler.OnPointerUp(PointerEventData eventData)

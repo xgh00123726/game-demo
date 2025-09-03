@@ -4,17 +4,22 @@ using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public class InventoryItem : DetailableBaseItem
+    public class InventoryItem : BasePanelItem
     {
-        public float dragableJugTime = 1f;
-        public RectTransform rectTransform;
         internal GameObject iconObject;
-        internal int iconImageID = -1;
-        public Sprite iconSprite;
+        internal int iconImageID;
         internal Image iconImage;
-        internal bool lastDrag;
-        public IDragable<InventoryItem> dragable;
 
+        public Sprite iconSprite;
+
+        public InventoryItem()
+        {
+            ObjID = 34;
+        }
+
+        internal override int IconTexureID => 0;
+        
+        
         public int IconImageID
         {
             set
@@ -26,6 +31,8 @@ namespace GameBase.UI
             }
         }
 
+        public Sprite IconSprite => iconSprite;
+
         public void HideIcon()
         {
             iconImage.sprite = null;
@@ -36,22 +43,9 @@ namespace GameBase.UI
             iconImage.sprite = iconSprite;
         }
 
-        public void SwapIconImage(InventoryItem other)
+        public void SwapIconSprite(InventoryItem other)
         {
-            if (iconImageID == other.iconImageID)
-            {
-                return;
-            }
-            var t = other.iconImage;
-            other.iconImage = iconImage;
-            iconImage = t;
-        }
-
-        internal override int IconTexureID => -1;
-
-        public InventoryItem()
-        {
-            ObjID = 34;
+            (iconSprite, other.iconSprite) = (other.iconSprite, iconSprite);
         }
     }
 }

@@ -15,6 +15,34 @@ namespace GameBase.UI
             Left = 0, Right, Center
         }
 
+        internal IDragable<T> dragable;
+        internal IEnterExist<T> enterExist;
+        internal ISwitchable<T> switchable;
+        internal IDetailable<T> detailable;
+
+        public IDragable<T> Dragable
+        {
+            get => dragable;
+            set => dragable = value;
+        }
+
+        public IEnterExist<T> EnterExist
+        {
+            get => enterExist;
+            set => enterExist = value;
+        }
+
+        public ISwitchable<T> Switchable
+        {
+            get => switchable;
+            set => switchable = value;
+        }
+
+        public IDetailable<T> Detailable
+        {
+            get => detailable;
+            set => detailable = value;
+        }
 
         public GameObject panel;
         private int itemIterIdx = 0;
@@ -31,6 +59,11 @@ namespace GameBase.UI
         internal abstract int ContourTexureID { get; }
         internal abstract int ItemAlign { get; }
         internal int ItemIterIdx => itemIterIdx;
+
+        protected virtual void SetRectTransform(T e, ref RectTransform rectTransform)
+        {
+
+        }
 
         protected virtual void GetItemNumXYStyle(int index, out int itemPerLine, out int x, out int y)
         {
@@ -61,17 +94,7 @@ namespace GameBase.UI
         }
 
         protected override void AfterInstantiateEUObject(T e)
-        {
-            var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.IconTexureID));
-            var shape = GameObject.Instantiate(ResourcesLoader.GetTexture2D(ShapeTexureID));
-            var contour = GameObject.Instantiate(ResourcesLoader.GetTexture2D(ContourTexureID));
-
-            e.iconMaterial.SetTexture("_Shape", shape);
-            e.iconMaterial.SetTexture("_Contour", contour);
-            e.iconMaterial.SetTexture("_Target", texture);
-
-            e.AfterInstantiateUObjectDelegate?.Invoke(e);
-            
+        {            
             e.Obj.gameObject.SetActive(true);
         }
 
@@ -83,35 +106,48 @@ namespace GameBase.UI
         protected override BaseUI InstantiateObj(T e)
         {
             var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
+
             var ui = obj.AddComponent<BaseUI>();
+            ui.enterAction = () => enterExist?.OnPointerEnter(e);
+            ui.exitAction = () => enterExist?.OnPointerExit(e);
+
+            e.Obj = ui;
+
+            e.iconTexture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.IconTexureID));
 
             obj.transform.SetParent(panel.transform, false);
 
-            var image = obj.transform.Find("Icon").GetComponent<Image>();
-            if (image == null)
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log("panel item must has icon object");
-            }
-
-            e.iconMaterial = new Material(image.material);
-            image.material = e.iconMaterial;
-
-            e.iconMaterial.SetFloat("_Dir1", -1f);
-            e.iconMaterial.SetFloat("_Dir2", -1f);
+            SetRectTransform(e, ref e.rectTransform);
 
             return ui;
+        }
+
+        private void DragableUpdate(T e)
+        {
+            if (dragable == null) return;   
+
+            var isDrag = dragable.IsDrag(e);
+            if (isDrag && !e.lastDrag)
+            {
+                dragable.OnEnterDrag(e);
+            }
+            else if (!isDrag && e.lastDrag)
+            {
+                dragable.OnExitDrag(e);
+            }
+
+            if (isDrag)
+            {
+                dragable.OnDrag(e);
+            }
+
+            e.lastDrag = isDrag;
         }
 
         protected override void UpdateEntity(T e)
         {
             panel.transform.localPosition = new Vector3(PanelX, PanelY, 0);
             e.Obj.transform.localPosition = GetItemLocalPosition(itemIterIdx);
-
-            if (++itemIterIdx >= _entities.Count)
-            {
-                itemIterIdx = 0;
-            }
 
             if (e.Obj.isPointerOn)
             {
@@ -120,7 +156,14 @@ namespace GameBase.UI
             if (e.Obj.isPointerDown)
             {
                 e.Obj.pointerDownTime += Time.deltaTime;
-            }    
+            }
+
+            DragableUpdate(e);
+
+            if (++itemIterIdx >= _entities.Count)
+            {
+                itemIterIdx = 0;
+            }
         }
 
         protected override void Awake()
@@ -129,6 +172,21 @@ namespace GameBase.UI
 
             panel = GameObject.Instantiate(ResourcesLoader.GetPrefab(PanelObjID));
             panel.transform.SetParent(RootCanvas.Instance.transform, false);
+        }
+
+        public T GetItem(Vector3 position)
+        {
+            foreach (var e in _entities)
+            {
+                Rect r = e.RectTransform.rect;
+                r.center = e.Obj.transform.position;
+                if (r.Contains(position))
+                {
+                    return e;
+                }
+            }
+
+            return null;
         }
     }
 }

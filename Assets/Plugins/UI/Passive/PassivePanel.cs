@@ -43,8 +43,6 @@ namespace GameBase.UI
         {
             var obj = base.InstantiateObj(e);
 
-            e.iconMaterial.SetFloat("_MaskFull", 0f);
-
             return obj;
         }
     }

@@ -83,8 +83,16 @@ namespace GameBase.EntitySystem
 
         protected virtual void FixedUpdateEntity(T_Entity e) { }
 
+        /// <summary>
+        /// new实体时调用
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnRegisterEntityToActives(T_Entity e) { }
 
+        /// <summary>
+        /// release实体时调用
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnRemoveEntityFromActives(T_Entity e) { }
 
         protected virtual void BeforeFirstUpdate(T_Entity e) { }

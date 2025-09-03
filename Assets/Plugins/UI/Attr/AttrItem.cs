@@ -3,21 +3,16 @@ using TMPro;
 
 namespace GameBase.UI
 {
-    public class AttrItem : DetailableBaseItem
+    public class AttrItem : BasePanelItem
     {
-        public AttrItem()
-        {
-            ObjID = 16;
-        }
-        public int iconTextureID;
         public IViewableAttr bindAttr;
 
         internal TextMeshProUGUI valueTMP;
-        internal override int IconTexureID => iconTextureID;
+        internal override int IconTexureID => bindAttr.IconTextureID;
 
-        public override void OnPointerEnter()
+        public AttrItem()
         {
-            detailContent.value = bindAttr.Value;
+            ObjID = 16;
         }
     }
 }

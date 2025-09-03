@@ -1,6 +1,9 @@
+using GameBase.Infos;
+using GameBase.Resources;
+using GameBase.Tools;
 using TMPro;
 using UnityEngine;
-using GameBase.Infos;
+using UnityEngine.UI;
 
 namespace GameBase.UI
 {
@@ -18,9 +21,38 @@ namespace GameBase.UI
         internal override float PanelY => UIPanelConfig.Float.Buff_panelY;
         internal override int ItemAlign => UIPanelConfig.Int.Buff_itemAlign;
 
+        protected override void AfterInstantiateEUObject(BuffItem e)
+        {
+            base.AfterInstantiateEUObject(e);
+
+            var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.IconTexureID)); 
+            e.iconMaterial.SetTexture("_Target", texture);
+        }
+
         protected override BaseUI InstantiateObj(BuffItem e)
         {
             var obj = base.InstantiateObj(e);
+
+            var image = obj.transform.Find("Icon").GetComponent<Image>();
+            if (image == null)
+            {
+                XLogger.Instance.Level(XLogger.LogLevel.Error)
+                    .Log("panel item must has icon object");
+            }
+
+            e.iconMaterial = new Material(image.material);
+            image.material = e.iconMaterial;
+
+            e.iconMaterial.SetFloat("_Dir1", -1f);
+            e.iconMaterial.SetFloat("_Dir2", -1f);
+
+            var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.IconTexureID));
+            var shape = GameObject.Instantiate(ResourcesLoader.GetTexture2D(ShapeTexureID));
+            var contour = GameObject.Instantiate(ResourcesLoader.GetTexture2D(ContourTexureID));
+
+            e.iconMaterial.SetTexture("_Shape", shape);
+            e.iconMaterial.SetTexture("_Contour", contour);
+            e.iconMaterial.SetTexture("_Target", texture);
 
             e.stackNumTMP = obj.transform.Find("StackNum").GetComponent<TextMeshProUGUI>();
 

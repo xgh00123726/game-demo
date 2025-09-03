@@ -12,8 +12,7 @@ namespace Instance.Inventory
         public const float PANEL_OFFSET_HIDE_X = 1920;
 
         private static CommonInventory _instance = new();
-        public static CommonInventory Instance => _instance;
-        private Inventory<CommonItem, CommonDataBase> _inventory;
+        private Inventory<EquipmentItem, CommonDataBase> _inventory = new();
         private InventoryPanel _panel;
         internal LinearNonReleaseEntityContainer<InventoryItem> container = new();
         private bool _showFlag = false;
@@ -22,30 +21,19 @@ namespace Instance.Inventory
         {
             _panel = InventoryPanel.Instance;
             _panel.Container = container;
+            _panel.Dragable = new CommonDragable();
             _panel.panel.SetActive(false);
             for (int i = 0; i < ITEM_NUM; i++)
             {
                 var e = _panel.NewEntity();
-                e.dragable = new CommonDragable();
             }
-            var go = new GameObject("CommonInventoryGizmos");
-            var gizmos = go.AddComponent<InventoryGizmos>();
-            gizmos.Init(_panel);
         }
+
+        public static CommonInventory Instance => _instance;
 
         public InventoryItem GetItem(Vector3 position)
         {
-            Vector2 mousePosition = new Vector2(position.x, position.y);
-            foreach (var item in container)
-            {
-                var r = item.rectTransform.rect;
-                r.center = item.Obj.transform.position;
-                if (r.Contains(mousePosition))
-                {
-                    return item;
-                }
-            }
-            return null;
+            return _panel.GetItem(position);
         }
 
         public InventoryItem this[int i]
@@ -53,7 +41,7 @@ namespace Instance.Inventory
             get => container[i];
         }
 
-        public void AddItem(CommonItem item)
+        public void AddItem(EquipmentItem item)
         {
             _inventory.AddItem(item);
         }

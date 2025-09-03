@@ -6,17 +6,21 @@ namespace Instance.Spells
     public class ViewableSpell :
         IViewableSpell
     {
-        public ViewableSpell(Spell spell)
+        private Spell spell;
+        private int _iconTextureID;
+
+        public ViewableSpell(Spell spell, int iconTextureID)
         {
             this.spell = spell;
+            _iconTextureID = iconTextureID;
         }
-
-        private Spell spell;
 
         float IViewableSpell.CoolingRemain => spell.CoolingTimeRemain;
 
         float IViewableSpell.CoolingSet => spell.coolingTimeSet;
 
         int IViewableSpell.Charge => 0;
+
+        int IViewableSpell.IconTextureID => _iconTextureID;
     }
 }

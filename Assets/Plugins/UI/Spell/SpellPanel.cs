@@ -30,6 +30,27 @@ namespace GameBase.UI
 
             e.chargeTMP = obj.transform.Find("Charge").GetComponent<TextMeshProUGUI>();
 
+            var image = obj.transform.Find("Icon").GetComponent<Image>();
+            if (image == null)
+            {
+                XLogger.Instance.Level(XLogger.LogLevel.Error)
+                    .Log("panel item must has icon object");
+            }
+
+            e.iconMaterial = new Material(image.material);
+            image.material = e.iconMaterial;
+
+            e.iconMaterial.SetFloat("_Dir1", -1f);
+            e.iconMaterial.SetFloat("_Dir2", -1f);
+
+            var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.IconTexureID));
+            var shape = GameObject.Instantiate(ResourcesLoader.GetTexture2D(ShapeTexureID));
+            var contour = GameObject.Instantiate(ResourcesLoader.GetTexture2D(ContourTexureID));
+
+            e.iconMaterial.SetTexture("_Shape", shape);
+            e.iconMaterial.SetTexture("_Contour", contour);
+            e.iconMaterial.SetTexture("_Target", texture);
+
             return obj;
         }
         protected override void UpdateEntity(SpellItem e)

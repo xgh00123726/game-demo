@@ -1,32 +1,30 @@
-using GameBase.GCamera;
-using GameBase.Tools;
 using GameBase.UI;
 using UnityEngine;
 
 namespace Instance.Inventory
 {
-    public class CommonDragable : IDragable<InventoryItem>
+    public class EquipmentDragable : IDragable<GameBase.UI.EquipmentItem>
     {
         public float dragJugTime = 0.1f;
 
-        bool IDragable<InventoryItem>.IsDrag(InventoryItem e)
+        bool IDragable<GameBase.UI.EquipmentItem>.IsDrag(GameBase.UI.EquipmentItem e)
         {
             return e.Obj.PointerDownTime > dragJugTime;
         }
 
-        void IDragable<InventoryItem>.OnDrag(InventoryItem e)
+        void IDragable<GameBase.UI.EquipmentItem>.OnDrag(GameBase.UI.EquipmentItem e)
         {
             InventoryShadowItem.SetPosition(Input.mousePosition);
         }
 
-        void IDragable<InventoryItem>.OnEnterDrag(InventoryItem e)
+        void IDragable<GameBase.UI.EquipmentItem>.OnEnterDrag(GameBase.UI.EquipmentItem e)
         {
             e.HideIcon();
             InventoryShadowItem.storedItem = e;
             InventoryShadowItem.SetIconSprite(e);
         }
 
-        void IDragable<InventoryItem>.OnExitDrag(InventoryItem e)
+        void IDragable<GameBase.UI.EquipmentItem>.OnExitDrag(GameBase.UI.EquipmentItem e)
         {
             InventoryShadowItem.Hide();
             var eitem = EquipmentInventory.Instance.GetItem(Input.mousePosition);

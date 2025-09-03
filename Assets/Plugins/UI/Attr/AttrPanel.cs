@@ -1,6 +1,7 @@
 using GameBase.Infos;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GameBase.UI
 {
@@ -33,6 +34,10 @@ namespace GameBase.UI
             var obj = base.InstantiateObj(e);
 
             e.valueTMP = obj.transform.Find("ValueText").GetComponent<TextMeshProUGUI>();
+
+            var sprite = Sprite.Create(e.iconTexture, new Rect(0, 0, e.iconTexture.width, e.iconTexture.height), new Vector2(0.5f, 0.5f));
+
+            obj.transform.Find("Icon").GetComponent<Image>().sprite = sprite;
 
             return obj;
         }

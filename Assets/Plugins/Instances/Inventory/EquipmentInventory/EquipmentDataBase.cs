@@ -1,10 +1,8 @@
 using GameBase.Inventorys;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 namespace Instance.Inventory
 {
-    public class CommonDataBase : IDataBase<EquipmentItem>
+    public class EquipmentDataBase : IDataBase<EquipmentItem>
     {
         void IDataBase<EquipmentItem>.Read(out EquipmentItem data)
         {
