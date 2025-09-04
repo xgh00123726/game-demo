@@ -59,11 +59,9 @@ namespace Constructor.Spells.Action
     {
         protected override string RelativePath => "Spell/Action/TrigNearestTarget.csv";
 
-        protected override TrigNearestTargetAction Get(Action<TrigNearestTargetAction> Init)
+        protected override TrigNearestTargetAction Get()
         {
-            var e = new TrigNearestTargetAction();
-            Init(e);
-            return e;
+            return new TrigNearestTargetAction();
         }
 
         protected override void Parse(CsvReader line, ref TrigNearestTargetData data)

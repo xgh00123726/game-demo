@@ -34,7 +34,7 @@ namespace Constructor.Flyings
             data.hitEffectID = int.Parse(line[8]);
         }
 
-        protected override void Set(Flying e, in CommonData data)
+        protected override void ESet(Flying e, in CommonData data)
         {
             e.ObjID = data.objID;
 

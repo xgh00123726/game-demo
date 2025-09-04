@@ -1,5 +1,6 @@
 using GameBase.Buffs;
 using GameBase.Inventorys;
+using GameBase.Resources;
 using GameBase.UI;
 using Instance.Buffs;
 using UnityEngine;
@@ -21,11 +22,16 @@ namespace Instance.Inventory
             _panel = EquipmentPanel.Instance;
             _panel.Container = container;
             _panel.Dragable = new EquipmentDragable();
-            _panel.panel.SetActive(false);
             for (int i = 0; i < ITEM_NUM; i++)
             {
                 var e = _panel.NewEntity();
             }
+        }
+
+        public void SetIconSprite(int index, int iconID)
+        {
+            var texture = ResourcesLoader.GetTexture2D(iconID);
+            container[index].IconSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         }
 
         public GameBase.UI.EquipmentItem GetItem(Vector3 position)
@@ -41,7 +47,7 @@ namespace Instance.Inventory
         public void SetItem(Buff e, int position)
         {
             var ee = this[position];
-            ee.bindEquipment = new ViewableEquipment(e);
+            SetIconSprite(position, e.textureID);
         }
 
         public void AddItem(EquipmentItem item)

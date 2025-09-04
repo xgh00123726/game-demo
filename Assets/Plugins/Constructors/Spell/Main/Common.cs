@@ -31,7 +31,7 @@ namespace Constructor.Spells.Main
             data.coolingTime = int.Parse(line[5]);
         }
 
-        protected override void Set(Spell e, in CommonData data)
+        protected override void ESet(Spell e, in CommonData data)
         {
             e.interactive = Interactive.Factory.Instance.Get(data.interactiveType, data.interactiveID);
             e.actionInterface = Action.Factory.Instance.Get(data.actionType, data.actionInterfaceID);

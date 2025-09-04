@@ -52,11 +52,9 @@ namespace Constructor.Spells.Interactive
     {
         protected override string RelativePath => "Spell/Interactive/KeyCommon.csv";
 
-        protected override KeyInteractive Get(Action<KeyInteractive> Init)
+        protected override KeyInteractive Get()
         {
-            var e = new KeyInteractive();
-            Init(e);
-            return e;
+            return new KeyInteractive();
         }
 
         protected override void Parse(CsvReader line, ref CommonData data)

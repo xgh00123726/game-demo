@@ -48,11 +48,9 @@ namespace Constructor.Spells.Action
     {
         protected override string RelativePath => "Spell/Action/TrigOnRelease.csv";
 
-        protected override TrigOnReleaseAction Get(Action<TrigOnReleaseAction> Init)
+        protected override TrigOnReleaseAction Get()
         {
-            var e = new TrigOnReleaseAction();
-            Init(e);
-            return e;
+            return new TrigOnReleaseAction();
         }
 
         protected override void Parse(CsvReader line, ref TrigOnReleaseData data)

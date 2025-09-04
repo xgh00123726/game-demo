@@ -1,4 +1,5 @@
 using GameBase.Inventorys;
+using GameBase.Resources;
 using GameBase.Tools;
 using GameBase.UI;
 using UnityEngine;
@@ -30,6 +31,12 @@ namespace Instance.Inventory
         }
 
         public static CommonInventory Instance => _instance;
+
+        public void SetIconSprite(int index, int iconID)
+        {
+            var texture = ResourcesLoader.GetTexture2D(iconID);
+            container[index].IconSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        }
 
         public InventoryItem GetItem(Vector3 position)
         {

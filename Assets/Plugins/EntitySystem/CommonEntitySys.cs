@@ -16,7 +16,6 @@ namespace GameBase.EntitySystem
     {
         public int sysID = 0;
         public int entityCount = 0;
-        public int entityNewTimes = 0;
         public IEnumerable<T_Entity> Entities => _entities;
         public IEContainer<T_Entity> Container
         {
@@ -28,7 +27,6 @@ namespace GameBase.EntitySystem
         protected internal LinkedList<T_Entity> _entitiesNeedRemove = new LinkedList<T_Entity>();
         protected internal IEContainer<T_Entity> _entityContainer = new CommonEntityContainer<T_Entity>();
         protected internal LinkedList<T_Entity> _entities = new LinkedList<T_Entity>();
-        protected internal Dictionary<int, Delegate> entityGenerateDelegates = new();
 
         protected internal int tick = 0;
         protected internal int fixedTick = 0;
@@ -67,7 +65,7 @@ namespace GameBase.EntitySystem
             _entitiesNeedRemove.AddLast(e);
         }
 
-        protected void RegisterImmediately(T_Entity e)
+        protected void AddToNeedRegisterImmediately(T_Entity e)
         {
             if (e == null) return;
 
@@ -100,6 +98,20 @@ namespace GameBase.EntitySystem
         public int Tick => tick;
         public int FixedTick => fixedTick;
 
+
+        public T_Entity NewFromPool()
+        {
+            return _entityContainer.GetEntity();
+        }
+
+        public void RegisterEntity(T_Entity e)
+        {
+            e.InstanceID = PoolInfo.allocatedID++;
+            AddToNeedRegisterImmediately(e);
+            OnRegisterEntityToActives(e);
+        }
+
+
         /// <summary>
         /// 立刻创建一个对象，可以在对象被遍历时使用，会在立刻将对象的unity对象创建出来
         /// </summary>
@@ -107,13 +119,9 @@ namespace GameBase.EntitySystem
         /// <returns></returns>
         public T_Entity NewEntity(Action<T_Entity> Init = null)
         {
-            ++entityNewTimes;
-
-            var e = _entityContainer.GetEntity();
-            e.InstanceID = PoolInfo.allocatedID++;
+            var e = NewFromPool();
             Init?.Invoke(e);
-            RegisterImmediately(e);
-            OnRegisterEntityToActives(e);
+            RegisterEntity(e);
             return e;
         }
 

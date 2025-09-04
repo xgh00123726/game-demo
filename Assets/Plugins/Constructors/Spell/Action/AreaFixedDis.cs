@@ -41,11 +41,9 @@ namespace Constructor.Spells.Action
     {
         protected override string RelativePath => "Spell/Action/AreaFixedDis.csv";
 
-        protected override AreaFixedDisAction Get(Action<AreaFixedDisAction> Init)
+        protected override AreaFixedDisAction Get()
         {
-            var e = new AreaFixedDisAction();
-            Init(e);
-            return e;
+            return new AreaFixedDisAction();
         }
 
         protected override void Parse(CsvReader line, ref AreaFixedDisData data)

@@ -21,7 +21,7 @@ namespace Constructor.Effects
             data.existTime = float.Parse(line[2]);
         }
 
-        protected override void Set(Effect e, in CommonData data)
+        protected override void ESet(Effect e, in CommonData data)
         {
             e.ObjID = data.ObjID;
             e.existTime = data.existTime;

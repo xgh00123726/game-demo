@@ -11,9 +11,17 @@ namespace Constructor
     {
         protected abstract T_EntitySys SysInstance { get; }
 
-        protected override T_Entity Get(Action<T_Entity> Init)
+        protected abstract void ESet(T_Entity e, in T_Data data);
+
+        protected override T_Entity Get()
         {
-            return SysInstance.NewEntity(Init);
+            return SysInstance.NewFromPool();
+        }
+
+        protected sealed override void Set(T_Entity e, in T_Data data)
+        {
+            ESet(e, in data);
+            SysInstance.RegisterEntity(e);
         }
     }
 }

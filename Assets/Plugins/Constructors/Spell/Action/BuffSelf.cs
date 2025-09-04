@@ -37,11 +37,9 @@ namespace Constructor.Spells.Action
     {
         protected override string RelativePath => "Spell/Action/BuffSelf.csv";
 
-        protected override BuffSelfAction Get(Action<BuffSelfAction> Init)
+        protected override BuffSelfAction Get()
         {
-            var e = new BuffSelfAction();
-            Init(e);
-            return e;
+            return new BuffSelfAction();
         }
 
         protected override void Parse(CsvReader line, ref BuffSelfData data)

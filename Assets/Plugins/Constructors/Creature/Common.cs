@@ -29,7 +29,7 @@ namespace Constructor.Creatures
             data.healthBarZOffset = float.Parse(line[5]);
         }
 
-        protected override void Set(Creature e, in CommonData data)
+        protected override void ESet(Creature e, in CommonData data)
         {
             e.ObjID = data.ObjID;
             e.tag = data.tag;

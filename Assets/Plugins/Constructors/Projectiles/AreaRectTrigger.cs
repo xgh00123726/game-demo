@@ -21,7 +21,7 @@ namespace Constructor.Projectiles
             data.damage = int.Parse(line[2]);
         }
 
-        protected override void Set(Projectile e, in AreaRectTriggerData data)
+        protected override void ESet(Projectile e, in AreaRectTriggerData data)
         {
             e.maxeffectTimes = 100;
             e.hasWhite = true;

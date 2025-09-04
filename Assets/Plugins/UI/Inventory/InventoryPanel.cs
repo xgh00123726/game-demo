@@ -58,9 +58,9 @@ namespace GameBase.UI
             return new Vector3(vx, PanelY - vy, 0);
         }
 
-        protected override void SetRectTransform(InventoryItem e, ref RectTransform rectTransform)
+        protected override RectTransform GetRectTransform(InventoryItem e)
         {
-            rectTransform = e.Obj.transform.Find("Icon").GetComponent<RectTransform>();
+            return e.Obj.transform.Find("Icon").GetComponent<RectTransform>();
         }
 
         protected override BaseUI InstantiateObj(InventoryItem e)

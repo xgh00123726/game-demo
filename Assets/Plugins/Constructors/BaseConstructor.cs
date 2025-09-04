@@ -29,8 +29,8 @@ namespace Constructor
         protected abstract void Parse(CsvReader line, ref T_Data data);
         protected abstract string RelativePath { get; }
         protected abstract void Set(T_Entity e, in T_Data data);
-        protected abstract T_Entity Get(Action<T_Entity> Init);
 
+        protected abstract T_Entity Get();
 
         public T_Entity Get(int index)
         {
@@ -38,10 +38,10 @@ namespace Constructor
             {
                 XLogger.Instance.Log($"index out off array:{index}");
             }
-            return Get((T_Entity e) =>
-            {
-                Set(e, in _datas[index]);
-            });
+
+            var e = Get();
+            Set(e, in _datas[index]);
+            return e;
         }
 
         private void Init()

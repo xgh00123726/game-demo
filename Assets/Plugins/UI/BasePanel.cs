@@ -60,9 +60,9 @@ namespace GameBase.UI
         internal abstract int ItemAlign { get; }
         internal int ItemIterIdx => itemIterIdx;
 
-        protected virtual void SetRectTransform(T e, ref RectTransform rectTransform)
+        protected virtual RectTransform GetRectTransform(T e)
         {
-
+            return null;
         }
 
         protected virtual void GetItemNumXYStyle(int index, out int itemPerLine, out int x, out int y)
@@ -117,7 +117,7 @@ namespace GameBase.UI
 
             obj.transform.SetParent(panel.transform, false);
 
-            SetRectTransform(e, ref e.rectTransform);
+            e.rectTransform = GetRectTransform(e);
 
             return ui;
         }

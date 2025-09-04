@@ -7,10 +7,8 @@ namespace GameBase.UI
     public class InventoryItem : BasePanelItem
     {
         internal GameObject iconObject;
-        internal int iconImageID;
         internal Image iconImage;
-
-        public Sprite iconSprite;
+        internal Sprite iconSprite;
 
         public InventoryItem()
         {
@@ -18,20 +16,16 @@ namespace GameBase.UI
         }
 
         internal override int IconTexureID => 0;
-        
-        
-        public int IconImageID
+
+        public Sprite IconSprite
         {
+            get => iconSprite;
             set
             {
-                iconImageID = value;
-                var texture = Resources.ResourcesLoader.GetTexture2D(value);
-                iconSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+                iconSprite = value;
                 iconImage.sprite = iconSprite;
             }
         }
-
-        public Sprite IconSprite => iconSprite;
 
         public void HideIcon()
         {

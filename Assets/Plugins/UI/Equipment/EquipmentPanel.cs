@@ -1,6 +1,7 @@
 using UnityEngine;
 using GameBase.Tools;
 using GameBase.Infos;
+using UnityEngine.UI;
 
 namespace GameBase.UI
 {
@@ -27,5 +28,24 @@ namespace GameBase.UI
         internal override int ContourTexureID => UIPanelConfig.Int.Equipment_contourTexureID;
 
         internal override int ItemAlign => UIPanelConfig.Int.Equipment_itemAlign;
+
+        protected override RectTransform GetRectTransform(EquipmentItem e)
+        {
+            return e.Obj.transform.Find("Icon").GetComponent<RectTransform>();
+        }
+
+        protected override BaseUI InstantiateObj(EquipmentItem e)
+        {
+            var ui = base.InstantiateObj(e);
+
+            e.iconImage = e.Obj.transform.Find("Icon").GetComponent<Image>();
+            if (e.iconImage == null)
+            {
+                XLogger.Instance.Level(XLogger.LogLevel.Error)
+                    .Log("panel item must has icon object");
+            }
+
+            return ui;
+        }
     }
 }
