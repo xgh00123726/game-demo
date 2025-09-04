@@ -174,8 +174,9 @@ namespace GameBase.UI
             panel.transform.SetParent(RootCanvas.Instance.transform, false);
         }
 
-        public T GetItem(Vector3 position)
+        public T GetItem(Vector3 position, out int index)
         {
+            index = 0;
             foreach (var e in _entities)
             {
                 Rect r = e.RectTransform.rect;
@@ -184,6 +185,7 @@ namespace GameBase.UI
                 {
                     return e;
                 }
+                index++;
             }
 
             return null;

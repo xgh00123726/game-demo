@@ -27,7 +27,7 @@ namespace Instance.Inventory
         void IDragable<GameBase.UI.EquipmentItem>.OnExitDrag(GameBase.UI.EquipmentItem e)
         {
             InventoryShadowItem.Hide();
-            var eitem = EquipmentInventory.Instance.GetItem(Input.mousePosition);
+            var eitem = EquipmentInventory.Instance.GetItem(Input.mousePosition, out int eidx);
             if (eitem != null)
             {
                 InventoryShadowItem.storedItem.SwapIconSprite(eitem);
@@ -35,7 +35,7 @@ namespace Instance.Inventory
             }
             e.ShowIcon();
 
-            var citem = CommonInventory.Instance.GetItem(Input.mousePosition);
+            var citem = CommonInventory.Instance.GetItemUI(Input.mousePosition, out int cidx);
             if (citem != null)
             {
                 InventoryShadowItem.storedItem.SwapIconSprite(citem);

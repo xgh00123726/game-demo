@@ -27,8 +27,6 @@ namespace GameBase.Buffs
         public float durationSet;
         public IBuffOwner owner;
         public BuffModifyers modifyers = new ();
-        public Action RegistertoActivesDelegate;
-        public Action RemoveFromActiveDelegate;
 
         int IEntity.InstanceID { get; set; }
 
@@ -45,8 +43,6 @@ namespace GameBase.Buffs
 
         void IPoolable.BeforeRelease()
         {
-            RegistertoActivesDelegate = null;
-            RemoveFromActiveDelegate = null;
             textureID = 0;
             alive = false;
             owner = null;

@@ -4,23 +4,23 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace Instance.Inventory
 {
-    public class CommonDataBase : IDataBase<EquipmentItem>
+    public class CommonDataBase : IDataBase<CommonItem>
     {
-        void IDataBase<EquipmentItem>.Read(out EquipmentItem data)
+        void IDataBase<CommonItem>.Read(out CommonItem data)
         {
-            data = new EquipmentItem();
+            data = new CommonItem();
         }
 
-        void IDataBase<EquipmentItem>.Read(out IEnumerator<EquipmentItem> datas)
+        void IDataBase<CommonItem>.Read(out IEnumerator<CommonItem> datas)
         {
             datas = null;
         }
 
-        void IDataBase<EquipmentItem>.Write(EquipmentItem data)
+        void IDataBase<CommonItem>.Write(CommonItem data)
         {
         }
 
-        void IDataBase<EquipmentItem>.Write(IEnumerator<EquipmentItem> datas)
+        void IDataBase<CommonItem>.Write(IEnumerator<CommonItem> datas)
         {
         }
     }

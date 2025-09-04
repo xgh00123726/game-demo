@@ -13,7 +13,7 @@ namespace Instance.Inventory
         public const float PANEL_OFFSET_HIDE_X = 1920;
 
         private static CommonInventory _instance = new();
-        private Inventory<EquipmentItem, CommonDataBase> _inventory = new();
+        private Inventory<CommonItem, CommonDataBase> _inventory = new();
         private InventoryPanel _panel;
         internal LinearNonReleaseEntityContainer<InventoryItem> container = new();
         private bool _showFlag = false;
@@ -32,25 +32,36 @@ namespace Instance.Inventory
 
         public static CommonInventory Instance => _instance;
 
+        public CommonItem DataOfUI(InventoryItem item)
+        {
+            return _inventory[container.IndexOf(item)];
+        }
+
         public void SetIconSprite(int index, int iconID)
         {
             var texture = ResourcesLoader.GetTexture2D(iconID);
             container[index].IconSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         }
 
-        public InventoryItem GetItem(Vector3 position)
+        public InventoryItem GetItemUI(Vector3 position, out int index)
         {
-            return _panel.GetItem(position);
+            return _panel.GetItem(position, out index);
         }
 
-        public InventoryItem this[int i]
+        public CommonItem GetItemData(int index)
         {
-            get => container[i];
+            return _inventory[index];
         }
 
-        public void AddItem(EquipmentItem item)
+        public InventoryItem GetItemUI(int index)
         {
-            _inventory.AddItem(item);
+            return container[index];
+        }
+
+        public void AddItem(CommonItem item)
+        {
+            var index = _inventory.AddItem(item);
+            SetIconSprite(index, item.iconTextureID);
         }
 
         public void RemoveItem(int position)

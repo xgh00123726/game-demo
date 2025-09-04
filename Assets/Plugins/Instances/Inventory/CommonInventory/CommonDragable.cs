@@ -29,15 +29,20 @@ namespace Instance.Inventory
         void IDragable<InventoryItem>.OnExitDrag(InventoryItem e)
         {
             InventoryShadowItem.Hide();
-            var eitem = EquipmentInventory.Instance.GetItem(Input.mousePosition);
+            var eitem = EquipmentInventory.Instance.GetItem(Input.mousePosition, out int eidx);
             if (eitem != null)
             {
                 InventoryShadowItem.storedItem.SwapIconSprite(eitem);
+                var data = CommonInventory.Instance.DataOfUI(e);
+                var eb = Constructor.Buffs.Factory.Instance.Get(Constructor.Buffs.Type.Common, data.buffID);
+                eb.owner = EquipmentInventory.Instance.owner;
+                eb.durationSet = 9999;
+                eb.uiStyle = GameBase.Buffs.UIStyle.None;
                 eitem.ShowIcon();
             }
             e.ShowIcon();
 
-            var citem = CommonInventory.Instance.GetItem(Input.mousePosition);
+            var citem = CommonInventory.Instance.GetItemUI(Input.mousePosition, out int cidx);
             if (citem != null)
             {
                 InventoryShadowItem.storedItem.SwapIconSprite(citem);

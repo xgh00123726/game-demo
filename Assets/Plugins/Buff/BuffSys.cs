@@ -8,12 +8,10 @@ namespace GameBase.Buffs
     {
         protected override void OnRegisterEntityToActives(Buff e)
         {
-            e.RegistertoActivesDelegate?.Invoke();
         }
 
         protected override void OnRemoveEntityFromActives(Buff e)
         {
-            e.RemoveFromActiveDelegate?.Invoke();
             foreach (var em in e.modifyers.FixedModifyers)
             {
                 em.Value.externalClear = true;

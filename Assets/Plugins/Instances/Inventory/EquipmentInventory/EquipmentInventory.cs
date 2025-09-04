@@ -10,6 +10,7 @@ namespace Instance.Inventory
     public class EquipmentInventory
     {
         public const int ITEM_NUM = 6;
+        public IBuffOwner owner;
 
         private static EquipmentInventory _instance = new();
         public static EquipmentInventory Instance => _instance;
@@ -34,9 +35,9 @@ namespace Instance.Inventory
             container[index].IconSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         }
 
-        public GameBase.UI.EquipmentItem GetItem(Vector3 position)
+        public GameBase.UI.EquipmentItem GetItem(Vector3 position, out int index)
         {
-            return _panel.GetItem(position);
+            return _panel.GetItem(position, out index);
         }
 
         public GameBase.UI.EquipmentItem this[int i]

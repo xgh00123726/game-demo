@@ -18,17 +18,38 @@ namespace GameBase.Inventorys
         }
 
         private List<InventoryItem> _items = new();
-        private int _count = 0;
+        private List<int> _nullIndex = new();
+
+        public T_Item this[int i]
+        {
+            get => _items[i].item;
+            set => _items[i] = new InventoryItem(value, true);
+        }
 
         public bool HasItem(int position)
         {
-            return position < _count;
+            if (position >= _items.Count)
+            {
+                return false;
+            }
+
+            return _items[position].exist;
         }
 
-        public void AddItem(T_Item item)
+        public int AddItem(T_Item item)
         {
-            _items.Add(new InventoryItem(item, true));
-            _count++;
+            if (_nullIndex.Count > 0)
+            {
+                var i = _nullIndex[_nullIndex.Count - 1];
+                _nullIndex.RemoveAt(_nullIndex.Count - 1);
+                _items[i] = new InventoryItem(item, true);
+                return i;
+            }
+            else
+            {
+                _items.Add(new InventoryItem(item, true));
+                return _items.Count - 1;
+            }
         }
 
         public void RemoveItem(int position)
@@ -38,22 +59,17 @@ namespace GameBase.Inventorys
                 return;
             }
 
+            _nullIndex.Add(position);
+            // ½µÐòÅÅÁÐ
+            _nullIndex.Sort((x, y) => -x.CompareTo(y));
             var item = _items[position];
             item.exist = false;
             _items[position] = item;
-            _count--;
         }
 
         public void Swap(int p1, int p2)
         {
-            var t = _items[p1];
-            _items[p1] = _items[p2];
-            _items[p2] = t;
-        }
-
-        public void Sort()
-        {
-            _items.Sort();
+            (_items[p2], _items[p1]) = (_items[p1], _items[p2]);
         }
     }
 }
