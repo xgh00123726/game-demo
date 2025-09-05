@@ -4,13 +4,13 @@ using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public class InventoryItem : BasePanelItem
+    public class InventoryViewItem : BaseViewItem
     {
         internal GameObject iconObject;
         internal Image iconImage;
         internal Sprite iconSprite;
 
-        public InventoryItem()
+        public InventoryViewItem()
         {
             ObjID = 34;
         }
@@ -37,7 +37,7 @@ namespace GameBase.UI
             iconImage.sprite = iconSprite;
         }
 
-        public void SwapIconSprite(InventoryItem other)
+        public void SwapIconSprite(InventoryViewItem other)
         {
             (iconSprite, other.iconSprite) = (other.iconSprite, iconSprite);
         }

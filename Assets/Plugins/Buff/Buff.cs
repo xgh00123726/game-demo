@@ -2,6 +2,7 @@ using GameBase.Modify;
 using GameBase.Tools;
 using System;
 using GameBase.EntitySystem;
+using UnityEngine;
 
 namespace GameBase.Buffs
 {
@@ -18,14 +19,15 @@ namespace GameBase.Buffs
     public class Buff : IEntity,
         IPoolable
     {
-        internal protected float durationRemain;
-        internal protected int stackNum = 1;
-        internal protected bool alive;
+        internal float durationRemain;
+        internal float instantiateTime;
+        internal int stackNum = 1;
+        internal bool alive;
+        internal IBuffOwner owner;
 
         public UIStyle uiStyle = UIStyle.None;
         public int textureID;
         public float durationSet;
-        public IBuffOwner owner;
         public BuffModifyers modifyers = new ();
 
         int IEntity.InstanceID { get; set; }
@@ -39,6 +41,7 @@ namespace GameBase.Buffs
             alive = true;
             uiStyle = UIStyle.None;
             durationRemain = 0;
+            instantiateTime = Time.time;
         }
 
         void IPoolable.BeforeRelease()

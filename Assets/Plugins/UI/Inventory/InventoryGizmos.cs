@@ -7,11 +7,11 @@ namespace GameBase.UI
     {
         public bool isInit = false;
         public bool drawGizmos = false;
-        public static InventoryPanel sysInstance;
+        public static InventoryViewPanel sysInstance;
         public static InventoryGizmos Instance => _instance;
         public static InventoryGizmos _instance;
 
-        public void Init(InventoryPanel panel)
+        public void Init(InventoryViewPanel panel)
         {
             sysInstance = panel;
         }

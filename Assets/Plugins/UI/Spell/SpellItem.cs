@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameBase.UI
 {
-    public class SpellItem : BasePanelItem
+    public class SpellItem : BaseViewItem
     {
         internal Material iconMaterial;
         internal TextMeshProUGUI timeTMP;

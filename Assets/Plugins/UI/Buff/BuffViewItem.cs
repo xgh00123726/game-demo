@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameBase.UI
 {
-    public class BuffItem : BasePanelItem
+    public class BuffViewItem : BaseViewItem
     {
         internal Material iconMaterial;
         internal TextMeshProUGUI stackNumTMP;
@@ -13,7 +13,7 @@ namespace GameBase.UI
         public IViewableBuff bindBuff;
 
         internal override int IconTexureID => iconTextureID;
-        public BuffItem()
+        public BuffViewItem()
         {
             ObjID = 9;
         }

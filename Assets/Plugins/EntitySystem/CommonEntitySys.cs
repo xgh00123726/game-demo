@@ -93,8 +93,6 @@ namespace GameBase.EntitySystem
         /// <param name="e"></param>
         protected virtual void OnRemoveEntityFromActives(T_Entity e) { }
 
-        protected virtual void BeforeFirstUpdate(T_Entity e) { }
-
         public int Tick => tick;
         public int FixedTick => fixedTick;
 
@@ -138,7 +136,6 @@ namespace GameBase.EntitySystem
             foreach (T_Entity e in _entityNeedRegister)
             {
                 _entities.AddLast(e);
-                BeforeFirstUpdate(e);
             }
             _entityNeedRegister.Clear();
 

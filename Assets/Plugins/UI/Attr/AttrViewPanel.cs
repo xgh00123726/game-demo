@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public class AttrPanel : BasePanel<AttrItem, AttrPanel>
+    public class AttrViewPanel : BaseViewPanel<AttrViewItem, AttrViewPanel>
     {
         internal override float ItemWidth => UIPanelConfig.Float.Attr_itemWidth;
 
@@ -29,7 +29,7 @@ namespace GameBase.UI
 
         internal override int ItemAlign => UIPanelConfig.Int.Attr_itemAlign;
 
-        protected override BaseUI InstantiateObj(AttrItem e)
+        protected override BaseUI InstantiateObj(AttrViewItem e)
         {
             var obj = base.InstantiateObj(e);
 
@@ -42,7 +42,7 @@ namespace GameBase.UI
             return obj;
         }
 
-        protected override void UpdateEntity(AttrItem e)
+        protected override void UpdateEntity(AttrViewItem e)
         {
             base.UpdateEntity(e);
 

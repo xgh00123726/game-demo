@@ -10,17 +10,15 @@ namespace GameBase.Projectiles
         { 
         }
 
-        protected override void BeforeFirstUpdate(Projectile e)
+        protected override void OnRegisterEntityToActives(Projectile e)
         {
             if (e.hasWhite)
             {
                 e.whites = new System.Collections.Generic.HashSet<int>();
             }
-
-            e.flying.OnHit += () => HitTarget(e);
         }
 
-        private void HitTarget(Projectile e)
+        internal void HitTarget(Projectile e)
         {
             if (e.target != null && e.actualEffectTimes < e.maxeffectTimes)
             {

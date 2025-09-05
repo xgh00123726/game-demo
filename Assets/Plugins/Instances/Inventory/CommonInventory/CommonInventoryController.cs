@@ -6,22 +6,22 @@ using UnityEngine;
 
 namespace Instance.Inventory
 {
-    public class CommonInventory
+    public class CommonInventoryController
     {
         public const int ITEM_NUM = 50;
         public const float PANEL_OFFSET_HIDE_SPEED = 6000;
         public const float PANEL_OFFSET_HIDE_X = 1920;
 
-        private static CommonInventory _instance = new();
-        private Inventory<CommonItem, CommonDataBase> _inventory = new();
-        private InventoryPanel _panel;
-        internal LinearNonReleaseEntityContainer<InventoryItem> container = new();
+        private InventoryViewPanel _panel;
+        private CommonInventoryModel _inventoryModel = new();
+        private static CommonInventoryController _instance = new();
+        private LinearNonReleaseEntityContainer<InventoryViewItem> _container = new();
         private bool _showFlag = false;
 
-        private CommonInventory()
+        private CommonInventoryController()
         {
-            _panel = InventoryPanel.Instance;
-            _panel.Container = container;
+            _panel = InventoryViewPanel.Instance;
+            _panel.Container = _container;
             _panel.Dragable = new CommonDragable();
             _panel.panel.SetActive(false);
             for (int i = 0; i < ITEM_NUM; i++)
@@ -30,48 +30,53 @@ namespace Instance.Inventory
             }
         }
 
-        public static CommonInventory Instance => _instance;
+        public static CommonInventoryController Instance => _instance;
 
-        public CommonItem DataOfUI(InventoryItem item)
+        public CommonItemData DataOfUI(InventoryViewItem item)
         {
-            return _inventory[container.IndexOf(item)];
+            return _inventoryModel[_container.IndexOf(item)];
         }
 
         public void SetIconSprite(int index, int iconID)
         {
             var texture = ResourcesLoader.GetTexture2D(iconID);
-            container[index].IconSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            _container[index].IconSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         }
 
-        public InventoryItem GetItemUI(Vector3 position, out int index)
+        public int TryGetItemUI(Vector3 position, out InventoryViewItem e)
         {
-            return _panel.GetItem(position, out index);
+            return _panel.TryGetItem(position, out e);
         }
 
-        public CommonItem GetItemData(int index)
+        public bool HasItemData(int index)
         {
-            return _inventory[index];
+            return _inventoryModel.HasItem(index);
         }
 
-        public InventoryItem GetItemUI(int index)
+        public CommonItemData GetItemData(int index)
         {
-            return container[index];
+            return _inventoryModel[index];
         }
 
-        public void AddItem(CommonItem item)
+        public InventoryViewItem GetItemUI(int index)
         {
-            var index = _inventory.AddItem(item);
+            return _container[index];
+        }
+
+        public void AddItem(CommonItemData item)
+        {
+            var index = _inventoryModel.AddItem(item);
             SetIconSprite(index, item.iconTextureID);
         }
 
         public void RemoveItem(int position)
         {
-            _inventory.RemoveItem(position);
+            _inventoryModel.RemoveItem(position);
         }
 
         public void SwapItem(int p1, int p2)
         {
-            _inventory.Swap(p1, p2);
+            _inventoryModel.Swap(p1, p2);
         }
 
         public void Show()

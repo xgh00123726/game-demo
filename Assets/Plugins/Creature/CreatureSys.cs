@@ -92,11 +92,6 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
         e.Obj.SetActive(false);
     }
 
-    protected override void BeforeFirstUpdate(Creature e)
-    {
-
-    }
-
     protected override void UpdateEntity(Creature e)
     {
         if (e.ReleaseTrigger)

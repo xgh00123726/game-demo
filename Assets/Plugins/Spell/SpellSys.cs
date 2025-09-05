@@ -16,15 +16,6 @@ namespace GameBase.Spells
             e.RemoveFromActiveDelegate?.Invoke(e);
         }
 
-        protected override void BeforeFirstUpdate(Spell e)
-        {
-            if (e.speller == null)
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log("null speller");
-            }
-        }
-
         protected override void UpdateEntity(Spell e)
         {
             if (e.speller == null)

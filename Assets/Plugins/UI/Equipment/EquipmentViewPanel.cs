@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public class EquipmentPanel : BasePanel<EquipmentItem, EquipmentPanel>
+    public class EquipmentViewPanel : BaseViewPanel<EquipmentViewItem, EquipmentViewPanel>
     {
         internal override float ItemWidth => UIPanelConfig.Float.Equipment_itemWidth;
 
@@ -29,12 +29,12 @@ namespace GameBase.UI
 
         internal override int ItemAlign => UIPanelConfig.Int.Equipment_itemAlign;
 
-        protected override RectTransform GetRectTransform(EquipmentItem e)
+        protected override RectTransform GetRectTransform(EquipmentViewItem e)
         {
             return e.Obj.transform.Find("Icon").GetComponent<RectTransform>();
         }
 
-        protected override BaseUI InstantiateObj(EquipmentItem e)
+        protected override BaseUI InstantiateObj(EquipmentViewItem e)
         {
             var ui = base.InstantiateObj(e);
 

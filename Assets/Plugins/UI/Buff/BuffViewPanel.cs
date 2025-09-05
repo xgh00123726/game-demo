@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public class BuffPanel : BasePanel<BuffItem, BuffPanel>
+    public class BuffViewPanel : BaseViewPanel<BuffViewItem, BuffViewPanel>
     {
         internal override int PanelObjID => UIPanelConfig.Int.Buff_panelObjID;
         internal override int ShapeTexureID => UIPanelConfig.Int.Buff_shapeTexureID;
@@ -21,7 +21,7 @@ namespace GameBase.UI
         internal override float PanelY => UIPanelConfig.Float.Buff_panelY;
         internal override int ItemAlign => UIPanelConfig.Int.Buff_itemAlign;
 
-        protected override void AfterInstantiateEUObject(BuffItem e)
+        protected override void AfterInstantiateEUObject(BuffViewItem e)
         {
             base.AfterInstantiateEUObject(e);
 
@@ -29,7 +29,7 @@ namespace GameBase.UI
             e.iconMaterial.SetTexture("_Target", texture);
         }
 
-        protected override BaseUI InstantiateObj(BuffItem e)
+        protected override BaseUI InstantiateObj(BuffViewItem e)
         {
             var obj = base.InstantiateObj(e);
 
@@ -59,7 +59,7 @@ namespace GameBase.UI
             return obj;
         }
 
-        protected override void UpdateEntity(BuffItem e)
+        protected override void UpdateEntity(BuffViewItem e)
         {
             base.UpdateEntity(e);
 

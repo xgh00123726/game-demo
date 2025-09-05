@@ -47,9 +47,9 @@ namespace Constructor.Spells.Action
             var pOwner = spell.speller as IProjectileOwner;
 
             var e = Projectiles.Factory.Instance.Get(data.projectileType, data.projectileID);
-            e.flying = Flyings.Factory.Instance.Get(data.flyingType, data.flyingID);
-            e.flying.Src = pOwner.HandPosition + new Vector3(0, 1, 0);
-            e.flying.dest = CameraSys.MouseHitPosition;
+            e.Flying = Flyings.Factory.Instance.Get(data.flyingType, data.flyingID);
+            e.Flying.Src = pOwner.HandPosition + new Vector3(0, 1, 0);
+            e.Flying.dest = CameraSys.MouseHitPosition;
             e.owner = pOwner;
             e.target = target;
         }

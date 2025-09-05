@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public class SpellPanel : BasePanel<SpellItem, SpellPanel>
+    public class SpellPanel : BaseViewPanel<SpellItem, SpellPanel>
     {
         internal override int PanelObjID => UIPanelConfig.Int.Spell_panelObjID;
         internal override int ShapeTexureID => UIPanelConfig.Int.Spell_shapeTexureID;

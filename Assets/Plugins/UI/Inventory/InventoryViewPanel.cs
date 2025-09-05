@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public class InventoryPanel : BasePanel<InventoryItem, InventoryPanel>
+    public class InventoryViewPanel : BaseViewPanel<InventoryViewItem, InventoryViewPanel>
     {
         internal override float ItemWidth => UIPanelConfig.Float.Inventory_itemWidth;
 
@@ -58,12 +58,12 @@ namespace GameBase.UI
             return new Vector3(vx, PanelY - vy, 0);
         }
 
-        protected override RectTransform GetRectTransform(InventoryItem e)
+        protected override RectTransform GetRectTransform(InventoryViewItem e)
         {
             return e.Obj.transform.Find("Icon").GetComponent<RectTransform>();
         }
 
-        protected override BaseUI InstantiateObj(InventoryItem e)
+        protected override BaseUI InstantiateObj(InventoryViewItem e)
         {
             var ui = base.InstantiateObj(e);
 

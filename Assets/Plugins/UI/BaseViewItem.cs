@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameBase.UI
 {
-    public abstract class BasePanelItem : IUEntity<BaseUI>
+    public abstract class BaseViewItem : IUEntity<BaseUI>
     {
         internal RectTransform rectTransform;
         internal Texture2D iconTexture;

@@ -27,23 +27,6 @@ namespace GameBase.Buffs
             e.modifyers.Clear();
         }
 
-        protected override void BeforeFirstUpdate(Buff e)
-        {
-            e.durationRemain = e.durationSet;
-            foreach (var em in e.modifyers.FixedModifyers)
-            {
-                e.owner.Modifyables.AddModify(em.Key, em.Value);
-            }
-            foreach (var em in e.modifyers.SetModifyers)
-            {
-                e.owner.Modifyables.AddModify(em.Key, em.Value);
-            }
-            foreach (var em in e.modifyers.CurrModifyers)
-            {
-                e.owner.Modifyables.AddModify(em.Key, em.Value);
-            }
-        }
-
         protected override void UpdateEntity(Buff e)
         {
             if (e.owner == null)
@@ -54,16 +37,18 @@ namespace GameBase.Buffs
                 return;
             }
 
-            if (e.durationRemain > 0)
-            {
-                e.durationRemain -= Time.deltaTime;
-            }
+            e.durationRemain = e.durationSet - (Time.time - e.instantiateTime);
 
             if (e.durationRemain <= 0)
             {
                 e.owner.Buffs.RemoveBuff(e);
                 RemoveEntity(e);
             }
+        }
+
+        internal void RemoveBuff(Buff e)
+        {
+            RemoveEntity(e);
         }
     }
 }

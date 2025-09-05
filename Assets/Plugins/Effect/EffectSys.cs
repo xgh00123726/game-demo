@@ -11,19 +11,16 @@ namespace GameBase.Effects
         {
             e.instantiateTime = Time.time;
             e.Obj.gameObject.SetActive(true);
+
+            if (e.hasParticle)
+            {
+                e.Obj.Play();
+            }
         }
 
         protected override void BeforeReleaseEUObject(Effect e)
         {
             e.Obj.gameObject.SetActive(false);
-        }
-
-        protected override void BeforeFirstUpdate(Effect e)
-        {
-            if (e.hasParticle)
-            {
-                e.Obj.Play();
-            }
         }
 
         protected override ParticleSystem InstantiateObj(Effect e)

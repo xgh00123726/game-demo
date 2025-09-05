@@ -3,43 +3,39 @@ using UnityEngine;
 
 namespace Instance.Inventory
 {
-    public class EquipmentDragable : IDragable<GameBase.UI.EquipmentItem>
+    public class EquipmentDragable : IDragable<GameBase.UI.EquipmentViewItem>
     {
         public float dragJugTime = 0.1f;
 
-        bool IDragable<GameBase.UI.EquipmentItem>.IsDrag(GameBase.UI.EquipmentItem e)
+        bool IDragable<GameBase.UI.EquipmentViewItem>.IsDrag(GameBase.UI.EquipmentViewItem e)
         {
             return e.Obj.PointerDownTime > dragJugTime;
         }
 
-        void IDragable<GameBase.UI.EquipmentItem>.OnDrag(GameBase.UI.EquipmentItem e)
+        void IDragable<GameBase.UI.EquipmentViewItem>.OnDrag(GameBase.UI.EquipmentViewItem e)
         {
             InventoryShadowItem.SetPosition(Input.mousePosition);
         }
 
-        void IDragable<GameBase.UI.EquipmentItem>.OnEnterDrag(GameBase.UI.EquipmentItem e)
+        void IDragable<GameBase.UI.EquipmentViewItem>.OnEnterDrag(GameBase.UI.EquipmentViewItem e)
         {
             e.HideIcon();
-            InventoryShadowItem.storedItem = e;
-            InventoryShadowItem.SetIconSprite(e);
+            InventoryShadowItem.StoreItem(e);
         }
 
-        void IDragable<GameBase.UI.EquipmentItem>.OnExitDrag(GameBase.UI.EquipmentItem e)
+        void IDragable<GameBase.UI.EquipmentViewItem>.OnExitDrag(GameBase.UI.EquipmentViewItem e)
         {
             InventoryShadowItem.Hide();
-            var eitem = EquipmentInventory.Instance.GetItem(Input.mousePosition, out int eidx);
-            if (eitem != null)
+            if (EquipmentInventoryController.Instance.TryGetItemUI(Input.mousePosition, out var ee) != -1)
             {
-                InventoryShadowItem.storedItem.SwapIconSprite(eitem);
-                eitem.ShowIcon();
+                InventoryShadowItem.StorePop().SwapIconSprite(ee);
+                ee.ShowIcon();
             }
-            e.ShowIcon();
 
-            var citem = CommonInventory.Instance.GetItemUI(Input.mousePosition, out int cidx);
-            if (citem != null)
+            if (CommonInventoryController.Instance.TryGetItemUI(Input.mousePosition, out var ec) != -1)
             {
-                InventoryShadowItem.storedItem.SwapIconSprite(citem);
-                citem.ShowIcon();
+                InventoryShadowItem.StorePop().SwapIconSprite(ec);
+                ec.ShowIcon();
             }
             e.ShowIcon();
         }

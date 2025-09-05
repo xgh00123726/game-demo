@@ -10,7 +10,7 @@ namespace Instance.Inventory
     {
         private static Image _iconImage;
 
-        public static InventoryItem storedItem;
+        private static InventoryViewItem storedItem;
 
         static InventoryShadowItem()
         {
@@ -32,9 +32,15 @@ namespace Instance.Inventory
             _iconImage.transform.position = position;
         }
 
-        public static void SetIconSprite(InventoryItem other)
+        public static void StoreItem(InventoryViewItem e)
         {
-            _iconImage.sprite = other.IconSprite;
+            storedItem = e;
+            _iconImage.sprite = e.IconSprite;
+        }
+
+        public static InventoryViewItem StorePop()
+        {
+            return storedItem;
         }
 
         public static void Hide()

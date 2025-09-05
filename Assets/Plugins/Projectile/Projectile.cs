@@ -12,7 +12,6 @@ namespace GameBase.Projectiles
         IPoolable
     {
         // require
-        public Flying flying;
         public int maxeffectTimes;
         public IProjectileTarget target;
         public IShape2D shape;
@@ -23,8 +22,19 @@ namespace GameBase.Projectiles
         // optional
         public bool hasWhite;
 
+        internal Flying flying;
         internal int actualEffectTimes;
         internal HashSet<int> whites;
+
+        public Flying Flying
+        {
+            get => flying;
+            set
+            {
+                flying = value;
+                flying.OnHit = () => ProjectileSys.Instance.HitTarget(this);
+            }
+        }
 
         public int InstanceID { get; set; }
 

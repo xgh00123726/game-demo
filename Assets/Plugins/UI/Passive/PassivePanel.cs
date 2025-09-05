@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public class PassivePanel : BasePanel<PassiveItem, PassivePanel>
+    public class PassivePanel : BaseViewPanel<PassiveItem, PassivePanel>
     {
 
         public static float itemWidth = 100f;

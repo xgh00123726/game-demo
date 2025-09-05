@@ -33,7 +33,7 @@ namespace Constructor.Spells.Action
             ef.dest = ef.Src + dir * data.distance;
             var ep = Projectiles.Factory.Instance.Get(data.projectileType, data.projectileID);
             ep.owner = pOwner;
-            ep.flying = ef;
+            ep.Flying = ef;
         }
     }
 

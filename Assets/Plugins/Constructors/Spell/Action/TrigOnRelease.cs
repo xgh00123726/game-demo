@@ -35,10 +35,10 @@ namespace Constructor.Spells.Action
                 ef.OnHit += () =>
                 {
                     var e = Projectiles.Factory.Instance.Get(data.projType, data.projectileID);
-                    e.flying = Flyings.Factory.Instance.Get(data.flying2Type, data.flying2ID);
+                    e.Flying = Flyings.Factory.Instance.Get(data.flying2Type, data.flying2ID);
                     e.shape.Center = new Vector2(ef.dest.x, ef.dest.z);
-                    e.flying.Src = ef.dest;
-                    e.flying.dest = ef.dest;
+                    e.Flying.Src = ef.dest;
+                    e.Flying.dest = ef.dest;
                     e.owner = pOwner;
                 };
             }

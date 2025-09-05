@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public abstract class BasePanel<T, T_Instance> : UObjEntitySys<T, BaseUI, T_Instance>
-        where T : BasePanelItem, new()
-        where T_Instance : BasePanel<T, T_Instance>, new()
+    public abstract class BaseViewPanel<T, T_Instance> : UObjEntitySys<T, BaseUI, T_Instance>
+        where T : BaseViewItem, new()
+        where T_Instance : BaseViewPanel<T, T_Instance>, new()
     {
         public enum Align
         {
@@ -174,21 +174,23 @@ namespace GameBase.UI
             panel.transform.SetParent(RootCanvas.Instance.transform, false);
         }
 
-        public T GetItem(Vector3 position, out int index)
+        public int TryGetItem(Vector3 position, out T e)
         {
-            index = 0;
-            foreach (var e in _entities)
+            int index = 0;
+            foreach (var ie in _entities)
             {
-                Rect r = e.RectTransform.rect;
-                r.center = e.Obj.transform.position;
+                Rect r = ie.RectTransform.rect;
+                r.center = ie.Obj.transform.position;
                 if (r.Contains(position))
                 {
-                    return e;
+                    e = ie;
+                    return index;
                 }
                 index++;
             }
 
-            return null;
+            e = null;
+            return -1;
         }
     }
 }
