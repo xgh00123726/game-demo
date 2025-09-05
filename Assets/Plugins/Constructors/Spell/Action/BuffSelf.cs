@@ -28,7 +28,7 @@ namespace Constructor.Spells.Action
             var eb = Buffs.Factory.Instance.Get(data.buffType, data.buffID);
             eb.durationSet = data.duration;
             eb.uiStyle = UIStyle.Buff;
-            bOwner.AddBuff(eb);
+            bOwner.RegisterBuff(eb);
         }
     }
 

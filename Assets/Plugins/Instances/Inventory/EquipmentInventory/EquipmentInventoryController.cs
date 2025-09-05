@@ -13,7 +13,7 @@ namespace Instance.Inventory
         public IBuffOwner owner;
 
         private static EquipmentInventoryController _instance = new();
-        private EquipmentInventoryModel _inventory = new();
+        private EquipmentInventoryModel _inventoryModel = new(ITEM_NUM);
         private EquipmentViewPanel _panel;
         private LinearNonReleaseEntityContainer<EquipmentViewItem> _container = new();
 
@@ -21,7 +21,8 @@ namespace Instance.Inventory
         {
             _panel = EquipmentViewPanel.Instance;
             _panel.Container = _container;
-            _panel.Dragable = new EquipmentDragable();
+            _panel.DragableControl = new EquipmentDragableControl();
+            _panel.DetailableControl = new EquipmentDetailControl();
             for (int i = 0; i < ITEM_NUM; i++)
             {
                 var e = _panel.NewEntity();
@@ -41,19 +42,24 @@ namespace Instance.Inventory
             return _panel.TryGetItem(position, out e);
         }
 
+        public Buff GetItemBuff(int index)
+        {
+            return _inventoryModel.GetBuff(index);
+        }
+
         public void AddItem(CommonItemData item)
         {
-            _inventory.AddItem(item);
+            _inventoryModel.AddItem(item);
         }
 
         public void RemoveItem(int position)
         {
-            _inventory.RemoveItem(position);
+            _inventoryModel.RemoveItem(position);
         }
 
         public void SwapItem(int p1, int p2)
         {
-            _inventory.Swap(p1, p2);
+            _inventoryModel.Swap(p1, p2);
         }
     }
 }

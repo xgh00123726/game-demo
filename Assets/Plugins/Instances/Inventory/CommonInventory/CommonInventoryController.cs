@@ -22,7 +22,8 @@ namespace Instance.Inventory
         {
             _panel = InventoryViewPanel.Instance;
             _panel.Container = _container;
-            _panel.Dragable = new CommonDragable();
+            _panel.DragableControl = new CommonDragableControl();
+            _panel.DetailableControl = new CommonDetailControl();
             _panel.panel.SetActive(false);
             for (int i = 0; i < ITEM_NUM; i++)
             {

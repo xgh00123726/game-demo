@@ -15,15 +15,15 @@ namespace GameBase.UI
             Left = 0, Right, Center
         }
 
-        internal IDragable<T> dragable;
+        internal IDragableControl<T> dragableControl;
         internal IEnterExist<T> enterExist;
         internal ISwitchable<T> switchable;
-        internal IDetailable<T> detailable;
+        internal IDetailableControl<T> detailableControl;
 
-        public IDragable<T> Dragable
+        public IDragableControl<T> DragableControl
         {
-            get => dragable;
-            set => dragable = value;
+            get => dragableControl;
+            set => dragableControl = value;
         }
 
         public IEnterExist<T> EnterExist
@@ -38,10 +38,10 @@ namespace GameBase.UI
             set => switchable = value;
         }
 
-        public IDetailable<T> Detailable
+        public IDetailableControl<T> DetailableControl
         {
-            get => detailable;
-            set => detailable = value;
+            get => detailableControl;
+            set => detailableControl = value;
         }
 
         public GameObject panel;
@@ -124,24 +124,46 @@ namespace GameBase.UI
 
         private void DragableUpdate(T e)
         {
-            if (dragable == null) return;   
+            if (dragableControl == null) return;   
 
-            var isDrag = dragable.IsDrag(e);
+            var isDrag = dragableControl.IsDrag(e);
             if (isDrag && !e.lastDrag)
             {
-                dragable.OnEnterDrag(e);
+                dragableControl.OnEnterDrag(e);
             }
             else if (!isDrag && e.lastDrag)
             {
-                dragable.OnExitDrag(e);
+                dragableControl.OnExitDrag(e);
             }
 
             if (isDrag)
             {
-                dragable.OnDrag(e);
+                dragableControl.OnDrag(e);
             }
 
             e.lastDrag = isDrag;
+        }
+
+        private void DetailbleUpdate(T e)
+        {
+            if (detailableControl == null) return;
+
+            var isDetail = detailableControl.IsDetail(e);
+            if (isDetail && !e.lastDetail)
+            {
+                detailableControl.OnEnterDetail(e);
+            }
+            else if (!isDetail && e.lastDetail)
+            {
+                detailableControl.OnExitDetail(e);
+            }
+
+            if (isDetail)
+            {
+                detailableControl.OnDetail(e);
+            }
+
+            e.lastDetail = isDetail;
         }
 
         protected override void UpdateEntity(T e)
@@ -159,6 +181,7 @@ namespace GameBase.UI
             }
 
             DragableUpdate(e);
+            DetailbleUpdate(e);
 
             if (++itemIterIdx >= _entities.Count)
             {

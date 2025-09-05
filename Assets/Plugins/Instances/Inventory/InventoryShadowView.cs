@@ -6,19 +6,20 @@ using UnityEngine.UI;
 
 namespace Instance.Inventory
 {
-    public class InventoryShadowItem
+    public class InventoryShadowView
     {
+        private static GameObject _shadowObj;
         private static Image _iconImage;
 
         private static InventoryViewItem storedItem;
 
-        static InventoryShadowItem()
+        static InventoryShadowView()
         {
-            var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(37));
+            _shadowObj = GameObject.Instantiate(ResourcesLoader.GetPrefab(37));
 
-            obj.transform.SetParent(RootCanvas.Instance.transform, false);
+            _shadowObj.transform.SetParent(RootCanvas.Instance.transform, false);
 
-            _iconImage = obj.transform.Find("Icon").GetComponent<Image>();
+            _iconImage = _shadowObj.transform.Find("Icon").GetComponent<Image>();
             if (_iconImage == null)
             {
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
@@ -28,8 +29,13 @@ namespace Instance.Inventory
 
         public static void SetPosition(Vector3 position)
         {
-            _iconImage.gameObject.SetActive(true);
-            _iconImage.transform.position = position;
+            _shadowObj.SetActive(true);
+            _shadowObj.transform.position = position;
+        }
+
+        public static void Hide()
+        {
+            _shadowObj.SetActive(false);
         }
 
         public static void StoreItem(InventoryViewItem e)
@@ -41,11 +47,6 @@ namespace Instance.Inventory
         public static InventoryViewItem StorePop()
         {
             return storedItem;
-        }
-
-        public static void Hide()
-        {
-            _iconImage.gameObject.SetActive(false);
         }
     }
 }

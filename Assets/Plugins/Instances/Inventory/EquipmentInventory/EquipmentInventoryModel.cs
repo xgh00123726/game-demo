@@ -1,9 +1,18 @@
+using GameBase.Buffs;
 using GameBase.Inventorys;
 using Instance.Inventory;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class EquipmentInventoryModel : Inventory<CommonItemData, CommonDataBase>
 {
+    private List<Buff> buffs;
+    public EquipmentInventoryModel(int capacity)
+    {
+        buffs = new List<Buff>(6);
+    }
+
+    public Buff GetBuff(int index)
+    {
+        return buffs[index];
+    }
 }

@@ -8,6 +8,7 @@ namespace GameBase.UI
         internal RectTransform rectTransform;
         internal Texture2D iconTexture;
         internal bool lastDrag;
+        internal bool lastDetail;
 
         public Texture2D IconTexture => iconTexture;
         public RectTransform RectTransform => rectTransform;

@@ -5,48 +5,47 @@ using UnityEngine;
 
 namespace Instance.Inventory
 {
-    public class CommonDragable : IDragable<InventoryViewItem>
+    public class CommonDragableControl : IDragableControl<InventoryViewItem>
     {
         public float dragJugTime = 0.1f;
 
-        bool IDragable<InventoryViewItem>.IsDrag(InventoryViewItem e)
+        bool IDragableControl<InventoryViewItem>.IsDrag(InventoryViewItem e)
         {
             return e.Obj.PointerDownTime > dragJugTime;
         }
 
-        void IDragable<InventoryViewItem>.OnDrag(InventoryViewItem e)
+        void IDragableControl<InventoryViewItem>.OnDrag(InventoryViewItem e)
         {
             // 拖动时shadow位置跟随鼠标变化
-            InventoryShadowItem.SetPosition(Input.mousePosition);
+            InventoryShadowView.SetPosition(Input.mousePosition);
         }
 
-        void IDragable<InventoryViewItem>.OnEnterDrag(InventoryViewItem e)
+        void IDragableControl<InventoryViewItem>.OnEnterDrag(InventoryViewItem e)
         {
             // 被拖拽的图标隐藏
             e.HideIcon();
 
             // shadow储存被拖拽的图标，模拟图标被拖走
-            InventoryShadowItem.StoreItem(e);
+            InventoryShadowView.StoreItem(e);
         }
 
-        void IDragable<InventoryViewItem>.OnExitDrag(InventoryViewItem e)
+        void IDragableControl<InventoryViewItem>.OnExitDrag(InventoryViewItem e)
         {
-            InventoryShadowItem.Hide();
+            InventoryShadowView.Hide();
             if(EquipmentInventoryController.Instance.TryGetItemUI(Input.mousePosition, out var ee) != -1)
             {
-                InventoryShadowItem.StorePop().SwapIconSprite(ee);
+                InventoryShadowView.StorePop().SwapIconSprite(ee);
                 var data = CommonInventoryController.Instance.DataOfUI(e);
                 var eb = Constructor.Buffs.Factory.Instance.Get(Constructor.Buffs.Type.Common, data.buffID);
-
                 eb.uiStyle = GameBase.Buffs.UIStyle.None;
                 eb.durationSet = 9999;
-                EquipmentInventoryController.Instance.owner.AddBuff(eb);
+                EquipmentInventoryController.Instance.owner.RegisterBuff(eb);
                 ee.ShowIcon();
             }
 
             if (CommonInventoryController.Instance.TryGetItemUI(Input.mousePosition, out var ec) != -1)
             {
-                InventoryShadowItem.StorePop().SwapIconSprite(ec);
+                InventoryShadowView.StorePop().SwapIconSprite(ec);
                 ec.ShowIcon();
             }
 

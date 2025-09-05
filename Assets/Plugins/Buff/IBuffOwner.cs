@@ -5,7 +5,7 @@ namespace GameBase.Buffs
     public interface IBuffOwner : IModifyOwner<float>
     {
         BuffContainer Buffs { get; }
-        public void AddBuff(Buff e)
+        public void RegisterBuff(Buff e)
         {
             Buffs.AddBuff(e);
             e.owner = this;
