@@ -37,6 +37,33 @@ namespace Instance.Inventory
             _container[index].IconSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         }
 
+        public bool TryGetDataOfView(EquipmentViewItem item, out CommonItemData data)
+        {
+            var index = _container.IndexOf(item);
+            var ret = HasItemData(index);
+
+            if (ret)
+            {
+                data = _inventoryModel[index];
+            }
+            else
+            {
+                data = default;
+            }
+
+            return ret;
+        }
+
+        public bool HasItemData(int index)
+        {
+            return _inventoryModel.HasItem(index);
+        }
+
+        public CommonItemData GetItemData(int index)
+        {
+            return _inventoryModel[index];
+        }
+
         public int TryGetItemUI(Vector3 position, out EquipmentViewItem e)
         {
             return _panel.TryGetItem(position, out e);

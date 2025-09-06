@@ -35,12 +35,14 @@ namespace Instance.Inventory
             if(EquipmentInventoryController.Instance.TryGetItemUI(Input.mousePosition, out var ee) != -1)
             {
                 InventoryShadowView.StorePop().SwapIconSprite(ee);
-                var data = CommonInventoryController.Instance.DataOfUI(e);
-                var eb = Constructor.Buffs.Factory.Instance.Get(Constructor.Buffs.Type.Common, data.buffID);
-                eb.uiStyle = GameBase.Buffs.UIStyle.None;
-                eb.durationSet = 9999;
-                EquipmentInventoryController.Instance.owner.RegisterBuff(eb);
-                ee.ShowIcon();
+                if (CommonInventoryController.Instance.TryGetDataOfView(e, out var data))
+                {
+                    var eb = Constructor.Buffs.Factory.Instance.Get(Constructor.Buffs.Type.Common, data.buffID);
+                    eb.uiStyle = GameBase.Buffs.UIStyle.None;
+                    eb.durationSet = 9999;
+                    EquipmentInventoryController.Instance.owner.RegisterBuff(eb);
+                    ee.ShowIcon();
+                }
             }
 
             if (CommonInventoryController.Instance.TryGetItemUI(Input.mousePosition, out var ec) != -1)

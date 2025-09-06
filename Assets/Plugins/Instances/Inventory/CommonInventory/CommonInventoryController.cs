@@ -33,9 +33,21 @@ namespace Instance.Inventory
 
         public static CommonInventoryController Instance => _instance;
 
-        public CommonItemData DataOfUI(InventoryViewItem item)
+        public bool TryGetDataOfView(InventoryViewItem item, out CommonItemData data)
         {
-            return _inventoryModel[_container.IndexOf(item)];
+            var index = _container.IndexOf(item);
+            var ret = HasItemData(index);
+
+            if (ret)
+            {
+                data = _inventoryModel[index];
+            }
+            else
+            {
+                data = default;
+            }
+
+            return ret;
         }
 
         public void SetIconSprite(int index, int iconID)
