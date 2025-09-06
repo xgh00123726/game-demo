@@ -2,9 +2,8 @@ using System.Collections.Generic;
 
 namespace GameBase.Inventorys
 {
-    public class Inventory<T_Item, T_DataBase>
-        where T_Item : struct, IItem
-        where T_DataBase : IDataBase<T_Item>
+    public class InventoryModel<T_Item>
+        where T_Item : struct, IModelItem
     {
         private struct InventoryItem
         {

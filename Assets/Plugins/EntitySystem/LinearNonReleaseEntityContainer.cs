@@ -8,7 +8,11 @@ public class LinearNonReleaseEntityContainer<T> : IEContainer<T>, IEnumerable<T>
 {
     private List<T> _entities = new();
 
-    public T this[int i] => _entities[i];
+    public T this[int i]
+    {
+        get => _entities[i];
+        set => _entities[i] = value;
+    }
 
     public int Count => _entities.Count;
 

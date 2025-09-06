@@ -5,47 +5,51 @@ using UnityEngine;
 
 namespace Instance.Inventory
 {
-    public class CommonDragableControl : IDragableControl<InventoryViewItem>
+    public class CommonDragableControl : IDragableControl<CommonInventoryViewItem>
     {
         public float dragJugTime = 0.1f;
 
-        bool IDragableControl<InventoryViewItem>.IsDrag(InventoryViewItem e)
+        bool IDragableControl<CommonInventoryViewItem>.IsDrag(CommonInventoryViewItem e)
         {
             return e.Obj.PointerDownTime > dragJugTime;
         }
 
-        void IDragableControl<InventoryViewItem>.OnDrag(InventoryViewItem e)
+        void IDragableControl<CommonInventoryViewItem>.OnDrag(CommonInventoryViewItem e)
         {
             // 拖动时shadow位置跟随鼠标变化
             InventoryShadowView.SetPosition(Input.mousePosition);
         }
 
-        void IDragableControl<InventoryViewItem>.OnEnterDrag(InventoryViewItem e)
+        void IDragableControl<CommonInventoryViewItem>.OnEnterDrag(CommonInventoryViewItem e)
         {
             // 被拖拽的图标隐藏
             e.HideIcon();
 
             // shadow储存被拖拽的图标，模拟图标被拖走
-            InventoryShadowView.StoreItem(e);
+            InventoryShadowView.StorePush(e);
         }
 
-        void IDragableControl<InventoryViewItem>.OnExitDrag(InventoryViewItem e)
+        void IDragableControl<CommonInventoryViewItem>.OnExitDrag(CommonInventoryViewItem e)
         {
             InventoryShadowView.Hide();
-            if(EquipmentInventoryController.Instance.TryGetItemUI(Input.mousePosition, out var ee) != -1)
+
+            // 如果拖动的位置是装备栏
+            if(EquipmentInventoryController.Instance.TryGetItemUI(Input.mousePosition, out var ee, out var ie))
             {
                 InventoryShadowView.StorePop().SwapIconSprite(ee);
+                ee.ShowIcon();
+
                 if (CommonInventoryController.Instance.TryGetDataOfView(e, out var data))
                 {
                     var eb = Constructor.Buffs.Factory.Instance.Get(Constructor.Buffs.Type.Common, data.buffID);
                     eb.uiStyle = GameBase.Buffs.UIStyle.None;
                     eb.durationSet = 9999;
                     EquipmentInventoryController.Instance.owner.RegisterBuff(eb);
-                    ee.ShowIcon();
                 }
             }
 
-            if (CommonInventoryController.Instance.TryGetItemUI(Input.mousePosition, out var ec) != -1)
+            // 如果拖动终点是背包
+            if (CommonInventoryController.Instance.TryGetItemUI(Input.mousePosition, out var ec, out var ic))
             {
                 InventoryShadowView.StorePop().SwapIconSprite(ec);
                 ec.ShowIcon();

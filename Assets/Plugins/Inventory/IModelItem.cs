@@ -1,6 +1,6 @@
 namespace GameBase.Inventorys
 {
-    public interface IItem
+    public interface IModelItem
     {
         public int ID { get; set; }
     }

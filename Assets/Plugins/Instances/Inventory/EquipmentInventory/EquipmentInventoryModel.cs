@@ -3,7 +3,7 @@ using GameBase.Inventorys;
 using Instance.Inventory;
 using System.Collections.Generic;
 
-public class EquipmentInventoryModel : Inventory<CommonItemData, CommonDataBase>
+public class EquipmentInventoryModel : InventoryModel<CommonItemData>
 {
     private List<Buff> buffs;
     public EquipmentInventoryModel(int capacity)

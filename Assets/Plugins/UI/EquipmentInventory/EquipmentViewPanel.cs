@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public class EquipmentViewPanel : BaseViewPanel<EquipmentViewItem, EquipmentViewPanel>
+    public class EquipmentViewPanel : InventoryViewPanel<EquipmentViewItem, EquipmentViewPanel>
     {
         internal override float ItemWidth => UIPanelConfig.Float.Equipment_itemWidth;
 

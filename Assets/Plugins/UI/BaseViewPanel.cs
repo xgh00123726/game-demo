@@ -197,9 +197,15 @@ namespace GameBase.UI
             panel.transform.SetParent(RootCanvas.Instance.transform, false);
         }
 
-        public int TryGetItem(Vector3 position, out T e)
+        /// <summary>
+        /// 尝试从panel中获取position位置的UI，和下标，并返回获取结果
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        public bool TryGetItem(Vector3 position, out T e, out int index)
         {
-            int index = 0;
+            index = 0;
             foreach (var ie in _entities)
             {
                 Rect r = ie.RectTransform.rect;
@@ -207,13 +213,13 @@ namespace GameBase.UI
                 if (r.Contains(position))
                 {
                     e = ie;
-                    return index;
+                    return true;
                 }
                 index++;
             }
 
             e = null;
-            return -1;
+            return false;
         }
     }
 }

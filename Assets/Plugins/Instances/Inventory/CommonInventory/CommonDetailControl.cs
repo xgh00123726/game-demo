@@ -2,19 +2,19 @@ using GameBase.UI;
 using Instance.Inventory;
 using UnityEngine;
 
-public class CommonDetailControl : IDetailableControl<InventoryViewItem>
+public class CommonDetailControl : IDetailableControl<CommonInventoryViewItem>
 {
-    bool IDetailableControl<InventoryViewItem>.IsDetail(InventoryViewItem e)
+    bool IDetailableControl<CommonInventoryViewItem>.IsDetail(CommonInventoryViewItem e)
     {
         return e.Obj.EnterTime > 0.2f;
     }
 
-    void IDetailableControl<InventoryViewItem>.OnDetail(InventoryViewItem e)
+    void IDetailableControl<CommonInventoryViewItem>.OnDetail(CommonInventoryViewItem e)
     {
         CommonDetailShadowView.SetPosition(Input.mousePosition);
     }
 
-    void IDetailableControl<InventoryViewItem>.OnEnterDetail(InventoryViewItem e)
+    void IDetailableControl<CommonInventoryViewItem>.OnEnterDetail(CommonInventoryViewItem e)
     {
         CommonDetailShadowView.SetPosition(Input.mousePosition);
 
@@ -28,7 +28,7 @@ public class CommonDetailControl : IDetailableControl<InventoryViewItem>
         }
     }
 
-    void IDetailableControl<InventoryViewItem>.OnExitDetail(InventoryViewItem e)
+    void IDetailableControl<CommonInventoryViewItem>.OnExitDetail(CommonInventoryViewItem e)
     {
         CommonDetailShadowView.Hide();
     }

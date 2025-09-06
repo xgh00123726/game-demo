@@ -6,64 +6,18 @@ using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public class InventoryViewPanel : BaseViewPanel<InventoryViewItem, InventoryViewPanel>
+    public abstract class InventoryViewPanel<T, T_instance> : BaseViewPanel<T, T_instance>
+        where T : InventoryViewItem, new()
+        where T_instance : InventoryViewPanel<T, T_instance>, new()
     {
-        internal override float ItemWidth => UIPanelConfig.Float.Inventory_itemWidth;
+        protected LinearNonReleaseEntityContainer<T> _container;
 
-        internal override float ItemHeight => UIPanelConfig.Float.Inventory_itemHeight;
-
-        internal override float XInterval => UIPanelConfig.Float.Inventory_xInterval;
-
-        internal override float YInterval => UIPanelConfig.Float.Inventory_yInterval;
-
-        internal override float MaxPanelWidth => UIPanelConfig.Float.Inventory_maxPanelWidth;
-
-        internal override float PanelX => UIPanelConfig.Float.Inventory_panelX + panelXOffset;
-
-        internal override float PanelY => UIPanelConfig.Float.Inventory_panelY + panelYOffset;
-
-        internal override int PanelObjID => UIPanelConfig.Int.Inventory_panelObjID;
-
-        internal override int ShapeTexureID => UIPanelConfig.Int.Inventory_shapeTexureID;
-
-        internal override int ContourTexureID => UIPanelConfig.Int.Inventory_contourTexureID;
-
-        internal override int ItemAlign => UIPanelConfig.Int.Inventory_itemAlign;
-
-        protected float panelXOffset = 0f;
-        protected float panelYOffset = 0f;
-        public float panelXMoveSpeed = 100f;
-        public float panelYMoveSpeed = 100f;
-        public float panelXOffsetTarget = 0f;
-        public float panelYOffsetTarget = 0f;
-
-        protected override Vector3 GetItemLocalPosition(int index)
-        {
-            GetItemNumXYStyle(index, out int itemPerLine, out int x, out int y);
-
-            float vx = 0f;
-            if (ItemAlign == (int)Align.Left)
-            {
-                vx = (ItemWidth + XInterval) * x;
-            }
-            else if (ItemAlign == (int)Align.Center)
-            {
-                vx = (ItemWidth + XInterval) * x;
-                float remainWidth = itemPerLine * (ItemWidth + XInterval);
-                vx -= remainWidth / 2;
-            }
-            float vy = (ItemHeight + YInterval) * y;
-
-
-            return new Vector3(vx, PanelY - vy, 0);
-        }
-
-        protected override RectTransform GetRectTransform(InventoryViewItem e)
+        protected override RectTransform GetRectTransform(T e)
         {
             return e.Obj.transform.Find("Icon").GetComponent<RectTransform>();
         }
 
-        protected override BaseUI InstantiateObj(InventoryViewItem e)
+        protected override BaseUI InstantiateObj(T e)
         {
             var ui = base.InstantiateObj(e);
 
@@ -77,24 +31,23 @@ namespace GameBase.UI
             return ui;
         }
 
-        protected override void Update()
+        protected override void Awake()
         {
-            base.Update();
+            base.Awake();
 
-            var delta = panelXOffset - panelXOffsetTarget;
-            var xMoveDis = panelXMoveSpeed * Time.deltaTime;
-            if (delta > xMoveDis)
-            {
-                panelXOffset -= xMoveDis;
-            }
-            else if (-delta > xMoveDis)
-            {
-                panelXOffset += xMoveDis;
-            }
-            else
-            {
-                panelXOffset = panelXOffsetTarget;
-            }
+            _container = new LinearNonReleaseEntityContainer<T>();
+            Container = _container;
+        }
+
+        public int IndexOf(T e)
+        {
+            return _container.IndexOf(e);
+        }
+
+        public T this[int i]
+        {
+            get => _container[i];
+            set => _container[i] = value;
         }
     }
 }

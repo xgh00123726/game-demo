@@ -2,7 +2,7 @@ using GameBase.Inventorys;
 
 namespace Instance.Inventory
 {
-    public class CommonInventoryModel : Inventory<CommonItemData, CommonDataBase>
+    public class CommonInventoryModel : InventoryModel<CommonItemData>
     {
 
     }

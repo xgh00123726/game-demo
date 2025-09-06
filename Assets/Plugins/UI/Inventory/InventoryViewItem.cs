@@ -10,11 +10,6 @@ namespace GameBase.UI
         internal Image iconImage;
         internal Sprite iconSprite;
 
-        public InventoryViewItem()
-        {
-            ObjID = 34;
-        }
-
         internal override int IconTexureID => 0;
 
         public Sprite IconSprite

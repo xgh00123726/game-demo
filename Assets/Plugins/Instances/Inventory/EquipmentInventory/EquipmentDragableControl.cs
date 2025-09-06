@@ -20,19 +20,19 @@ namespace Instance.Inventory
         void IDragableControl<GameBase.UI.EquipmentViewItem>.OnEnterDrag(GameBase.UI.EquipmentViewItem e)
         {
             e.HideIcon();
-            InventoryShadowView.StoreItem(e);
+            InventoryShadowView.StorePush(e);
         }
 
         void IDragableControl<GameBase.UI.EquipmentViewItem>.OnExitDrag(GameBase.UI.EquipmentViewItem e)
         {
             InventoryShadowView.Hide();
-            if (EquipmentInventoryController.Instance.TryGetItemUI(Input.mousePosition, out var ee) != -1)
+            if (EquipmentInventoryController.Instance.TryGetItemUI(Input.mousePosition, out var ee, out var ie))
             {
                 InventoryShadowView.StorePop().SwapIconSprite(ee);
                 ee.ShowIcon();
             }
 
-            if (CommonInventoryController.Instance.TryGetItemUI(Input.mousePosition, out var ec) != -1)
+            if (CommonInventoryController.Instance.TryGetItemUI(Input.mousePosition, out var ec, out var ic))
             {
                 InventoryShadowView.StorePop().SwapIconSprite(ec);
                 ec.ShowIcon();

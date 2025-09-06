@@ -38,7 +38,7 @@ namespace Instance.Inventory
             _shadowObj.SetActive(false);
         }
 
-        public static void StoreItem(InventoryViewItem e)
+        public static void StorePush(InventoryViewItem e)
         {
             storedItem = e;
             _iconImage.sprite = e.IconSprite;
