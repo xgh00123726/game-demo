@@ -8,7 +8,6 @@ namespace GameBase.UI
         public IViewableAttr bindAttr;
 
         internal TextMeshProUGUI valueTMP;
-        internal override int IconTexureID => bindAttr.IconTextureID;
 
         public AttrViewItem()
         {

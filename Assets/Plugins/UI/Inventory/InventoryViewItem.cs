@@ -10,7 +10,7 @@ namespace GameBase.UI
         internal Image iconImage;
         internal Sprite iconSprite;
 
-        internal override int IconTexureID => 0;
+        public int iconTextureID;
 
         public Sprite IconSprite
         {

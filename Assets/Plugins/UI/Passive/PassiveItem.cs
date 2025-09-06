@@ -12,7 +12,5 @@ namespace GameBase.UI
         public IViewablePassive bindPassive;
         internal TextMeshProUGUI timeTMP;
         internal TextMeshProUGUI chargeTMP;
-
-        internal override int IconTexureID => bindPassive.TextureID;
     }
 }

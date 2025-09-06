@@ -113,8 +113,6 @@ namespace GameBase.UI
 
             e.Obj = ui;
 
-            e.iconTexture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.IconTexureID));
-
             obj.transform.SetParent(panel.transform, false);
 
             e.rectTransform = GetRectTransform(e);

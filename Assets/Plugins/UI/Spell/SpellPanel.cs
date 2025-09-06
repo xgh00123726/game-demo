@@ -43,7 +43,7 @@ namespace GameBase.UI
             e.iconMaterial.SetFloat("_Dir1", -1f);
             e.iconMaterial.SetFloat("_Dir2", -1f);
 
-            var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.IconTexureID));
+            var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.bindSpell.IconTextureID));
             var shape = GameObject.Instantiate(ResourcesLoader.GetTexture2D(ShapeTexureID));
             var contour = GameObject.Instantiate(ResourcesLoader.GetTexture2D(ContourTexureID));
 

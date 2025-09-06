@@ -12,7 +12,6 @@ namespace GameBase.UI
         public int iconTextureID;
         public IViewableBuff bindBuff;
 
-        internal override int IconTexureID => iconTextureID;
         public BuffViewItem()
         {
             ObjID = 9;

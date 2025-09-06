@@ -38,12 +38,5 @@ namespace GameBase.UI
             y = halfY * 2 + (reMainX == 0 ? 0 : 1);
             x = reMainX == 0 ? 0 : reMainX - 1;
         }
-
-        protected override BaseUI InstantiateObj(PassiveItem e)
-        {
-            var obj = base.InstantiateObj(e);
-
-            return obj;
-        }
     }
 }

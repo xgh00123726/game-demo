@@ -10,8 +10,6 @@ namespace GameBase.UI
         internal TextMeshProUGUI chargeTMP;
 
         public IViewableSpell bindSpell;
-
-        internal override int IconTexureID => bindSpell.IconTextureID;
         public SpellItem()
         {
             ObjID = 11;
