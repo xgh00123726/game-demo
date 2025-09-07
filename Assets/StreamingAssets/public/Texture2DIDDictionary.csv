@@ -1,4 +1,4 @@
-22
+36
 0,Textures/Spell_Speeder
 1,Textures/Spell_ArrowRain
 2,Textures/DiamondShape
@@ -21,3 +21,17 @@
 19,Textures/universalIcon
 20,Textures/moveSpeedIcon
 21,Textures/attackSpeedIcon
+22,Textures/Equipment/moveSpeed1.png
+23,Textures/Equipment/moveSpeed2.png
+24,Textures/Equipment/coolingAccelerate1.png
+25,Textures/Equipment/coolingAccelerate2.png
+26,Textures/Equipment/damage1.png
+27,Textures/Equipment/universal1.png
+28,Textures/Equipment/defense1.png
+29,Textures/Equipment/attackSpeed1.png
+30,Textures/Equipment/agility1.png
+31,Textures/Equipment/intelligence1.png
+32,Textures/Equipment/strength1.png
+33,Textures/Spell/blackHole1.png
+34,Textures/Spell/FallStone1.png
+35,Textures/Spell/Shoot1.png

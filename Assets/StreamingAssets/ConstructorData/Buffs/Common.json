@@ -15,5 +15,45 @@
             "setPer": "10",
             "currPer": "10"
         }
+    },
+    "3": {
+        "coolingAccelerate": {
+            "fixed": "1000"
+        }
+    },
+    "4": {
+        "damage": {
+            "fixed": "10"
+        }
+    },
+    "5": {
+        "universal": {
+            "fixed": "10"
+        }
+    },
+    "6": {
+        "defense": {
+            "fixed": "10"
+        }
+    },
+    "7": {
+        "attackSpeed": {
+            "fixed": "100"
+        }
+    },
+    "8": {
+        "agility": {
+            "fixed": "10"
+        }
+    },
+    "9": {
+        "intelligence": {
+            "fixed": "10"
+        }
+    },
+    "10": {
+        "strength": {
+            "fixed": "10"
+        }
     }
 }

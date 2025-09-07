@@ -1,7 +1,7 @@
 5,interactiveType,interactiveID,actionType,actionInterfaceID,coolingTime
 0,KeyCommon,0,TrigOnRelease,1,5
 1,KeyCommon,1,TrigNearestTarget,0,5
-2,KeyCommon,1,TrigNearestTarget,0,1
+2,Always,0,TrigNearestTarget,0,1
 3,KeyCommon,3,AreaFixedDis,0,5
 4,KeyCommon,0,BuffSelf,0,3
 

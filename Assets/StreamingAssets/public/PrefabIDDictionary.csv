@@ -1,4 +1,4 @@
-36
+39
 0,Prefabs/Entity/Player1
 1,Prefabs/Entity/Enemy1
 2,Prefabs/Projectile/Lighting
@@ -35,3 +35,6 @@
 33,Prefabs/Projectile/FallingStone2
 34,Prefabs/UI/InventoryItem
 35,Prefabs/UI/InventoryPanel
+36,Prefabs/Effect/Move/RightClickEffect
+37,Prefabs/UI/InventoryShadowItem
+38,Prefabs/UI/FixedDetailUI
