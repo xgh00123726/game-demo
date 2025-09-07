@@ -12,12 +12,11 @@ namespace GameBase.Spells
 
         public ISpeller speller;
         public IAction actionInterface;
-        public IInteractive interactive;
+        public ISpellInteractive interactive;
 
         public Action<Spell> RegistertoActivesDelegate;
         public Action<Spell> RemoveFromActiveDelegate;
 
-        internal bool userReady; // 技能如期交互触发，等待施法
         internal bool coolReady; // 技能冷却完成，可以进行交互
         internal float spellMoment;             // 施法时刻
         internal float coolingTimeRemain;       // 剩余冷却时间

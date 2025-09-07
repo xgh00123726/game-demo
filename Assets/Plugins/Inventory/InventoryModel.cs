@@ -71,6 +71,8 @@ namespace GameBase.Inventorys
             return -1;
         }
 
+
+
         public virtual int AddItem(T_Item item, int index)
         {
             if (index >= _size)
@@ -110,19 +112,23 @@ namespace GameBase.Inventorys
 
         public virtual void Swap(int p1, int p2)
         {
-            if (HasItem(p1) && HasItem(p2))
+            if (p1 >= _size || p2 >= _size)
             {
-                (_items[p2], _items[p1]) = (_items[p1], _items[p2]);
+                XLogger.Instance.Level(XLogger.LogLevel.Error)
+                    .Log($"invalid pos:{p1}, {p2}");
+                return;
             }
-            else if (HasItem(p1))
+
+            (_items[p2], _items[p1]) = (_items[p1], _items[p2]);
+            if (HasItem(p1) && !HasItem(p2))
             {
-                AddItem(_items[p1].item, p2);
-                RemoveItem(p1);
+                _nullIndexes.Remove(p2);
+                _nullIndexes.Push(p1);
             }
-            else if (HasItem(p2))
+            else if (HasItem(p2) && !HasItem(p1))
             {
-                AddItem(_items[p2].item, p1);
-                RemoveItem(p2);
+                _nullIndexes.Remove(p1);
+                _nullIndexes.Push(p2);
             }
         }
     }

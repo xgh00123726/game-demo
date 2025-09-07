@@ -9,9 +9,9 @@ namespace Constructor.Spells.Interactive
     {
         KeyCommon,
     }
-    public class Factory : ConstructorFactory<Type, IInteractive, Factory>
+    public class Factory : ConstructorFactory<Type, ISpellInteractive, Factory>
     {
-        protected override Dictionary<Type, Func<int, IInteractive>> ConstructorGetDict =>
+        protected override Dictionary<Type, Func<int, ISpellInteractive>> ConstructorGetDict =>
             new()
             {
                 {Type.KeyCommon, KeyCommon.Instance.Get },

@@ -13,7 +13,7 @@ namespace Constructor.Spells.Interactive
         public float length;
     }
 
-    public class KeyInteractive : IInteractive
+    public class KeyInteractive : ISpellInteractive
     {
         public KeyFunction readyKey;
         public KeyFunction castKey;
@@ -21,29 +21,46 @@ namespace Constructor.Spells.Interactive
         public IInteractiveIndicator indicator;
         public bool fastCast;
 
-        bool IInteractive.ReadyTrig => fastCast ? true : Inputs.GetKeyDown(readyKey);
+        private bool indicatorReady;
 
-        bool IInteractive.CastTrig => fastCast ? Inputs.GetKeyDown(readyKey) : Inputs.GetKeyDown(castKey);
+        bool ReadyTrig => fastCast ? true : Inputs.GetKeyDown(readyKey);
 
-        bool IInteractive.CancelTrig => Inputs.GetKeyDown(cancelKey);
+        bool CancelTrig => Inputs.GetKeyDown(cancelKey);
 
-        void IInteractive.OnCancel()
+        bool CastTrig
         {
-            indicator?.Hide();
+            get
+            {
+                if (fastCast)
+                {
+                    return Inputs.GetKeyDown(readyKey);
+                }
+                else
+                {
+                    return indicatorReady && Inputs.GetKeyDown(castKey);
+                }
+            }
         }
 
-        void IInteractive.OnCast()
-        {
-            indicator?.Hide();
-        }
+        bool ISpellInteractive.IsTrig => CastTrig;
 
-        void IInteractive.OnReady()
+        void ISpellInteractive.Update(ISpeller speller)
         {
-            indicator?.Show();
-        }
+            if (ReadyTrig)
+            {
+                indicator?.Show();
+                indicatorReady = true;
+            }
+            if (CancelTrig)
+            {
+                indicator?.Hide();
+                indicatorReady = false;
+            }
+            if (CastTrig)
+            {
+                indicator?.Hide();
+            }
 
-        void IInteractive.OnReadying(ISpeller speller)
-        {
             indicator?.Update(speller, GameBase.GCamera.CameraSys.MouseHitPosition);
         }
     }

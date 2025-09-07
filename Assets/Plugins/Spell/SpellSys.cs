@@ -18,7 +18,7 @@ namespace GameBase.Spells
 
         protected override void UpdateEntity(Spell e)
         {
-            if (e.speller == null)
+            if (e.speller == null || e.interactive == null)
             {
                 RemoveEntity(e);
                 return;
@@ -35,34 +35,13 @@ namespace GameBase.Spells
 
             if (e.coolReady)
             {
-                if (!e.userReady && e.interactive.ReadyTrig)
-                {
-                    e.userReady = true;
-                    e.interactive.OnReady();
-                }
-
-
-                if (e.userReady && e.interactive.CancelTrig)
-                {
-                    e.userReady = false;
-                    e.interactive.OnCancel();
-                }
-                else if (e.userReady && e.interactive.CastTrig)
+                e.interactive.Update(e.speller);
+                if (e.interactive.IsTrig)
                 {
                     e.coolReady = false;
-                    e.userReady = false;
                     e.coolingTimeRemain = e.coolingTimeSet;
-                    if (e.actionInterface != null)
-                    {
-                        e.actionInterface.CastAction(e);
-                    }
-                    e.interactive.OnCast();
+                    e.actionInterface?.CastAction(e);
                 }
-            }
-
-            if (e.userReady)
-            {
-                e.interactive.OnReadying(e.speller);
             }
         }
     }
