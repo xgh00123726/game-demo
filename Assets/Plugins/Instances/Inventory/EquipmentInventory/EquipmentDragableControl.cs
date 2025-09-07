@@ -3,41 +3,35 @@ using UnityEngine;
 
 namespace Instance.Inventory
 {
-    public class EquipmentDragableControl : IDragableControl<GameBase.UI.EquipmentViewItem>
+    public class EquipmentDragableControl : InventoryDragableControl<EquipmentViewItem>
     {
-        public float dragJugTime = 0.1f;
+        public CommonInventoryController CC => CommonInventoryController.Instance;
+        public EquipmentInventoryController EC => EquipmentInventoryController.Instance;
 
-        bool IDragableControl<GameBase.UI.EquipmentViewItem>.IsDrag(GameBase.UI.EquipmentViewItem e)
+        protected override int GetDragedItemIndex(EquipmentViewItem e)
         {
-            return e.Obj.PointerDownTime > dragJugTime;
+            return EC.IndexOfView(e);
         }
 
-        void IDragableControl<GameBase.UI.EquipmentViewItem>.OnDrag(GameBase.UI.EquipmentViewItem e)
+        protected override void OnExitDrag(EquipmentViewItem dragedItem, int dragedIndex)
         {
-            InventoryShadowView.SetPosition(Input.mousePosition);
-        }
-
-        void IDragableControl<GameBase.UI.EquipmentViewItem>.OnEnterDrag(GameBase.UI.EquipmentViewItem e)
-        {
-            e.HideIcon();
-            InventoryShadowView.StorePush(e);
-        }
-
-        void IDragableControl<GameBase.UI.EquipmentViewItem>.OnExitDrag(GameBase.UI.EquipmentViewItem e)
-        {
-            InventoryShadowView.Hide();
-            if (EquipmentInventoryController.Instance.TryGetItemUI(Input.mousePosition, out var ee, out var ie))
+            if (EC.TryGetItemUI(Input.mousePosition, out var ee, out var ie))
             {
-                InventoryShadowView.StorePop().SwapIconSprite(ee);
+                EC.Swap(dragedIndex, ie);
                 ee.ShowIcon();
             }
 
-            if (CommonInventoryController.Instance.TryGetItemUI(Input.mousePosition, out var ec, out var ic))
+            if (CC.TryGetItemUI(Input.mousePosition, out var ec, out var ic))
             {
-                InventoryShadowView.StorePop().SwapIconSprite(ec);
+                ec.SwapIconSprite(dragedItem);
                 ec.ShowIcon();
+
+                if (EC.TryGetData(dragedIndex, out var data))
+                {
+                    CC.AddItem(data, ic);
+                    EC.RemoveItem(dragedIndex);
+                }
             }
-            e.ShowIcon();
         }
     }
 }

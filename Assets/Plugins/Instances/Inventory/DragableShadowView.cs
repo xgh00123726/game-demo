@@ -6,14 +6,12 @@ using UnityEngine.UI;
 
 namespace Instance.Inventory
 {
-    public class InventoryShadowView
+    public class DragableShadowView
     {
         private static GameObject _shadowObj;
         private static Image _iconImage;
 
-        private static InventoryViewItem storedItem;
-
-        static InventoryShadowView()
+        static DragableShadowView()
         {
             _shadowObj = GameObject.Instantiate(ResourcesLoader.GetPrefab(37));
 
@@ -38,15 +36,9 @@ namespace Instance.Inventory
             _shadowObj.SetActive(false);
         }
 
-        public static void StorePush(InventoryViewItem e)
+        public static void CopyIcon(InventoryViewItem e)
         {
-            storedItem = e;
             _iconImage.sprite = e.IconSprite;
-        }
-
-        public static InventoryViewItem StorePop()
-        {
-            return storedItem;
         }
     }
 }

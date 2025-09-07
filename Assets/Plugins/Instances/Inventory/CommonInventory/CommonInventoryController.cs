@@ -2,6 +2,8 @@ using GameBase.Inventorys;
 using GameBase.Resources;
 using GameBase.Tools;
 using GameBase.UI;
+using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace Instance.Inventory
@@ -17,7 +19,10 @@ namespace Instance.Inventory
         public const float PANEL_OFFSET_HIDE_X = 1920;
 
 
-        private CommonInventoryModel _inventoryModel = new();
+        private CommonInventoryModel _inventoryModel = new()
+        {
+            Size = ITEM_NUM
+        };
         protected override CommonInventoryModel Model => _inventoryModel;
         protected override CommonInventoryViewPanel View => CommonInventoryViewPanel.Instance;
         private bool _showFlag = false;
@@ -55,6 +60,12 @@ namespace Instance.Inventory
             {
                 Show();
             }
+        }
+
+        protected override void SetIcon(CommonItemData modelData, CommonInventoryViewItem viewItem)
+        {
+            var texture = ResourcesLoader.GetTexture2D(modelData.iconTextureID);
+            viewItem.IconSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         }
     }
 }

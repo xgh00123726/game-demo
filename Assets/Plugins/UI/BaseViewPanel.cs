@@ -131,12 +131,12 @@ namespace GameBase.UI
             }
             else if (!isDrag && e.lastDrag)
             {
-                dragableControl.OnExitDrag(e);
+                dragableControl.OnExitDrag();
             }
 
             if (isDrag)
             {
-                dragableControl.OnDrag(e);
+                dragableControl.OnDrag();
             }
 
             e.lastDrag = isDrag;

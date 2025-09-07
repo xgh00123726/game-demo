@@ -1,9 +1,12 @@
 using GameBase.UI;
 using Instance.Inventory;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class CommonDetailControl : IDetailableControl<CommonInventoryViewItem>
 {
+    protected DetailableShadowView<CommonInventoryViewItem> ShadowView => CommonDetailShadowView.Instance;
+
     bool IDetailableControl<CommonInventoryViewItem>.IsDetail(CommonInventoryViewItem e)
     {
         return e.Obj.EnterTime > 0.2f;
@@ -11,25 +14,26 @@ public class CommonDetailControl : IDetailableControl<CommonInventoryViewItem>
 
     void IDetailableControl<CommonInventoryViewItem>.OnDetail(CommonInventoryViewItem e)
     {
-        CommonDetailShadowView.SetPosition(Input.mousePosition);
+        ShadowView.SetPosition(Input.mousePosition);
     }
 
     void IDetailableControl<CommonInventoryViewItem>.OnEnterDetail(CommonInventoryViewItem e)
     {
-        CommonDetailShadowView.SetPosition(Input.mousePosition);
+        ShadowView.SetPosition(Input.mousePosition);
 
-        if (CommonInventoryController.Instance.TryGetDataOfView(e, out var data))
+        var index = CommonInventoryController.Instance.IndexOfView(e);
+        if (index >= 0 && CommonInventoryController.Instance.TryGetData(index, out var data))
         {
-            CommonDetailShadowView.SetText($"buff id:{data.buffID}\ntexture id:{data.iconTextureID}");
+            ShadowView.SetText($"index:{index}\nbuff id:{data.buffID}\ntexture id:{data.iconTextureID}");
         }
         else
         {
-            CommonDetailShadowView.SetText($"this pos has no item");
+            ShadowView.SetText($"this pos has no item");
         }
     }
 
     void IDetailableControl<CommonInventoryViewItem>.OnExitDetail(CommonInventoryViewItem e)
     {
-        CommonDetailShadowView.Hide();
+        ShadowView.Hide();
     }
 }

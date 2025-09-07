@@ -31,9 +31,22 @@ namespace Instance.Inventory
         protected override EquipmentInventoryModel Model => _inventoryModel;
         protected override EquipmentViewPanel View => EquipmentViewPanel.Instance;
 
-        public Buff GetItemBuff(int index)
+        public override void AddItem(CommonItemData item, int index)
         {
-            return _inventoryModel.GetBuff(index);
+            base.AddItem(item, index);
+            owner.RegisterBuff(_inventoryModel.GetBuff(index));
+        }
+
+        public override void RemoveItem(int position)
+        {
+            owner.RemoveBuff(_inventoryModel.GetBuff(position));
+            base.RemoveItem(position);
+        }
+
+        protected override void SetIcon(CommonItemData modelData, EquipmentViewItem viewItem)
+        {
+            var texture = ResourcesLoader.GetTexture2D(modelData.iconTextureID);
+            viewItem.IconSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         }
     }
 }

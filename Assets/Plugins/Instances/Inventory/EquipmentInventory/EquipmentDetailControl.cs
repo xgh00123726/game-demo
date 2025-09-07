@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class EquipmentDetailControl : IDetailableControl<EquipmentViewItem>
 {
+    protected DetailableShadowView<EquipmentViewItem> ShadowView => DetailableShadowView<EquipmentViewItem>.Instance;
     bool IDetailableControl<EquipmentViewItem>.IsDetail(EquipmentViewItem e)
     {
         return e.Obj.EnterTime > 0.2f;
@@ -13,25 +14,26 @@ public class EquipmentDetailControl : IDetailableControl<EquipmentViewItem>
 
     void IDetailableControl<EquipmentViewItem>.OnDetail(EquipmentViewItem e)
     {
-        EquipmentDetailShadowView.SetPosition(Input.mousePosition);
+        ShadowView.SetPosition(Input.mousePosition);
     }
 
     void IDetailableControl<EquipmentViewItem>.OnEnterDetail(EquipmentViewItem e)
     {
-        EquipmentDetailShadowView.SetPosition(Input.mousePosition);
+        ShadowView.SetPosition(Input.mousePosition);
 
-        if (EquipmentInventoryController.Instance.TryGetDataOfView(e, out var data))
+        var index = EquipmentInventoryController.Instance.IndexOfView(e);
+        if (index >= 0 && EquipmentInventoryController.Instance.TryGetData(index, out var data))
         {
-            EquipmentDetailShadowView.SetText($"buff id:{data.buffID}\ntexture id:{data.iconTextureID}");
+            ShadowView.SetText($"index:{index}\nbuff id:{data.buffID}\ntexture id:{data.iconTextureID}");
         }
         else
         {
-            EquipmentDetailShadowView.SetText($"this position has no item");
+            ShadowView.SetText($"this pos has no item");
         }
     }
 
     void IDetailableControl<EquipmentViewItem>.OnExitDetail(EquipmentViewItem e)
     {
-        EquipmentDetailShadowView.Hide();
+        ShadowView.Hide();
     }
 }

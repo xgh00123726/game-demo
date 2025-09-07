@@ -1,3 +1,5 @@
+using GameBase.Tools;
+using System;
 using System.Collections.Generic;
 
 namespace GameBase.Inventorys
@@ -17,17 +19,39 @@ namespace GameBase.Inventorys
         }
 
         private List<InventoryItem> _items = new();
-        private List<int> _nullIndex = new();
+        private SortedIntList _nullIndexes = new((x, y) => (y - x));
+        private int _size = 0;
+
+        public int Size
+        {
+            get => _size;
+            set
+            {
+                if (value < _size)
+                {
+                    return;
+                }
+
+                _items.Capacity = value;
+                for (int i = 0; i < value - _size; ++i)
+                {
+                    _items.Add(new InventoryItem(default, false));
+                    _nullIndexes.Push(i);
+                }
+
+                _size = value;
+            }
+        }
 
         public T_Item this[int i]
         {
             get => _items[i].item;
-            set => _items[i] = new InventoryItem(value, true);
+            private set => _items[i] = new InventoryItem(value, true);
         }
 
         public bool HasItem(int position)
         {
-            if (position >= _items.Count)
+            if (position >= _size)
             {
                 return false;
             }
@@ -35,40 +59,71 @@ namespace GameBase.Inventorys
             return _items[position].exist;
         }
 
-        public int AddItem(T_Item item)
+        public virtual int AddItem(T_Item item)
         {
-            if (_nullIndex.Count > 0)
+            if (_nullIndexes.Count > 0)
             {
-                var i = _nullIndex[_nullIndex.Count - 1];
-                _nullIndex.RemoveAt(_nullIndex.Count - 1);
-                _items[i] = new InventoryItem(item, true);
-                return i;
+                var index = _nullIndexes.Pop();
+                this[index] = item;
+                return index;
+            }
+
+            return -1;
+        }
+
+        public virtual int AddItem(T_Item item, int index)
+        {
+            if (index >= _size)
+            {
+                XLogger.Instance.Level(XLogger.LogLevel.Error)
+                    .Log($"inventory model out of range: i{index}, max size:{_size}");
+                _items.Capacity = index + 1;
+
+                return index;
             }
             else
             {
-                _items.Add(new InventoryItem(item, true));
-                return _items.Count - 1;
+                if (_items[index].exist)
+                {
+                    XLogger.Instance.Log($"index:{index} of inventory:{this} has aready exist");
+                }
+                else
+                {
+                    this[index] = item;
+                    _nullIndexes.Remove(index);
+                }
+
+                return index;
             }
         }
 
-        public void RemoveItem(int position)
+        public virtual void RemoveItem(int position)
         {
             if (!HasItem(position))
             {
                 return;
             }
 
-            _nullIndex.Add(position);
-            // ½µÐòÅÅÁÐ
-            _nullIndex.Sort((x, y) => -x.CompareTo(y));
-            var item = _items[position];
-            item.exist = false;
-            _items[position] = item;
+            _nullIndexes.Push(position);
+            _items[position] = new InventoryItem(_items[position].item, false);
         }
 
-        public void Swap(int p1, int p2)
+        public virtual void Swap(int p1, int p2)
         {
-            (_items[p2], _items[p1]) = (_items[p1], _items[p2]);
+            if (HasItem(p1) && HasItem(p2))
+            {
+                (_items[p2], _items[p1]) = (_items[p1], _items[p2]);
+            }
+            else if (HasItem(p1))
+            {
+                AddItem(_items[p1].item, p2);
+                RemoveItem(p1);
+            }
+            else if (HasItem(p2))
+            {
+                AddItem(_items[p2].item, p1);
+                RemoveItem(p2);
+            }
         }
     }
 }

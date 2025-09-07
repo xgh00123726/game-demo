@@ -39,6 +39,11 @@ namespace GameBase.UI
             Container = _container;
         }
 
+        public void Swap(int p1, int p2)
+        {
+            (_container[p1].IconSprite, _container[p2].IconSprite) = (_container[p2].iconSprite, _container[p1].iconSprite);
+        }
+
         public int IndexOf(T e)
         {
             return _container.IndexOf(e);

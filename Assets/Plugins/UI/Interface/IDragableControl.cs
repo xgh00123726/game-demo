@@ -8,7 +8,7 @@ namespace GameBase.UI
     {
         bool IsDrag(T e);
         void OnEnterDrag(T e);
-        void OnExitDrag(T e);
-        void OnDrag(T e);
+        void OnExitDrag();
+        void OnDrag();
     }
 }
