@@ -22,6 +22,8 @@ namespace GameBase.Tools
         ToggleAttrPanel,
         SummonEnemy, SummonAllies,
         ChooseText,
+        OpenShop, CloseShop,
+        DragScreen
     }
 
     internal struct InputKey

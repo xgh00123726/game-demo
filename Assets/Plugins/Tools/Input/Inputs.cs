@@ -40,7 +40,9 @@ namespace GameBase.Tools
             {new List<KeyCode>{KeyCode.Mouse0}, new List<KeyFunction>{KeyFunction.MouseConfirm, KeyFunction.TestPosKey} },
             {new List<KeyCode>{KeyCode.Tab}, new List<KeyFunction> { KeyFunction.ToggleAttrPanel, KeyFunction.ChooseText} }, // 切换属性显示栏显示
             {new List<KeyCode>{KeyCode.LeftControl, KeyCode.LeftShift, KeyCode.A }, new List<KeyFunction>{ KeyFunction.SummonEnemy} },
-            {new List<KeyCode>{ KeyCode.LeftControl, KeyCode.LeftShift, KeyCode.C },new List<KeyFunction>{ KeyFunction.SummonAllies }  }
+            {new List<KeyCode>{ KeyCode.LeftControl, KeyCode.LeftShift, KeyCode.C },new List<KeyFunction>{ KeyFunction.SummonAllies }  },
+            {new List<KeyCode>{KeyCode.E}, new List<KeyFunction>{KeyFunction.OpenShop, KeyFunction.CloseShop } },
+            {new List<KeyCode>{KeyCode.Mouse2}, new List<KeyFunction>{KeyFunction.DragScreen} },
         };
         // 按键功能和按键码对应表，由构造函数计算获取
         private static Dictionary<KeyFunction, List<KeyCode>> _codeOfFunc = new Dictionary<KeyFunction, List<KeyCode>> { };

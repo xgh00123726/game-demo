@@ -16,5 +16,14 @@ namespace GameBase.Infos
         {
             return _players[index].Position;
         }
+
+        public static int GetPlayerGold(int index)
+        {
+            return _players[index].Gold;
+        }
+        public static void SetPlayerGold(int index, int value)
+        {
+            _players[index].Gold = value;
+        }
     }
 }

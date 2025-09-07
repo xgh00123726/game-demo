@@ -40,7 +40,6 @@ namespace Constructor.Spells.Action
             var target = TargetSetFactorary.GetTargetSet("Common").NearestTarget(center, attackRange);
             if (target == null)
             {
-                XLogger.Instance.Log($"pos:{center}, no target");
                 return;
             }
 
