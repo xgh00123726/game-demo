@@ -28,12 +28,11 @@ namespace Instance.Inventory
         void IDragableControl<T>.OnEnterDrag(T e)
         {
             // 被拖拽的图标隐藏
-            e.HideIcon();
+            _dragedItem = e;
+            _dragedItem.HideIcon();
 
             // shadow储存被拖拽的图标，模拟图标被拖走
             DragableShadowView.CopyIcon(e);
-
-            _dragedItem = e;
             _dragedIndex = GetDragedItemIndex(e);
         }
 

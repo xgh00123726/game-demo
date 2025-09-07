@@ -24,6 +24,18 @@ namespace Instance.Inventory
         protected abstract void SetIcon(T_ModelItem modelData, T_ViewItem viewItem);
         protected virtual void OnSwap(int p1, int p2) { }
 
+        private void SetColor(int index)
+        {
+            if (Model.HasItem(index))
+            {
+                View[index].ShowColor();
+            }
+            else
+            {
+                View[index].HideColor();
+            }
+        }
+
         public int IndexOfView(T_ViewItem vitem)
         {
             return View.IndexOf(vitem);
@@ -55,6 +67,7 @@ namespace Instance.Inventory
             var index = Model.AddItem(item);
             var viewItem = View[index];
             SetIcon(item, viewItem);
+            SetColor(index);
         }
 
         public virtual void AddItem(T_ModelItem item, int index)
@@ -62,11 +75,13 @@ namespace Instance.Inventory
             Model.AddItem(item, index);
             var viewItem = View[index];
             SetIcon(item, viewItem);
+            SetColor(index);
         }
 
         public virtual void RemoveItem(int position)
         {
             Model.RemoveItem(position);
+            SetColor(position);
         }
 
         public T_ModelItem GetItemData(int index)
@@ -84,6 +99,8 @@ namespace Instance.Inventory
             Model.Swap(p1, p2);
             View.Swap(p1, p2);
             OnSwap(p1, p2);
+            SetColor(p1);
+            SetColor(p2);
         }
     }
 }

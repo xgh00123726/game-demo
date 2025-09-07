@@ -28,6 +28,9 @@ namespace GameBase.UI
                     .Log("panel item must has icon object");
             }
 
+            e.colorHide = e.iconImage.color;
+            e.colorShow = new Color(e.colorHide.r, e.colorHide.g, e.colorHide.b, 1);
+
             return ui;
         }
 
@@ -41,7 +44,7 @@ namespace GameBase.UI
 
         public void Swap(int p1, int p2)
         {
-            (_container[p1].IconSprite, _container[p2].IconSprite) = (_container[p2].iconSprite, _container[p1].iconSprite);
+            _container[p1].SwapIconSprite(_container[p2]);
         }
 
         public int IndexOf(T e)

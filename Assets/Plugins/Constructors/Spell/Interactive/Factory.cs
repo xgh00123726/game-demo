@@ -8,6 +8,8 @@ namespace Constructor.Spells.Interactive
     public enum Type
     {
         KeyCommon,
+        KeyFast,
+        Always,
     }
     public class Factory : ConstructorFactory<Type, ISpellInteractive, Factory>
     {
@@ -15,6 +17,8 @@ namespace Constructor.Spells.Interactive
             new()
             {
                 {Type.KeyCommon, KeyCommon.Instance.Get },
+                {Type.KeyFast, KeyFast.Instance.Get },
+                {Type.Always, Always.Instance.Get },
             };
     }
 }

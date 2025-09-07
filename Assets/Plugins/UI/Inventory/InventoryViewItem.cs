@@ -10,6 +10,8 @@ namespace GameBase.UI
         internal Image iconImage;
         internal Sprite iconSprite;
 
+        public Color colorHide;
+        public Color colorShow;
         public int iconTextureID;
 
         public Sprite IconSprite
@@ -20,6 +22,16 @@ namespace GameBase.UI
                 iconSprite = value;
                 iconImage.sprite = iconSprite;
             }
+        }
+
+        public void ShowColor()
+        {
+            iconImage.color = colorShow;
+        }
+
+        public void HideColor()
+        {
+            iconImage.color = colorHide;
         }
 
         public void HideIcon()
@@ -35,6 +47,7 @@ namespace GameBase.UI
         public void SwapIconSprite(InventoryViewItem other)
         {
             (iconSprite, other.iconSprite) = (other.iconSprite, iconSprite);
+            (colorShow, other.colorShow) = (other.colorShow, colorShow);
         }
     }
 }
