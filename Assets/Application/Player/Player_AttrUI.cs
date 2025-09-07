@@ -4,23 +4,17 @@ using Instance.Modify;
 
 public partial class Player
 {
-    private DetailUI attrDetailUI;
-
     private void ShowAttrUI(Modifyable<float> attr, int texureID)
     {
-        var attrUI = AttrPanel.Instance.NewEntity((AttrItem e) =>
+        var attrUI = AttrViewPanel.Instance.NewEntity((AttrViewItem e) =>
         {
-            e.iconTextureID = texureID;
-            e.bindAttr = new ViewableAttr<float>(attr);
+            e.bindAttr = new ViewableAttr<float>(attr, texureID);
         });
-
-        attrDetailUI.detailables.Add(attrUI);
     }
 
     public void AttrUIInit()
     {
-        var e = AttrPanel.Instance;
-        attrDetailUI = DetailUISys.Instance.NewEntity();
+        var e = AttrViewPanel.Instance;
 
         ShowAttrUI(charater.ModifyableContainer["universal"], 19);
         ShowAttrUI(charater.ModifyableContainer["moveSpeed"], 20);

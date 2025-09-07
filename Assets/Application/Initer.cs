@@ -2,12 +2,7 @@ using GameBase.Creatures;
 using GameBase.GCamera;
 using GameBase.Projectiles;
 using GameBase.Tools;
-using Instance.Inventory;
-using Instance.UI;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.IO;
+using GameBase.Modify;
 using UnityEngine;
 public class Initer : MonoBehaviour
 {
@@ -29,6 +24,16 @@ public class Initer : MonoBehaviour
         {
             var c = Constructor.Creatures.Factory.Instance.Get(Constructor.Creatures.Type.Common, 1);
             c.Position = CameraSys.MouseHitPosition;
+            c.ModifyableContainer["maxHP"].AddModify(ModifyerSys<float>.Instance.NewEntity((Modifyer<float> e) =>
+            {
+                e.ModifyFunc = ConvientModifyerFunc.FloatFixedValue(10000);
+                e.type = ModifyType.Once | ModifyType.Forever;
+            }));
+            c.ModifyableContainer["currHP"].AddModify(ModifyerSys<float>.Instance.NewEntity((Modifyer<float> e) =>
+            {
+                e.ModifyFunc = ConvientModifyerFunc.FloatFixedValue(10000);
+                e.type = ModifyType.Once | ModifyType.Forever;
+            }));
         });
 
         Command.Register("generate-enermy", (int id) =>
@@ -57,19 +62,10 @@ public class Initer : MonoBehaviour
         charater.Position = new Vector3(-6, -7, 4);
 
         ProjectileGizmos.Instance.ToggleShow();
-        for (int i = 0; i < 10; ++i)
-        {
-            var e = CommonInventory.Instance;
-        }
-        CommonInventory.Instance.Hide();
-        CommonInventory.Instance[0].IconImageID = 0;
     }
 
     private void Update()
     {
-        if (Inputs.GetKeyDown(KeyFunction.ToggleAttrPanel))
-        {
-            CommonInventory.Instance.Toggle();
-        }
+
     }
 }

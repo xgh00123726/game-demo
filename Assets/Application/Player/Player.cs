@@ -9,42 +9,56 @@ using GameBase.Infos;
 using GameBase.Animations;
 using GameBase.Indicators;
 using GameBase.Creatures;
+using Instance.Move;
+using Instance.Inventory;
 
 public partial class Player : MonoBehaviour,
     IPlayerGlobal
 {
+    private Player _instance;
+
     public Creature charater;
     public PlayerAnimController2 animCtrler2;
 
+    public Player Instance => _instance;
     Vector3 IPlayerGlobal.Position => transform.position;
 
 
 
     private void SpellInit()
     {
+        var indicatorMutex = new IndicatorMutex();
+
         var spell1 = Constructor.Spells.Main.Common.Instance.Get(0);
         spell1.speller = charater;
-        ((Constructor.Spells.Interactive.KeyInteractive)spell1.interactive).readyKey = KeyFunction.Spell1;
+        var interactive1 = (Constructor.Spells.Interactive.KeyInteractive)spell1.interactive;
+        interactive1.readyKey = KeyFunction.Spell1;
+        indicatorMutex.Add(interactive1.indicator);
         charater.SpellContainer[0] = spell1;
 
         var spell2 = Constructor.Spells.Main.Common.Instance.Get(1);
         spell2.speller = charater;
-        ((Constructor.Spells.Interactive.KeyInteractive)spell2.interactive).readyKey = KeyFunction.Spell2;
+        var interactive2 = (Constructor.Spells.Interactive.KeyInteractive)spell2.interactive;
+        interactive2.readyKey = KeyFunction.Spell2;
+        indicatorMutex.Add(interactive2.indicator);
         charater.SpellContainer[1] = spell2;
 
         var spell3 = Constructor.Spells.Main.Common.Instance.Get(3);
         spell3.speller = charater;
-        ((Constructor.Spells.Interactive.KeyInteractive)spell3.interactive).readyKey = KeyFunction.Spell3;
+        var interactive3 = (Constructor.Spells.Interactive.KeyInteractive)spell3.interactive;
+        interactive3.readyKey = KeyFunction.Spell3;
+        indicatorMutex.Add(interactive3.indicator);
         charater.SpellContainer[2] = spell3;
 
         var spell4 = Constructor.Spells.Main.Common.Instance.Get(4);
         spell4.speller = charater;
-        ((Constructor.Spells.Interactive.KeyInteractive)spell4.interactive).readyKey = KeyFunction.Spell4;
+        var interactive4 = (Constructor.Spells.Interactive.KeyInteractive)spell4.interactive;
+        interactive4.readyKey = KeyFunction.Spell4;
+        indicatorMutex.Add(interactive4.indicator);
         charater.SpellContainer[3] = spell4;
 
         var spella = Constructor.Spells.Main.Common.Instance.Get(2);
         spella.speller = charater;
-        ((Constructor.Spells.Interactive.KeyInteractive)spella.interactive).readyKey = KeyFunction.Aim;
     }
 
     private void EpicBarInit()
@@ -63,22 +77,23 @@ public partial class Player : MonoBehaviour,
 
     private void PassiveInit()
     {
-        for (int i = 0; i < 10; ++i)
-        {
-            var buff = BuffSys.Instance.NewEntity();
-            buff.durationSet = 9999;
-            buff.owner = charater;
-        }
+    }
+
+    private void EquipmentUIInit()
+    {
+        var e = EquipmentInventoryController.Instance;
+        e.owner = charater;
     }
 
     private void EquipmentInit()
     {
-        for (int i = 0; i < 6; ++i)
+    }
+
+    private void InventoryUIInit()
+    {
+        for (int i = 0; i < 11; ++i)
         {
-            var equipment = BuffSys.Instance.NewEntity();
-            equipment.owner = charater;
-            equipment.durationSet = 9999;
-            ShowEquipmentUI(equipment);
+            CommonInventoryController.Instance.AddItem(i, 20 + i);
         }
     }
 
@@ -104,17 +119,33 @@ public partial class Player : MonoBehaviour,
         SpellUIInit();
         BuffUIInit();
         EquipmentUIInit();
-
+        InventoryUIInit();
 
         EquipmentInit();
+
+        _instance = this;
     }
 
     private void Update()
     {
-        if (Inputs.GetKeyDown(KeyFunction.MoveTo))
+        if (Inputs.GetKeyDown(KeyFunction.MoveTo, "mover"))
         {
             charater.Dest = CameraSys.MouseHitPosition;
             charater.Dir = CameraSys.MouseHitPosition - charater.Obj.transform.position;
+            MoveIndicator.Show(CameraSys.MouseHitPosition);
+        }
+
+        if (Inputs.GetKeyDown(KeyFunction.ToggleAttrPanel, "inventory"))
+        {
+            CommonInventoryController.Instance.Toggle();
+            if (CommonInventoryController.Instance.IsShow)
+            {
+                Inputs.LockOthers("inventory");
+            }
+            else
+            {
+                Inputs.ReleaseAll();
+            }
         }
 
         animCtrler2.Update();

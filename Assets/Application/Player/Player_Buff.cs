@@ -9,7 +9,7 @@ public partial class Player
     {
         if (buff.uiStyle == UIStyle.Buff)
         {
-            var item = BuffPanel.Instance.NewEntity((BuffItem e) =>
+            var item = BuffViewPanel.Instance.NewEntity((BuffViewItem e) =>
             {
                 e.iconTextureID = buff.textureID;
                 e.bindBuff = new ViewableBuff(buff);
@@ -23,7 +23,7 @@ public partial class Player
 
     private void BuffUIInit()
     {
-        var e = BuffPanel.Instance;
+        var e = BuffViewPanel.Instance;
         charater.BuffContainer.OnAddBuff = OnAddBuff;
         charater.BuffContainer.OnRemoveBuff = OnRemoveBuff;
     }
