@@ -47,25 +47,19 @@ namespace GameBase.Tools
         // 按键码和按键功能类，用于保存设置文件
         private static List<InputKey> GInputKeys = new List<InputKey> { };
 
+        private static Dictionary<string, bool> _callersLock = new();
+
         static Inputs()
         {
             ConvertDictToList();
             ConvertListToDict();
         }
 
-        public static string SettingSaveFolder
-        {
-            get
-            {
-                return Application.persistentDataPath + "/KeySetting/";
-            }
-        }
-
         public static string SettingSavePath
         {
             get
             {
-                return SettingSaveFolder + "KeySetting.jsons";
+                return Application.streamingAssetsPath + "/KeySetting/" + "KeySetting.json";
             }
         }
 
@@ -122,6 +116,72 @@ namespace GameBase.Tools
             }
         }
 
+        public static void LockCaller(string caller)
+        {
+            if (_callersLock.ContainsKey(caller))
+            {
+                _callersLock[caller] = true;
+            }
+            else
+            {
+                _callersLock.Add(caller, true);
+            }
+        }
+
+        public static void LockAll()
+        {
+            string[] keys = new string[_callersLock.Keys.Count];
+            _callersLock.Keys.CopyTo(keys, 0);
+            foreach (var c in keys)
+            {
+                _callersLock[c] = true;
+            }
+        }
+
+        public static void LockOthers(string caller)
+        {
+            string[] keys = new string[_callersLock.Keys.Count];
+            _callersLock.Keys.CopyTo(keys, 0);
+            foreach (var c in keys)
+            {
+                if (caller == c)
+                {
+                    continue;
+                }
+                _callersLock[c] = true;
+            }
+        }
+        public static void ReleaseCaller(string caller)
+        {
+            if (_callersLock.ContainsKey(caller))
+            {
+                _callersLock[caller] = false;
+            }
+        }
+        public static void ReleaseAll()
+        {
+            string[] keys = new string[_callersLock.Keys.Count];
+            _callersLock.Keys.CopyTo(keys, 0);
+            foreach (var c in keys)
+            {
+                _callersLock[c] = false;
+            }
+        }
+
+        public static void ReleaseOthers(string caller)
+        {
+            string[] keys = new string[_callersLock.Keys.Count];
+            _callersLock.Keys.CopyTo(keys, 0);
+            foreach (var c in keys)
+            {
+                if (caller == c)
+                {
+                    continue;
+                }
+                _callersLock[c] = false;
+            }
+        }
+
         public static bool GetKeyDown(KeyFunction keyFunction)
         {
             if (!_codeOfFunc.ContainsKey(keyFunction))
@@ -139,6 +199,23 @@ namespace GameBase.Tools
                 }
             }
             return true;
+        }
+
+        public static bool GetKeyDown(KeyFunction keyFunction, string caller)
+        {
+            if (!_callersLock.ContainsKey(caller))
+            {
+                _callersLock.Add(caller, false);
+            }
+
+            if (_callersLock[caller])
+            {
+                return false;
+            }
+            else
+            {
+                return GetKeyDown(keyFunction);
+            }
         }
 
         public static bool GetKeyUp(KeyFunction keyFunction)
@@ -160,6 +237,23 @@ namespace GameBase.Tools
             return true;
         }
 
+        public static bool GetKeyUp(KeyFunction keyFunction, string caller)
+        {
+            if (!_callersLock.ContainsKey(caller))
+            {
+                _callersLock.Add(caller, false);
+            }
+
+            if (_callersLock[caller])
+            {
+                return false;
+            }
+            else
+            {
+                return GetKeyUp(keyFunction);
+            }
+        }
+
         public static bool GetKey(KeyFunction keyFunction)
         {
             foreach (var kc in _codeOfFunc[keyFunction])
@@ -167,6 +261,23 @@ namespace GameBase.Tools
                 if (!UnityEngine.Input.GetKey(kc)) return false;
             }
             return true;
+        }
+
+        public static bool GetKey(KeyFunction keyFunction, string caller)
+        {
+            if (!_callersLock.ContainsKey(caller))
+            {
+                _callersLock.Add(caller, false);
+            }
+
+            if (_callersLock[caller])
+            {
+                return false;
+            }
+            else
+            {
+                return GetKey(keyFunction);
+            }
         }
 
         public static void Remap(KeyFunction keyFunction, List<KeyCode> newKeyCode)

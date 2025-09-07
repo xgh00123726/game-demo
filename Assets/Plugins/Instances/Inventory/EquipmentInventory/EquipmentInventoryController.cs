@@ -29,8 +29,7 @@ namespace Instance.Inventory
 
         protected override InventoryModel<CommonItemData> Model => _inventoryModel;
         protected override EquipmentViewPanel View => EquipmentViewPanel.Instance;
-
-        protected override IDataBase<CommonItemData> DataBase => throw new System.NotImplementedException();
+        protected override IDataBase<CommonItemData> DataBase => CommonDataBase.Instance;
 
         public override void AddItem(CommonItemData item, int index)
         {

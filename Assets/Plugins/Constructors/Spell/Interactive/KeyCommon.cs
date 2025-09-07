@@ -23,9 +23,9 @@ namespace Constructor.Spells.Interactive
 
         private bool indicatorReady;
 
-        bool ReadyTrig => fastCast ? true : Inputs.GetKeyDown(readyKey);
+        bool ReadyTrig => fastCast ? true : Inputs.GetKeyDown(readyKey, "spell");
 
-        bool CancelTrig => Inputs.GetKeyDown(cancelKey);
+        bool CancelTrig => Inputs.GetKeyDown(cancelKey, "spell");
 
         bool CastTrig
         {
@@ -33,11 +33,11 @@ namespace Constructor.Spells.Interactive
             {
                 if (fastCast)
                 {
-                    return Inputs.GetKeyDown(readyKey);
+                    return Inputs.GetKeyDown(readyKey, "spell");
                 }
                 else
                 {
-                    return indicatorReady && Inputs.GetKeyDown(castKey);
+                    return indicatorReady && Inputs.GetKeyDown(castKey, "spell");
                 }
             }
         }

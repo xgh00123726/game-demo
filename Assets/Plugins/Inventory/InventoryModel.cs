@@ -49,6 +49,7 @@ namespace GameBase.Inventorys
             private set => _items[i] = new InventoryItem(value, true);
         }
 
+
         public bool HasItem(int position)
         {
             if (position >= _size)
@@ -70,8 +71,6 @@ namespace GameBase.Inventorys
 
             return -1;
         }
-
-
 
         public virtual int AddItem(T_Item item, int index)
         {

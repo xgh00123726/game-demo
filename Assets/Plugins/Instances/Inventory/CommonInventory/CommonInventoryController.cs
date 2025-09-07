@@ -13,6 +13,8 @@ namespace Instance.Inventory
         CommonInventoryViewPanel,
         CommonInventoryController>
     {
+        private bool _showFlag = false;
+
         public const int ITEM_NUM = 50;
         public const float PANEL_OFFSET_HIDE_SPEED = 6000;
         public const float PANEL_OFFSET_HIDE_X = 1920;
@@ -24,10 +26,9 @@ namespace Instance.Inventory
         };
         protected override InventoryModel<CommonItemData> Model => _inventoryModel;
         protected override CommonInventoryViewPanel View => CommonInventoryViewPanel.Instance;
-
-        protected override IDataBase<CommonItemData> DataBase => throw new NotImplementedException();
-
-        private bool _showFlag = false;
+        protected override IDataBase<CommonItemData> DataBase => CommonDataBase.Instance;
+        public bool IsShow => _showFlag;
+        
 
         public CommonInventoryController()
         {

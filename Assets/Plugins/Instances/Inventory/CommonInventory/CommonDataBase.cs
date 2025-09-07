@@ -1,27 +1,56 @@
 using GameBase.Inventorys;
+using NReco.Csv;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml.Linq;
 using UnityEngine;
 namespace Instance.Inventory
 {
     public class CommonDataBase : IDataBase<CommonItemData>
     {
-        void IDataBase<CommonItemData>.Read(out CommonItemData data)
+        private CommonItemData[] _datas;
+        private static CommonDataBase _instance = new();
+        protected CommonDataBase()
         {
-            data = new CommonItemData();
+            if (RelativePath == null || RelativePath.Length == 0 || RelativePath == "")
+            {
+                return;
+            }
+            StreamReader reader = File.OpenText($"{Application.streamingAssetsPath}/{RelativePath}");
+            CsvReader csvReader = new CsvReader(reader);
+            csvReader.Read();
+            _datas = new CommonItemData[int.Parse(csvReader[0])];
+            for (int i = 0; i < _datas.Length; i++)
+            {
+                csvReader.Read();
+
+                var data = new CommonItemData();
+                int index = int.Parse(csvReader[0]);
+                data.iconTextureID = int.Parse(csvReader[1]);
+                data.buffID = int.Parse(csvReader[2]);
+                data.ID = index;
+
+                _datas[index] = data;
+            }
+
+            reader.Close();
         }
 
-        void IDataBase<CommonItemData>.Read(out IEnumerator<CommonItemData> datas)
+        public static CommonDataBase Instance => _instance;
+
+        public string RelativePath => "Instance/Inventory/CommonInventory/CommonDataBase.csv";
+
+        int IDataBase<CommonItemData>.Count => _datas.Length;
+
+        CommonItemData IDataBase<CommonItemData>.Read(int index)
         {
-            datas = null;
+            return _datas[index];
         }
 
-        void IDataBase<CommonItemData>.Write(CommonItemData data)
+        void IDataBase<CommonItemData>.Write(CommonItemData data, int index)
         {
-        }
-
-        void IDataBase<CommonItemData>.Write(IEnumerator<CommonItemData> datas)
-        {
+            _datas[index] = data;
         }
     }
 }

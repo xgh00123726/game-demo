@@ -57,6 +57,20 @@ namespace Instance.Inventory
             return ret;
         }
 
+        public bool TryGetDataFromDataBase(int index, out T_ModelItem data)
+        {
+            if (index >= DataBase.Count)
+            {
+                data = default;
+                return false;
+            }
+            else
+            {
+                data = DataBase.Read(index);
+                return true;
+            }
+        }
+
         public bool TryGetItemUI(Vector3 position, out T_ViewItem e, out int index)
         {
             return View.TryGetItem(position, out e, out index);
@@ -68,6 +82,20 @@ namespace Instance.Inventory
             var viewItem = View[index];
             SetIcon(item, viewItem);
             SetColor(index);
+        }
+
+        /// <summary>
+        /// 从数据库中添加物品到背包
+        /// <list type="bullet">
+        /// <item><param name="dataBaseIndex"><paramref name="dataBaseIndex"/>物品在数据库中的位置</param></item>
+        /// <item><param name="index"><paramref name="index"/>需要添加到背包的位置</param></item>
+        /// </list></summary>
+        public void AddItem(int dataBaseIndex, int index)
+        {
+            if (TryGetDataFromDataBase(dataBaseIndex, out T_ModelItem item))
+            {
+                AddItem(item, index);
+            }
         }
 
         public virtual void AddItem(T_ModelItem item, int index)

@@ -12,7 +12,7 @@ namespace Constructor.Spells.Interactive
     {
         public KeyFunction castKey;
 
-        bool ISpellInteractive.IsTrig => Inputs.GetKeyDown(castKey);
+        bool ISpellInteractive.IsTrig => Inputs.GetKeyDown(castKey, "spell");
 
         void ISpellInteractive.Update(ISpeller speller)
         {
