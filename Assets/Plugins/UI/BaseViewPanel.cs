@@ -16,7 +16,7 @@ namespace GameBase.UI
         }
 
         internal IDragableControl<T> dragableControl;
-        internal IEnterExist<T> enterExist;
+        internal IEnterExistControl<T> enterExistControl;
         internal ISwitchable<T> switchable;
         internal IDetailableControl<T> detailableControl;
 
@@ -26,10 +26,10 @@ namespace GameBase.UI
             set => dragableControl = value;
         }
 
-        public IEnterExist<T> EnterExist
+        public IEnterExistControl<T> EnterExistControl
         {
-            get => enterExist;
-            set => enterExist = value;
+            get => enterExistControl;
+            set => enterExistControl = value;
         }
 
         public ISwitchable<T> Switchable
@@ -108,8 +108,9 @@ namespace GameBase.UI
             var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
 
             var ui = obj.AddComponent<BaseUI>();
-            ui.enterAction = () => enterExist?.OnPointerEnter(e);
-            ui.exitAction = () => enterExist?.OnPointerExit(e);
+            ui.enterAction = () => enterExistControl?.OnPointerEnter(e);
+            ui.exitAction = () => enterExistControl?.OnPointerExit(e);
+            ui.pointerDownAction = () => enterExistControl?.OnPointerDown(e);
 
             e.Obj = ui;
 

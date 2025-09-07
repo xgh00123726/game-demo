@@ -8,7 +8,6 @@ using UnityEngine;
 namespace Instance.Inventory
 {
     public class EquipmentInventoryController : InventoryController<CommonItemData,
-        EquipmentInventoryModel,
         EquipmentViewItem,
         EquipmentViewPanel,
         EquipmentInventoryController>
@@ -28,8 +27,10 @@ namespace Instance.Inventory
             }
         }
 
-        protected override EquipmentInventoryModel Model => _inventoryModel;
+        protected override InventoryModel<CommonItemData> Model => _inventoryModel;
         protected override EquipmentViewPanel View => EquipmentViewPanel.Instance;
+
+        protected override IDataBase<CommonItemData> DataBase => throw new System.NotImplementedException();
 
         public override void AddItem(CommonItemData item, int index)
         {

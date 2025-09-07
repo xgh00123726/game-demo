@@ -12,6 +12,7 @@ namespace GameBase.UI
         internal bool isPointerDown;
         internal Action enterAction;
         internal Action exitAction;
+        internal Action pointerDownAction;
 
         public float EnterTime => enterTime;
         public float PointerDownTime => pointerDownTime;
@@ -22,6 +23,7 @@ namespace GameBase.UI
             {
                 isPointerDown = true;
             }
+            pointerDownAction?.Invoke();
         }
 
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)

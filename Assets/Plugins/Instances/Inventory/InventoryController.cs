@@ -8,18 +8,18 @@ using UnityEngine.UIElements;
 
 namespace Instance.Inventory
 {
-    public abstract class InventoryController<T_ModelItem, T_Model, T_ViewItem, T_View, T_Controller>
+    public abstract class InventoryController<T_ModelItem, T_ViewItem, T_View, T_Controller>
         where T_ModelItem : struct, IModelItem
-        where T_Model : InventoryModel<T_ModelItem>
         where T_ViewItem : InventoryViewItem, new()
         where T_View : InventoryViewPanel<T_ViewItem, T_View>, new()
-        where T_Controller : InventoryController<T_ModelItem, T_Model, T_ViewItem, T_View, T_Controller>, new()
+        where T_Controller : InventoryController<T_ModelItem, T_ViewItem, T_View, T_Controller>, new()
     {
         private static T_Controller _controller = new();
         public static T_Controller Instance =>_controller;
 
-        protected abstract T_Model Model { get; }
+        protected abstract InventoryModel<T_ModelItem> Model { get; }
         protected abstract T_View View { get; }
+        protected abstract IDataBase<T_ModelItem> DataBase { get; }
 
         protected abstract void SetIcon(T_ModelItem modelData, T_ViewItem viewItem);
         protected virtual void OnSwap(int p1, int p2) { }

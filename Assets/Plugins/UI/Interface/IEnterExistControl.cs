@@ -1,8 +1,9 @@
 namespace GameBase.UI
 {
-    public interface IEnterExist<T>
+    public interface IEnterExistControl<T>
     {
         void OnPointerEnter(T e);
         void OnPointerExit(T e);
+        void OnPointerDown(T e);
     }
 }

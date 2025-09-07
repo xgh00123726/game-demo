@@ -9,7 +9,6 @@ using UnityEngine;
 namespace Instance.Inventory
 {
     public class CommonInventoryController : InventoryController<CommonItemData,
-        CommonInventoryModel,
         CommonInventoryViewItem,
         CommonInventoryViewPanel,
         CommonInventoryController>
@@ -23,14 +22,18 @@ namespace Instance.Inventory
         {
             Size = ITEM_NUM
         };
-        protected override CommonInventoryModel Model => _inventoryModel;
+        protected override InventoryModel<CommonItemData> Model => _inventoryModel;
         protected override CommonInventoryViewPanel View => CommonInventoryViewPanel.Instance;
+
+        protected override IDataBase<CommonItemData> DataBase => throw new NotImplementedException();
+
         private bool _showFlag = false;
 
         public CommonInventoryController()
         {
             View.DragableControl = new CommonDragableControl();
             View.DetailableControl = new CommonDetailControl();
+            View.EnterExistControl = new CommonFixedDetailableControl();
             View.panel.SetActive(false);
             for (int i = 0; i < ITEM_NUM; i++)
             {
@@ -49,6 +52,7 @@ namespace Instance.Inventory
             _showFlag = false;
             View.panelXOffsetTarget = PANEL_OFFSET_HIDE_X;
             View.panelXMoveSpeed = PANEL_OFFSET_HIDE_SPEED;
+            CommonFixedDetailableShadowView.Instance.Hide();
         }
         public void Toggle()
         {
