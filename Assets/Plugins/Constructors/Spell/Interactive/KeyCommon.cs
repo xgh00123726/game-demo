@@ -3,6 +3,7 @@ using GameBase.Spells;
 using GameBase.Tools;
 using NReco.Csv;
 using System;
+using System.Collections.Generic;
 
 namespace Constructor.Spells.Interactive
 {
@@ -15,15 +16,33 @@ namespace Constructor.Spells.Interactive
 
     public class KeyInteractive : ISpellInteractive
     {
+        internal static List<KeyInteractive> mutexInteractives = new();
+        internal void DeReadyAll()
+        {
+            foreach (var interactive in mutexInteractives)
+            {
+                interactive.indicatorReady = false;
+                interactive.indicator?.Hide();
+            }
+        }
+
+        internal bool indicatorReady;
+
         public KeyFunction readyKey;
         public KeyFunction castKey;
         public KeyFunction cancelKey;
         public IInteractiveIndicator indicator;
+        public bool readyLockEnable = true;
         public bool fastCast;
 
-        private bool indicatorReady;
 
-        bool ReadyTrig => fastCast ? true : Inputs.GetKeyDown(readyKey, "spell");
+        bool ReadyTrig
+        {
+            get
+            {
+                return fastCast ? true : Inputs.GetKeyDown(readyKey, "spell");
+            }
+        }
 
         bool CancelTrig => Inputs.GetKeyDown(cancelKey, "spell");
 
@@ -48,6 +67,7 @@ namespace Constructor.Spells.Interactive
         {
             if (ReadyTrig)
             {
+                DeReadyAll();
                 indicator?.Show();
                 indicatorReady = true;
             }
@@ -62,6 +82,11 @@ namespace Constructor.Spells.Interactive
             }
 
             indicator?.Update(speller, GameBase.GCamera.CameraSys.MouseHitPosition);
+        }
+
+        void ISpellInteractive.OnTrig(ISpeller speller)
+        {
+            indicatorReady = false;
         }
     }
 
@@ -90,6 +115,11 @@ namespace Constructor.Spells.Interactive
             idata.radius = data.radius;
             idata.length = data.length;
             e.indicator = Constructor.Spells.Indicators.Factory.Get(data.indicatorType, idata);
+            e.indicator.Hide();
+            if (e.readyLockEnable)
+            {
+                KeyInteractive.mutexInteractives.Add(e);
+            }
         }
     }
 }

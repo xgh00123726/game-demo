@@ -1,13 +1,17 @@
 using GameBase.GCamera;
 using GameBase.Tools;
+using GameBase.Infos;
 using UnityEngine;
 namespace GameBase.Instance
 {
     public class PlayerCamera : MonoBehaviour
     {
         private bool _inDrag = false;
-        private Vector3 _dragPosition;
+        private Vector3 _dragCameraPosition;
+        private Vector3 _dragMousePosition;
 
+        public float dragFactor = 100f;
+        public bool enableEdgeAutoDrag = true;
         public float xMoveSpeed = 10f;
         public float yMoveSpeed = 10f;
         public float xBorder = 20f;
@@ -31,12 +35,29 @@ namespace GameBase.Instance
             return new Vector3(1.414f, 0, 1.414f);
         }
 
+        private Vector3 MouseDirToWorldDir(Vector3 dir)
+        {
+            float x = dir.x;
+            float y = dir.y;
+
+            var dirRet = x * DirRight() + y * DirUp();
+            return dirRet;
+        }
+
+        private void CameraReset()
+        {
+            var position = Globals.GetPlayerPosition(0);
+            position.y = transform.position.y;
+            transform.position = position;
+        }
+
         private void DragUpdate()
         {
             if (Inputs.GetKeyDown(KeyFunction.DragScreen, "camera"))
             {
                 _inDrag = true;
-                _dragPosition = CameraSys.MouseHitPosition;
+                _dragCameraPosition = transform.position;
+                _dragMousePosition = Input.mousePosition;
             }
             else if (Inputs.GetKeyUp(KeyFunction.DragScreen, "camera"))
             {
@@ -45,8 +66,11 @@ namespace GameBase.Instance
 
             if (_inDrag)
             {
-                var position = CameraSys.MouseHitPosition;
-                Vector3 currPosition = _dragPosition * 2 - position;
+                var position = transform.position;
+                var mousePosition = Input.mousePosition;
+                var mouseDir = mousePosition - _dragMousePosition;
+                var worldDir = MouseDirToWorldDir(mouseDir) / dragFactor;
+                Vector3 currPosition = _dragCameraPosition - worldDir;
                 currPosition.y = transform.position.y;
                 transform.position = currPosition;
             }
@@ -83,7 +107,10 @@ namespace GameBase.Instance
         private void Update()
         {
             DragUpdate();
-            EdgeAutoUpdate();
+            if (enableEdgeAutoDrag)
+            {
+                EdgeAutoUpdate();
+            }
         }
     }
 }

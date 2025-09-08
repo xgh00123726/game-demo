@@ -13,17 +13,25 @@ namespace GameBase.UI
         internal Action enterAction;
         internal Action exitAction;
         internal Action pointerDownAction;
+        internal Action pointerRightDownAction;
 
         public float EnterTime => enterTime;
         public float PointerDownTime => pointerDownTime;
 
         void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
         {
-            if (isPointerOn)
+            if (eventData.button == PointerEventData.InputButton.Left)
             {
-                isPointerDown = true;
+                if (isPointerOn)
+                {
+                    isPointerDown = true;
+                }
+                pointerDownAction?.Invoke();
             }
-            pointerDownAction?.Invoke();
+            else if (eventData.button == PointerEventData.InputButton.Right)
+            {
+                pointerRightDownAction?.Invoke();
+            }
         }
 
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)

@@ -16,7 +16,7 @@ namespace GameBase.Tools
         SettingPitch, SettingYawClockWise, SettingYawAntiClockWise,
         SettingYawClockWiseFaster, SettingYawAntiClockWiseFaster,
         ResetView,
-        ToggleCmd, CmdConfirm, CmdDelete,
+        ToggleCmd, CmdConfirm, CmdDelete, CmdUseLast,
         Cancel, MouseConfirm,
         TestPosKey,
         ToggleAttrPanel,

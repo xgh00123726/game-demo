@@ -35,6 +35,5 @@ namespace GameBase.UI
 
         public GameObject Obj { get; set; }
         public int ObjID { get; set; } = 5;
-        public virtual Action AfterInstantiateObj { get; set; } = null;
     }
 }

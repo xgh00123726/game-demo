@@ -17,5 +17,10 @@ namespace Instance.Inventory
         void IEnterExistControl<CommonInventoryViewItem>.OnPointerExit(CommonInventoryViewItem e)
         {
         }
+
+        void IEnterExistControl<CommonInventoryViewItem>.OnPointerRightDown(CommonInventoryViewItem e)
+        {
+            
+        }
     }
 }

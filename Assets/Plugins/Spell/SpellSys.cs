@@ -41,6 +41,7 @@ namespace GameBase.Spells
                     e.coolReady = false;
                     e.coolingTimeRemain = e.coolingTimeSet;
                     e.actionInterface?.CastAction(e);
+                    e.interactive.OnTrig(e.speller);
                 }
             }
         }

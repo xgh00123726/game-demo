@@ -111,6 +111,7 @@ namespace GameBase.UI
             ui.enterAction = () => enterExistControl?.OnPointerEnter(e);
             ui.exitAction = () => enterExistControl?.OnPointerExit(e);
             ui.pointerDownAction = () => enterExistControl?.OnPointerDown(e);
+            ui.pointerRightDownAction = () => enterExistControl?.OnPointerRightDown(e);
 
             e.Obj = ui;
 
@@ -167,7 +168,6 @@ namespace GameBase.UI
 
         protected override void UpdateEntity(T e)
         {
-            panel.transform.localPosition = new Vector3(PanelX, PanelY, 0);
             e.Obj.transform.localPosition = GetItemLocalPosition(itemIterIdx);
 
             if (e.Obj.isPointerOn)
@@ -186,6 +186,13 @@ namespace GameBase.UI
             {
                 itemIterIdx = 0;
             }
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+
+            panel.transform.localPosition = new Vector3(PanelX, PanelY, 0);
         }
 
         protected override void Awake()

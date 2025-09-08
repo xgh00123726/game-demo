@@ -1,10 +1,12 @@
 using UnityEngine;
 
-namespace Instance.Shops
+namespace GameBase.Shops
 {
     public interface IShoper
     {
         int Gold { get; set; }
         Vector3 Position { get; }
+        bool OpenShop { get; }
+        bool CloseShop { get; }
     }
 }

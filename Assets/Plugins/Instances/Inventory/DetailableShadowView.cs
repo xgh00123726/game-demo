@@ -18,7 +18,7 @@ namespace Instance.Inventory
         private RectTransform _textRectTransform;
 
         private float widthMax = 1920;
-        private float heightMax = 1080;
+        //private float heightMax = 1080;
         private float _width;
         private float _height;
 

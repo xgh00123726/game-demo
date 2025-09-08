@@ -14,6 +14,11 @@ namespace Constructor.Spells.Interactive
 
         bool ISpellInteractive.IsTrig => Inputs.GetKeyDown(castKey, "spell");
 
+        void ISpellInteractive.OnTrig(ISpeller speller)
+        {
+            
+        }
+
         void ISpellInteractive.Update(ISpeller speller)
         {
         }

@@ -43,6 +43,7 @@ namespace GameBase.Tools
             {new List<KeyCode>{ KeyCode.LeftControl, KeyCode.LeftShift, KeyCode.C },new List<KeyFunction>{ KeyFunction.SummonAllies }  },
             {new List<KeyCode>{KeyCode.E}, new List<KeyFunction>{KeyFunction.OpenShop, KeyFunction.CloseShop } },
             {new List<KeyCode>{KeyCode.Mouse2}, new List<KeyFunction>{KeyFunction.DragScreen} },
+            {new List<KeyCode> {KeyCode.UpArrow}, new List<KeyFunction>{KeyFunction.CmdUseLast} },
         };
         // 按键功能和按键码对应表，由构造函数计算获取
         private static Dictionary<KeyFunction, List<KeyCode>> _codeOfFunc = new Dictionary<KeyFunction, List<KeyCode>> { };
