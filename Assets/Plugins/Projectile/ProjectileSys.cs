@@ -33,7 +33,7 @@ namespace GameBase.Projectiles
                 return;
             }
 
-            e.action?.Action(e);
+            e.action?.Effect(e, target);
             e.actualEffectTimes++;
             if (e.hasWhite)
             {
@@ -64,6 +64,7 @@ namespace GameBase.Projectiles
 
             if (e.shape != null)
             {
+                XLogger.Instance.Log("range");
                 e.shape.Center = new Vector2(objTransform.position.x, objTransform.position.z);
                 foreach (var target in e.targetsSet.TargetsInShape(e.shape))
                 {

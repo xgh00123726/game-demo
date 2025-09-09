@@ -14,9 +14,9 @@ namespace Constructor.Spells.Interactive
         public float length;
     }
 
-    public class KeyInteractive : ISpellInteractive
+    public class KeyCommon : ISpellInteractive
     {
-        internal static List<KeyInteractive> mutexInteractives = new();
+        internal static List<KeyCommon> mutexInteractives = new();
         internal void DeReadyAll()
         {
             foreach (var interactive in mutexInteractives)
@@ -90,13 +90,13 @@ namespace Constructor.Spells.Interactive
         }
     }
 
-    public class KeyCommon : BaseConstructor<CommonData, KeyInteractive, KeyCommon>
+    public class KeyCommonCon : BaseConstructor<CommonData, KeyCommon, KeyCommonCon>
     {
         protected override string RelativePath => "Spell/Interactive/KeyCommon.csv";
 
-        protected override KeyInteractive Get()
+        protected override KeyCommon Get()
         {
-            return new KeyInteractive();
+            return new KeyCommon();
         }
 
         protected override void Parse(CsvReader line, ref CommonData data)
@@ -106,7 +106,7 @@ namespace Constructor.Spells.Interactive
             data.length = float.Parse(line[3]);
         }
 
-        protected override void Set(KeyInteractive e, in CommonData data)
+        protected override void Set(KeyCommon e, in CommonData data)
         {
             e.cancelKey = KeyFunction.Cancel;
             e.castKey = KeyFunction.MouseConfirm;
@@ -118,7 +118,7 @@ namespace Constructor.Spells.Interactive
             e.indicator.Hide();
             if (e.readyLockEnable)
             {
-                KeyInteractive.mutexInteractives.Add(e);
+                KeyCommon.mutexInteractives.Add(e);
             }
         }
     }

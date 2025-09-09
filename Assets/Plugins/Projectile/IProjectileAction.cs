@@ -4,6 +4,6 @@ namespace GameBase.Projectiles
 {
     public interface IProjectileAction
     {
-        void Action(Projectile e);
+        void Effect(Projectile e, IProjectileTarget target);
     }
 }

@@ -1,3 +1,4 @@
+using Constructor.Spells.Action.Modifyables;
 using GameBase.Spells;
 using System;
 using System.Collections.Generic;
@@ -9,17 +10,20 @@ namespace Constructor.Spells.Action
         TrigOnRelease,
         TrigNearestTarget,
         AreaFixedDis,
-        BuffSelf
+        BuffSelf,
+
+        MAreaFixedDis,
     }
     public class Factory : ConstructorFactory<Type, IAction, Factory>
     {
         protected override Dictionary<Type, Func<int, IAction>> ConstructorGetDict =>
             new()
             {
-                {Type.TrigOnRelease, TrigOnRelease.Instance.Get },
-                {Type.TrigNearestTarget, TrigNearestTarget.Instance.Get },
-                {Type.AreaFixedDis, AreaFixedDis.Instance.Get },
-                {Type.BuffSelf, BuffSelf.Instance.Get },
+                {Type.TrigOnRelease, TrigOnReleaseCon.Instance.Get },
+                {Type.TrigNearestTarget, TrigNearestTargetCon.Instance.Get },
+                {Type.AreaFixedDis, AreaFixedDisCon.Instance.Get },
+                {Type.BuffSelf, BuffSelfCon.Instance.Get },
+                {Type.MAreaFixedDis, MAreaFixedDisCon.Instance.Get },
             };
     }
 }

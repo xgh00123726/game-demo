@@ -1,0 +1,42 @@
+using NReco.Csv;
+
+namespace Constructor.Spells.Action.Modifyables.Modifier
+{
+    public struct FlyingNumModifierData
+    {
+        public int flyingNumsModify;
+    }
+    public class FlyingNumModifier : BaseModifier
+    {
+        public FlyingNumModifierData data;
+        public FlyingNumModifier(int flyingNumsModify)
+        {
+            data.flyingNumsModify = flyingNumsModify;
+        }
+
+        internal override void Modify(ref ModifyableModifyData modifyData)
+        {
+            modifyData.flyingNums = data.flyingNumsModify;
+        }
+    }
+
+    public class FlyingNumModifierCon : BaseConstructor<FlyingNumModifierData, FlyingNumModifier, FlyingNumModifierCon>
+    {
+        protected override string RelativePath => "Spell/Action/Modifyable/Modifier/FlyingNumModifier.csv";
+
+        protected override FlyingNumModifier Get()
+        {
+            return new FlyingNumModifier(0);
+        }
+
+        protected override void Parse(CsvReader line, ref FlyingNumModifierData data)
+        {
+            data.flyingNumsModify = int.Parse(line[1]);
+        }
+
+        protected override void Set(FlyingNumModifier e, in FlyingNumModifierData data)
+        {
+            e.data = data;
+        }
+    }
+}

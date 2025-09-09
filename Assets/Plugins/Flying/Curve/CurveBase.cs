@@ -13,10 +13,6 @@ namespace GameBase.Flyings
         {
             _projectile = projectile;
         }
-        /// <summary>
-        /// 方向更新
-        /// </summary>
-        /// 
 
         protected abstract Vector3 GetDirDelta();
 
@@ -61,6 +57,11 @@ namespace GameBase.Flyings
             {
                 _projectile.Position = _projectile.Position + delta;
             }
+        }
+
+        public void DirInit()
+        {
+            _projectile.Dir = _projectile.Dest - _projectile.Src;
         }
     }
 }

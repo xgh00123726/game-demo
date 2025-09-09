@@ -18,7 +18,7 @@ namespace Constructor.Spells.Action
         public int flyingID;
     }
 
-    public class TrigNearestTargetAction : IAction
+    public class TrigNearestTarget : IAction
     {
         public TrigNearestTargetData data;
         void IAction.CastAction(Spell spell)
@@ -48,19 +48,20 @@ namespace Constructor.Spells.Action
             var e = Projectiles.Factory.Instance.Get(data.projectileType, data.projectileID);
             e.Flying = Flyings.Factory.Instance.Get(data.flyingType, data.flyingID);
             e.Flying.Src = pOwner.HandPosition + new Vector3(0, 1, 0);
-            e.Flying.dest = CameraSys.MouseHitPosition;
+            e.Flying.dest = target.Center;
+            e.Flying.curve.DirInit();
             e.owner = pOwner;
             e.target = target;
         }
     }
 
-    public class TrigNearestTarget : BaseConstructor<TrigNearestTargetData, TrigNearestTargetAction, TrigNearestTarget>
+    public class TrigNearestTargetCon : BaseConstructor<TrigNearestTargetData, TrigNearestTarget, TrigNearestTargetCon>
     {
         protected override string RelativePath => "Spell/Action/TrigNearestTarget.csv";
 
-        protected override TrigNearestTargetAction Get()
+        protected override TrigNearestTarget Get()
         {
-            return new TrigNearestTargetAction();
+            return new TrigNearestTarget();
         }
 
         protected override void Parse(CsvReader line, ref TrigNearestTargetData data)
@@ -71,7 +72,7 @@ namespace Constructor.Spells.Action
             data.flyingID = int.Parse(line[4]);
         }
 
-        protected override void Set(TrigNearestTargetAction e, in TrigNearestTargetData data)
+        protected override void Set(TrigNearestTarget e, in TrigNearestTargetData data)
         {
             e.data = data;
         }

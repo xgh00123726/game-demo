@@ -8,7 +8,7 @@ namespace Constructor.Spells.Interactive
     {
     }
 
-    public class KeyFastInteractive : ISpellInteractive
+    public class KeyFast : ISpellInteractive
     {
         public KeyFunction castKey;
 
@@ -23,20 +23,20 @@ namespace Constructor.Spells.Interactive
         {
         }
     }
-    public class KeyFast : BaseConstructor<KeyFastData, KeyFastInteractive, KeyFast>
+    public class KeyFastCon : BaseConstructor<KeyFastData, KeyFast, KeyFastCon>
     {
         protected override string RelativePath => "Spell/Interactive/KeyFast.csv";
 
-        protected override KeyFastInteractive Get()
+        protected override KeyFast Get()
         {
-            return new KeyFastInteractive();
+            return new KeyFast();
         }
 
         protected override void Parse(CsvReader line, ref KeyFastData data)
         {
         }
 
-        protected override void Set(KeyFastInteractive e, in KeyFastData data)
+        protected override void Set(KeyFast e, in KeyFastData data)
         {
         }
     }

@@ -8,7 +8,7 @@ namespace Constructor.Spells.Interactive
     {
     }
 
-    public class AlwaysInteractive : ISpellInteractive
+    public class Always : ISpellInteractive
     {
         public KeyFunction castKey;
 
@@ -23,20 +23,20 @@ namespace Constructor.Spells.Interactive
         {
         }
     }
-    public class Always : BaseConstructor<AlwaysData, AlwaysInteractive, Always>
+    public class AlwaysCon : BaseConstructor<AlwaysData, Always, AlwaysCon>
     {
         protected override string RelativePath => "Spell/Interactive/Always.csv";
 
-        protected override AlwaysInteractive Get()
+        protected override Always Get()
         {
-            return new AlwaysInteractive();
+            return new Always();
         }
 
         protected override void Parse(CsvReader line, ref AlwaysData data)
         {
         }
 
-        protected override void Set(AlwaysInteractive e, in AlwaysData data)
+        protected override void Set(Always e, in AlwaysData data)
         {
         }
     }

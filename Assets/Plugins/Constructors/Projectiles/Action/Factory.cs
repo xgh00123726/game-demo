@@ -12,7 +12,7 @@ namespace Constructor.Projectiles.Action
         protected override Dictionary<Type, System.Func<int, IProjectileAction>> ConstructorGetDict =>
             new()
             {
-                {Type.Damage, Damage.Get },
+                {Type.Damage, DamageCon.Get },
             };
     }
 }

@@ -16,9 +16,9 @@ namespace Constructor.Spells.Interactive
         protected override Dictionary<Type, Func<int, ISpellInteractive>> ConstructorGetDict =>
             new()
             {
-                {Type.KeyCommon, KeyCommon.Instance.Get },
-                {Type.KeyFast, KeyFast.Instance.Get },
-                {Type.Always, Always.Instance.Get },
+                {Type.KeyCommon, KeyCommonCon.Instance.Get },
+                {Type.KeyFast, KeyFastCon.Instance.Get },
+                {Type.Always, AlwaysCon.Instance.Get },
             };
     }
 }

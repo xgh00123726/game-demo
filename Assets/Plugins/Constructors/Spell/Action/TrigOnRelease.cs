@@ -21,7 +21,7 @@ namespace Constructor.Spells.Action
         public float zOffset;
     }
 
-    public class TrigOnReleaseAction : IAction
+    public class TrigOnRelease : IAction
     {
         public TrigOnReleaseData data;
 
@@ -44,13 +44,13 @@ namespace Constructor.Spells.Action
             }
         }
     }
-    public class TrigOnRelease : BaseConstructor<TrigOnReleaseData, TrigOnReleaseAction, TrigOnRelease>
+    public class TrigOnReleaseCon : BaseConstructor<TrigOnReleaseData, TrigOnRelease, TrigOnReleaseCon>
     {
         protected override string RelativePath => "Spell/Action/TrigOnRelease.csv";
 
-        protected override TrigOnReleaseAction Get()
+        protected override TrigOnRelease Get()
         {
-            return new TrigOnReleaseAction();
+            return new TrigOnRelease();
         }
 
         protected override void Parse(CsvReader line, ref TrigOnReleaseData data)
@@ -66,7 +66,7 @@ namespace Constructor.Spells.Action
             data.zOffset = float.Parse(line[9]);
         }
 
-        protected override void Set(TrigOnReleaseAction e, in TrigOnReleaseData data)
+        protected override void Set(TrigOnRelease e, in TrigOnReleaseData data)
         {
             e.data = data;
         }

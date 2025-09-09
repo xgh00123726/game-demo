@@ -1,5 +1,6 @@
 using GameBase.Modify;
 using GameBase.Projectiles;
+using GameBase.Tools;
 using GameBase.UI;
 
 namespace Constructor.Projectiles.Action
@@ -9,12 +10,12 @@ namespace Constructor.Projectiles.Action
         public int value;
     }
 
-    public class DamageAction : IProjectileAction
+    public class Damage : IProjectileAction
     {
         public DamageData data;
-        void IProjectileAction.Action(Projectile e)
+        void IProjectileAction.Effect(Projectile e, IProjectileTarget target)
         {
-            if (e.target is IModifyOwner<float> mTarget)
+            if (target is IModifyOwner<float> mTarget)
             {
                 var modifyer = ModifyerSys<float>.Instance.NewEntity();
                 modifyer.type = ModifyType.Once | ModifyType.Forever;
@@ -22,7 +23,7 @@ namespace Constructor.Projectiles.Action
                 modifyer.OnModify += () =>
                 {
                     var text = TextSys.Instance.NewEntity();
-                    text.showPosition = e.target.Center;
+                    text.showPosition = target.Center;
                     text.value = data.value.ToString();
                 };
 
@@ -31,11 +32,11 @@ namespace Constructor.Projectiles.Action
         }
     }
 
-    public class Damage
+    public class DamageCon
     {
-        public static DamageAction Get(int value)
+        public static Damage Get(int value)
         {
-            var e = new DamageAction();
+            var e = new Damage();
             e.data.value = value;
             return e;
         }

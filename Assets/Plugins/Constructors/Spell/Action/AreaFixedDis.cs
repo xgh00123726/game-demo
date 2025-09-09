@@ -16,7 +16,7 @@ namespace Constructor.Spells.Action
         public int distance;
     }
 
-    public class AreaFixedDisAction : IAction
+    public class AreaFixedDis : IAction
     {
         public AreaFixedDisData data;
         void IAction.CastAction(Spell spell)
@@ -37,13 +37,13 @@ namespace Constructor.Spells.Action
         }
     }
 
-    public class AreaFixedDis : BaseConstructor<AreaFixedDisData, AreaFixedDisAction, AreaFixedDis>
+    public class AreaFixedDisCon : BaseConstructor<AreaFixedDisData, AreaFixedDis, AreaFixedDisCon>
     {
         protected override string RelativePath => "Spell/Action/AreaFixedDis.csv";
 
-        protected override AreaFixedDisAction Get()
+        protected override AreaFixedDis Get()
         {
-            return new AreaFixedDisAction();
+            return new AreaFixedDis();
         }
 
         protected override void Parse(CsvReader line, ref AreaFixedDisData data)
@@ -55,7 +55,7 @@ namespace Constructor.Spells.Action
             data.distance = int.Parse(line[5]);
         }
 
-        protected override void Set(AreaFixedDisAction e, in AreaFixedDisData data)
+        protected override void Set(AreaFixedDis e, in AreaFixedDisData data)
         {
             e.data = data;
         }

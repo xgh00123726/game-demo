@@ -8,7 +8,7 @@ namespace Constructor
 {
     public abstract class BaseConstructor<T_Data, T_Entity, T_Constructor>
         where T_Data : struct
-        where T_Entity : class, new()
+        where T_Entity : class
         where T_Constructor : BaseConstructor<T_Data, T_Entity, T_Constructor>, new()
     {
         private T_Data[] _datas;
@@ -36,7 +36,8 @@ namespace Constructor
         {
             if (index >= _datas.Length || index < 0)
             {
-                XLogger.Instance.Log($"index out off array:{index}");
+                XLogger.Instance.Level(XLogger.LogLevel.Error)
+                    .Log($"index out off array:{index}");
             }
 
             var e = Get();

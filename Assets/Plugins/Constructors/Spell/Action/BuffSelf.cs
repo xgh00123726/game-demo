@@ -13,7 +13,7 @@ namespace Constructor.Spells.Action
         public float duration;
     }
 
-    public class BuffSelfAction : IAction
+    public class BuffSelf : IAction
     {
         public BuffSelfData data;
         void IAction.CastAction(Spell spell)
@@ -32,13 +32,13 @@ namespace Constructor.Spells.Action
         }
     }
 
-    public class BuffSelf : BaseConstructor<BuffSelfData, BuffSelfAction, BuffSelf>
+    public class BuffSelfCon : BaseConstructor<BuffSelfData, BuffSelf, BuffSelfCon>
     {
         protected override string RelativePath => "Spell/Action/BuffSelf.csv";
 
-        protected override BuffSelfAction Get()
+        protected override BuffSelf Get()
         {
-            return new BuffSelfAction();
+            return new BuffSelf();
         }
 
         protected override void Parse(CsvReader line, ref BuffSelfData data)
@@ -48,7 +48,7 @@ namespace Constructor.Spells.Action
             data.duration = float.Parse(line[3]);
         }
 
-        protected override void Set(BuffSelfAction e, in BuffSelfData data)
+        protected override void Set(BuffSelf e, in BuffSelfData data)
         {
             e.data = data;
         }
