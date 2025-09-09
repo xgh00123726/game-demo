@@ -28,7 +28,6 @@ namespace Instance.Inventory
         protected override CommonInventoryViewPanel View => CommonInventoryViewPanel.Instance;
         protected override IDataBase<CommonItemData> DataBase => CommonDataBase.Instance;
         public bool IsShow => _showFlag;
-        
 
         public CommonInventoryController()
         {

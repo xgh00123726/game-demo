@@ -29,14 +29,28 @@ namespace Constructor.Spells.Action.Modifyables
             }
 
             int flyingNumsModify = modifyData.flyingNums > 0 ? modifyData.flyingNums : 0;
-            float angleDelta = modifyData.fireDisfuse / (1 + flyingNumsModify);
+
+            // 如果飞行物大于等于2个，且没有扩散，会导致两个飞行物完全重合，代码上强行赋予一个扩散
+            float disfuse = ProcessDisfuse(modifyData.fireDisfuse);
+
+            // 每个飞行物之间的角度偏移
+            float angleDelta = 0;
+            // 初始飞行物角度
+            float angleInit = 0;
+            if (flyingNumsModify > 0)
+            {
+                angleInit = -disfuse / 2;
+                angleDelta = disfuse / flyingNumsModify;
+            }
+
+
             float flyingDistance = data.distance + modifyData.flyingDistance;
             for (int i = 0; i < 1 + flyingNumsModify; ++i)
             {
                 var ef = Flyings.Factory.Instance.Get(data.flyingType, data.flyingID);
                 ef.Src = spell.speller.Position;
                 Vector3 dir = (CameraSys.MouseHitPosition - spell.speller.Position).normalized;
-                Quaternion rotate = Quaternion.Euler(0, angleDelta * i, 0);
+                Quaternion rotate = Quaternion.Euler(0, angleDelta * i + angleInit, 0);
                 dir = rotate * dir;
                 ef.dest = ef.Src + dir * flyingDistance;
                 var ep = Projectiles.Factory.Instance.Get(data.projectileType, data.projectileID);

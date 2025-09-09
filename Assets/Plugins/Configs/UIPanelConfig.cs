@@ -38,6 +38,11 @@ namespace GameBase.Infos
             public static int Shop_shapeTexureID = 4;
             public static int Shop_contourTexureID = 7;
             public static int Shop_itemAlign = 0;
+
+            public static int SpellActionModifier_panelObjID = 43;
+            public static int SpellActionModifier_shapeTexureID = 4;
+            public static int SpellActionModifier_contourTexureID = 7;
+            public static int SpellActionModifier_itemAlign = 0;
         }
 
         public static class Float
@@ -97,6 +102,14 @@ namespace GameBase.Infos
             public static float Shop_maxPanelWidth = 1000f;
             public static float Shop_panelX = 0;
             public static float Shop_panelY = 0;
+
+            public static float SpellActionModifier_itemWidth = 80;
+            public static float SpellActionModifier_itemHeight = 80;
+            public static float SpellActionModifier_xInterval = 15f;
+            public static float SpellActionModifier_yInterval = 10f;
+            public static float SpellActionModifier_maxPanelWidth = 1000f;
+            public static float SpellActionModifier_panelX = 0;
+            public static float SpellActionModifier_panelY = 0;
         }
     }
 }

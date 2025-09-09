@@ -1,5 +1,7 @@
 using GameBase.Inventorys;
+using GameBase.Tools;
 using NReco.Csv;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -27,11 +29,14 @@ namespace Instance.Inventory
 
                 var data = new CommonItemData();
                 int index = int.Parse(csvReader[0]);
-                data.iconTextureID = int.Parse(csvReader[1]);
-                data.buffID = int.Parse(csvReader[2]);
+                Enum.TryParse(csvReader[1], out InventoryTag tag);
+                data.Tag = tag;
+                data.iconTextureID = int.Parse(csvReader[2]);
+                data.buffID = int.Parse(csvReader[3]);
+                data.spellActionModifyerID = int.Parse(csvReader[4]);
                 data.ID = index;
 
-                _datas[index] = data;
+                _datas[i] = data;
             }
 
             reader.Close();

@@ -33,6 +33,19 @@ namespace Constructor.Spells.Action.Modifyables
             }
         }
 
+        public float ProcessDisfuse(float origin)
+        {
+            const float MIN_DISFUSE = 30f;
+            if (origin < 0)
+            {
+                return MIN_DISFUSE * MIN_DISFUSE / (-origin + MIN_DISFUSE);
+            }
+            else
+            {
+                return origin;
+            }
+        }
+
         public void AddModifier(BaseModifier modifier)
         {
             _modifiers.Add(modifier);
