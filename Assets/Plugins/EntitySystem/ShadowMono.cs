@@ -5,7 +5,6 @@ namespace GameBase.EntitySystem
 {
     public class ShadowMono : MonoBehaviour
     {
-        private Action _Awake;
         private Action _Update;
 
         private Func<int> _EntityCountGetterDelegate;
@@ -20,7 +19,6 @@ namespace GameBase.EntitySystem
         public static void CreateShadowMono<T>(T instance) where T : IBaseSys
         {
             var shadowMono = new GameObject(instance.GetType().Name).AddComponent<ShadowMono>();
-            instance.Awake();
             shadowMono._Update = instance.Update;
             shadowMono._EntityCountGetterDelegate = instance.GetEntityCount;
             shadowMono._EntityReleasedCountGetterDelegate = instance.GetReleasedCount;

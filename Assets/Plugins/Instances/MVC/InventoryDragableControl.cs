@@ -10,8 +10,6 @@ namespace Instance.MVC
 
         private T _dragedItem;
         private int _dragedIndex;
-
-        protected abstract int GetDragedItemIndex(T e);
         protected abstract void OnExitDrag(T dragedItem, int dragedIndex);
 
         bool IDragableControl<T>.IsDrag(T e)
@@ -33,7 +31,7 @@ namespace Instance.MVC
 
             // shadow储存被拖拽的图标，模拟图标被拖走
             DragableShadowView.CopyIcon(e);
-            _dragedIndex = GetDragedItemIndex(e);
+            _dragedIndex = e.ItemIndex;
         }
 
         void IDragableControl<T>.OnExitDrag()

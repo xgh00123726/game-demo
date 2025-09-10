@@ -3,14 +3,14 @@ using UnityEngine;
 
 namespace GameBase.UI
 {
-    public class SpellItem : BaseViewItem
+    public class SpellViewItem : BaseViewItem
     {
         internal Material iconMaterial;
         internal TextMeshProUGUI timeTMP;
         internal TextMeshProUGUI chargeTMP;
 
         public IViewableSpell bindSpell;
-        public SpellItem()
+        public SpellViewItem()
         {
             ObjID = 11;
         }

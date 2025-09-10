@@ -16,11 +16,6 @@ public class LinearNonReleaseConstructor<T> : IEConstructor<T>, IEnumerable<T>
 
     public int Count => _entities.Count;
 
-    public int IndexOf(T e)
-    {
-        return _entities.IndexOf(e);
-    }
-
     public IEnumerator<T> GetEnumerator()
     {
         return ((IEnumerable<T>)_entities).GetEnumerator();

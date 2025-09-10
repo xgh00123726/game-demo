@@ -6,6 +6,7 @@ using GameBase.Move;
 using GameBase.Projectiles;
 using GameBase.Spells;
 using GameBase.UI;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameBase.Creatures
@@ -30,6 +31,7 @@ namespace GameBase.Creatures
         public int radius;
         public Tag tag;
         public Vector3 healthBarOffset = new Vector3(0, 1.6f, 0);
+        public Spell[] spells = new Spell[5];
         public bool Alive { get; internal protected set; }
         public int InstanceID { get; set; }
         public GameObject Obj { get; set; }
@@ -37,7 +39,6 @@ namespace GameBase.Creatures
         public virtual bool ReleaseTrigger => _modifyableContainer["currHP"].Value <= 0f;
 
         protected ModifyableContainer<float> _modifyableContainer = new();
-        protected SpellContainer _spellContainer = new();
         protected BuffContainer _buffContainer = new();
 
         internal Animator animator;
@@ -93,8 +94,6 @@ namespace GameBase.Creatures
 
         public Vector3 Dir { get; set; }
 
-        public SpellContainer SpellContainer => _spellContainer;
-
         bool IPlayerAnimable.IsMoving()
         {
             return IsMoving;
@@ -112,7 +111,6 @@ namespace GameBase.Creatures
 
         public void BeforeRelease()
         {
-            
         }
     }
 }

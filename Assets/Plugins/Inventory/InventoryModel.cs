@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace GameBase.Inventorys
 {
     public class InventoryModel<T_Item>
-        where T_Item : struct, IModelItem
+        where T_Item : struct
     {
         private struct InventoryItem
         {

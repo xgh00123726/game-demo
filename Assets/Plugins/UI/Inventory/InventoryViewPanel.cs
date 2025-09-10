@@ -12,6 +12,12 @@ namespace GameBase.UI
     {
         protected LinearNonReleaseConstructor<T> _container;
 
+        public InventoryViewPanel()
+        {
+            _container = new LinearNonReleaseConstructor<T>();
+            Constructor = _container;
+        }
+
         protected override RectTransform GetRectTransform(T e)
         {
             return e.Obj.transform.Find("Icon").GetComponent<RectTransform>();
@@ -34,25 +40,12 @@ namespace GameBase.UI
             return ui;
         }
 
-        protected override void Awake()
-        {
-            base.Awake();
-
-            _container = new LinearNonReleaseConstructor<T>();
-            Constructor = _container;
-        }
-
         public void Swap(int p1, int p2)
         {
             _container[p1].SwapIconSprite(_container[p2]);
         }
 
-        public int IndexOf(T e)
-        {
-            return _container.IndexOf(e);
-        }
-
-        public T this[int i]
+        public override T this[int i]
         {
             get => _container[i];
             set => _container[i] = value;

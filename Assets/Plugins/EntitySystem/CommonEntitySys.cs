@@ -14,28 +14,28 @@ namespace GameBase.EntitySystem
         where T_Entity : class, IEntity, new()
         where T_Instance : CommonEntitySys<T_Entity, T_Instance>, new()
     {
-        public int sysID = 0;
-        public int entityCount = 0;
-        public IEnumerable<T_Entity> Entities => _entities;
-        public IEConstructor<T_Entity> Constructor
-        {
-            set => _entityConstructor = value;
-            get => _entityConstructor;
-        }
+        private float _updateTimeAccumulate = 0;
+        private int _currentIterateIndex = 0;
 
         protected internal LinkedList<T_Entity> _entityNeedRegister = new LinkedList<T_Entity>();
         protected internal LinkedList<T_Entity> _entitiesNeedRemove = new LinkedList<T_Entity>();
         protected internal IEConstructor<T_Entity> _entityConstructor = new CommonConstructor<T_Entity>();
         protected internal LinkedList<T_Entity> _entities = new LinkedList<T_Entity>();
-
         protected internal int tick = 0;
         protected internal int fixedTick = 0;
+
+        public int sysID = 0;
+        public int entityCount = 0;
+
         protected internal virtual float FixedFreq => 60f;
-        private float _updateTimeAccumulate = 0;
 
         protected CommonEntitySys()
         {
             ShadowMono.CreateShadowMono(this);
+            PoolInfo.entitySysNum++;
+            sysID = PoolInfo.entitySysNum;
+            Tools.XLogger.Instance.Color(Color.green).IF(false).
+                Log($"entity sys: {this.GetType().Name} has awaken, entitySys id: {sysID}, instance hash:{GetHashCode()}");
         }
 
         /// <summary>
@@ -81,6 +81,15 @@ namespace GameBase.EntitySystem
         /// <param name="e"></param>
         protected virtual void OnRemoveEntityFromActives(T_Entity e) { }
 
+        protected int CurrentIterateIndex => _currentIterateIndex;
+
+        public IEnumerable<T_Entity> Entities => _entities;
+        public IEConstructor<T_Entity> Constructor
+        {
+            set => _entityConstructor = value;
+            get => _entityConstructor;
+        }
+
         public int Tick => tick;
         public int FixedTick => fixedTick;
 
@@ -111,14 +120,6 @@ namespace GameBase.EntitySystem
             return e;
         }
 
-        internal protected virtual void Awake()
-        {
-            PoolInfo.entitySysNum++;
-            sysID = PoolInfo.entitySysNum;
-            Tools.XLogger.Instance.Color(Color.green).IF(false).
-                Log($"entity sys: {this.GetType().Name} has awaken, entitySys id: {sysID}, instance hash:{GetHashCode()}");
-        }
-
         private void SysUpdate()
         {
             foreach (T_Entity e in _entityNeedRegister)
@@ -127,9 +128,11 @@ namespace GameBase.EntitySystem
             }
             _entityNeedRegister.Clear();
 
+            _currentIterateIndex = 0;
             foreach (var e in _entities)
             {
                 UpdateEntity(e);
+                _currentIterateIndex++;
             }
 
             foreach (var e in _entitiesNeedRemove)
@@ -159,11 +162,6 @@ namespace GameBase.EntitySystem
                 _updateTimeAccumulate -= fixedPeriod;
                 fixedTick++;
             }
-        }
-
-        void IBaseSys.Awake()
-        {
-            Awake();
         }
 
         void IBaseSys.Update()

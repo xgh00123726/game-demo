@@ -1,6 +1,4 @@
-using GameBase.EntitySystem;
 using GameBase.Spells;
-using GameBase.Tools;
 using NReco.Csv;
 using System;
 

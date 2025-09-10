@@ -28,13 +28,11 @@ namespace Instance.MVC
                 csvReader.Read();
 
                 var data = new CommonItemData();
-                int index = int.Parse(csvReader[0]);
-                Enum.TryParse(csvReader[1], out InventoryTag tag);
-                data.Tag = tag;
+                data.id = int.Parse(csvReader[0]);
+                Enum.TryParse(csvReader[1], out data.tag);
                 data.iconTextureID = int.Parse(csvReader[2]);
                 data.buffID = int.Parse(csvReader[3]);
                 data.spellActionModifyerID = int.Parse(csvReader[4]);
-                data.ID = index;
 
                 _datas[i] = data;
             }

@@ -20,7 +20,7 @@ namespace Instance.MVC
         {
             ShadowView.SetPosition(Input.mousePosition);
 
-            var index = CommonInventoryController.Instance.IndexOfView(e);
+            var index = e.ItemIndex;
             if (index >= 0 && CommonInventoryController.Instance.TryGetData(index, out var data))
             {
                 ShadowView.SetText($"index:{index}\nbuff id:{data.buffID}\ntexture id:{data.iconTextureID}");

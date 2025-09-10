@@ -31,10 +31,11 @@ namespace Instance.MVC
         protected override EquipmentViewPanel View => EquipmentViewPanel.Instance;
         protected override IDataBase<CommonItemData> DataBase => CommonDataBase.Instance;
 
-        public override void AddItem(CommonItemData item, int index)
+        public override int AddItem(CommonItemData item, int index)
         {
             base.AddItem(item, index);
             owner.RegisterBuff(_inventoryModel.GetBuff(index));
+            return index;
         }
 
         public override void RemoveItem(int position)

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameBase.Spells
@@ -7,6 +8,5 @@ namespace GameBase.Spells
         // 需具备技能急速属性，单位1%
         float CoolingAccelerate { get; }
         Vector3 Position { get; }
-        SpellContainer SpellContainer { get; }
     }
 }

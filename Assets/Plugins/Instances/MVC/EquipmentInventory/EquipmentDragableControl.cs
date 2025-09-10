@@ -8,11 +8,6 @@ namespace Instance.MVC
         public CommonInventoryController CC => CommonInventoryController.Instance;
         public EquipmentInventoryController EC => EquipmentInventoryController.Instance;
 
-        protected override int GetDragedItemIndex(EquipmentViewItem e)
-        {
-            return EC.IndexOfView(e);
-        }
-
         protected override void OnExitDrag(EquipmentViewItem dragedItem, int dragedIndex)
         {
             if (EC.TryGetItemUI(Input.mousePosition, out var ee, out var ie))

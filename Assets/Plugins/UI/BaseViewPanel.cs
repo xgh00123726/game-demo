@@ -16,9 +16,11 @@ namespace GameBase.UI
         }
 
         internal IDragableControl<T> dragableControl;
-        internal IEnterExistControl<T> enterExistControl;
+        internal IEnterExitControl<T> enterExitControl;
         internal ISwitchable<T> switchable;
         internal IDetailableControl<T> detailableControl;
+
+        public GameObject panel;
 
         public IDragableControl<T> DragableControl
         {
@@ -26,10 +28,10 @@ namespace GameBase.UI
             set => dragableControl = value;
         }
 
-        public IEnterExistControl<T> EnterExistControl
+        public IEnterExitControl<T> EnterExitControl
         {
-            get => enterExistControl;
-            set => enterExistControl = value;
+            get => enterExitControl;
+            set => enterExitControl = value;
         }
 
         public ISwitchable<T> Switchable
@@ -44,9 +46,6 @@ namespace GameBase.UI
             set => detailableControl = value;
         }
 
-        public GameObject panel;
-        private int itemIterIdx = 0;
-
         internal abstract float ItemWidth { get; }
         internal abstract float ItemHeight { get; }
         internal abstract float XInterval { get; }
@@ -58,7 +57,12 @@ namespace GameBase.UI
         internal abstract int ShapeTexureID { get; }
         internal abstract int ContourTexureID { get; }
         internal abstract int ItemAlign { get; }
-        internal int ItemIterIdx => itemIterIdx;
+
+        public BaseViewPanel()
+        {
+            panel = GameObject.Instantiate(ResourcesLoader.GetPrefab(PanelObjID));
+            panel.transform.SetParent(RootCanvas.Instance.transform, false);
+        }
 
         protected virtual RectTransform GetRectTransform(T e)
         {
@@ -108,10 +112,10 @@ namespace GameBase.UI
             var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
 
             var ui = obj.AddComponent<BaseUI>();
-            ui.enterAction = () => enterExistControl?.OnPointerEnter(e);
-            ui.exitAction = () => enterExistControl?.OnPointerExit(e);
-            ui.pointerDownAction = () => enterExistControl?.OnPointerDown(e);
-            ui.pointerRightDownAction = () => enterExistControl?.OnPointerRightDown(e);
+            ui.enterAction = () => enterExitControl?.OnPointerEnter(e);
+            ui.exitAction = () => enterExitControl?.OnPointerExit(e);
+            ui.pointerDownAction = () => enterExitControl?.OnPointerDown(e);
+            ui.pointerRightDownAction = () => enterExitControl?.OnPointerRightDown(e);
 
             e.Obj = ui;
 
@@ -166,9 +170,17 @@ namespace GameBase.UI
             e.lastDetail = isDetail;
         }
 
+        private void EnterExitUpdate(T e)
+        {
+            e.lastClicked = e.Obj.isPointerDown;
+
+            if (enterExitControl == null) return;
+        }
+
         protected override void UpdateEntity(T e)
         {
-            e.Obj.transform.localPosition = GetItemLocalPosition(itemIterIdx);
+            e.itemIndex = CurrentIterateIndex;
+            e.Obj.transform.localPosition = GetItemLocalPosition(CurrentIterateIndex);
 
             if (e.Obj.isPointerOn)
             {
@@ -181,11 +193,7 @@ namespace GameBase.UI
 
             DragableUpdate(e);
             DetailbleUpdate(e);
-
-            if (++itemIterIdx >= _entities.Count)
-            {
-                itemIterIdx = 0;
-            }
+            EnterExitUpdate(e);
         }
 
         protected override void Update()
@@ -195,12 +203,20 @@ namespace GameBase.UI
             panel.transform.localPosition = new Vector3(PanelX, PanelY, 0);
         }
 
-        protected override void Awake()
+        public virtual T this[int index]
         {
-            base.Awake();
+            get
+            {
+                foreach (var e in _entities)
+                {
+                    if (e.itemIndex == index) return e;
+                }
+                return null;
+            }
+            set
+            {
 
-            panel = GameObject.Instantiate(ResourcesLoader.GetPrefab(PanelObjID));
-            panel.transform.SetParent(RootCanvas.Instance.transform, false);
+            }
         }
 
         /// <summary>

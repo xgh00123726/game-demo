@@ -2,10 +2,16 @@ using GameBase.Inventorys;
 
 namespace Instance.MVC
 {
-    public struct CommonItemData : IModelItem
+    public enum InventoryTag
     {
-        public int ID { get; set; }
-        public InventoryTag Tag {  get; set; }
+        None = 0,
+        Equipment,
+        SpellActionModify,
+    }
+    public struct CommonItemData
+    {
+        public int id;
+        public InventoryTag tag;
         public int iconTextureID;
         public int buffID;
         public int spellActionModifyerID;

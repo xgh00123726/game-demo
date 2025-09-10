@@ -10,11 +10,6 @@ namespace Instance.MVC
         public CommonInventoryController CC => CommonInventoryController.Instance;
         public EquipmentInventoryController EC => EquipmentInventoryController.Instance;
 
-        protected override int GetDragedItemIndex(CommonInventoryViewItem e)
-        {
-            return CC.IndexOfView(e);
-        }
-
         protected override void OnExitDrag(CommonInventoryViewItem dragedItem, int dragedIndex)
         {
             // 如果拖动的位置是装备栏

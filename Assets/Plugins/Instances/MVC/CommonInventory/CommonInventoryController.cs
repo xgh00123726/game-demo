@@ -30,7 +30,7 @@ namespace Instance.MVC
         {
             View.DragableControl = new CommonDragableControl();
             View.DetailableControl = new CommonDetailControl();
-            View.EnterExistControl = new CommonFixedDetailableControl();
+            View.EnterExitControl = new CommonFixedDetailableControl();
             View.panel.SetActive(false);
             for (int i = 0; i < ITEM_NUM; i++)
             {

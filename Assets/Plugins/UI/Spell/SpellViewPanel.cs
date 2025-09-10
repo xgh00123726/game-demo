@@ -8,9 +8,10 @@ using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public class SpellPanel : BaseViewPanel<SpellItem, SpellPanel>
+    public class SpellViewPanel : BaseViewPanel<SpellViewItem, SpellViewPanel>
     {
-        protected LinearConstructor<SpellItem> _container;
+        protected LinearConstructor<SpellViewItem> _container;
+        private int _lastClickedItemIndex = -1;
         internal override int PanelObjID => UIPanelConfig.Int.Spell_panelObjID;
         internal override int ShapeTexureID => UIPanelConfig.Int.Spell_shapeTexureID;
         internal override int ContourTexureID => UIPanelConfig.Int.Spell_contourTexureID;
@@ -23,7 +24,13 @@ namespace GameBase.UI
         internal override float PanelY =>  UIPanelConfig.Float.Spell_panelY;
         internal override int ItemAlign =>  UIPanelConfig.Int.Spell_itemAlign;
 
-        protected override BaseUI InstantiateObj(SpellItem e)
+        public SpellViewPanel()
+        {
+            _container = new LinearConstructor<SpellViewItem>();
+            Constructor = _container;
+        }
+
+        protected override BaseUI InstantiateObj(SpellViewItem e)
         {
             var obj = base.InstantiateObj(e);
 
@@ -54,14 +61,8 @@ namespace GameBase.UI
 
             return obj;
         }
-        protected override void Awake()
-        {
-            base.Awake();
 
-            _container = new LinearConstructor<SpellItem>();
-            Constructor = _container;
-        }
-        protected override void UpdateEntity(SpellItem e)
+        protected override void UpdateEntity(SpellViewItem e)
         {
             base.UpdateEntity(e);
 
@@ -80,6 +81,19 @@ namespace GameBase.UI
                 coolingText = $".{(int)(coolingTimeRemain * 10)}";
             }
             e.timeTMP.text = coolingText;
+
+            if (e.Obj.isPointerDown)
+            {
+                _lastClickedItemIndex = CurrentIterateIndex;
+            }
         }
+
+        public override SpellViewItem this[int index]
+        {
+            get => _container[index];
+            set => _container[index] = value;
+        }
+
+        public int LastClickedItemIndex => _lastClickedItemIndex;
     }
 }
