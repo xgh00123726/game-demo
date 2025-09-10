@@ -24,7 +24,7 @@ public partial class Player
     private void BuffUIInit()
     {
         var e = BuffViewPanel.Instance;
-        charater.BuffContainer.OnAddBuff = OnAddBuff;
-        charater.BuffContainer.OnRemoveBuff = OnRemoveBuff;
+        character.BuffContainer.OnAddBuff = OnAddBuff;
+        character.BuffContainer.OnRemoveBuff = OnRemoveBuff;
     }
 }

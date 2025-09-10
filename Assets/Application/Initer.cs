@@ -4,6 +4,8 @@ using GameBase.Projectiles;
 using GameBase.Tools;
 using GameBase.Modify;
 using UnityEngine;
+using Instance.Shops;
+using GameBase.Shops;
 public class Initer : MonoBehaviour
 {
     void Start()
@@ -56,12 +58,22 @@ public class Initer : MonoBehaviour
             CreatureSys.Instance.RemoveAll(GameBase.Creatures.Tag.CommonCreature);
         });
 
-        var charater = Constructor.Creatures.Factory.Instance.Get(Constructor.Creatures.Type.Common, 0);
-        var player = charater.Obj.AddComponent<Player>();
-        player.charater = charater;
-        charater.Position = new Vector3(-6, -7, 4);
+        var character = Constructor.Creatures.Factory.Instance.Get(Constructor.Creatures.Type.Common, 0);
+        var player = character.Obj.AddComponent<Player>();
+        player.character = character;
+        character.Position = new Vector3(-6, -7, 4);
 
         ProjectileGizmos.Instance.ToggleShow();
+
+        var shop = ShopSys.Instance.NewEntity();
+        shop.Obj.transform.position = character.Position + new Vector3(3, 0, 0);
+        var shopView = new ShopView();
+        shop.shopView = shopView;
+        shop.newrView = new NearView();
+        shop.shoper = player;
+        shop.interactive = shopView;
+        shop.model = new ShopModel();
+        shop.GoodNum = 5;
     }
 
     private void Update()

@@ -28,6 +28,16 @@ Inventory_shapeTexureID = 4
 Inventory_contourTexureID = 7
 Inventory_itemAlign = 0
 
+Shop_panelObjID = 41
+Shop_shapeTexureID = 4
+Shop_contourTexureID = 7
+Shop_itemAlign = 0
+
+SpellActionModifier_panelObjID = 43
+SpellActionModifier_shapeTexureID = 4
+SpellActionModifier_contourTexureID = 7
+SpellActionModifier_itemAlign = 0
+
 Buff_itemWidth = 30.0
 Buff_itemHeight = 30.0
 Buff_xInterval = 1.5
@@ -75,3 +85,19 @@ Inventory_yInterval = 35;
 Inventory_maxPanelWidth = 1200;
 Inventory_panelX = -600;
 Inventory_panelY = 160;
+
+Shop_itemWidth = 80;
+Shop_itemHeight = 80;
+Shop_xInterval = 100;
+Shop_yInterval = 35;
+Shop_maxPanelWidth = 1200;
+Shop_panelX = -300;
+Shop_panelY = 200;
+
+SpellActionModifier_itemWidth = 80;
+SpellActionModifier_itemHeight = 80;
+SpellActionModifier_xInterval = 100;
+SpellActionModifier_yInterval = 35;
+SpellActionModifier_maxPanelWidth = 1200;
+SpellActionModifier_panelX = -300;
+SpellActionModifier_panelY = 200;

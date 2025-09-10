@@ -16,13 +16,13 @@ public partial class Player
     {
         var e = AttrViewPanel.Instance;
 
-        ShowAttrUI(charater.ModifyableContainer["universal"], 19);
-        ShowAttrUI(charater.ModifyableContainer["moveSpeed"], 20);
-        ShowAttrUI(charater.ModifyableContainer["strength"], 18);
-        ShowAttrUI(charater.ModifyableContainer["attackSpeed"], 21);
-        ShowAttrUI(charater.ModifyableContainer["agility"], 14);
-        ShowAttrUI(charater.ModifyableContainer["defense"], 13);
-        ShowAttrUI(charater.ModifyableContainer["intelligence"], 15);
-        ShowAttrUI(charater.ModifyableContainer["damage"], 12);
+        ShowAttrUI(character.ModifyableContainer["universal"], 19);
+        ShowAttrUI(character.ModifyableContainer["moveSpeed"], 20);
+        ShowAttrUI(character.ModifyableContainer["strength"], 18);
+        ShowAttrUI(character.ModifyableContainer["attackSpeed"], 21);
+        ShowAttrUI(character.ModifyableContainer["agility"], 14);
+        ShowAttrUI(character.ModifyableContainer["defense"], 13);
+        ShowAttrUI(character.ModifyableContainer["intelligence"], 15);
+        ShowAttrUI(character.ModifyableContainer["damage"], 12);
     }
 }
