@@ -4,7 +4,7 @@ using GameBase.Tools;
 
 namespace Constructor
 {
-    public abstract class ConstructorFactory<T_EntityEnum, T_Entity, T_Factory> : Signleton<T_Factory>
+    public abstract class ConstructorFactory<T_EntityEnum, T_Entity, T_Factory> : Singleton<T_Factory>
         where T_Factory : ConstructorFactory<T_EntityEnum, T_Entity, T_Factory>, new()
     {
         private Dictionary<T_EntityEnum, Func<int, T_Entity>> _constructorGetDict;

@@ -7,10 +7,9 @@ using UnityEngine.UI;
 
 namespace Instance.MVC
 {
-    public class DetailableShadowView<T>
+    public class DetailableShadowView<T> : Singleton<DetailableShadowView<T>>
         where T : InventoryViewItem
     {
-        private static DetailableShadowView<T> _instance = new();
         private GameObject _shadowObj;
         private Image _iconImage;
         private TextMeshProUGUI _textTMP;
@@ -45,9 +44,6 @@ namespace Instance.MVC
                     .Log("panel item must has icon object");
             }
         }
-
-        public static DetailableShadowView<T> Instance => _instance;
-
         public void SetText(string text)
         {
             _textTMP.text = text;

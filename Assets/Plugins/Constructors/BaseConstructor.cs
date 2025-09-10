@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Constructor
 {
-    public abstract class BaseConstructor<T_Data, T_Entity, T_Constructor> : Signleton<T_Constructor>
+    public abstract class BaseConstructor<T_Data, T_Entity, T_Constructor> : Singleton<T_Constructor>
         where T_Data : struct
         where T_Entity : class
         where T_Constructor : BaseConstructor<T_Data, T_Entity, T_Constructor>, new()

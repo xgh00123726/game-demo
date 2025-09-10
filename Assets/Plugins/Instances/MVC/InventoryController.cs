@@ -6,15 +6,12 @@ using UnityEngine;
 
 namespace Instance.MVC
 {
-    public abstract class InventoryController<T_ModelItem, T_ViewItem, T_View, T_Controller>
+    public abstract class InventoryController<T_ModelItem, T_ViewItem, T_View, T_Controller> : Singleton<T_Controller>
         where T_ModelItem : struct, IModelItem
         where T_ViewItem : InventoryViewItem, new()
         where T_View : InventoryViewPanel<T_ViewItem, T_View>, new()
         where T_Controller : InventoryController<T_ModelItem, T_ViewItem, T_View, T_Controller>, new()
     {
-        private static T_Controller _controller = new();
-        public static T_Controller Instance =>_controller;
-
         protected abstract IInventoryModel<T_ModelItem> Model { get; }
         protected abstract T_View View { get; }
         protected abstract IDataBase<T_ModelItem> DataBase { get; }
