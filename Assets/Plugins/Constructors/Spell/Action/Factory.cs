@@ -16,8 +16,9 @@ namespace Constructor.Spells.Action
     }
     public class Factory : ConstructorFactory<Type, IAction, Factory>
     {
-        protected override Dictionary<Type, Func<int, IAction>> ConstructorGetDict =>
-            new()
+        protected override Dictionary<Type, Func<int, IAction>> GetConstructorGetDict()
+        {
+            return new()
             {
                 {Type.TrigOnRelease, TrigOnReleaseCon.Instance.Get },
                 {Type.TrigNearestTarget, TrigNearestTargetCon.Instance.Get },
@@ -25,5 +26,6 @@ namespace Constructor.Spells.Action
                 {Type.BuffSelf, BuffSelfCon.Instance.Get },
                 {Type.MAreaFixedDis, MAreaFixedDisCon.Instance.Get },
             };
+        }
     }
 }

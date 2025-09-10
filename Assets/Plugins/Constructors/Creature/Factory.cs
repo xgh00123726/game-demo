@@ -9,10 +9,12 @@ namespace Constructor.Creatures
     }
     public class Factory : ConstructorFactory<Type, Creature, Factory>
     {
-        protected override Dictionary<Type, System.Func<int, Creature>> ConstructorGetDict =>
-            new()
+        protected override Dictionary<Type, System.Func<int, Creature>> GetConstructorGetDict()
+        {
+            return new()
             {
                 {Type.Common, Common.Instance.Get }
             };
+        }
     }
 }

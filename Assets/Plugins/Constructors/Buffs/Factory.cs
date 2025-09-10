@@ -9,10 +9,12 @@ namespace Constructor.Buffs
     }
     public class Factory : ConstructorFactory<Type, Buff, Factory>
     {
-        protected override Dictionary<Type, System.Func<int, Buff>> ConstructorGetDict =>
-            new()
+        protected override Dictionary<Type, System.Func<int, Buff>> GetConstructorGetDict()
+        {
+            return new()
             {
                 {Type.Common, Common.Instance.Get }
             };
+        }
     }
 }

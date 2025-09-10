@@ -9,10 +9,12 @@ namespace Constructor.Effects
     }
     public class Factory : ConstructorFactory<Type, Effect, Factory>
     {
-        protected override Dictionary<Type, System.Func<int, Effect>> ConstructorGetDict =>
-            new()
+        protected override Dictionary<Type, System.Func<int, Effect>> GetConstructorGetDict()
+        {
+            return new()
             {
                 {Type.Common, Common.Instance.Get }
             };
+        }
     }
 }

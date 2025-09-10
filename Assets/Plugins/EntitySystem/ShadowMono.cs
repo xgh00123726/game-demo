@@ -19,7 +19,7 @@ namespace GameBase.EntitySystem
 
         public static void CreateShadowMono<T>(T instance) where T : IBaseSys
         {
-            var shadowMono = new GameObject(typeof(T).Name).AddComponent<ShadowMono>();
+            var shadowMono = new GameObject(instance.GetType().Name).AddComponent<ShadowMono>();
             instance.Awake();
             shadowMono._Update = instance.Update;
             shadowMono._EntityCountGetterDelegate = instance.GetEntityCount;

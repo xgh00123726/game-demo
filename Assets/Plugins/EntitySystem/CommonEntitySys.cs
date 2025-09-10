@@ -10,7 +10,7 @@ namespace GameBase.EntitySystem
     /// <list type="bullet">
     /// <item><typeparam name="T_Entity"><typeparamref name="T_Entity"/>:实体类型</typeparam></item>
     /// </list></summary>
-    public abstract class CommonEntitySys<T_Entity, T_Instance> : IBaseSys
+    public abstract class CommonEntitySys<T_Entity, T_Instance> : Signleton<T_Instance>, IBaseSys
         where T_Entity : class, IEntity, new()
         where T_Instance : CommonEntitySys<T_Entity, T_Instance>, new()
     {
@@ -33,22 +33,10 @@ namespace GameBase.EntitySystem
         protected internal virtual float FixedFreq => 60f;
         private float _updateTimeAccumulate = 0;
 
-        internal static T_Instance instance;
-
-        public static T_Instance Instance
+        protected CommonEntitySys()
         {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new T_Instance();
-                    ShadowMono.CreateShadowMono(instance);
-                }
-
-                return instance;
-            }
+            ShadowMono.CreateShadowMono(this);
         }
-
 
         /// <summary>
         /// 将实体标记为删除
@@ -128,7 +116,7 @@ namespace GameBase.EntitySystem
             PoolInfo.entitySysNum++;
             sysID = PoolInfo.entitySysNum;
             Tools.XLogger.Instance.Color(Color.green).IF(false).
-                Log($"entity sys: {this.GetType().Name} has awaken, entitySys id: {sysID}, instance hash:{instance.GetHashCode()}");
+                Log($"entity sys: {this.GetType().Name} has awaken, entitySys id: {sysID}, instance hash:{GetHashCode()}");
         }
 
         private void SysUpdate()

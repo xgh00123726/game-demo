@@ -6,26 +6,19 @@ using UnityEngine;
 
 namespace Constructor
 {
-    public abstract class BaseConstructor<T_Data, T_Entity, T_Constructor>
+    public abstract class BaseConstructor<T_Data, T_Entity, T_Constructor> : Signleton<T_Constructor>
         where T_Data : struct
         where T_Entity : class
         where T_Constructor : BaseConstructor<T_Data, T_Entity, T_Constructor>, new()
     {
         private T_Data[] _datas;
-        private static T_Constructor _instance;
-        public static T_Constructor Instance
+
+        protected BaseConstructor()
         {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new T_Constructor();
-                    _instance.Init();
-                    Command.Register($"{typeof(T_Constructor).FullName}-init", _instance.Init);
-                }
-                return _instance;
-            }
+            Init();
+            Command.Register($"{typeof(T_Constructor).FullName}-init", Init);
         }
+
         protected abstract void Parse(CsvReader line, ref T_Data data);
         protected abstract string RelativePath { get; }
         protected abstract void Set(T_Entity e, in T_Data data);

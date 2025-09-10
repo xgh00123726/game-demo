@@ -9,10 +9,12 @@ namespace Constructor.Projectiles.Action
     }
     public class Factory : ConstructorFactory<Type, IProjectileAction, Factory>
     {
-        protected override Dictionary<Type, System.Func<int, IProjectileAction>> ConstructorGetDict =>
-            new()
+        protected override Dictionary<Type, System.Func<int, IProjectileAction>> GetConstructorGetDict()
+        {
+            return new()
             {
                 {Type.Damage, DamageCon.Get },
             };
+        }
     }
 }
