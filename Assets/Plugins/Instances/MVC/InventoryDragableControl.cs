@@ -1,7 +1,7 @@
 using GameBase.UI;
 using UnityEngine;
 
-namespace Instance.Inventory
+namespace Instance.MVC
 {
     public abstract class InventoryDragableControl<T> : IDragableControl<T>
         where T : InventoryViewItem

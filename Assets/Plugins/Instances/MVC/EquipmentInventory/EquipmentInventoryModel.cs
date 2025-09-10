@@ -1,12 +1,13 @@
 using GameBase.Buffs;
 using GameBase.Inventorys;
-using Instance.Inventory;
+using Instance.MVC;
 using System;
 using System.Collections.Generic;
 
-public class EquipmentInventoryModel : InventoryModel<CommonItemData>
+public class EquipmentInventoryModel : InventoryModel<CommonItemData>, IInventoryModel<CommonItemData>
 {
     private List<Buff> buffs;
+
     public EquipmentInventoryModel(int capacity)
     {
         buffs = new List<Buff>(capacity);

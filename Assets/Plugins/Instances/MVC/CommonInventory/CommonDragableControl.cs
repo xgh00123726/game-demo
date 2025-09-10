@@ -3,7 +3,7 @@ using GameBase.Tools;
 using GameBase.UI;
 using UnityEngine;
 
-namespace Instance.Inventory
+namespace Instance.MVC
 {
     public class CommonDragableControl : InventoryDragableControl<CommonInventoryViewItem>
     {

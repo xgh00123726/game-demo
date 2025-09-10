@@ -5,7 +5,7 @@ using GameBase.UI;
 using Instance.Buffs;
 using UnityEngine;
 
-namespace Instance.Inventory
+namespace Instance.MVC
 {
     public class EquipmentInventoryController : InventoryController<CommonItemData,
         EquipmentViewItem,
@@ -27,7 +27,7 @@ namespace Instance.Inventory
             }
         }
 
-        protected override InventoryModel<CommonItemData> Model => _inventoryModel;
+        protected override IInventoryModel<CommonItemData> Model => _inventoryModel;
         protected override EquipmentViewPanel View => EquipmentViewPanel.Instance;
         protected override IDataBase<CommonItemData> DataBase => CommonDataBase.Instance;
 

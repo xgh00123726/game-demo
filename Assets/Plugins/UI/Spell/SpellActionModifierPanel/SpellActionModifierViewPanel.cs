@@ -1,7 +1,7 @@
 using GameBase.Infos;
 using GameBase.UI;
 
-public class SpellActionModifierViewPanel : BaseViewPanel<SpellActionModifierViewItem, SpellActionModifierViewPanel>
+public class SpellActionModifierViewPanel : InventoryViewPanel<SpellActionModifierViewItem, SpellActionModifierViewPanel>
 {
     internal override float ItemWidth => UIPanelConfig.Float.SpellActionModifier_itemWidth;
 

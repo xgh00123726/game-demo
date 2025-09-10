@@ -1,7 +1,7 @@
 using GameBase.UI;
 using UnityEngine;
 
-namespace Instance.Inventory
+namespace Instance.MVC
 {
     public class EquipmentDragableControl : InventoryDragableControl<EquipmentViewItem>
     {

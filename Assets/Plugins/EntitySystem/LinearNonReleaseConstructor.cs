@@ -2,9 +2,8 @@ using GameBase.EntitySystem;
 using GameBase.Tools;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class LinearEntityContainer<T> : IEContainer<T>, IEnumerable<T>
+public class LinearNonReleaseConstructor<T> : IEConstructor<T>, IEnumerable<T>
     where T : new()
 {
     private List<T> _entities = new();
@@ -27,17 +26,10 @@ public class LinearEntityContainer<T> : IEContainer<T>, IEnumerable<T>
         return ((IEnumerable<T>)_entities).GetEnumerator();
     }
 
-    T IEContainer<T>.GetEntity()
+    T IEConstructor<T>.GetEntity()
     {
         var ret = new T();
         _entities.Add(ret);
-        return ret;
-    }
-
-    public T PopLast()
-    {
-        T ret = _entities[_entities.Count - 1];
-        _entities.RemoveAt(_entities.Count - 1);
         return ret;
     }
 
@@ -46,7 +38,7 @@ public class LinearEntityContainer<T> : IEContainer<T>, IEnumerable<T>
         return ((IEnumerable)_entities).GetEnumerator();
     }
 
-    void IEContainer<T>.ReleaseEntity(T e)
+    void IEConstructor<T>.ReleaseEntity(T e)
     {
         XLogger.Instance.Level(XLogger.LogLevel.Error).
             Log("trying to release entity to a non-release container");

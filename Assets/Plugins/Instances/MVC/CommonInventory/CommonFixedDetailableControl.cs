@@ -1,6 +1,6 @@
 using GameBase.UI;
 
-namespace Instance.Inventory
+namespace Instance.MVC
 {
     public class CommonFixedDetailableControl : IEnterExistControl<CommonInventoryViewItem>
     {

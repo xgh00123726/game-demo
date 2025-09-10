@@ -1,12 +1,9 @@
 using GameBase.Inventorys;
 using GameBase.Resources;
-using GameBase.Tools;
 using GameBase.UI;
-using System;
-using UnityEditor;
 using UnityEngine;
 
-namespace Instance.Inventory
+namespace Instance.MVC
 {
     public class CommonInventoryController : InventoryController<CommonItemData,
         CommonInventoryViewItem,
@@ -24,7 +21,7 @@ namespace Instance.Inventory
         {
             Size = ITEM_NUM
         };
-        protected override InventoryModel<CommonItemData> Model => _inventoryModel;
+        protected override IInventoryModel<CommonItemData> Model => _inventoryModel;
         protected override CommonInventoryViewPanel View => CommonInventoryViewPanel.Instance;
         protected override IDataBase<CommonItemData> DataBase => CommonDataBase.Instance;
         public bool IsShow => _showFlag;

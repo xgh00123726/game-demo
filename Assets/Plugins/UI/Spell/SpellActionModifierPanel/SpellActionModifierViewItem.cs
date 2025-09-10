@@ -1,6 +1,6 @@
 namespace GameBase.UI
 {
-    public class SpellActionModifierViewItem : BaseViewItem
+    public class SpellActionModifierViewItem : InventoryViewItem
     {
         public SpellActionModifierViewItem()
         {

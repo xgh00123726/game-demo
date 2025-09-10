@@ -10,7 +10,7 @@ namespace GameBase.UI
         where T : InventoryViewItem, new()
         where T_instance : InventoryViewPanel<T, T_instance>, new()
     {
-        protected LinearNonReleaseEntityContainer<T> _container;
+        protected LinearNonReleaseConstructor<T> _container;
 
         protected override RectTransform GetRectTransform(T e)
         {
@@ -38,8 +38,8 @@ namespace GameBase.UI
         {
             base.Awake();
 
-            _container = new LinearNonReleaseEntityContainer<T>();
-            Container = _container;
+            _container = new LinearNonReleaseConstructor<T>();
+            Constructor = _container;
         }
 
         public void Swap(int p1, int p2)

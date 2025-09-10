@@ -1,6 +1,6 @@
 using GameBase.Inventorys;
 
-namespace Instance.Inventory
+namespace Instance.MVC
 {
     public struct CommonItemData : IModelItem
     {

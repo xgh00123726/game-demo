@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Instance.Inventory
+namespace Instance.MVC
 {
     public class FixedDetailableShadowView<T>
         where T : InventoryViewItem

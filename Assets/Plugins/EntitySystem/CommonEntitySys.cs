@@ -17,15 +17,15 @@ namespace GameBase.EntitySystem
         public int sysID = 0;
         public int entityCount = 0;
         public IEnumerable<T_Entity> Entities => _entities;
-        public IEContainer<T_Entity> Container
+        public IEConstructor<T_Entity> Constructor
         {
-            set => _entityContainer = value;
-            get => _entityContainer;
+            set => _entityConstructor = value;
+            get => _entityConstructor;
         }
 
         protected internal LinkedList<T_Entity> _entityNeedRegister = new LinkedList<T_Entity>();
         protected internal LinkedList<T_Entity> _entitiesNeedRemove = new LinkedList<T_Entity>();
-        protected internal IEContainer<T_Entity> _entityContainer = new CommonEntityContainer<T_Entity>();
+        protected internal IEConstructor<T_Entity> _entityConstructor = new CommonConstructor<T_Entity>();
         protected internal LinkedList<T_Entity> _entities = new LinkedList<T_Entity>();
 
         protected internal int tick = 0;
@@ -99,7 +99,7 @@ namespace GameBase.EntitySystem
 
         public T_Entity NewFromPool()
         {
-            return _entityContainer.GetEntity();
+            return _entityConstructor.GetEntity();
         }
 
         public void RegisterEntity(T_Entity e)
@@ -148,7 +148,7 @@ namespace GameBase.EntitySystem
             {
                 OnRemoveEntityFromActives(e);
                 _entities.Remove(e);
-                _entityContainer.ReleaseEntity(e);
+                _entityConstructor.ReleaseEntity(e);
             }
             _entitiesNeedRemove.Clear();
         }
@@ -190,7 +190,7 @@ namespace GameBase.EntitySystem
 
         int IBaseSys.GetReleasedCount()
         {
-            return _entityContainer.Count;
+            return _entityConstructor.Count;
         }
 
         int IBaseSys.GetActiveCount()

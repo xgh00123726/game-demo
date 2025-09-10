@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Linq;
 using UnityEngine;
-namespace Instance.Inventory
+namespace Instance.MVC
 {
     public class CommonDataBase : IDataBase<CommonItemData>
     {

@@ -11,10 +11,10 @@ namespace Instance.Shops
 
         int IShopView.GoodNums
         {
-            get => SP.Container.Count;
+            get => SP.Constructor.Count;
             set
             {
-                var count = SP.Container.Count;
+                var count = SP.Constructor.Count;
                 if (value > count)
                 {
                     for (int i = 0; i < value - count; i++)

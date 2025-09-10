@@ -2,11 +2,9 @@ using GameBase.Inventorys;
 using GameBase.Resources;
 using GameBase.Tools;
 using GameBase.UI;
-using Instance.Inventory;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-namespace Instance.Inventory
+namespace Instance.MVC
 {
     public abstract class InventoryController<T_ModelItem, T_ViewItem, T_View, T_Controller>
         where T_ModelItem : struct, IModelItem
@@ -17,7 +15,7 @@ namespace Instance.Inventory
         private static T_Controller _controller = new();
         public static T_Controller Instance =>_controller;
 
-        protected abstract InventoryModel<T_ModelItem> Model { get; }
+        protected abstract IInventoryModel<T_ModelItem> Model { get; }
         protected abstract T_View View { get; }
         protected abstract IDataBase<T_ModelItem> DataBase { get; }
 

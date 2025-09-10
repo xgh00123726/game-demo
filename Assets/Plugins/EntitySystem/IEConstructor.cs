@@ -1,6 +1,6 @@
 namespace GameBase.EntitySystem
 {
-    public interface IEContainer<T>
+    public interface IEConstructor<T>
     {
         T GetEntity();
 

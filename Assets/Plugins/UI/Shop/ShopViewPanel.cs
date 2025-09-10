@@ -7,7 +7,7 @@ namespace GameBase.UI
 {
     public class ShopViewPanel : BaseViewPanel<ShopViewItem, ShopViewPanel>
     {
-        protected LinearEntityContainer<ShopViewItem> _container;
+        protected LinearConstructor<ShopViewItem> _container;
 
         internal override float ItemWidth => UIPanelConfig.Float.Shop_itemWidth;
 
@@ -54,8 +54,8 @@ namespace GameBase.UI
         {
             base.Awake();
 
-            _container = new LinearEntityContainer<ShopViewItem>();
-            Container = _container;
+            _container = new LinearConstructor<ShopViewItem>();
+            Constructor = _container;
         }
 
         public void PopLast()

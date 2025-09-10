@@ -4,7 +4,7 @@ using GameBase.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Instance.Inventory
+namespace Instance.MVC
 {
     public class DragableShadowView
     {

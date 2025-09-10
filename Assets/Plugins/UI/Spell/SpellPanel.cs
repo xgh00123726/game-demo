@@ -10,6 +10,7 @@ namespace GameBase.UI
 {
     public class SpellPanel : BaseViewPanel<SpellItem, SpellPanel>
     {
+        protected LinearConstructor<SpellItem> _container;
         internal override int PanelObjID => UIPanelConfig.Int.Spell_panelObjID;
         internal override int ShapeTexureID => UIPanelConfig.Int.Spell_shapeTexureID;
         internal override int ContourTexureID => UIPanelConfig.Int.Spell_contourTexureID;
@@ -52,6 +53,13 @@ namespace GameBase.UI
             e.iconMaterial.SetTexture("_Target", texture);
 
             return obj;
+        }
+        protected override void Awake()
+        {
+            base.Awake();
+
+            _container = new LinearConstructor<SpellItem>();
+            Constructor = _container;
         }
         protected override void UpdateEntity(SpellItem e)
         {
