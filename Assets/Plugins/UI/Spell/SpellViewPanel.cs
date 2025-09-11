@@ -1,7 +1,6 @@
 using GameBase.Infos;
 using GameBase.Resources;
 using GameBase.Tools;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,19 +44,7 @@ namespace GameBase.UI
                     .Log("panel item must has icon object");
             }
 
-            e.iconMaterial = new Material(image.material);
-            image.material = e.iconMaterial;
-
-            e.iconMaterial.SetFloat("_Dir1", -1f);
-            e.iconMaterial.SetFloat("_Dir2", -1f);
-
-            var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.bindSpell.IconTextureID));
-            var shape = GameObject.Instantiate(ResourcesLoader.GetTexture2D(ShapeTexureID));
-            var contour = GameObject.Instantiate(ResourcesLoader.GetTexture2D(ContourTexureID));
-
-            e.iconMaterial.SetTexture("_Shape", shape);
-            e.iconMaterial.SetTexture("_Contour", contour);
-            e.iconMaterial.SetTexture("_Target", texture);
+            e.iconImage = image;
 
             return obj;
         }
@@ -66,9 +53,9 @@ namespace GameBase.UI
         {
             base.UpdateEntity(e);
 
-            float coolingTimeRemain = e.bindSpell.CoolingRemain;
+            float coolingTimeRemain = e.viewInfo.CoolingRemain;
 
-            float fullVal = coolingTimeRemain / e.bindSpell.CoolingSet;
+            float fullVal = coolingTimeRemain / e.viewInfo.CoolingSet;
             e.iconMaterial.SetFloat("_MaskFull", fullVal);
 
             string coolingText = string.Empty;
@@ -86,6 +73,27 @@ namespace GameBase.UI
             {
                 _lastClickedItemIndex = CurrentIterateIndex;
             }
+        }
+
+        /// <summary>
+        /// 设置e的物品贴图和材质
+        /// </summary>
+        /// <param name="e"></param>
+        public void SetIcon(SpellViewItem e)
+        {
+            e.iconMaterial = new Material(e.iconImage.material);
+            e.iconImage.material = e.iconMaterial;
+
+            e.iconMaterial.SetFloat("_Dir1", -1f);
+            e.iconMaterial.SetFloat("_Dir2", -1f);
+
+            var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.iconTextureID));
+            var shape = GameObject.Instantiate(ResourcesLoader.GetTexture2D(ShapeTexureID));
+            var contour = GameObject.Instantiate(ResourcesLoader.GetTexture2D(ContourTexureID));
+
+            e.iconMaterial.SetTexture("_Shape", shape);
+            e.iconMaterial.SetTexture("_Contour", contour);
+            e.iconMaterial.SetTexture("_Target", texture);
         }
 
         public override SpellViewItem this[int index]

@@ -8,15 +8,38 @@ namespace Instance.MVC
     {
         public SpellModel spellModel;
 
+        public SpellController()
+        {
+            for (int i = 0; i < 4; ++i)
+            {
+                View.NewEntity();
+            }
+        }
+
         protected override IInventoryModel<SpellItemData> Model => spellModel;
 
         protected override SpellViewPanel View => SpellViewPanel.Instance;
 
         protected override IDataBase<SpellItemData> DataBase => throw new System.NotImplementedException();
 
+        public override int AddItem(SpellItemData item)
+        {
+            var ret = base.AddItem(item);
+            View[ret].viewInfo = new SpellViewInfo(spellModel.owner.GetSpell(ret));
+            return ret;
+        }
+
+        public override int AddItem(SpellItemData item, int index)
+        {
+            var ret = base.AddItem(item, index);
+            View[ret].viewInfo = new SpellViewInfo(spellModel.owner.GetSpell(ret));
+            return ret;
+        }
+
         protected override void SetIcon(SpellItemData modelData, SpellViewItem viewItem)
         {
-            
+            viewItem.iconTextureID = modelData.iconTextureID;
+            View.SetIcon(viewItem);
         }
     }
 }

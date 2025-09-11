@@ -16,6 +16,11 @@ namespace Instance.MVC
 
         protected abstract void SetIcon(T_ModelItem modelData, T_ViewItem viewItem);
 
+        /// <summary>
+        /// 向controller中添加一个物品，被添加的位置总是第一个空位
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public virtual int AddItem(T_ModelItem item)
         {
             var index = Model.AddItem(item);
@@ -24,6 +29,12 @@ namespace Instance.MVC
             return index;
         }
 
+        /// <summary>
+        /// 向指定位置中添加物品
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public virtual int AddItem(T_ModelItem item, int index)
         {
             Model.AddItem(item, index);
@@ -32,11 +43,21 @@ namespace Instance.MVC
             return index;
         }
 
+        /// <summary>
+        /// 移除指定位置的物品
+        /// </summary>
+        /// <param name="position"></param>
         public virtual void RemoveItem(int position)
         {
             Model.RemoveItem(position);
         }
 
+        /// <summary>
+        /// 尝试获取index位置的物品数据
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public bool TryGetData(int index, out T_ModelItem data)
         {
             var ret = Model.HasItem(index);
@@ -53,6 +74,12 @@ namespace Instance.MVC
             return ret;
         }
 
+        /// <summary>
+        /// 尝试获取database中index位置的物品数据
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public bool TryGetDataFromDataBase(int index, out T_ModelItem data)
         {
             if (index >= DataBase.Count)
@@ -67,6 +94,13 @@ namespace Instance.MVC
             }
         }
 
+        /// <summary>
+        /// 尝试获取position位置（屏幕空间）的UI和位置
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="e"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public bool TryGetItemUI(Vector3 position, out T_ViewItem e, out int index)
         {
             return View.TryGetItem(position, out e, out index);

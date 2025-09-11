@@ -1,3 +1,4 @@
+using Constructor.Spells.Interactive;
 using GameBase.Creatures;
 using GameBase.Inventorys;
 using GameBase.Spells;
@@ -10,13 +11,22 @@ namespace Instance.MVC
     {
         public Constructor.Spells.Main.Type type;
         public int id;
+        public int iconTextureID;
     }
     public class SpellModel : IInventoryModel<SpellItemData>
     {
-        private InventoryModel<SpellItemData> _inventoryModel = new();
+        internal ISpellModelOwner owner;
+        private InventoryModel<SpellItemData> _inventoryModel = new()
+        {
+            Size = MAX_SPELL_NUM
+        };
 
         public const int MAX_SPELL_NUM = 5;
-        public Creature owner;
+        
+        public SpellModel(ISpellModelOwner owner)
+        {
+            this.owner = owner;
+        }
 
         SpellItemData IInventoryModel<SpellItemData>.this[int index] => _inventoryModel[index];
 
@@ -29,14 +39,31 @@ namespace Instance.MVC
         int IInventoryModel<SpellItemData>.AddItem(SpellItemData item)
         {
             var ret = _inventoryModel.AddItem(item);
-            owner.spells[ret] = Factory.Instance.Get(item.type, item.id);
+            var spell = Factory.Instance.Get(item.type, item.id);
+
+            Constructor.Spells.Interactive.Factory.Instance
+                .SetHotKey(spell.interactive, owner.GetKeyFunction(ret));
+
+            spell.speller = owner.Speller;
+            owner.SetSpell(ret, spell);
+            
             return ret;
         }
 
         int IInventoryModel<SpellItemData>.AddItem(SpellItemData item, int index)
         {
-            var ret = _inventoryModel.AddItem(item, index);
-            owner.spells[ret] = Factory.Instance.Get(item.type, item.id);
+            _inventoryModel.AddItem(item, index);
+            _inventoryModel.SortItems();
+
+            var ret = _inventoryModel.Count - 1;
+            var spell = Factory.Instance.Get(item.type, item.id);
+
+            Constructor.Spells.Interactive.Factory.Instance
+                .SetHotKey(spell.interactive, owner.GetKeyFunction(ret));
+
+            spell.speller = owner.Speller;
+            owner.SetSpell(ret, spell);
+
             return ret;
         }
 
@@ -48,13 +75,26 @@ namespace Instance.MVC
         void IInventoryModel<SpellItemData>.RemoveItem(int index)
         {
             _inventoryModel.RemoveItem(index);
-            owner.spells[index] = null;
+            owner.RemoveSpell(index);
         }
 
         void IInventoryModel<SpellItemData>.Swap(int p1, int p2)
         {
             _inventoryModel.Swap(p1, p2);
-            (owner.spells[p1], owner.spells[p2]) = (owner.spells[p2], owner.spells[p1]);
+            var s1 = owner.GetSpell(p1);
+            var s2 = owner.GetSpell(p2);
+            
+            owner.SetSpell(p2, s1);
+            if (s1.interactive is KeyCommon keyCommon1)
+            {
+                keyCommon1.readyKey = owner.GetKeyFunction(p2);
+            }
+
+            owner.SetSpell(p1, s2);
+            if (s2.interactive is KeyCommon keyCommon2)
+            {
+                keyCommon2.readyKey = owner.GetKeyFunction(p1);
+            }
         }
     }
 }
