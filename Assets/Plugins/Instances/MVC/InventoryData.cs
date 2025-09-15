@@ -8,12 +8,13 @@ namespace Instance.MVC
         Equipment,
         SpellActionModify,
     }
-    public struct CommonItemData
+    public class InventoryData : IInventoryItem
     {
         public int id;
         public InventoryTag tag;
-        public int iconTextureID;
         public int buffID;
         public int spellActionModifyerID;
+
+        public int IconTextureID { get; set;}
     }
 }

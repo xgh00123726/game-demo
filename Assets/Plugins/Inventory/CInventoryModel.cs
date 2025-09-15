@@ -11,25 +11,25 @@ namespace GameBase.Inventorys
     /// </list>
     /// </summary>
     /// <typeparam name="T_Item"></typeparam>
-    public class InventoryModel<T_Item>
-        where T_Item : struct
+    public class CInventoryModel<T_Item>
+        where T_Item : class, new()
     {
-        private struct InventoryItem
+        private class CInventoryItem
         {
             public T_Item item;
             public bool exist;
-            public InventoryItem(T_Item item, bool exist)
+            public CInventoryItem(T_Item item, bool exist)
             {
                 this.item = item;
                 this.exist = exist;
             }
         }
 
-        private List<InventoryItem> _items = new();
+        private List<CInventoryItem> _items = new();
         private SortedIntList _nullIndexes = new((x, y) => (y - x));
         private int _size = 0;
 
-        public int Size
+        public virtual int Size
         {
             get => _size;
             set
@@ -42,7 +42,7 @@ namespace GameBase.Inventorys
                 _items.Capacity = value;
                 for (int i = 0; i < value - _size; ++i)
                 {
-                    _items.Add(new InventoryItem(default, false));
+                    _items.Add(new CInventoryItem(new T_Item(), false));
                     _nullIndexes.Push(i);
                 }
 
@@ -55,7 +55,11 @@ namespace GameBase.Inventorys
         public T_Item this[int i]
         {
             get => _items[i].item;
-            private set => _items[i] = new InventoryItem(value, true);
+            set
+            {
+                _items[i].item = value;
+                _items[i].exist = true;
+            }
         }
 
 
@@ -115,7 +119,7 @@ namespace GameBase.Inventorys
             }
 
             _nullIndexes.Push(position);
-            _items[position] = new InventoryItem(_items[position].item, false);
+            _items[position].exist = false;
         }
 
         public virtual void Swap(int p1, int p2)
@@ -178,12 +182,12 @@ namespace GameBase.Inventorys
 
             p1Ready = true;
             p2 = p1;
-            for(; p2 < _size; ++p2)
+            for (; p2 < _size; ++p2)
             {
                 if (p1Ready && p2Ready)
                 {
                     _items[p1] = _items[p2];
-                    _items[p2] = new InventoryItem(default, false);
+                    _items[p2].exist = false;
                 }
                 else if (!p1Ready)
                 {
@@ -200,7 +204,7 @@ namespace GameBase.Inventorys
                 {
                     for (; p2 < _size; ++p2)
                     {
-                        if ( HasItem(p2))
+                        if (HasItem(p2))
                         {
                             p2Ready = true;
                             break;

@@ -16,11 +16,13 @@ namespace GameBase.EntitySystem
     {
         private float _updateTimeAccumulate = 0;
         private int _currentIterateIndex = 0;
+        private bool _inUpdating = false;
+        private IEConstructor<T_Entity> _entityConstructor = new PoolConstructor<T_Entity>();
+        private IEContainer<T_Entity> _entities = new LinkListContainer<T_Entity>();
 
         protected internal LinkedList<T_Entity> _entityNeedRegister = new LinkedList<T_Entity>();
         protected internal LinkedList<T_Entity> _entitiesNeedRemove = new LinkedList<T_Entity>();
-        protected internal IEConstructor<T_Entity> _entityConstructor = new CommonConstructor<T_Entity>();
-        protected internal LinkedList<T_Entity> _entities = new LinkedList<T_Entity>();
+
         protected internal int tick = 0;
         protected internal int fixedTick = 0;
 
@@ -50,10 +52,19 @@ namespace GameBase.EntitySystem
                 return;
             }
 
-            _entitiesNeedRemove.AddLast(e);
+            OnRemoveEntityFromActives(e);
+
+            if (!_inUpdating)
+            {
+                Entities.Remove(e);
+            }
+            else
+            {
+                _entitiesNeedRemove.AddLast(e);
+            }
         }
 
-        protected void AddToNeedRegisterImmediately(T_Entity e)
+        protected void AddToNeedRegister(T_Entity e)
         {
             if (e == null) return;
 
@@ -83,12 +94,8 @@ namespace GameBase.EntitySystem
 
         protected int CurrentIterateIndex => _currentIterateIndex;
 
-        public IEnumerable<T_Entity> Entities => _entities;
-        public IEConstructor<T_Entity> Constructor
-        {
-            set => _entityConstructor = value;
-            get => _entityConstructor;
-        }
+        public virtual IEContainer<T_Entity> Entities => _entities;
+        public virtual IEConstructor<T_Entity> Constructor => _entityConstructor;
 
         public int Tick => tick;
         public int FixedTick => fixedTick;
@@ -96,14 +103,23 @@ namespace GameBase.EntitySystem
 
         public T_Entity NewFromPool()
         {
-            return _entityConstructor.GetEntity();
+            return Constructor.GetEntity();
         }
 
         public void RegisterEntity(T_Entity e)
         {
             e.InstanceID = PoolInfo.allocatedID++;
-            AddToNeedRegisterImmediately(e);
+
+
             OnRegisterEntityToActives(e);
+            if (_inUpdating)
+            {
+                AddToNeedRegister(e);
+            }
+            else
+            {
+                Entities.Add(e);
+            }
         }
 
 
@@ -124,22 +140,23 @@ namespace GameBase.EntitySystem
         {
             foreach (T_Entity e in _entityNeedRegister)
             {
-                _entities.AddLast(e);
+                Entities.Add(e);
             }
             _entityNeedRegister.Clear();
 
             _currentIterateIndex = 0;
-            foreach (var e in _entities)
+            _inUpdating = true;
+            foreach (var e in Entities)
             {
                 UpdateEntity(e);
                 _currentIterateIndex++;
             }
+            _inUpdating = false;
 
             foreach (var e in _entitiesNeedRemove)
             {
-                OnRemoveEntityFromActives(e);
-                _entities.Remove(e);
-                _entityConstructor.ReleaseEntity(e);
+                Entities.Remove(e);
+                Constructor.ReleaseEntity(e);
             }
             _entitiesNeedRemove.Clear();
         }
@@ -155,10 +172,12 @@ namespace GameBase.EntitySystem
             _updateTimeAccumulate += Time.deltaTime;
             while (_updateTimeAccumulate > fixedPeriod)
             {
+                _inUpdating = true;
                 foreach (var e in _entities)
                 {
                     FixedUpdateEntity(e);
                 }
+                _inUpdating = false;
                 _updateTimeAccumulate -= fixedPeriod;
                 fixedTick++;
             }
@@ -176,7 +195,7 @@ namespace GameBase.EntitySystem
 
         int IBaseSys.GetReleasedCount()
         {
-            return _entityConstructor.Count;
+            return Constructor.Count;
         }
 
         int IBaseSys.GetActiveCount()

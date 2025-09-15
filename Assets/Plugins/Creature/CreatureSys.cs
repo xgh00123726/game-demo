@@ -31,7 +31,7 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
             rangeLimit = infDis;
         }
 
-        foreach (var e in sys._entities)
+        foreach (var e in sys.Entities)
         {
             if (hasFilter && !filter(e)) continue; // 不满足过滤需求
 
@@ -102,7 +102,7 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
 
     public void RemoveAll(Tag tag)
     {
-        foreach (var e in _entities)
+        foreach (var e in Entities)
         {
             if (e.tag == tag)
             {
@@ -113,7 +113,7 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
 
     public void RemoveAll<T_EntityType>() where T_EntityType : Creature
     {
-        foreach (var c in _entities)
+        foreach (var c in Entities)
         {
             if (c.GetType() == typeof(T_EntityType))
             {

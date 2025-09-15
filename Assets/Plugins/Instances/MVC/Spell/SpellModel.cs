@@ -16,7 +16,7 @@ namespace Instance.MVC
     public class SpellModel : IInventoryModel<SpellItemData>
     {
         internal ISpellModelOwner owner;
-        private InventoryModel<SpellItemData> _inventoryModel = new()
+        private SInventoryModel<SpellItemData> _inventoryModel = new()
         {
             Size = MAX_SPELL_NUM
         };

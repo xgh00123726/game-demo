@@ -7,8 +7,6 @@ namespace GameBase.UI
 {
     public class ShopViewPanel : BaseViewPanel<ShopViewItem, ShopViewPanel>
     {
-        protected LinearConstructor<ShopViewItem> _container;
-
         internal override float ItemWidth => UIPanelConfig.Float.Shop_itemWidth;
         internal override float ItemHeight => UIPanelConfig.Float.Shop_itemHeight;
         internal override float XInterval => UIPanelConfig.Float.Shop_xInterval;
@@ -20,13 +18,6 @@ namespace GameBase.UI
         internal override int ShapeTexureID => UIPanelConfig.Int.Shop_shapeTexureID;
         internal override int ContourTexureID => UIPanelConfig.Int.Shop_contourTexureID;
         internal override int ItemAlign => UIPanelConfig.Int.Shop_itemAlign;
-
-        public ShopViewPanel()
-        {
-            _container = new LinearConstructor<ShopViewItem>();
-            Constructor = _container;
-        }
-
         protected override RectTransform GetRectTransform(ShopViewItem e)
         {
             return e.Obj.transform.Find("Icon").GetComponent<RectTransform>();
@@ -43,24 +34,6 @@ namespace GameBase.UI
             }
 
             return ui;
-        }
-
-
-        public void PopLast()
-        {
-            var e = _container.PopLast();
-            RemoveEntity(e);
-        }
-
-        public int IndexOf(ShopViewItem e)
-        {
-            return _container.IndexOf(e);
-        }
-
-        public ShopViewItem this[int i]
-        {
-            get => _container[i];
-            set => _container[i] = value;
         }
     }
 }

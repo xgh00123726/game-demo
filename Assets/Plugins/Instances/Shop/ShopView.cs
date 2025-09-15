@@ -26,7 +26,6 @@ namespace Instance.Shops
                 {
                     for (int i = 0; i < count -  value; i++)
                     {
-                        SP.PopLast();
                     }
                 }
             }

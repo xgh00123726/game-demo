@@ -9,7 +9,6 @@ namespace GameBase.UI
 {
     public class SpellViewPanel : BaseViewPanel<SpellViewItem, SpellViewPanel>
     {
-        protected LinearConstructor<SpellViewItem> _container;
         private int _lastClickedItemIndex = -1;
         internal override int PanelObjID => UIPanelConfig.Int.Spell_panelObjID;
         internal override int ShapeTexureID => UIPanelConfig.Int.Spell_shapeTexureID;
@@ -22,12 +21,6 @@ namespace GameBase.UI
         internal override float PanelX => UIPanelConfig.Float.Spell_panelX;
         internal override float PanelY =>  UIPanelConfig.Float.Spell_panelY;
         internal override int ItemAlign =>  UIPanelConfig.Int.Spell_itemAlign;
-
-        public SpellViewPanel()
-        {
-            _container = new LinearConstructor<SpellViewItem>();
-            Constructor = _container;
-        }
 
         protected override BaseUI InstantiateObj(SpellViewItem e)
         {
@@ -94,12 +87,6 @@ namespace GameBase.UI
             e.iconMaterial.SetTexture("_Shape", shape);
             e.iconMaterial.SetTexture("_Contour", contour);
             e.iconMaterial.SetTexture("_Target", texture);
-        }
-
-        public override SpellViewItem this[int index]
-        {
-            get => _container[index];
-            set => _container[index] = value;
         }
 
         public int LastClickedItemIndex => _lastClickedItemIndex;

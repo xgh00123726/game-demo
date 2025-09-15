@@ -22,7 +22,7 @@ namespace Instance.MVC
             var index = e.ItemIndex;
             if (index >= 0 && EquipmentInventoryController.Instance.TryGetData(index, out var data))
             {
-                ShadowView.SetText($"index:{index}\nbuff id:{data.buffID}\ntexture id:{data.iconTextureID}");
+                ShadowView.SetText($"index:{index}\nbuff id:{data.buffID}\ntexture id:{data.IconTextureID}");
             }
             else
             {

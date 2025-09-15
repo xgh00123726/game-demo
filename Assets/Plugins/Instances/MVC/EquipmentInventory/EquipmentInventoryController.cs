@@ -7,31 +7,28 @@ using UnityEngine;
 
 namespace Instance.MVC
 {
-    public class EquipmentInventoryController : InventoryController<CommonItemData,
+    public class EquipmentInventoryController : InventoryController<InventoryData,
         EquipmentViewItem,
         EquipmentViewPanel,
         EquipmentInventoryController>
     {
-        public const int ITEM_NUM = 6;
         public IBuffOwner owner;
 
-        private EquipmentInventoryModel _inventoryModel = new(ITEM_NUM);
+        private EquipmentInventoryModel _inventoryModel = new();
 
         public EquipmentInventoryController()
         {
             View.DragableControl = new EquipmentDragableControl();
             View.DetailableControl = new EquipmentDetailControl();
-            for (int i = 0; i < ITEM_NUM; i++)
-            {
-                var e = View.NewEntity();
-            }
+
+            Size = 6;
         }
 
-        protected override IInventoryModel<CommonItemData> Model => _inventoryModel;
+        protected override IInventoryModel<InventoryData> Model => _inventoryModel;
         protected override EquipmentViewPanel View => EquipmentViewPanel.Instance;
-        protected override IDataBase<CommonItemData> DataBase => CommonDataBase.Instance;
+        protected override IDataBase<InventoryData> DataBase => CommonDataBase.Instance;
 
-        public override int AddItem(CommonItemData item, int index)
+        public override int AddItem(InventoryData item, int index)
         {
             base.AddItem(item, index);
             owner.RegisterBuff(_inventoryModel.GetBuff(index));
@@ -42,12 +39,6 @@ namespace Instance.MVC
         {
             owner.RemoveBuff(_inventoryModel.GetBuff(position));
             base.RemoveItem(position);
-        }
-
-        protected override void SetIcon(CommonItemData modelData, EquipmentViewItem viewItem)
-        {
-            var texture = ResourcesLoader.GetTexture2D(modelData.iconTextureID);
-            viewItem.IconSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         }
     }
 }

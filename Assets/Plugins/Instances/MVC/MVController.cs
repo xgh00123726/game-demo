@@ -16,6 +16,16 @@ namespace Instance.MVC
 
         protected abstract void SetIcon(T_ModelItem modelData, T_ViewItem viewItem);
 
+        public int Size
+        {
+            get => Model.Size;
+            set
+            {
+                Model.Size = value;
+                View.FillItem(value);
+            }
+        }
+
         /// <summary>
         /// 向controller中添加一个物品，被添加的位置总是第一个空位
         /// </summary>
@@ -24,7 +34,7 @@ namespace Instance.MVC
         public virtual int AddItem(T_ModelItem item)
         {
             var index = Model.AddItem(item);
-            var viewItem = View[index];
+            var viewItem = View.FillGet(index);
             SetIcon(item, viewItem);
             return index;
         }
@@ -38,7 +48,7 @@ namespace Instance.MVC
         public virtual int AddItem(T_ModelItem item, int index)
         {
             Model.AddItem(item, index);
-            var viewItem = View[index];
+            var viewItem = View.FillGet(index);
             SetIcon(item, viewItem);
             return index;
         }

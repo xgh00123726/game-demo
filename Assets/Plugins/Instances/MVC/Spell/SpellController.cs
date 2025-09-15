@@ -1,5 +1,6 @@
 using GameBase.Inventorys;
 using GameBase.Spells;
+using GameBase.Tools;
 using GameBase.UI;
 
 namespace Instance.MVC
@@ -7,14 +8,6 @@ namespace Instance.MVC
     public class SpellController : MVController<SpellItemData, SpellViewItem, SpellViewPanel, SpellController>
     {
         public SpellModel spellModel;
-
-        public SpellController()
-        {
-            for (int i = 0; i < 4; ++i)
-            {
-                View.NewEntity();
-            }
-        }
 
         protected override IInventoryModel<SpellItemData> Model => spellModel;
 
@@ -41,5 +34,7 @@ namespace Instance.MVC
             viewItem.iconTextureID = modelData.iconTextureID;
             View.SetIcon(viewItem);
         }
+
+        public int LastClickedItemIndex => View.LastClickedItemIndex;
     }
 }

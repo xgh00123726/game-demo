@@ -4,18 +4,27 @@ using Instance.MVC;
 using System;
 using System.Collections.Generic;
 
-public class EquipmentInventoryModel : InventoryModel<CommonItemData>, IInventoryModel<CommonItemData>
+public class EquipmentInventoryModel : CInventoryModel<InventoryData>, IInventoryModel<InventoryData>
 {
-    private List<Buff> buffs;
+    private List<Buff> buffs = new();
 
-    public EquipmentInventoryModel(int capacity)
+    public override int Size
     {
-        buffs = new List<Buff>(capacity);
-        for (int i = 0; i < capacity; ++i)
+        get => base.Size;
+        set
         {
-            buffs.Add(null);
+            base.Size = value;
+            
+            if (value > buffs.Count)
+            {
+                buffs.Capacity = value;
+                int count = buffs.Count;
+                for (int i = 0; i < value - count; ++i)
+                {
+                    buffs.Add(null);
+                }
+            }
         }
-        Size = capacity;
     }
 
     public override void RemoveItem(int position)
@@ -24,7 +33,7 @@ public class EquipmentInventoryModel : InventoryModel<CommonItemData>, IInventor
         buffs[position] = null;
     }
 
-    public override int AddItem(CommonItemData item, int index)
+    public override int AddItem(InventoryData item, int index)
     {
         var ret = base.AddItem(item, index);
         var eb = Constructor.Buffs.Factory.Instance.Get(Constructor.Buffs.Type.Common, item.buffID);

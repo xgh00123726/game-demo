@@ -1,4 +1,5 @@
 using GameBase.Modify;
+using GameBase.Tools;
 
 namespace GameBase.Buffs
 {
@@ -27,6 +28,7 @@ namespace GameBase.Buffs
         public void RemoveBuff(Buff e)
         {
             BuffSys.Instance.RemoveBuff(e);
+            Buffs.RemoveBuff(e);
         }
     }
 }

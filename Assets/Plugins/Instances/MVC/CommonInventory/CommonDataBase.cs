@@ -9,9 +9,9 @@ using System.Xml.Linq;
 using UnityEngine;
 namespace Instance.MVC
 {
-    public class CommonDataBase : IDataBase<CommonItemData>
+    public class CommonDataBase : IDataBase<InventoryData>
     {
-        private CommonItemData[] _datas;
+        private InventoryData[] _datas;
         private static CommonDataBase _instance = new();
         protected CommonDataBase()
         {
@@ -22,15 +22,15 @@ namespace Instance.MVC
             StreamReader reader = File.OpenText($"{Application.streamingAssetsPath}/{RelativePath}");
             CsvReader csvReader = new CsvReader(reader);
             csvReader.Read();
-            _datas = new CommonItemData[int.Parse(csvReader[0])];
+            _datas = new InventoryData[int.Parse(csvReader[0])];
             for (int i = 0; i < _datas.Length; i++)
             {
                 csvReader.Read();
 
-                var data = new CommonItemData();
+                var data = new InventoryData();
                 data.id = int.Parse(csvReader[0]);
                 Enum.TryParse(csvReader[1], out data.tag);
-                data.iconTextureID = int.Parse(csvReader[2]);
+                data.IconTextureID = int.Parse(csvReader[2]);
                 data.buffID = int.Parse(csvReader[3]);
                 data.spellActionModifyerID = int.Parse(csvReader[4]);
 
@@ -44,14 +44,14 @@ namespace Instance.MVC
 
         public string RelativePath => "Instance/Inventory/CommonInventory/CommonDataBase.csv";
 
-        int IDataBase<CommonItemData>.Count => _datas.Length;
+        int IDataBase<InventoryData>.Count => _datas.Length;
 
-        CommonItemData IDataBase<CommonItemData>.Read(int index)
+        InventoryData IDataBase<InventoryData>.Read(int index)
         {
             return _datas[index];
         }
 
-        void IDataBase<CommonItemData>.Write(CommonItemData data, int index)
+        void IDataBase<InventoryData>.Write(InventoryData data, int index)
         {
             _datas[index] = data;
         }

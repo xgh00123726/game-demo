@@ -11,11 +11,17 @@ namespace Instance.MVC
         T_ViewItem,
         T_View,
         T_Controller>
+        where T_ModelItem : IInventoryItem
         where T_ViewItem : InventoryViewItem, new()
         where T_View : InventoryViewPanel<T_ViewItem, T_View>, new()
         where T_Controller : InventoryController<T_ModelItem, T_ViewItem, T_View, T_Controller>, new()
     {
         protected virtual void OnSwap(int p1, int p2) { }
+
+        protected override void SetIcon(T_ModelItem modelData, T_ViewItem viewItem)
+        {
+            viewItem.SetIconSprite(modelData.IconTextureID);
+        }
 
         private void SetColor(int index)
         {

@@ -1,6 +1,7 @@
 using GameBase.EntitySystem;
 using GameBase.Resources;
 using GameBase.Tools;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,7 @@ namespace GameBase.UI
             Left = 0, Right, Center
         }
 
+        internal ListContainer<T> container = new();
         internal IDragableControl<T> dragableControl;
         internal IEnterExitControl<T> enterExitControl;
         internal ISwitchable<T> switchable;
@@ -96,6 +98,8 @@ namespace GameBase.UI
 
             return new Vector3(vx, vy, 0);
         }
+
+        public override IEContainer<T> Entities => container;
 
         protected override void AfterInstantiateEUObject(T e)
         {            
@@ -203,20 +207,41 @@ namespace GameBase.UI
             panel.transform.localPosition = new Vector3(PanelX, PanelY, 0);
         }
 
+        public void FillItem(int targetCount)
+        {
+            int count = container.Count;
+            if (count >= targetCount)
+            {
+                return;
+            }
+            for (int i = 0; i < targetCount - count; i++)
+            {
+                NewEntity();
+            }
+        }
+
+        public T FillGet(int index)
+        {
+            if (index >= container.Count)
+            {
+                FillItem(index + 1);
+            }
+            return container[index];
+        }
+
+        public void FillSet(int index, T e)
+        {
+            if (index >= container.Count)
+            {
+                FillItem(index + 1);
+            }
+            container[index] = e;
+        }
+
         public virtual T this[int index]
         {
-            get
-            {
-                foreach (var e in _entities)
-                {
-                    if (e.itemIndex == index) return e;
-                }
-                return null;
-            }
-            set
-            {
-
-            }
+            get => container[index];
+            set => container[index] = value;
         }
 
         /// <summary>
@@ -228,7 +253,7 @@ namespace GameBase.UI
         public bool TryGetItem(Vector3 position, out T e, out int index)
         {
             index = 0;
-            foreach (var ie in _entities)
+            foreach (var ie in Entities)
             {
                 Rect r = ie.RectTransform.rect;
                 r.center = ie.Obj.transform.position;
@@ -242,6 +267,11 @@ namespace GameBase.UI
 
             e = null;
             return false;
+        }
+
+        public void SwapIconSprite(int p1, int p2)
+        {
+            this[p1].SwapIconSprite(this[p2]);
         }
     }
 }

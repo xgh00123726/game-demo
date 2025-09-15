@@ -1,3 +1,4 @@
+using GameBase.Config;
 using GameBase.Inventorys;
 using GameBase.Resources;
 using GameBase.UI;
@@ -5,25 +6,17 @@ using UnityEngine;
 
 namespace Instance.MVC
 {
-    public class CommonInventoryController : InventoryController<CommonItemData,
+    public class CommonInventoryController : InventoryController<InventoryData,
         CommonInventoryViewItem,
         CommonInventoryViewPanel,
         CommonInventoryController>
     {
         private bool _showFlag = false;
 
-        public const int ITEM_NUM = 50;
-        public const float PANEL_OFFSET_HIDE_SPEED = 6000;
-        public const float PANEL_OFFSET_HIDE_X = 1920;
-
-
-        private CommonInventoryModel _inventoryModel = new()
-        {
-            Size = ITEM_NUM
-        };
-        protected override IInventoryModel<CommonItemData> Model => _inventoryModel;
+        private CommonInventoryModel _inventoryModel = new();
+        protected override IInventoryModel<InventoryData> Model => _inventoryModel;
         protected override CommonInventoryViewPanel View => CommonInventoryViewPanel.Instance;
-        protected override IDataBase<CommonItemData> DataBase => CommonDataBase.Instance;
+        protected override IDataBase<InventoryData> DataBase => CommonDataBase.Instance;
         public bool IsShow => _showFlag;
 
         public CommonInventoryController()
@@ -32,23 +25,21 @@ namespace Instance.MVC
             View.DetailableControl = new CommonDetailControl();
             View.EnterExitControl = new CommonFixedDetailableControl();
             View.panel.SetActive(false);
-            for (int i = 0; i < ITEM_NUM; i++)
-            {
-                var e = View.NewEntity();
-            }
+            
+            Size = InventoryConfig.Int.InventoryPageCapacity;
         }
 
         public void Show()
         {
-            View.panel.SetActive(true);
             _showFlag = true;
             View.panelXOffsetTarget = 0;
+            View.panel.SetActive(true);
         }
         public void Hide()
         {
             _showFlag = false;
-            View.panelXOffsetTarget = PANEL_OFFSET_HIDE_X;
-            View.panelXMoveSpeed = PANEL_OFFSET_HIDE_SPEED;
+            View.panelXOffsetTarget = InventoryConfig.Float.InventoryPanelHideOffsetX;
+            View.panelXMoveSpeed = InventoryConfig.Float.InventoryPanelHideSpeed;
             CommonFixedDetailableShadowView.Instance.Hide();
         }
         public void Toggle()
@@ -61,12 +52,6 @@ namespace Instance.MVC
             {
                 Show();
             }
-        }
-
-        protected override void SetIcon(CommonItemData modelData, CommonInventoryViewItem viewItem)
-        {
-            var texture = ResourcesLoader.GetTexture2D(modelData.iconTextureID);
-            viewItem.IconSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         }
     }
 }

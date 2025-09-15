@@ -1,9 +1,9 @@
 namespace GameBase.EntitySystem
 {
-    public class CommonConstructor<T> : IEConstructor<T>
+    public class PoolConstructor<T> : IEConstructor<T>
         where T : new()
     {
-        public CommonConstructor()
+        public PoolConstructor()
         {
             _pool.InstantiateFunc = () => new T();
         }

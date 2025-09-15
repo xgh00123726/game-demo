@@ -10,14 +10,6 @@ namespace GameBase.UI
         where T : InventoryViewItem, new()
         where T_instance : InventoryViewPanel<T, T_instance>, new()
     {
-        protected LinearNonReleaseConstructor<T> _container;
-
-        public InventoryViewPanel()
-        {
-            _container = new LinearNonReleaseConstructor<T>();
-            Constructor = _container;
-        }
-
         protected override RectTransform GetRectTransform(T e)
         {
             return e.Obj.transform.Find("Icon").GetComponent<RectTransform>();
@@ -42,13 +34,7 @@ namespace GameBase.UI
 
         public void Swap(int p1, int p2)
         {
-            _container[p1].SwapIconSprite(_container[p2]);
-        }
-
-        public override T this[int i]
-        {
-            get => _container[i];
-            set => _container[i] = value;
+            container[p1].SwapIconSprite(container[p2]);
         }
     }
 }

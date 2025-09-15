@@ -1,34 +1,56 @@
 using GameBase.Inventorys;
 using GameBase.Resources;
+using GameBase.Tools;
 using GameBase.UI;
+using System.Collections.Generic;
 using UnityEngine;
 namespace Instance.MVC
 {
-    public class SpellActionModifierController : InventoryController<CommonItemData, 
+    public class SpellActionModifierController : InventoryController<InventoryData, 
         SpellActionModifierViewItem, 
         SpellActionModifierViewPanel, 
         SpellActionModifierController>
     {
-        private SpellActionModifierInventoryModel _model = new();
+        private List<SpellActionModifierInventoryModel> _models = new()
+        {
+            new() {Size = 10},
+            new() {Size = 10},
+            new() {Size = 10},
+            new() {Size = 10},
+        };
 
         public SpellActionModifierController()
         {
-            for (int i = 0; i < 5; ++i)
+            View.FillItem(5);
+        }
+
+        protected override IInventoryModel<InventoryData> Model
+        {
+            get
             {
-                View.NewEntity();
+                if (SpellController.Instance.LastClickedItemIndex == -1)
+                {
+                    return _models[0];
+                }
+                else
+                {
+                    return _models[SpellController.Instance.LastClickedItemIndex];
+                }
             }
         }
 
-        protected override IInventoryModel<CommonItemData> Model => _model;
-
         protected override SpellActionModifierViewPanel View => SpellActionModifierViewPanel.Instance;
 
-        protected override IDataBase<CommonItemData> DataBase => throw new System.NotImplementedException();
+        protected override IDataBase<InventoryData> DataBase => throw new System.NotImplementedException();
 
-        protected override void SetIcon(CommonItemData modelData, SpellActionModifierViewItem viewItem)
+        public void RefreshView()
         {
-            var texture = ResourcesLoader.GetTexture2D(modelData.iconTextureID);
-            viewItem.IconSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+
+        }
+
+        protected override void SetIcon(InventoryData modelData, SpellActionModifierViewItem viewItem)
+        {
+            
         }
     }
 }

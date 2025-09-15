@@ -41,7 +41,6 @@ namespace GameBase.Buffs
 
             if (e.durationRemain <= 0)
             {
-                e.owner.Buffs.RemoveBuff(e);
                 RemoveEntity(e);
             }
         }
