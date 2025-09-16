@@ -18,9 +18,18 @@ namespace Instance.MVC
     {
         protected virtual void OnSwap(int p1, int p2) { }
 
-        protected override void SetIcon(T_ModelItem modelData, T_ViewItem viewItem)
+        protected override void SetItem(T_ModelItem modelData, T_ViewItem viewItem)
         {
             viewItem.SetIconSprite(modelData.IconTextureID);
+            viewItem.ShowIcon();
+            viewItem.ShowColor();
+        }
+
+        protected override void SetNullItem(T_ModelItem modelData, T_ViewItem viewItem)
+        {
+            viewItem.SetIconSprite(-1);
+            viewItem.HideIcon();
+            viewItem.HideColor();
         }
 
         private void SetColor(int index)

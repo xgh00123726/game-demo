@@ -110,7 +110,6 @@ namespace GameBase.EntitySystem
         {
             e.InstanceID = PoolInfo.allocatedID++;
 
-
             OnRegisterEntityToActives(e);
             if (_inUpdating)
             {

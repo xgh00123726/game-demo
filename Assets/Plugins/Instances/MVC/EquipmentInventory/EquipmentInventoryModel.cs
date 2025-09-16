@@ -8,6 +8,8 @@ public class EquipmentInventoryModel : CInventoryModel<InventoryData>, IInventor
 {
     private List<Buff> buffs = new();
 
+    public IBuffOwner owner;
+
     public override int Size
     {
         get => base.Size;
@@ -27,10 +29,17 @@ public class EquipmentInventoryModel : CInventoryModel<InventoryData>, IInventor
         }
     }
 
-    public override void RemoveItem(int position)
+    public override bool RemoveItem(int index)
     {
-        base.RemoveItem(position);
-        buffs[position] = null;
+        if (base.RemoveItem(index))
+        {
+            owner.RemoveBuff(buffs[index]);
+            buffs[index] = null;
+
+            return true;
+        }
+
+        return false;
     }
 
     public override int AddItem(InventoryData item, int index)
@@ -40,7 +49,7 @@ public class EquipmentInventoryModel : CInventoryModel<InventoryData>, IInventor
         eb.uiStyle = GameBase.Buffs.UIStyle.None;
         eb.durationSet = 9999;
         buffs[index] = eb;
-
+        owner.RegisterBuff(buffs[index]);
         return ret;
     }
 
@@ -48,10 +57,5 @@ public class EquipmentInventoryModel : CInventoryModel<InventoryData>, IInventor
     {
         base.Swap(p1, p2);
         (buffs[p1], buffs[p2]) = (buffs[p2], buffs[p1]);
-    }
-
-    public Buff GetBuff(int index)
-    {
-        return buffs[index];
     }
 }

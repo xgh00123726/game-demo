@@ -9,28 +9,43 @@ namespace Instance.MVC
     {
         public CommonInventoryController CC => CommonInventoryController.Instance;
         public EquipmentInventoryController EC => EquipmentInventoryController.Instance;
+        public SpellActionModifierController SC => SpellActionModifierController.Instance;
 
         protected override void OnExitDrag(CommonInventoryViewItem dragedItem, int dragedIndex)
         {
             // 如果拖动的位置是装备栏
-            if (EC.TryGetItemUI(Input.mousePosition, out var ee, out var ie))
+            if (EC.TryGetItemUI(Input.mousePosition, out var eEntity, out var eIndex))
             {
-                ee.SwapIconSprite(dragedItem);
-                ee.ShowIcon();
+                eEntity.SwapIconSprite(dragedItem);
+                eEntity.ShowIcon();
 
 
                 if (CC.TryGetData(dragedIndex, out var data))
                 {
-                    EC.AddItem(data, ie);
+                    EC.AddItem(data, eIndex);
+                    CC.RemoveItem(dragedIndex);
+                }
+            }
+
+            // 如果拖动终点是技能修饰器
+            else if (SC.TryGetItemUI(Input.mousePosition, out var sEntity, out var sIndex))
+            {
+                sEntity.SwapIconSprite(dragedItem);
+                sEntity.ShowIcon();
+
+
+                if (CC.TryGetData(dragedIndex, out var data))
+                {
+                    SC.AddItem(data, sIndex);
                     CC.RemoveItem(dragedIndex);
                 }
             }
 
             // 如果拖动终点是背包
-            if (CC.TryGetItemUI(Input.mousePosition, out var ec, out var ic))
+            else if (CC.TryGetItemUI(Input.mousePosition, out var cEntity, out var cIndex))
             {
-                CC.Swap(dragedIndex, ic);
-                ec.ShowIcon();
+                CC.Swap(dragedIndex, cIndex);
+                cEntity.ShowIcon();
             }
         }
     }

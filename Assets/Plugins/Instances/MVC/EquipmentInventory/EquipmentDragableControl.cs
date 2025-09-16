@@ -10,20 +10,20 @@ namespace Instance.MVC
 
         protected override void OnExitDrag(EquipmentViewItem dragedItem, int dragedIndex)
         {
-            if (EC.TryGetItemUI(Input.mousePosition, out var ee, out var ie))
+            if (EC.TryGetItemUI(Input.mousePosition, out var eEntity, out var eIndex))
             {
-                EC.Swap(dragedIndex, ie);
-                ee.ShowIcon();
+                EC.Swap(dragedIndex, eIndex);
+                eEntity.ShowIcon();
             }
 
-            if (CC.TryGetItemUI(Input.mousePosition, out var ec, out var ic))
+            if (CC.TryGetItemUI(Input.mousePosition, out var cEntity, out var cIndex))
             {
-                ec.SwapIconSprite(dragedItem);
-                ec.ShowIcon();
+                cEntity.SwapIconSprite(dragedItem);
+                cEntity.ShowIcon();
 
                 if (EC.TryGetData(dragedIndex, out var data))
                 {
-                    CC.AddItem(data, ic);
+                    CC.AddItem(data, cIndex);
                     EC.RemoveItem(dragedIndex);
                 }
             }

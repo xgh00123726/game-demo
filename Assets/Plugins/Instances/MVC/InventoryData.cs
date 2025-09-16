@@ -10,11 +10,11 @@ namespace Instance.MVC
     }
     public class InventoryData : IInventoryItem
     {
-        public int id;
         public InventoryTag tag;
         public int buffID;
         public int spellActionModifyerID;
 
         public int IconTextureID { get; set;}
+        public int ID {  get; set; }
     }
 }

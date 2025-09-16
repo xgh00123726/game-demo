@@ -1,6 +1,7 @@
 using GameBase.Infos;
 using GameBase.Resources;
 using GameBase.Tools;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,9 @@ namespace GameBase.UI
     public class SpellViewPanel : BaseViewPanel<SpellViewItem, SpellViewPanel>
     {
         private int _lastClickedItemIndex = -1;
+
+        public Action<int> OnClickedItem;
+
         internal override int PanelObjID => UIPanelConfig.Int.Spell_panelObjID;
         internal override int ShapeTexureID => UIPanelConfig.Int.Spell_shapeTexureID;
         internal override int ContourTexureID => UIPanelConfig.Int.Spell_contourTexureID;
@@ -64,6 +68,7 @@ namespace GameBase.UI
 
             if (e.Obj.isPointerDown)
             {
+                OnClickedItem(CurrentIterateIndex);
                 _lastClickedItemIndex = CurrentIterateIndex;
             }
         }
@@ -72,8 +77,10 @@ namespace GameBase.UI
         /// 设置e的物品贴图和材质
         /// </summary>
         /// <param name="e"></param>
-        public void SetIcon(SpellViewItem e)
+        public void SetIcon(SpellViewItem e, int iconTextureID)
         {
+            e.iconTextureID = iconTextureID;
+
             e.iconMaterial = new Material(e.iconImage.material);
             e.iconImage.material = e.iconMaterial;
 

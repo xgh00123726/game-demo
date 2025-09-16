@@ -24,7 +24,14 @@ namespace Constructor.Spells.Action.Modifyables.Modifier
                 {Type.MultipleModifier, (val) => new MultipleModifier(val) },
             };
         }
-            
+        
+        public BaseModifier Get(int id)
+        {
+            Type type = (Type)(id >> 16);
+            id = id & 0xFFFF;
+
+            return Get(type, id);
+        }
     }
 }
 

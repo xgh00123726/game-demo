@@ -1,18 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
+using GameBase.UI;
 using UnityEngine;
 
-public class SpellActionModifierDragableControl : MonoBehaviour
+namespace Instance.MVC
 {
-    // Start is called before the first frame update
-    void Start()
+    public class SpellActionModifierDragableControl : InventoryDragableControl<SpellActionModifierViewItem>
     {
-        
-    }
+        public CommonInventoryController CC => CommonInventoryController.Instance;
+        public SpellActionModifierController SC => SpellActionModifierController.Instance;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        protected override void OnExitDrag(SpellActionModifierViewItem dragedItem, int dragedIndex)
+        {
+            if (SC.TryGetItemUI(Input.mousePosition, out var eEntity, out var eIndex))
+            {
+                SC.Swap(dragedIndex, eIndex);
+                eEntity.ShowIcon();
+            }
+
+            if (CC.TryGetItemUI(Input.mousePosition, out var cEntity, out var cIndex))
+            {
+                cEntity.SwapIconSprite(dragedItem);
+                cEntity.ShowIcon();
+
+                if (SC.TryGetData(dragedIndex, out var data))
+                {
+                    CC.AddItem(data, cIndex);
+                    SC.RemoveItem(dragedIndex);
+                }
+            }
+        }
     }
 }

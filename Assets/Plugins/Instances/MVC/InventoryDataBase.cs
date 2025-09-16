@@ -9,11 +9,11 @@ using System.Xml.Linq;
 using UnityEngine;
 namespace Instance.MVC
 {
-    public class CommonDataBase : IDataBase<InventoryData>
+    public class InventoryDataBase : IDataBase<InventoryData>
     {
         private InventoryData[] _datas;
-        private static CommonDataBase _instance = new();
-        protected CommonDataBase()
+        private static InventoryDataBase _instance = new();
+        protected InventoryDataBase()
         {
             if (RelativePath == null || RelativePath.Length == 0 || RelativePath == "")
             {
@@ -28,7 +28,7 @@ namespace Instance.MVC
                 csvReader.Read();
 
                 var data = new InventoryData();
-                data.id = int.Parse(csvReader[0]);
+                data.ID = int.Parse(csvReader[0]);
                 Enum.TryParse(csvReader[1], out data.tag);
                 data.IconTextureID = int.Parse(csvReader[2]);
                 data.buffID = int.Parse(csvReader[3]);
@@ -40,18 +40,18 @@ namespace Instance.MVC
             reader.Close();
         }
 
-        public static CommonDataBase Instance => _instance;
+        public static InventoryDataBase Instance => _instance;
 
         public string RelativePath => "Instance/Inventory/CommonInventory/CommonDataBase.csv";
 
-        int IDataBase<InventoryData>.Count => _datas.Length;
+        public int Count => _datas.Length;
 
-        InventoryData IDataBase<InventoryData>.Read(int index)
+        public InventoryData Read(int index)
         {
             return _datas[index];
         }
 
-        void IDataBase<InventoryData>.Write(InventoryData data, int index)
+        public void Write(InventoryData data, int index)
         {
             _datas[index] = data;
         }

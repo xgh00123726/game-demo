@@ -1,3 +1,4 @@
+using GameBase.EntitySystem;
 using GameBase.Inventorys;
 using GameBase.Tools;
 using GameBase.UI;
@@ -5,16 +6,23 @@ using UnityEngine;
 
 namespace Instance.MVC
 {
-    public abstract class MVController<T_ModelItem, T_ViewItem, T_View, T_Controller> : Singleton<T_Controller>
+    public abstract class MVController<T_ModelItem, T_ViewItem, T_View, T_Controller> : Singleton<T_Controller>, IBaseSys
         where T_ViewItem : BaseViewItem, new()
         where T_View : BaseViewPanel<T_ViewItem, T_View>, new()
         where T_Controller : MVController<T_ModelItem, T_ViewItem, T_View, T_Controller>, new()
     {
+        public MVController()
+        {
+            ShadowMono.CreateShadowMono(this);
+        }
+
         protected abstract IInventoryModel<T_ModelItem> Model { get; }
         protected abstract T_View View { get; }
         protected abstract IDataBase<T_ModelItem> DataBase { get; }
 
-        protected abstract void SetIcon(T_ModelItem modelData, T_ViewItem viewItem);
+        protected abstract void SetItem(T_ModelItem modelData, T_ViewItem viewItem);
+
+        protected virtual void SetNullItem(T_ModelItem modelData, T_ViewItem viewItem) { }
 
         public int Size
         {
@@ -35,7 +43,7 @@ namespace Instance.MVC
         {
             var index = Model.AddItem(item);
             var viewItem = View.FillGet(index);
-            SetIcon(item, viewItem);
+            SetItem(item, viewItem);
             return index;
         }
 
@@ -49,7 +57,7 @@ namespace Instance.MVC
         {
             Model.AddItem(item, index);
             var viewItem = View.FillGet(index);
-            SetIcon(item, viewItem);
+            SetItem(item, viewItem);
             return index;
         }
 
@@ -129,6 +137,68 @@ namespace Instance.MVC
                 return AddItem(item, index);
             }
             return -1;
+        }
+
+        public virtual void ForceRefreshView()
+        {
+            for (int i = 0; i < Model.Size; i++)
+            {
+                if (Model.HasItem(i))
+                {
+                    SetItem(Model[i], View[i]);
+                }
+                else
+                {
+                    SetNullItem(Model[i], View[i]);
+                }
+            }
+        }
+
+        public T_ModelItem GetModelItem(int index)
+        {
+            return Model[index];
+        }
+
+        public T_ViewItem GetViewItem(int index)
+        {
+            return View[index];
+        }
+
+        public virtual void Show()
+        {
+            View.Show();
+        }
+
+        public virtual void Hide()
+        {
+            View.Hide();
+        }
+
+        public virtual void Toggle()
+        {
+            View.Toggle();
+        }
+
+        protected virtual void Update() { }
+
+        void IBaseSys.Update()
+        {
+            
+        }
+
+        int IBaseSys.GetEntityCount()
+        {
+            return Model.Size;
+        }
+
+        int IBaseSys.GetReleasedCount()
+        {
+            return 0;
+        }
+
+        int IBaseSys.GetActiveCount()
+        {
+            return View.Entities.Count;
         }
     }
 }

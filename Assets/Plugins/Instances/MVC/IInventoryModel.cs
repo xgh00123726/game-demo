@@ -7,7 +7,7 @@ namespace Instance.MVC
         bool HasItem(int index);
         int AddItem(T item);
         int AddItem(T item, int index);
-        void RemoveItem(int index);
+        bool RemoveItem(int index);
         void Swap(int p1, int p2);
     }
 }

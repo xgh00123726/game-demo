@@ -273,5 +273,20 @@ namespace GameBase.UI
         {
             this[p1].SwapIconSprite(this[p2]);
         }
+
+        public void Show()
+        {
+            panel.SetActive(true);
+        }
+
+        public void Hide()
+        {
+            panel.SetActive(false);
+        }
+
+        public void Toggle()
+        {
+            panel.SetActive(!panel.activeSelf);
+        }
     }
 }

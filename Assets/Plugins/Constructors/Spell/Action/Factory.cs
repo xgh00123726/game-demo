@@ -13,6 +13,7 @@ namespace Constructor.Spells.Action
         BuffSelf,
 
         MAreaFixedDis,
+        MTrigNearestTarget,
     }
     public class Factory : ConstructorFactory<Type, IAction, Factory>
     {
@@ -25,6 +26,7 @@ namespace Constructor.Spells.Action
                 {Type.AreaFixedDis, AreaFixedDisCon.Instance.Get },
                 {Type.BuffSelf, BuffSelfCon.Instance.Get },
                 {Type.MAreaFixedDis, MAreaFixedDisCon.Instance.Get },
+                {Type.MTrigNearestTarget, MTrigNearestTargetCon.Instance.Get },
             };
         }
     }

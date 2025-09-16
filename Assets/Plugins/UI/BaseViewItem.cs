@@ -1,5 +1,6 @@
 using GameBase.EntitySystem;
 using GameBase.Resources;
+using GameBase.Tools;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,11 +21,19 @@ namespace GameBase.UI
         public Color colorHide;
         public Color colorShow;
 
+        public int IconTextureID => iconTextureID;
         public int ItemIndex => itemIndex;
         public RectTransform RectTransform => rectTransform;
         public BaseUI Obj { get; set; }
         public int ObjID { get; set; }
         public int InstanceID { get; set; }
+
+        public Sprite InstantiateSpriteFromIconTextureID(int iconTextureID)
+        {
+            var texture = ResourcesLoader.GetTexture2D(iconTextureID);
+            return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            
+        }
 
         public void SetIconSprite(int iconTextureID)
         {
@@ -32,8 +41,16 @@ namespace GameBase.UI
             {
                 return;
             }
-            var texture = ResourcesLoader.GetTexture2D(iconTextureID);
-            IconSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+
+            this.iconTextureID = iconTextureID;
+            
+            if (iconTextureID < 0)
+            {
+                iconSprite = null;
+                return;
+            }
+
+            IconSprite = InstantiateSpriteFromIconTextureID(iconTextureID);
         }
 
         public void SetIconSprite(Sprite iconSprite)

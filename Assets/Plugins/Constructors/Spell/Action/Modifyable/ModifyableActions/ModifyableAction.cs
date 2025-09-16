@@ -1,7 +1,10 @@
 using Constructor.Spells.Action.Modifyables.Modifier;
+using GameBase.Flyings;
+using GameBase.Projectiles;
 using GameBase.Spells;
 using GameBase.Tools;
 using System.Collections.Generic;
+using UnityEngine.UIElements;
 
 namespace Constructor.Spells.Action.Modifyables
 {
@@ -9,7 +12,11 @@ namespace Constructor.Spells.Action.Modifyables
     {
         private ModifyableModifyData _data;
         private ModifyableModifyData _modifiedData;
-        private List<BaseModifier> _modifiers = new();
+        private AutoFillList<BaseModifier> _modifiers = new();
+
+        private float _processedDisfuse = 0f;
+        private float _angleInit = 0f;
+        private float _angleDelta = 0f;
 
         public ModifyableAction()
         {
@@ -19,7 +26,48 @@ namespace Constructor.Spells.Action.Modifyables
             _data.castTimes = 0;
         }
 
-        protected abstract void CastAction(Spell spell, in ModifyableModifyData modifyData);
+        protected virtual bool IsCast(Spell spell)
+        {
+            return true;
+        }
+
+        protected virtual Flying GenFlying(Spell spell, float angleOffset, float flyingDistanceModify)
+        {
+            return null;
+        }
+
+        protected virtual Projectile GenProjectile(Flying flying)
+        {
+            return null;
+        }
+
+        protected virtual void CastAction(Spell spell, in ModifyableModifyData modifyData)
+        {
+            if (!IsCast(spell))
+            {
+                return;
+            }
+
+            for (int i = 0; i < 1 + _modifiedData.flyingNums; i++)
+            {
+                var flying = GenFlying(spell, GetAngleOffset(i), modifyData.flyingDistance);
+
+                if (flying != null && spell.speller is IProjectileOwner pOwner) 
+                {
+                    var projectile = GenProjectile(flying);
+                    if (projectile != null)
+                    {
+                        projectile.owner = pOwner;
+                    }
+                }
+            }
+        }
+
+        protected float Disfuse => _processedDisfuse;
+
+        protected float AngleInit => _angleInit;
+
+        protected float AngleDelta => _angleDelta;
 
         void IAction.CastAction(Spell spell)
         {
@@ -33,7 +81,7 @@ namespace Constructor.Spells.Action.Modifyables
             }
         }
 
-        public float ProcessDisfuse(float origin)
+        private float ProcessDisfuse(float origin)
         {
             const float MIN_DISFUSE = 30f;
             if (origin < 0)
@@ -46,22 +94,36 @@ namespace Constructor.Spells.Action.Modifyables
             }
         }
 
-        public void AddModifier(BaseModifier modifier)
+        protected float GetAngleOffset(int index)
         {
-            _modifiers.Add(modifier);
-            ResolveModifiedData();
+            return _angleInit + _angleDelta * index;
         }
 
-        public void RemoveModifyer(BaseModifier modifier)
+
+
+        public void AddModifier(BaseModifier modifier, int index)
         {
-            _modifiers.Remove(modifier);
+            _modifiers.Add(modifier, index);
             ResolveModifiedData();
         }
 
         public void RemoveModifyer(int index)
         {
-            _modifiers.RemoveAt(index);
+            if (index < 0 || index >= _modifiers.Count)
+            {
+                XLogger.Instance.Log($"invalid index:{index}, max:{_modifiers.Count}");
+                return;
+            }
+            _modifiers[index] = null;
             ResolveModifiedData();
+        }
+
+        public static void TryRemoveModifyer(Spell spell, int index)
+        {
+            if (spell.actionInterface is ModifyableAction mAct)
+            {
+                mAct.RemoveModifyer(index);
+            }
         }
 
         public void ResolveModifiedData()
@@ -69,7 +131,24 @@ namespace Constructor.Spells.Action.Modifyables
             _modifiedData = _data;
             foreach (var modifier in _modifiers)
             {
+                if (modifier == null)
+                {
+                    continue;
+                }
+
                 modifier.Modify(ref _modifiedData);
+            }
+
+            if (_modifiedData.flyingNums < 0)
+            {
+                _modifiedData.flyingNums = 0;
+            }
+
+            _processedDisfuse = ProcessDisfuse(_modifiedData.fireDisfuse);
+            if (_modifiedData.flyingNums > 0)
+            {
+                _angleInit = -_processedDisfuse / 2;
+                _angleDelta = _processedDisfuse / _modifiedData.flyingNums;
             }
         }
     }

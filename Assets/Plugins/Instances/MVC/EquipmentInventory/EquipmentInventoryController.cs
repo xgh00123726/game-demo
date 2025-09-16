@@ -12,8 +12,6 @@ namespace Instance.MVC
         EquipmentViewPanel,
         EquipmentInventoryController>
     {
-        public IBuffOwner owner;
-
         private EquipmentInventoryModel _inventoryModel = new();
 
         public EquipmentInventoryController()
@@ -26,19 +24,11 @@ namespace Instance.MVC
 
         protected override IInventoryModel<InventoryData> Model => _inventoryModel;
         protected override EquipmentViewPanel View => EquipmentViewPanel.Instance;
-        protected override IDataBase<InventoryData> DataBase => CommonDataBase.Instance;
+        protected override IDataBase<InventoryData> DataBase => InventoryDataBase.Instance;
 
-        public override int AddItem(InventoryData item, int index)
+        public void SetOwner<T_Owner>(T_Owner owner) where T_Owner : IBuffOwner
         {
-            base.AddItem(item, index);
-            owner.RegisterBuff(_inventoryModel.GetBuff(index));
-            return index;
-        }
-
-        public override void RemoveItem(int position)
-        {
-            owner.RemoveBuff(_inventoryModel.GetBuff(position));
-            base.RemoveItem(position);
+            _inventoryModel.owner = owner;
         }
     }
 }

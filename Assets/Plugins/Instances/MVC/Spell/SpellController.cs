@@ -2,14 +2,20 @@ using GameBase.Inventorys;
 using GameBase.Spells;
 using GameBase.Tools;
 using GameBase.UI;
+using System;
 
 namespace Instance.MVC
 {
     public class SpellController : MVController<SpellItemData, SpellViewItem, SpellViewPanel, SpellController>
     {
-        public SpellModel spellModel;
+        private SpellModel _model = new();
+        public Action<int> OnClickedItem
+        {
+            get => View.OnClickedItem;
+            set => View.OnClickedItem = value;
+        }
 
-        protected override IInventoryModel<SpellItemData> Model => spellModel;
+        protected override IInventoryModel<SpellItemData> Model => _model;
 
         protected override SpellViewPanel View => SpellViewPanel.Instance;
 
@@ -18,23 +24,27 @@ namespace Instance.MVC
         public override int AddItem(SpellItemData item)
         {
             var ret = base.AddItem(item);
-            View[ret].viewInfo = new SpellViewInfo(spellModel.owner.GetSpell(ret));
+            View[ret].viewInfo = new SpellViewInfo(_model.owner.GetSpell(ret));
             return ret;
         }
 
         public override int AddItem(SpellItemData item, int index)
         {
             var ret = base.AddItem(item, index);
-            View[ret].viewInfo = new SpellViewInfo(spellModel.owner.GetSpell(ret));
+            View[ret].viewInfo = new SpellViewInfo(_model.owner.GetSpell(ret));
             return ret;
         }
 
-        protected override void SetIcon(SpellItemData modelData, SpellViewItem viewItem)
+        protected override void SetItem(SpellItemData modelData, SpellViewItem viewItem)
         {
-            viewItem.iconTextureID = modelData.iconTextureID;
-            View.SetIcon(viewItem);
+            View.SetIcon(viewItem, modelData.iconTextureID);
         }
 
         public int LastClickedItemIndex => View.LastClickedItemIndex;
+
+        public void SetOwner<T_Owner>(T_Owner owner) where T_Owner : ISpellModelOwner
+        {
+            _model.owner = owner;
+        }
     }
 }

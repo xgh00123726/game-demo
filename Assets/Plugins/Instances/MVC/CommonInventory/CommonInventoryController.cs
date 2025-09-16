@@ -16,7 +16,7 @@ namespace Instance.MVC
         private CommonInventoryModel _inventoryModel = new();
         protected override IInventoryModel<InventoryData> Model => _inventoryModel;
         protected override CommonInventoryViewPanel View => CommonInventoryViewPanel.Instance;
-        protected override IDataBase<InventoryData> DataBase => CommonDataBase.Instance;
+        protected override IDataBase<InventoryData> DataBase => InventoryDataBase.Instance;
         public bool IsShow => _showFlag;
 
         public CommonInventoryController()
@@ -29,20 +29,20 @@ namespace Instance.MVC
             Size = InventoryConfig.Int.InventoryPageCapacity;
         }
 
-        public void Show()
+        public override void Show()
         {
             _showFlag = true;
             View.panelXOffsetTarget = 0;
             View.panel.SetActive(true);
         }
-        public void Hide()
+        public override void Hide()
         {
             _showFlag = false;
             View.panelXOffsetTarget = InventoryConfig.Float.InventoryPanelHideOffsetX;
             View.panelXMoveSpeed = InventoryConfig.Float.InventoryPanelHideSpeed;
             CommonFixedDetailableShadowView.Instance.Hide();
         }
-        public void Toggle()
+        public override void Toggle()
         {
             if (_showFlag)
             {

@@ -111,15 +111,17 @@ namespace GameBase.Inventorys
             }
         }
 
-        public virtual void RemoveItem(int position)
+        public virtual bool RemoveItem(int position)
         {
             if (!HasItem(position))
             {
-                return;
+                return false;
             }
 
             _nullIndexes.Push(position);
             _items[position].exist = false;
+
+            return true;
         }
 
         public virtual void Swap(int p1, int p2)

@@ -57,7 +57,7 @@ namespace Constructor.Flyings
                 };
             }
             var hitEffectID = data.hitEffectID;
-            if ( hitEffectID >= 0)
+            if (hitEffectID >= 0)
             {
                 e.OnHit += () =>
                 {

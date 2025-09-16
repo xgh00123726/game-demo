@@ -64,7 +64,6 @@ namespace GameBase.Projectiles
 
             if (e.shape != null)
             {
-                XLogger.Instance.Log("range");
                 e.shape.Center = new Vector2(objTransform.position.x, objTransform.position.z);
                 foreach (var target in e.targetsSet.TargetsInShape(e.shape))
                 {

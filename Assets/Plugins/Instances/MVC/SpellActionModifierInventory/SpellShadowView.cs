@@ -6,14 +6,20 @@ using UnityEngine.UI;
 
 namespace Instance.MVC
 {
-    public class DragableShadowView
+    /// <summary>
+    /// 技能修饰器上标识被修饰的技能的UI
+    /// </summary>
+    public class SpellShadowView
     {
         private static GameObject _shadowObj;
         private static Image _iconImage;
+        private static Color _defaultColor;
 
-        static DragableShadowView()
+        static SpellShadowView()
         {
-            _shadowObj = GameObject.Instantiate(ResourcesLoader.GetPrefab(37));
+            _shadowObj = GameObject.Instantiate(ResourcesLoader.GetPrefab(44));
+
+            _shadowObj.name = "SpellShadowView";
 
             _shadowObj.transform.SetParent(RootCanvas.Instance.transform, false);
 
@@ -23,12 +29,29 @@ namespace Instance.MVC
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
                     .Log("panel item must has icon object");
             }
+
+            _defaultColor = _iconImage.color;
         }
 
         public static void SetPosition(Vector3 position)
         {
             _shadowObj.SetActive(true);
             _shadowObj.transform.position = position;
+        }
+
+        public static void ShowColor(Color color)
+        {
+            _iconImage.color = color;
+        }
+
+        public static void RestoreColor()
+        {
+            _iconImage.color = _defaultColor;
+        }
+
+        public static void Show()
+        {
+            _shadowObj.SetActive(true);
         }
 
         public static void Hide()
@@ -38,7 +61,7 @@ namespace Instance.MVC
 
         public static void CopyIcon(BaseViewItem e)
         {
-            _iconImage.sprite = e.IconSprite;
+            _iconImage.sprite = e.InstantiateSpriteFromIconTextureID(e.IconTextureID);
         }
     }
 }

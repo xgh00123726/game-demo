@@ -22,11 +22,6 @@ namespace Instance.MVC
         };
 
         public const int MAX_SPELL_NUM = 5;
-        
-        public SpellModel(ISpellModelOwner owner)
-        {
-            this.owner = owner;
-        }
 
         SpellItemData IInventoryModel<SpellItemData>.this[int index] => _inventoryModel[index];
 
@@ -72,10 +67,15 @@ namespace Instance.MVC
             return _inventoryModel.HasItem(index);
         }
 
-        void IInventoryModel<SpellItemData>.RemoveItem(int index)
+        bool IInventoryModel<SpellItemData>.RemoveItem(int index)
         {
-            _inventoryModel.RemoveItem(index);
-            owner.RemoveSpell(index);
+            if(_inventoryModel.RemoveItem(index))
+            {
+                owner.RemoveSpell(index);
+                return true;
+            }
+
+            return false;
         }
 
         void IInventoryModel<SpellItemData>.Swap(int p1, int p2)

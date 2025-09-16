@@ -59,6 +59,11 @@ namespace GameBase.Flyings
             }
         }
 
+        public void DirInit(Vector3 dir)
+        {
+            _projectile.Dir = dir;
+        }
+
         public void DirInit()
         {
             _projectile.Dir = _projectile.Dest - _projectile.Src;
