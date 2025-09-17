@@ -23,7 +23,8 @@ namespace GameBase.Tools
         SummonEnemy, SummonAllies,
         ChooseText,
         OpenShop, CloseShop,
-        DragScreen
+        DragScreen,
+        ShopPurchase,
     }
 
     internal struct InputKey

@@ -35,7 +35,7 @@ namespace GameBase.Tools
                 OnInitialize();
             }
             status = OnUpdate();
-            // 如果推出状态时（执行完update之后），节点未运行，则表示节点完成一次运行
+            // 如果退出状态时（执行完update之后），节点未运行，则表示节点完成一次运行
             if (!IsRunning)
             {
                 OnTerminate();

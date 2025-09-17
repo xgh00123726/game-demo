@@ -1,10 +1,11 @@
+using System;
+
 namespace GameBase.Tools
 {
     public class ConditionBehavior : Behavior
     {
-        public delegate bool ConditionAction();
-        private ConditionAction _conditionAction;
-        public ConditionBehavior(ConditionAction conditionAction)
+        private Func<bool> _conditionAction;
+        public ConditionBehavior(Func<bool> conditionAction)
         {
             _conditionAction = conditionAction;
         }

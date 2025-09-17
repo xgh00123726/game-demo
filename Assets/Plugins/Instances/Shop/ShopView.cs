@@ -2,8 +2,9 @@ using GameBase.Resources;
 using GameBase.UI;
 using GameBase.Shops;
 using UnityEngine;
+using GameBase.Tools;
 
-namespace Instance.Shops
+namespace Instance.UI.Shops
 {
     public class ShopView : IShopView, IShopInteractive
     {
@@ -11,38 +12,36 @@ namespace Instance.Shops
 
         int IShopView.GoodNums
         {
-            get => SP.Constructor.Count;
+            get => SP.Entities.Count;
             set
             {
-                var count = SP.Constructor.Count;
-                if (value > count)
-                {
-                    for (int i = 0; i < value - count; i++)
-                    {
-                        SP.NewEntity();
-                    }
-                }
-                if (value < count)
-                {
-                    for (int i = 0; i < count -  value; i++)
-                    {
-                    }
-                }
+                SP.FillItem(value);
             }
         }
 
         bool IShopInteractive.TrigRefresh => false;
 
-        int IShopInteractive.CurrentPurchase => -1;
+        int IShopInteractive.CurrentPurchase
+        {
+            get
+            {
+                if(Inputs.GetKeyDown(KeyFunction.ShopPurchase) && SP.TryGetItem(Input.mousePosition, out var e, out var index))
+                {
+                    return index;
+                }
+
+                return -1;
+            }
+        }
 
         void IShopView.Hide()
         {
-            SP.panel.SetActive(false);
+            SP.Hide();
         }
 
         void IShopView.Show()
         {
-            SP.panel.SetActive(true);
+            SP.Show();
         }
     }
 }

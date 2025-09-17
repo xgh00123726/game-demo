@@ -4,6 +4,33 @@ namespace GameBase.Tools
 {
     public class AutoFillList<T> : List<T>
     {
+        public void CopyFrom(List<T> list)
+        {
+            int size = list.Count;
+            Capacity = size;
+            for (int i = 0; i < size; i++)
+            {
+                this[i] = list[i];
+            }
+        }
+
+        public void Resize(int size, T value = default)
+        {
+            int count = Count;
+            if (size > count)
+            {
+                Capacity = size;
+                for (int i = 0; i < size - count; i++)
+                {
+                    Add(value);
+                }
+            }
+            else
+            {
+                Capacity = size;
+            }
+        }
+
         public void Add(T e, int index)
         {
             if (index < Count)

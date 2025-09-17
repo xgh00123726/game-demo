@@ -73,20 +73,6 @@ namespace Instance.UI
             SetElemActive(false);
         }
 
-        private void ExecCmdString(string text)
-        {
-            string[] inputs = text.Split(" ");
-
-            if (inputs.Length == 2)
-            {
-                Command.Exec(inputs[0], inputs[1]);
-            }
-            else if (inputs.Length == 1)
-            {
-                Command.Exec(inputs[0]);
-            }
-        }
-
         private void OnActiveCmd()
         {
             _inputTextField.ActivateInputField();
@@ -95,7 +81,7 @@ namespace Instance.UI
 
         private void OnDeactiveCmd()
         {
-            ExecCmdString(_inputTextField.text);
+            Command.Exec(_inputTextField.text);
             _lastCmd = _inputTextField.text;
             _inputTextField.text = "";
             Inputs.ReleaseAll();

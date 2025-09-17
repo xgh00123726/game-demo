@@ -1,61 +1,74 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GameBase.Tools
 {
     public class Command
     {
-        private static Dictionary<string, Action> _commands = new();
-        private static Dictionary<string, Action<string>> _commandsWithPara = new();
-        private static Dictionary<string, Action<int>> _commandsWithIntPara = new();
-        private static List<string> _commandKeys = new();
+        private static Dictionary<string, Action<string[]>> _commands = new();
+        private static HashSet<string> _commandKeys = new();
 
-        public static List<string> CommandKeys => _commandKeys;
+        public static HashSet<string> CommandKeys => _commandKeys;
 
         public static void Register(string key, Action action)
+        {
+            Register(key, (string[] args) => action?.Invoke());
+        }
+
+        public static void Register(string key, Action<string> action)
+        {
+            Register(key, (string[] args) =>
+            {
+                if (args.Length < 2)
+                {
+                    return;
+                }
+                else
+                {
+                    action?.Invoke(args[1]);
+                }
+            });
+        }
+
+        public static void Register(string key, Action<int> action)
+        {
+            Register(key, (string[] args) =>
+            {
+                if (args.Length < 2)
+                {
+                    return;
+                }
+                else
+                {
+                    if (int.TryParse(args[1], out int value))
+                    {
+                        action?.Invoke(value);
+                    }
+                }
+            });
+        }
+
+        public static void Register(string key, Action<string[]> action)
         {
             _commands[key] = action;
             _commandKeys.Add(key);
         }
 
-        public static void Register(string key, Action<string> action)
-        {
-            _commandsWithPara[key] = action;
-            _commandKeys.Add(key);
-        }
-
-        public static void Register(string key, Action<int> action)
-        {
-            _commandsWithIntPara[key] = action;
-            _commandKeys.Add(key);
-        }
-
         public static void Exec(string cmd)
         {
-            Exec(cmd, null);
-        }
-
-        public static void Exec(string cmd, string para)
-        {
-            if (para == null)
+            string[] args = cmd.Split(" ");
+            
+            if (args.Length == 0)
             {
-                if (_commands.ContainsKey(cmd))
-                {
-                    _commands[cmd]?.Invoke();
-                }
+                return;
             }
-            else
-            {
-                if (_commandsWithPara.ContainsKey(cmd))
-                {
-                    _commandsWithPara[cmd]?.Invoke(para);
-                }
-                else if (_commandsWithIntPara.ContainsKey(cmd))
-                {
-                    int.TryParse(para, out var intPara);
 
-                    _commandsWithIntPara[cmd]?.Invoke(intPara);
-                }
+            string key = args[0];
+
+            if (_commands.ContainsKey(key))
+            {
+                _commands[key]?.Invoke(args);
             }
         }
     }

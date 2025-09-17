@@ -9,7 +9,7 @@ namespace GameBase.Tools
         // 按键码和按键功能对应表，程序中有初始值
         private static Dictionary<List<KeyCode>, List<KeyFunction>> _funcOfCode = new Dictionary<List<KeyCode>, List<KeyFunction>>
         {
-            {new List<KeyCode>{ KeyCode.Mouse0 }, new List<KeyFunction>{ KeyFunction.Attack } },
+            {new List<KeyCode>{ KeyCode.Mouse0 }, new List<KeyFunction>{ KeyFunction.Attack, KeyFunction.ShopPurchase } },
             {new List<KeyCode>{ KeyCode.Mouse1 }, new List<KeyFunction>{ KeyFunction.MoveTo } },
             {new List<KeyCode>{ KeyCode.W },      new List<KeyFunction>{ KeyFunction.Up } },
             {new List<KeyCode>{ KeyCode.S },      new List<KeyFunction>{ KeyFunction.Stop, KeyFunction.Down } },

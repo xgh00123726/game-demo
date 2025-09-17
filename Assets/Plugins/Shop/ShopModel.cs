@@ -1,30 +1,67 @@
 using GameBase.Tools;
+using NReco.Csv;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Xml.Linq;
 using UnityEngine;
 
 namespace GameBase.Shops
 {
+    public struct ShopModelData
+    {
+        public int goodID;
+        public int weight;
+        public int price;
+    }
+
     public class ShopModel
     {
         internal int goodNums = 5;
-        internal List<int> currGoodIDs = new();
-        internal List<int> goodIDs = new();
-        internal List<int> weights = new();
-        internal List<int> prices = new();
+        internal AutoFillList<int> currGoodIDs = new();
+        internal List<ShopModelData> datas = new();
         internal int weightSum = 0;
 
-        public void SetGoods(List<int> goodIDs, List<int> weights, List<int> prices)
+        internal ShopModel(string relativePath)
         {
-            this.goodIDs = goodIDs;
-            this.weights = weights;
-            this.prices = prices;
-            weightSum = this.weights.Sum();
+            Init(relativePath);
+            Command.Register($"shop-{relativePath}-init", Init);
+        }
+
+        private void Init(string relativePath)
+        {
+            if (relativePath == null || relativePath.Length == 0 || relativePath == "")
+            {
+                return;
+            }
+            StreamReader reader = File.OpenText($"{Application.streamingAssetsPath}/ShopData/{relativePath}");
+            CsvReader csvReader = new CsvReader(reader);
+            csvReader.Read();
+            int len = int.Parse(csvReader[0]);
+            weightSum = 0;
+            for (int i = 0; i < len; i++)
+            {
+                csvReader.Read();
+                int index = int.Parse(csvReader[0]);
+                int goodID = int.Parse(csvReader[1]);
+                int weight = int.Parse(csvReader[2]);
+                int price = int.Parse(csvReader[3]);
+
+                datas.Add(new ShopModelData()
+                {
+                    goodID = goodID,
+                    weight = weight,
+                    price = price,
+                });
+                weightSum += weight;
+            }
+
+            reader.Close();
         }
 
         public int GetGoodID(int index)
         {
-            return goodIDs[index];
+            return datas[index].goodID;
         }
 
         internal int GoodNums
@@ -32,17 +69,7 @@ namespace GameBase.Shops
             get => goodNums;
             set
             {
-                if (value >= goodNums)
-                {
-                    for(int i = 0; i < value - goodNums; i++)
-                    {
-                        currGoodIDs.Add(-1);
-                    }
-                }
-                else if (value < goodNums)
-                {
-                    currGoodIDs.RemoveRange(value, goodNums - value);
-                }
+                currGoodIDs.Resize(value, -1);
                 goodNums = value;
             }
         }
@@ -55,16 +82,16 @@ namespace GameBase.Shops
         /// <param name="goodIDs"></param>
         /// <param name="weights"></param>
         /// <returns></returns>
-        private int RandomToGoodIndex(int randomInt, List<int> weights)
+        private int RandomToGoodIndex(int randomInt)
         {
-            if (randomInt <= 0 || weights.Count == 0)
+            if (randomInt <= 0 || datas.Count == 0)
             {
                 return -1;
             }
 
-            for (int i = 0; i < weights.Count; i++)
+            for (int i = 0; i < datas.Count; i++)
             {
-                randomInt -= weights[i];
+                randomInt -= datas[i].weight;
                 if (randomInt < 0)
                 {
                     return i;
@@ -76,11 +103,13 @@ namespace GameBase.Shops
 
         protected internal virtual bool Purchase(int index, IShoper shoper)
         {
+            XLogger.Instance.Log($"purchase:{index}, l:{datas.Count}, ");
+
             if (index < 0 || index >= goodNums)
             {
                 return false;
             }
-            if (shoper.Gold < prices[index])
+            if (shoper.Gold < datas[index].price)
             {
                 return false;
             }
@@ -94,8 +123,8 @@ namespace GameBase.Shops
             for (int i = 0; i < goodNums; ++i)
             {
                 int randInt = Random.Range(0, weightSum - 1);
-                int index = RandomToGoodIndex(randInt, weights);
-                currGoodIDs[i] = goodIDs[index];
+                int index = RandomToGoodIndex(randInt);
+                currGoodIDs[i] = datas[index].goodID;
             }
         }
     }

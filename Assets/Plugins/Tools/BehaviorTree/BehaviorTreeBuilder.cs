@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using static GameBase.Tools.Behavior;
 
 namespace GameBase.Tools
 {
@@ -11,15 +12,18 @@ namespace GameBase.Tools
 
         private void AddBehavior(Behavior behavior)
         {
+            // 第一个节点作为根节点
             if (_tree._root == null)
             {
                 _tree._root = behavior;
             }
+            // 向最近的父节点添加子节点
             else
             {
                 _nodeStack.Peek().AddChild(behavior);
             }
 
+            // 如果是组合节点或者修饰器节点，则将其作为最近的父节点
             if (behavior is Composite || behavior is Decorator)
             {
                 _nodeStack.Push(behavior);
@@ -86,14 +90,14 @@ namespace GameBase.Tools
             return this;
         }
 
-        public BehaviorTreeBuilder IF(ConditionBehavior.ConditionAction condition)
+        public BehaviorTreeBuilder IF(Func<bool> condition)
         {
             var bh = new ConditionBehavior(condition);
             AddBehavior(bh);
             return this;
         }
 
-        public BehaviorTreeBuilder RR(RequestResponseBehavior.RRAction RRAction)
+        public BehaviorTreeBuilder RR(Func<Status> RRAction)
         {
             var bh = new RequestResponseBehavior(RRAction);
             AddBehavior(bh);

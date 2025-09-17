@@ -4,7 +4,7 @@ using GameBase.Shops;
 using UnityEngine;
 using GameBase.Tools;
 
-namespace Instance.Shops
+namespace Instance.UI.Shops
 {
     public class NearView : INearView
     {

@@ -1,12 +1,13 @@
+using System;
+
 namespace GameBase.Tools
 {
     public class RequestResponseBehavior : Behavior
     {
-        public delegate Status RRAction();
-        private RRAction _action;
-        public RequestResponseBehavior(RRAction action)
+        private Func<Status> _action;
+        public RequestResponseBehavior(Func<Status> RRAction)
         {
-            _action = action;
+            _action = RRAction;
         }
 
         protected override Status OnUpdate()
