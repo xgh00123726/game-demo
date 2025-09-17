@@ -33,7 +33,8 @@ namespace Instance.UI.MVC
                 Enum.TryParse(csvReader[1], out data.tag);
                 data.IconTextureID = int.Parse(csvReader[2]);
                 data.buffID = int.Parse(csvReader[3]);
-                data.spellActionModifyerID = int.Parse(csvReader[4]);
+                Enum.TryParse(csvReader[4], out data.spellActionModifierType);
+                data.spellActionModifyerID = int.Parse(csvReader[5]);
 
                 _datas[i] = data;
             }

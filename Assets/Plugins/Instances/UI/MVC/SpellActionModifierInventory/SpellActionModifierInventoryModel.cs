@@ -14,7 +14,7 @@ namespace Instance.UI.MVC
 
             if (item.tag == InventoryTag.SpellActionModify)
             {
-                var modify = Constructor.Spells.Action.Modifyables.Modifier.Factory.Instance.Get(item.spellActionModifyerID);
+                var modify = Constructor.Spells.Action.Modifyables.Modifier.Factory.Instance.Get(item.spellActionModifierType, item.spellActionModifyerID);
                 modify.ModifyTo(owner.Spell, index);
             }
 
