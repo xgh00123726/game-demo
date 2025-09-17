@@ -1,4 +1,4 @@
-39
+45
 0,Prefabs/Entity/Player1
 1,Prefabs/Entity/Enemy1
 2,Prefabs/Projectile/Lighting
@@ -38,3 +38,9 @@
 36,Prefabs/Effect/Move/RightClickEffect
 37,Prefabs/UI/InventoryShadowItem
 38,Prefabs/UI/FixedDetailUI
+39,Prefabs/UI/ShopNearView.prefab
+40,Prefabs/UI/ShopItem.prefab
+41,Prefabs/UI/ShopPanel.prefab
+42,Prefabs/UI/SpellActionModifierItem.prefab
+43,Prefabs/UI/SpellActionModifierPanel.prefab
+44,Prefabs/UI/SpellItemShadowView.prefab
