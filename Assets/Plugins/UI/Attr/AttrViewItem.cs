@@ -5,10 +5,14 @@ namespace GameBase.UI
 {
     public class AttrViewItem : BaseViewItem
     {
-        public IViewableAttr bindAttr;
-
         internal TextMeshProUGUI valueTMP;
-
+        public float Value
+        {
+            set
+            {
+                valueTMP.text = value.ToString();
+            }
+        }
         public AttrViewItem()
         {
             ObjID = 16;

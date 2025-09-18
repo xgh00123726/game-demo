@@ -26,20 +26,12 @@ namespace GameBase.UI
 
             e.valueTMP = obj.transform.Find("ValueText").GetComponent<TextMeshProUGUI>();
 
-            var texture = Texture2D.Instantiate(ResourcesLoader.GetTexture2D(e.bindAttr.IconTextureID));
-
-            var sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-
-            obj.transform.Find("Icon").GetComponent<Image>().sprite = sprite;
-
             return obj;
         }
 
         protected override void UpdateEntity(AttrViewItem e)
         {
             base.UpdateEntity(e);
-
-            e.valueTMP.text = e.bindAttr.Value;
         }
     }
 }

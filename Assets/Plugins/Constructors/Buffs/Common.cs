@@ -57,7 +57,7 @@ namespace Constructor.Buffs
                 {
                     var modifyKey = kv.Key;
                     var modifyValues = kv.Value;
-                    int modifyID = ModifyableContainer<float>.GetIDOfKey(modifyKey);
+                    int modifyID = ModifyTable.GetID(modifyKey);
                     ModifyData itemData = new();
 
                     if (modifyValues["setPer"] != null)
@@ -106,24 +106,24 @@ namespace Constructor.Buffs
                 var mv = mData.Value;
                 if (mv.setPercent != int.MinValue)
                 {
-                    var ems = ModifyerSys<float>.Instance.NewEntity();
-                    ems.ModifyFunc = ConvientModifyerFunc.FloatSetPercent(mv.setPercent);
+                    var ems = ModifyerSys.Instance.NewEntity();
+                    ems.value = mv.setPercent;
                     ems.type = ModifyType.Temporary | ModifyType.Aways;
                     ems.duration = 9999;
                     e.modifyers.AddSet(mk, ems);
                 }
                 if (mv.currentPercent != int.MinValue)
                 {
-                    var emc = ModifyerSys<float>.Instance.NewEntity();
-                    emc.ModifyFunc = ConvientModifyerFunc.FloatCurrPercent(mv.currentPercent);
+                    var emc = ModifyerSys.Instance.NewEntity();
+                    emc.value = mv.currentPercent;
                     emc.type = ModifyType.Temporary | ModifyType.Aways;
                     emc.duration = 9999;
                     e.modifyers.AddCurr(mk, emc);
                 }
                 if (mv.fixedValue != int.MinValue)
                 {
-                    var emf = ModifyerSys<float>.Instance.NewEntity();
-                    emf.ModifyFunc = ConvientModifyerFunc.FloatFixedValue(mv.fixedValue);
+                    var emf = ModifyerSys.Instance.NewEntity();
+                    emf.value = mv.fixedValue;
                     emf.type = ModifyType.Temporary | ModifyType.Aways;
                     emf.duration = 9999;
                     e.modifyers.AddFixed(mk, emf);

@@ -23,18 +23,18 @@ namespace Constructor.Spells.Action
         public TrigNearestTargetData data;
         void IAction.CastAction(Spell spell)
         {
-            var mOwner = spell.speller as IModifyOwner<float>;
+            var mOwner = spell.speller as IModifieder;
             if (mOwner == null)
             {
                 XLogger.Instance.Log("owner null");
                 return;
             }
-            if (!mOwner.Modifyables.ContainsValueWith("attackRange"))
+            if (!mOwner.Modifyables.ContainsKey("attackRange"))
             {
                 XLogger.Instance.Log("no attack range");
                 return;
             }
-            float attackRange = mOwner.Modifyables["attackRange"].Value;
+            float attackRange = mOwner.Modifyables["attackRange"];
             Vector3 center = new Vector3(spell.speller.Position.x, 0, spell.speller.Position.z);
 
             var target = TargetSetFactorary.GetTargetSet("Common").NearestTarget(center, attackRange);

@@ -121,6 +121,13 @@ namespace GameBase.UI
             ui.pointerDownAction = () => enterExitControl?.OnPointerDown(e);
             ui.pointerRightDownAction = () => enterExitControl?.OnPointerRightDown(e);
 
+            var iconObj = obj.transform.Find("Icon");
+
+            if (iconObj != null) 
+            {
+                e.iconImage = iconObj.GetComponent<Image>();
+            }
+
             e.Obj = ui;
 
             obj.transform.SetParent(panel.transform, false);

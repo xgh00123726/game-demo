@@ -3,7 +3,7 @@ using GameBase.Tools;
 
 namespace GameBase.Buffs
 {
-    public interface IBuffOwner : IModifyOwner<float>
+    public interface IBuffOwner : IModifieder
     {
         BuffContainer Buffs { get; }
         public void RegisterBuff(Buff e)
@@ -13,15 +13,15 @@ namespace GameBase.Buffs
 
             foreach (var em in e.modifyers.FixedModifyers)
             {
-                e.owner.Modifyables.AddModify(em.Key, em.Value);
+                e.owner.Modifyables.ModifySet(em.Key, em.Value);
             }
             foreach (var em in e.modifyers.SetModifyers)
             {
-                e.owner.Modifyables.AddModify(em.Key, em.Value);
+                e.owner.Modifyables.ModifySetPer(em.Key, em.Value);
             }
             foreach (var em in e.modifyers.CurrModifyers)
             {
-                e.owner.Modifyables.AddModify(em.Key, em.Value);
+                e.owner.Modifyables.ModifySumPer(em.Key, em.Value);
             }
         }
 

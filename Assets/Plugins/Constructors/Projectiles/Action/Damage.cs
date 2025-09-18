@@ -15,11 +15,11 @@ namespace Constructor.Projectiles.Action
         public DamageData data;
         void IProjectileAction.Effect(Projectile e, IProjectileTarget target)
         {
-            if (target is IModifyOwner<float> mTarget)
+            if (target is IModifieder mTarget)
             {
-                var modifyer = ModifyerSys<float>.Instance.NewEntity();
+                var modifyer = ModifyerSys.Instance.NewEntity();
                 modifyer.type = ModifyType.Once | ModifyType.Forever;
-                modifyer.ModifyFunc += ConvientModifyerFunc.FloatFixedValue(-data.value);
+                modifyer.value = -data.value;
                 modifyer.OnModify += () =>
                 {
                     var text = TextSys.Instance.NewEntity();
@@ -27,7 +27,7 @@ namespace Constructor.Projectiles.Action
                     text.value = data.value.ToString();
                 };
 
-                mTarget.Modifyables.AddModify("currHP", modifyer);
+                mTarget.Modifyables.ModifySet("currHP", modifyer);
             }
         }
     }

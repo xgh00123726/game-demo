@@ -2,27 +2,19 @@ using GameBase.EntitySystem;
 using GameBase.Tools;
 namespace GameBase.Modify
 {
-    public class ModifyableSys<T> : CommonEntitySys<Modifyable<T>, ModifyableSys<T>>
+    public class ModifyableSys : CommonEntitySys<Modifyable, ModifyableSys>
     {
-        protected override void OnRegisterEntityToActives(Modifyable<T> e)
+        protected override void OnRegisterEntityToActives(Modifyable e)
         {
-            foreach (var func in e.RegistertoActivesDelegate)
-            {
-                func?.Invoke(e);
-            }
         }
 
-        protected override void OnRemoveEntityFromActives(Modifyable<T> e)
+        protected override void OnRemoveEntityFromActives(Modifyable e)
         {
-            foreach (var func in e.RemoveFromActiveDelegate)
-            {
-                func?.Invoke(e);
-            }
             e.modifyers.Clear();
         }
 
 
-        protected override void UpdateEntity(Modifyable<T> e)
+        protected override void UpdateEntity(Modifyable e)
         {
             foreach (var m in e.modifyersNeedAdd)
             {
@@ -37,7 +29,7 @@ namespace GameBase.Modify
             e.modifyersNeedRemove.Clear();
 
 
-            T finnalVal = e.valueSet;
+            float finnalVal = e.valueSet;
             foreach (var modifyer in e.modifyers)
             {
                 if (modifyer.isRelease) // modifyer触发自身的移除条件后，也要从modifyerable的列表中移除
@@ -48,15 +40,13 @@ namespace GameBase.Modify
 
                 if (!modifyer.enable) continue;  // modifyer不使能则不生效
 
-                if (modifyer.ModifyFunc == null) continue;  // 没有modifyerfunc也不生效
-
                 if ((modifyer.type & ModifyType.Temporary) != 0)
                 {
-                    finnalVal = modifyer.ModifyFunc(finnalVal, e.valueSet);
+                    finnalVal += modifyer.value;
                 }
                 else if ((modifyer.type & ModifyType.Forever) != 0)
                 {
-                    e.valueSet = modifyer.ModifyFunc(finnalVal, e.valueSet);
+                    e.valueSet += modifyer.value;
                 }
 
                 modifyer.OnModify?.Invoke();
@@ -71,7 +61,12 @@ namespace GameBase.Modify
             e.value = finnalVal;
         }
 
-        public Modifyable<T> NewEntity(T initValue)
+        internal void InternalRemoveEntity(Modifyable e)
+        {
+            RemoveEntity(e);
+        }
+
+        public Modifyable NewEntity(float initValue)
         {
             var ret = Instance.NewEntity();
             ret.valueSet = initValue;

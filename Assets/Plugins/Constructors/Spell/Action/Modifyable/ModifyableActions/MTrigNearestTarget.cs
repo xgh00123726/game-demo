@@ -13,7 +13,7 @@ namespace Constructor.Spells.Action.Modifyables
 {
     public class MTrigNearestTarget : ModifyableAction
     {
-        private IModifyOwner<float> _mOwner;
+        private IModifieder _mOwner;
         private float _attackRange;
         private IProjectileTarget _target;
         private IProjectileOwner _pOwner;
@@ -24,7 +24,7 @@ namespace Constructor.Spells.Action.Modifyables
 
         protected override bool IsCast(Spell spell)
         {
-            _mOwner = spell.speller as IModifyOwner<float>;
+            _mOwner = spell.speller as IModifieder;
 
             if (_mOwner == null)
             {
@@ -37,13 +37,13 @@ namespace Constructor.Spells.Action.Modifyables
                 return false;
             }
 
-            if (!_mOwner.Modifyables.ContainsValueWith("attackRange"))
+            if (!_mOwner.Modifyables.ContainsKey("attackRange"))
             {
                 
                 return false;
             }
 
-            _attackRange = _mOwner.Modifyables["attackRange"].Value;
+            _attackRange = _mOwner.Modifyables["attackRange"];
 
             Vector3 center = new Vector3(spell.speller.Position.x, 0, spell.speller.Position.z);
             _target = TargetSetFactorary.GetTargetSet("Common").NearestTarget(center, _attackRange);

@@ -9,7 +9,12 @@ namespace GameBase.UI
         internal Material iconMaterial;
         internal TextMeshProUGUI stackNumTMP;
 
-        public int iconTextureID;
+        public new int IconTextureID
+        {
+            get => iconTextureID;
+            set => iconTextureID = value;
+        }
+
         public IViewableBuff bindBuff;
 
         public BuffViewItem()

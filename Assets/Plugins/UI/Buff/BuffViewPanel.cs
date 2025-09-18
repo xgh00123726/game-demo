@@ -33,15 +33,8 @@ namespace GameBase.UI
         {
             var obj = base.InstantiateObj(e);
 
-            var image = obj.transform.Find("Icon").GetComponent<Image>();
-            if (image == null)
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log("panel item must has icon object");
-            }
-
-            e.iconMaterial = new Material(image.material);
-            image.material = e.iconMaterial;
+            e.iconMaterial = new Material(e.iconImage.material);
+            e.iconImage.material = e.iconMaterial;
 
             e.iconMaterial.SetFloat("_Dir1", -1f);
             e.iconMaterial.SetFloat("_Dir2", -1f);

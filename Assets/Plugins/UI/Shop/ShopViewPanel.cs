@@ -22,18 +22,5 @@ namespace GameBase.UI
         {
             return e.Obj.transform.Find("Icon").GetComponent<RectTransform>();
         }
-        protected override BaseUI InstantiateObj(ShopViewItem e)
-        {
-            var ui = base.InstantiateObj(e);
-
-            e.iconImage = e.Obj.transform.Find("Icon").GetComponent<Image>();
-            if (e.iconImage == null)
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log("panel item must has icon object");
-            }
-
-            return ui;
-        }
     }
 }

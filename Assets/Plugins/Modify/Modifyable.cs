@@ -1,30 +1,25 @@
 using GameBase.EntitySystem;
-using System;
 using System.Collections.Generic;
 
 namespace GameBase.Modify
 {
-    public class Modifyable<T> : IEntity
+    public class Modifyable : IEntity
     {
-        internal int id;
-        internal T valueSet;
-        internal T value;
-        internal LinkedList<Modifyer<T>> modifyersNeedAdd = new();
-        internal LinkedList<Modifyer<T>> modifyersNeedRemove = new();
+        internal float valueSet;
+        internal float value;
+        internal LinkedList<Modifyer> modifyersNeedAdd = new();
+        internal LinkedList<Modifyer> modifyersNeedRemove = new();
 
-        public List<Action<Modifyable<T>>> RegistertoActivesDelegate = new();
-        public List<Action<Modifyable<T>>> RemoveFromActiveDelegate = new();
+        public LinkedList<Modifyer> modifyers = new ();
+        public float Value => value;
+        public float ValueSet => valueSet;
 
-        public LinkedList<Modifyer<T>> modifyers = new ();
-        public T Value => value;
-        public T ValueSet => valueSet;
-
-        public void AddModify(Modifyer<T> modifyer)
+        public void AddModify(Modifyer modifyer)
         {
             modifyersNeedAdd.AddLast(modifyer);
         }
 
-        public void RemoveModify(Modifyer<T> modifyer)
+        public void RemoveModify(Modifyer modifyer)
         {
             modifyersNeedRemove.AddLast(modifyer);
         }

@@ -19,13 +19,6 @@ namespace GameBase.UI
         {
             var ui = base.InstantiateObj(e);
 
-            e.iconImage = e.Obj.transform.Find("Icon").GetComponent<Image>();
-            if (e.iconImage == null)
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log("panel item must has icon object");
-            }
-
             e.colorHide = e.iconImage.color;
             e.colorShow = new Color(e.colorHide.r, e.colorHide.g, e.colorHide.b, 1);
 

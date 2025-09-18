@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace GameBase.Modify
 {
-    public class ModifyerSys<T> : CommonEntitySys<Modifyer<T>, ModifyerSys<T>>
+    public class ModifyerSys : CommonEntitySys<Modifyer, ModifyerSys>
     {
-        protected override void OnRegisterEntityToActives(Modifyer<T> e)
+        protected override void OnRegisterEntityToActives(Modifyer e)
         {
             e.instantiateTime = Time.time;
             e.lastEnableTime = Time.time;
@@ -23,15 +23,14 @@ namespace GameBase.Modify
             }
         }
 
-        protected override void OnRemoveEntityFromActives(Modifyer<T> e)
+        protected override void OnRemoveEntityFromActives(Modifyer e)
         {
             e.enable = false;
             e.externalClear = false;
-            e.ModifyFunc = null;
             e.modifyableRelease = false;
         }
 
-        protected override void UpdateEntity(Modifyer<T> e)
+        protected override void UpdateEntity(Modifyer e)
         {
             if ((e.type & ModifyType.Aways) != 0)
             {

@@ -21,7 +21,7 @@ namespace GameBase.Creatures
         IProjectileOwner,
         IProjectileTarget,
         IHealthBarOwner,
-        IModifyOwner<float>,
+        IModifieder,
         ISpeller,
         IBuffOwner,
         IMover,
@@ -36,14 +36,14 @@ namespace GameBase.Creatures
         public int InstanceID { get; set; }
         public GameObject Obj { get; set; }
         public int ObjID { get; set; }
-        public virtual bool ReleaseTrigger => _modifyableContainer["currHP"].Value <= 0f;
+        public virtual bool ReleaseTrigger => _fModifyables["currHP"] <= 0f;
 
-        protected ModifyableContainer<float> _modifyableContainer = new();
+        protected Modifyables _fModifyables = new();
         protected BuffContainer _buffContainer = new();
 
         internal Animator animator;
 
-        public ModifyableContainer<float> ModifyableContainer => _modifyableContainer;
+        public Modifyables Modifyables => _fModifyables;
         public BuffContainer BuffContainer => _buffContainer;
 
         Vector3 IHealthBarOwner.HealthBarPosition => Obj.transform.position 
@@ -53,17 +53,15 @@ namespace GameBase.Creatures
 
         float IProjectileTarget.Radius => radius;
 
-        float IHealthBarOwner.CurrHP => _modifyableContainer["currHP"].Value;
+        float IHealthBarOwner.CurrHP => _fModifyables["currHP"];
 
-        float IHealthBarOwner.MaxHP => _modifyableContainer["maxHP"].Value;
+        float IHealthBarOwner.MaxHP => _fModifyables["maxHP"];
 
         bool IHealthBarOwner.ALive => Alive;
 
-        ModifyableContainer<float> IModifyOwner<float>.Modifyables => _modifyableContainer;
-
         Vector3 IProjectileOwner.HandPosition => Obj.transform.position + new Vector3(0, 1, 0);
 
-        float ISpeller.CoolingAccelerate => _modifyableContainer["coolingAccelerate"].Value;
+        float ISpeller.CoolingAccelerate => _fModifyables["coolingAccelerate"];
 
         public Vector3 Position
         {
@@ -77,11 +75,11 @@ namespace GameBase.Creatures
 
         BuffContainer IBuffOwner.Buffs => _buffContainer;
 
-        float IMover.Speed => _modifyableContainer["moveSpeed"].Value;
+        float IMover.Speed => _fModifyables["moveSpeed"];
 
         GameObject IMover.GO => Obj;
 
-        float IRotater.Speed => _modifyableContainer["rotateSpeed"].Value;
+        float IRotater.Speed => _fModifyables["rotateSpeed"];
 
         GameObject IRotater.GO => Obj;
 
