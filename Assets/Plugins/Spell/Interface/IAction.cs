@@ -2,6 +2,6 @@ namespace GameBase.Spells
 {
     public interface IAction
     {
-        void CastAction(Spell spell);
+        bool CastAction(Spell spell);
     }
 }

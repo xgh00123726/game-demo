@@ -16,12 +16,7 @@ namespace Instance.UI.MVC
     public class SpellModel : IMVCModel<SpellItemData>
     {
         internal ISpellModelOwner owner;
-        private SInventoryModel<SpellItemData> _inventoryModel = new()
-        {
-            Size = MAX_SPELL_NUM
-        };
-
-        public const int MAX_SPELL_NUM = 5;
+        private DynInventoryModel<SpellItemData> _inventoryModel = new();
 
         SpellItemData IMVCModel<SpellItemData>.this[int index] => _inventoryModel[index];
 
@@ -36,7 +31,7 @@ namespace Instance.UI.MVC
             var ret = _inventoryModel.AddItem(item);
             var spell = Factory.Instance.Get(item.type, item.id);
 
-            Constructor.Spells.Interactive.Factory.Instance
+            KeyCommon
                 .SetHotKey(spell.interactive, owner.GetKeyFunction(ret));
 
             spell.speller = owner.Speller;
@@ -53,7 +48,7 @@ namespace Instance.UI.MVC
             var ret = _inventoryModel.Count - 1;
             var spell = Factory.Instance.Get(item.type, item.id);
 
-            Constructor.Spells.Interactive.Factory.Instance
+            KeyCommon
                 .SetHotKey(spell.interactive, owner.GetKeyFunction(ret));
 
             spell.speller = owner.Speller;

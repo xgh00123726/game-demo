@@ -6,16 +6,6 @@ namespace GameBase.Spells
 {
     public class SpellSys : CommonEntitySys<Spell, SpellSys>
     {
-        protected override void OnRegisterEntityToActives(Spell e)
-        {
-            e.RegistertoActivesDelegate?.Invoke(e);
-        }
-
-        protected override void OnRemoveEntityFromActives(Spell e)
-        {
-            e.RemoveFromActiveDelegate?.Invoke(e);
-        }
-
         protected override void UpdateEntity(Spell e)
         {
             if (e.speller == null || e.interactive == null)
@@ -36,11 +26,10 @@ namespace GameBase.Spells
             if (e.coolReady)
             {
                 e.interactive.Update(e.speller);
-                if (e.interactive.IsTrig)
+                if (e.interactive.IsTrig && e.actionInterface?.CastAction(e) == true)
                 {
                     e.coolReady = false;
                     e.coolingTimeRemain = e.coolingTimeSet;
-                    e.actionInterface?.CastAction(e);
                     e.interactive.OnTrig(e.speller);
                 }
             }

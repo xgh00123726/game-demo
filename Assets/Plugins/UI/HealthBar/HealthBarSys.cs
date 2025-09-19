@@ -29,12 +29,6 @@ namespace GameBase.UI
 
         protected override void AfterInstantiateEUObject(HealthBar e)
         {
-            if (e.owner == null)
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log("health bar must has a owner");
-            }
-
             e.currPercent = 1f;
             e.losingPercent = 1f;
 

@@ -21,18 +21,18 @@ namespace Constructor.Spells.Action
     public class TrigNearestTarget : IAction
     {
         public TrigNearestTargetData data;
-        void IAction.CastAction(Spell spell)
+        bool IAction.CastAction(Spell spell)
         {
             var mOwner = spell.speller as IModifieder;
             if (mOwner == null)
             {
                 XLogger.Instance.Log("owner null");
-                return;
+                return false;
             }
             if (!mOwner.Modifyables.ContainsKey("attackRange"))
             {
                 XLogger.Instance.Log("no attack range");
-                return;
+                return false;
             }
             float attackRange = mOwner.Modifyables["attackRange"];
             Vector3 center = new Vector3(spell.speller.Position.x, 0, spell.speller.Position.z);
@@ -40,7 +40,7 @@ namespace Constructor.Spells.Action
             var target = TargetSetFactorary.GetTargetSet("Common").NearestTarget(center, attackRange);
             if (target == null)
             {
-                return;
+                return false;
             }
 
             var pOwner = spell.speller as IProjectileOwner;
@@ -52,6 +52,8 @@ namespace Constructor.Spells.Action
             e.Flying.curve.DirInit();
             e.owner = pOwner;
             e.target = target;
+
+            return true;
         }
     }
 

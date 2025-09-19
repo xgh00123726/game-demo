@@ -1,31 +1,33 @@
 using GameBase.EntitySystem;
+using GameBase.Tools;
 using UnityEngine;
 
 namespace GameBase.Move
 {
     public class MoveSys : CommonEntitySys<Mover, MoveSys>
     {
-        public static float moveStopDis = 0.1f;
-
-        protected override void OnRegisterEntityToActives(Mover e)
-        {
-            e.owner.Dest = e.owner.GO.transform.position;
-        }
-
         protected override void UpdateEntity(Mover e)
         {
-            Vector3 dir = e.owner.Dest - e.owner.GO.transform.position;
-            Vector3 delta = dir.normalized * e.owner.Speed * Time.deltaTime;
-            Vector3 dest = e.owner.GO.transform.position + delta;
-
-            if ((e.owner.Dest - e.owner.GO.transform.position).magnitude < moveStopDis)
+            if (!e.isMoving)
             {
-                e.owner.IsMoving = false;
                 return;
             }
 
-            e.owner.IsMoving = true;
-            e.owner.GO.transform.position = dest;
+            Vector3 dir = e.dest - e.owner.Position;
+            Vector3 delta = dir.normalized * e.owner.Speed * Time.deltaTime;
+            Vector3 dest = e.owner.Position + delta;
+
+            if ((e.dest - e.owner.Position).magnitude <= delta.magnitude)
+            {
+                e.isMoving = false;
+                e.isArrive = true;
+                e.owner.Position = e.dest;
+                return;
+            }
+
+            e.isArrive = false;
+            e.isMoving = true;
+            e.owner.Position = dest;
         }
     }
 }

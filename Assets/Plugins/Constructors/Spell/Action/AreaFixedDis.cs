@@ -19,12 +19,12 @@ namespace Constructor.Spells.Action
     public class AreaFixedDis : IAction
     {
         public AreaFixedDisData data;
-        void IAction.CastAction(Spell spell)
+        bool IAction.CastAction(Spell spell)
         {
             var pOwner = spell.speller as IProjectileOwner;
             if (pOwner == null)
             {
-                return;
+                return false;
             }
 
             var ef = Flyings.Factory.Instance.Get(data.flyingType, data.flyingID);
@@ -34,6 +34,8 @@ namespace Constructor.Spells.Action
             var ep = Projectiles.Factory.Instance.Get(data.projectileType, data.projectileID);
             ep.owner = pOwner;
             ep.Flying = ef;
+
+            return true;
         }
     }
 

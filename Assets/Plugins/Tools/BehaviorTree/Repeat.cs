@@ -11,7 +11,6 @@ namespace GameBase.Tools
             Failure,
             Success,
         }
-        private int _runCount = 0;
         private int _maxRunCount = 0;
         private EndCondition _endCondition = EndCondition.Over;
         
@@ -21,12 +20,14 @@ namespace GameBase.Tools
         }
         protected override Status OnUpdate()
         {
-            child.Tick();
-            if (child.IsFailure && _endCondition == EndCondition.Failure) return Status.Failure;
-            if (child.IsSuccess && _endCondition == EndCondition.Success) return Status.Success;
+            for (int i = 0; i < _maxRunCount; ++i)
+            {
+                child.Tick();
+                if (child.IsFailure && _endCondition == EndCondition.Failure) return Status.Failure;
+                if (child.IsSuccess && _endCondition == EndCondition.Success) return Status.Success;
+            }
 
-            if (++_runCount >= _maxRunCount) return Status.Success;
-            return Status.Running;
+            return Status.Success;
         }
     }
 }

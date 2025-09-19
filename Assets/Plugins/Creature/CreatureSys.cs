@@ -61,19 +61,18 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
         e.animator = obj.GetComponent<Animator>();
         e.Obj = obj;
 
-        MoveSys.Instance.NewEntity((Mover em) =>
-        {
-            em.owner = e;
-        });
-        RotateSys.Instance.NewEntity((Rotater er) =>
-        {
-            er.owner = e;
-        });
-        HealthBarSys.Instance.NewEntity((HealthBar eh) =>
+        e.mover = MoveSys.Instance.NewEntity();
+        e.mover.owner = e;
+
+        e.rotater = RotateSys.Instance.NewEntity();
+        e.rotater.owner = e;
+
+        e.healthBar = HealthBarSys.Instance.NewEntity((HealthBar eh) =>
         {
             eh.ObjID = 6;
-            eh.owner = e;
         });
+        e.healthBar.owner = e;
+        
 
         return obj;
     }

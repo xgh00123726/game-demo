@@ -1,5 +1,4 @@
 using System;
-using GameBase.EntitySystem;
 
 namespace GameBase.Spells
 {
@@ -13,9 +12,6 @@ namespace GameBase.Spells
         public ISpeller speller;
         public IAction actionInterface;
         public ISpellInteractive interactive;
-
-        public Action<Spell> RegistertoActivesDelegate;
-        public Action<Spell> RemoveFromActiveDelegate;
 
         internal bool coolReady; // 技能冷却完成，可以进行交互
         internal float spellMoment;             // 施法时刻

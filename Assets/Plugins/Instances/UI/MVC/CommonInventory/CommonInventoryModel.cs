@@ -2,7 +2,7 @@ using GameBase.Inventorys;
 
 namespace Instance.UI.MVC
 {
-    public class CommonInventoryModel : CInventoryModel<InventoryData>, IMVCModel<InventoryData>
+    public class CommonInventoryModel : InventoryModel<InventoryData>, IMVCModel<InventoryData>
     {
     }
 }

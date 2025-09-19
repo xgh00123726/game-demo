@@ -11,6 +11,7 @@ namespace Constructor.Spells.Interactive
         KeyCommon,
         KeyFast,
         Always,
+        Invokable
     }
     public class Factory : ConstructorFactory<Type, ISpellInteractive, Factory>
     {
@@ -21,19 +22,8 @@ namespace Constructor.Spells.Interactive
                 {Type.KeyCommon, KeyCommonCon.Instance.Get },
                 {Type.KeyFast, KeyFastCon.Instance.Get },
                 {Type.Always, AlwaysCon.Instance.Get },
+                {Type.Invokable, Invokable.Get },
             };
-        }
-
-        public void SetHotKey(ISpellInteractive interactive, KeyFunction function)
-        {
-            if (interactive is KeyCommon keyCommon)
-            {
-                keyCommon.readyKey = function;
-            }
-            else if (interactive is KeyFast keyFast)
-            {
-                keyFast.castKey = function;
-            }
         }
     }
 }

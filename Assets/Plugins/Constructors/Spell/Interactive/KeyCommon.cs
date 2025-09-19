@@ -88,6 +88,18 @@ namespace Constructor.Spells.Interactive
         {
             indicatorReady = false;
         }
+
+        public static void SetHotKey(ISpellInteractive interactive, KeyFunction function)
+        {
+            if (interactive is KeyCommon keyCommon)
+            {
+                keyCommon.readyKey = function;
+            }
+            else if (interactive is KeyFast keyFast)
+            {
+                keyFast.castKey = function;
+            }
+        }
     }
 
     public class KeyCommonCon : BaseConstructor<CommonData, KeyCommon, KeyCommonCon>

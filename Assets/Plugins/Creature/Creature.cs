@@ -40,11 +40,18 @@ namespace GameBase.Creatures
 
         protected Modifyables _fModifyables = new();
         protected BuffContainer _buffContainer = new();
-
+        
+        internal Mover mover;
+        internal Rotater rotater;
+        internal HealthBar healthBar;
         internal Animator animator;
 
         public Modifyables Modifyables => _fModifyables;
         public BuffContainer BuffContainer => _buffContainer;
+        public Mover Mover => mover;
+        public Rotater Rotater => rotater;
+        public HealthBar HealthBar => healthBar;
+        public Animator Animator => animator;
 
         Vector3 IHealthBarOwner.HealthBarPosition => Obj.transform.position 
             + (CreatureGizmosDraw.Instance.healthBarDebugMode ? CreatureGizmosDraw.Instance.healthbarOffset : healthBarOffset);
@@ -66,40 +73,37 @@ namespace GameBase.Creatures
         public Vector3 Position
         {
             get => Obj.transform.position;
-            set
-            {
-                Obj.transform.position = value;
-                Dest = value;
-            }
+            set => Obj.transform.position = value;
         }
 
         BuffContainer IBuffOwner.Buffs => _buffContainer;
 
         float IMover.Speed => _fModifyables["moveSpeed"];
 
-        GameObject IMover.GO => Obj;
+        Vector3 IMover.Position
+        {
+            get => Obj.transform.position;
+            set => Obj.transform.position = value;
+        }
 
         float IRotater.Speed => _fModifyables["rotateSpeed"];
 
         GameObject IRotater.GO => Obj;
 
-        public bool IsMoving { get; set; }
         public bool IsRotating { get; set; }
 
         Animator IPlayerAnimable.Animator => animator;
-
-        public Vector3 Dest { get; set; }
 
         public Vector3 Dir { get; set; }
 
         bool IPlayerAnimable.IsMoving()
         {
-            return IsMoving;
+            return mover.IsMoving;
         }
 
         bool IPlayerAnimable.IsIdle()
         {
-            return !IsMoving;
+            return !mover.IsMoving;
         }
 
         public virtual void AfterGet()

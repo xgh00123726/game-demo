@@ -11,25 +11,25 @@ namespace GameBase.Inventorys
     /// </list>
     /// </summary>
     /// <typeparam name="T_Item"></typeparam>
-    public class SInventoryModel<T_Item>
-        where T_Item : struct
+    public class InventoryModel<T_Item>
+        where T_Item : new()
     {
-        private class InventoryItem
+        protected class CInventoryItem
         {
             public T_Item item;
             public bool exist;
-            public InventoryItem(T_Item item, bool exist)
+            public CInventoryItem(T_Item item, bool exist)
             {
                 this.item = item;
                 this.exist = exist;
             }
         }
 
-        private List<InventoryItem> _items = new();
-        private SortedIntList _nullIndexes = new((x, y) => (y - x));
-        private int _size = 0;
+        protected List<CInventoryItem> _items = new();
+        protected SortedIntList _nullIndexes = new((x, y) => (y - x));
+        protected int _size = 0;
 
-        public int Size
+        public virtual int Size
         {
             get => _size;
             set
@@ -42,7 +42,7 @@ namespace GameBase.Inventorys
                 _items.Capacity = value;
                 for (int i = 0; i < value - _size; ++i)
                 {
-                    _items.Add(new InventoryItem(default, false));
+                    _items.Add(new CInventoryItem(new T_Item(), false));
                     _nullIndexes.Push(i);
                 }
 
@@ -184,7 +184,7 @@ namespace GameBase.Inventorys
 
             p1Ready = true;
             p2 = p1;
-            for(; p2 < _size; ++p2)
+            for (; p2 < _size; ++p2)
             {
                 if (p1Ready && p2Ready)
                 {
@@ -206,7 +206,7 @@ namespace GameBase.Inventorys
                 {
                     for (; p2 < _size; ++p2)
                     {
-                        if ( HasItem(p2))
+                        if (HasItem(p2))
                         {
                             p2Ready = true;
                             break;

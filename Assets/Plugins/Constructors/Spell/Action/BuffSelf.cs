@@ -16,19 +16,21 @@ namespace Constructor.Spells.Action
     public class BuffSelf : IAction
     {
         public BuffSelfData data;
-        void IAction.CastAction(Spell spell)
+        bool IAction.CastAction(Spell spell)
         {
             var bOwner = spell.speller as IBuffOwner;
             if (bOwner == null)
             {
                 XLogger.Instance.Log("spell must be buff owner");
-                return;
+                return false;
             }
 
             var eb = Buffs.Factory.Instance.Get(data.buffType, data.buffID);
             eb.durationSet = data.duration;
             eb.uiStyle = UIStyle.Buff;
             bOwner.RegisterBuff(eb);
+
+            return true;
         }
     }
 

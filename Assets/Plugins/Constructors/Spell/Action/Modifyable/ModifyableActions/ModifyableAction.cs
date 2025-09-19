@@ -41,12 +41,14 @@ namespace Constructor.Spells.Action.Modifyables
             return null;
         }
 
-        protected virtual void CastAction(Spell spell, in ModifyableModifyData modifyData)
+        protected virtual bool CastAction(Spell spell, in ModifyableModifyData modifyData)
         {
             if (!IsCast(spell))
             {
-                return;
+                return false;
             }
+
+            var ret = false;
 
             for (int i = 0; i < 1 + _modifiedData.flyingNums; i++)
             {
@@ -59,8 +61,12 @@ namespace Constructor.Spells.Action.Modifyables
                     {
                         projectile.owner = pOwner;
                     }
+
+                    ret = true;
                 }
             }
+
+            return ret;
         }
 
         protected float Disfuse => _processedDisfuse;
@@ -69,16 +75,22 @@ namespace Constructor.Spells.Action.Modifyables
 
         protected float AngleDelta => _angleDelta;
 
-        void IAction.CastAction(Spell spell)
+        bool IAction.CastAction(Spell spell)
         {
-            CastAction(spell, in _modifiedData);
+            var ret = false;
+            ret |= CastAction(spell, in _modifiedData);
             if (_modifiedData.castTimes > 0)
             {
                 for (int i = 1; i <= _modifiedData.castTimes; ++i)
                 {
-                    Timer.AddTask(i * 0.2f, () => CastAction(spell, in _modifiedData));
+                    Timer.AddTask(i * 0.2f, () =>
+                    {
+                        CastAction(spell, in _modifiedData);
+                    });
                 }
             }
+
+            return ret;
         }
 
         private float ProcessDisfuse(float origin)

@@ -13,7 +13,7 @@ namespace Constructor.Spells.Action.Modifyables
     {
         public TrigOnReleaseData data;
 
-        public void CastAction(Spell spell)
+        public bool CastAction(Spell spell)
         {
             if (spell.speller is IProjectileOwner pOwner)
             {
@@ -29,7 +29,11 @@ namespace Constructor.Spells.Action.Modifyables
                     e.Flying.dest = ef.dest;
                     e.owner = pOwner;
                 };
+
+                return true;
             }
+
+            return false;
         }
     }
     public class MTrigOnReleaseCon : BaseConstructor<TrigOnReleaseData, MTrigOnRelease, MTrigOnReleaseCon>

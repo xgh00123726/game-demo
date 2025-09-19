@@ -37,6 +37,19 @@ namespace GameBase.Math
             return Mathf.Sqrt(dx * dx + dy * dy);
         }
 
+        public static Vector3 RollRandomDir()
+        {
+            float x = Random.value;
+            float y = Random.value;
+            float z = Random.value;
+            return new Vector3(x, y, z);
+        }
+
+        public static Vector3 RollRandomDir(float len)
+        {
+            Vector3 dir = RollRandomDir();
+            return dir.normalized * len;
+        }
 
         public static bool FloatEqualZero(float val)
         {

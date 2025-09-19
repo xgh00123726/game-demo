@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Instance.UI.MVC
 {
-    public class EquipmentInventoryModel : CInventoryModel<InventoryData>, IMVCModel<InventoryData>
+    public class EquipmentInventoryModel : InventoryModel<InventoryData>, IMVCModel<InventoryData>
     {
         private List<Buff> buffs = new();
 
