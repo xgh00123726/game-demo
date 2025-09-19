@@ -15,7 +15,7 @@ namespace Instance.UI.MVC
             set => View.OnClickedItem = value;
         }
 
-        protected override IInventoryModel<SpellItemData> Model => _model;
+        protected override IMVCModel<SpellItemData> Model => _model;
 
         protected override SpellViewPanel View => SpellViewPanel.Instance;
 

@@ -13,7 +13,7 @@ namespace Instance.UI.MVC
         public int id;
         public int iconTextureID;
     }
-    public class SpellModel : IInventoryModel<SpellItemData>
+    public class SpellModel : IMVCModel<SpellItemData>
     {
         internal ISpellModelOwner owner;
         private SInventoryModel<SpellItemData> _inventoryModel = new()
@@ -23,15 +23,15 @@ namespace Instance.UI.MVC
 
         public const int MAX_SPELL_NUM = 5;
 
-        SpellItemData IInventoryModel<SpellItemData>.this[int index] => _inventoryModel[index];
+        SpellItemData IMVCModel<SpellItemData>.this[int index] => _inventoryModel[index];
 
-        int IInventoryModel<SpellItemData>.Size
+        int IMVCModel<SpellItemData>.Size
         {
             get => _inventoryModel.Size;
             set => _inventoryModel.Size = value;
         }
 
-        int IInventoryModel<SpellItemData>.AddItem(SpellItemData item)
+        int IMVCModel<SpellItemData>.AddItem(SpellItemData item)
         {
             var ret = _inventoryModel.AddItem(item);
             var spell = Factory.Instance.Get(item.type, item.id);
@@ -45,7 +45,7 @@ namespace Instance.UI.MVC
             return ret;
         }
 
-        int IInventoryModel<SpellItemData>.AddItem(SpellItemData item, int index)
+        int IMVCModel<SpellItemData>.AddItem(SpellItemData item, int index)
         {
             _inventoryModel.AddItem(item, index);
             _inventoryModel.SortItems();
@@ -62,12 +62,12 @@ namespace Instance.UI.MVC
             return ret;
         }
 
-        bool IInventoryModel<SpellItemData>.HasItem(int index)
+        bool IMVCModel<SpellItemData>.HasItem(int index)
         {
             return _inventoryModel.HasItem(index);
         }
 
-        bool IInventoryModel<SpellItemData>.RemoveItem(int index)
+        bool IMVCModel<SpellItemData>.RemoveItem(int index)
         {
             if(_inventoryModel.RemoveItem(index))
             {
@@ -78,7 +78,7 @@ namespace Instance.UI.MVC
             return false;
         }
 
-        void IInventoryModel<SpellItemData>.Swap(int p1, int p2)
+        void IMVCModel<SpellItemData>.Swap(int p1, int p2)
         {
             _inventoryModel.Swap(p1, p2);
             var s1 = owner.GetSpell(p1);

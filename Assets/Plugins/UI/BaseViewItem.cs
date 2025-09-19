@@ -26,7 +26,6 @@ namespace GameBase.UI
         public RectTransform RectTransform => rectTransform;
         public BaseUI Obj { get; set; }
         public int ObjID { get; set; }
-        public int InstanceID { get; set; }
 
         public Sprite InstantiateSpriteFromIconTextureID(int iconTextureID)
         {

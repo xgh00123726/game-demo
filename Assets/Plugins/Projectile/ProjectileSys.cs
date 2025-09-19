@@ -14,7 +14,7 @@ namespace GameBase.Projectiles
         {
             if (e.hasWhite)
             {
-                e.whites = new System.Collections.Generic.HashSet<int>();
+                e.whites = new ();
             }
         }
 
@@ -28,7 +28,7 @@ namespace GameBase.Projectiles
 
         private void EffectTarget(Projectile e, IProjectileTarget target)
         {
-            if (e.hasWhite && e.whites.Contains(target.InstanceID))
+            if (e.hasWhite && e.whites.Contains(target))
             {
                 return;
             }
@@ -37,7 +37,7 @@ namespace GameBase.Projectiles
             e.actualEffectTimes++;
             if (e.hasWhite)
             {
-                e.whites.Add(target.InstanceID);
+                e.whites.Add(target);
             }
         }
 

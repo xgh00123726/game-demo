@@ -29,6 +29,5 @@ namespace GameBase.Shops
 
         public GameObject Obj { get; set; }
         public int ObjID { get; set; } = 1;
-        public int InstanceID { get; set; }
     }
 }

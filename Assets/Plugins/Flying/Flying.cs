@@ -50,7 +50,6 @@ namespace GameBase.Flyings
         }
 
         public bool Alive => alive;
-        public int InstanceID { get; set; }
         Vector3 ICurveable.Position
         {
             get => Obj.transform.position;

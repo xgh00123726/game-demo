@@ -2,9 +2,8 @@ using GameBase.EntitySystem;
 
 namespace GameBase.Move
 {
-    public class Mover : IEntity
+    public class Mover
     {
         public IMover owner;
-        public int InstanceID { get; set; }
     }
 }

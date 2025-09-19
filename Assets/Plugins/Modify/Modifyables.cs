@@ -10,14 +10,12 @@ namespace GameBase.Modify
 {
     public class ModifyTable
     {
-        private static List<string> _modifyableNames;
-        private static Dictionary<string, int> _modifyableIDs;
+        private static List<string> _modifyableNames = new();
+        private static List<int> _modifyableTextureIDs = new();
+        private static Dictionary<string, int> _modifyableIDs = new();
 
         static ModifyTable()
         {
-            _modifyableNames = new();
-            _modifyableIDs = new();
-
             StreamReader reader = File.OpenText($"{Application.streamingAssetsPath}/ConstructorData/ModifyContainer/ModifyTable_Single.csv");
             CsvReader csvReader = new CsvReader(reader);
 
@@ -31,9 +29,11 @@ namespace GameBase.Modify
 
                 int id = int.Parse(csvReader[1]);
                 string name = csvReader[2];
+                int iconTextureID = int.Parse(csvReader[3]);
 
                 _modifyableNames.Add(name);
                 _modifyableIDs.Add(name, id);
+                _modifyableTextureIDs.Add(iconTextureID);
             }
 
             reader.Close();
@@ -50,6 +50,8 @@ namespace GameBase.Modify
 
             return _modifyableIDs[name];
         }
+
+        public static int GetIconTextureID(int id) => _modifyableTextureIDs[id];
     }
 
     public struct ModifyableGroup
@@ -82,8 +84,8 @@ namespace GameBase.Modify
             }
 
             var set = ModifyableSys.Instance.NewEntity(value);
-            var setPer = ModifyableSys.Instance.NewEntity();
-            var sumPer = ModifyableSys.Instance.NewEntity();
+            var setPer = ModifyableSys.Instance.NewEntity(0);
+            var sumPer = ModifyableSys.Instance.NewEntity(0);
             _modifyableGroups[id] = new ModifyableGroup()
             {
                 set = set,

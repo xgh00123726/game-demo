@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace GameBase.Projectiles
 { 
-    public class Projectile : IEntity,
+    public class Projectile :
         IPoolable
     {
         // require
@@ -24,7 +24,7 @@ namespace GameBase.Projectiles
 
         internal Flying flying;
         internal int actualEffectTimes;
-        internal HashSet<int> whites;
+        internal HashSet<IProjectileTarget> whites;
 
         public Flying Flying
         {
@@ -35,8 +35,6 @@ namespace GameBase.Projectiles
                 flying.OnHit = () => ProjectileSys.Instance.HitTarget(this);
             }
         }
-
-        public int InstanceID { get; set; }
 
         public float Size
         {

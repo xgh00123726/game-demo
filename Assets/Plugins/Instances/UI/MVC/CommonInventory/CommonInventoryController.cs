@@ -14,7 +14,7 @@ namespace Instance.UI.MVC
         private bool _showFlag = false;
 
         private CommonInventoryModel _inventoryModel = new();
-        protected override IInventoryModel<InventoryData> Model => _inventoryModel;
+        protected override IMVCModel<InventoryData> Model => _inventoryModel;
         protected override CommonInventoryViewPanel View => CommonInventoryViewPanel.Instance;
         protected override IDataBase<InventoryData> DataBase => InventoryDataBase.Instance;
         public bool IsShow => _showFlag;

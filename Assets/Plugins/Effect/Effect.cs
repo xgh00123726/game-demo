@@ -21,6 +21,5 @@ namespace GameBase.Effects
         }
         public ParticleSystem Obj { get; set; }
         public int ObjID {  get; set; }
-        public int InstanceID {  get; set; }
     }
 }

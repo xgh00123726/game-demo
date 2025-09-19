@@ -3,7 +3,7 @@ using GameBase.EntitySystem;
 
 namespace GameBase.Spells
 {
-    public class Spell : IEntity
+    public class Spell
     {
         public float coolingTimeSet;   // 冷却时间
         public float point;            // 前摇
@@ -22,6 +22,5 @@ namespace GameBase.Spells
         internal float coolingTimeRemain;       // 剩余冷却时间
 
         public float CoolingTimeRemain => coolingTimeRemain;
-        public int InstanceID { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 namespace Instance.UI.MVC
 {
-    public interface IInventoryModel<T>
+    public interface IMVCModel<T>
     {
         T this[int index] { get; }
         int Size { get; set; }

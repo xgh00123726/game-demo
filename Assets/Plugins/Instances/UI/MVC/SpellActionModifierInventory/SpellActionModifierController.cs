@@ -38,7 +38,7 @@ namespace Instance.UI.MVC
             };
         }
 
-        protected override IInventoryModel<InventoryData> Model => _model;
+        protected override IMVCModel<InventoryData> Model => _model;
 
         protected override SpellActionModifierViewPanel View => SpellActionModifierViewPanel.Instance;
 

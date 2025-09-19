@@ -11,7 +11,7 @@ namespace GameBase.EntitySystem
     /// <item><typeparam name="T_Entity"><typeparamref name="T_Entity"/>:实体类型</typeparam></item>
     /// </list></summary>
     public abstract class CommonEntitySys<T_Entity, T_Instance> : Singleton<T_Instance>, IBaseSys
-        where T_Entity : class, IEntity, new()
+        where T_Entity : class, new()
         where T_Instance : CommonEntitySys<T_Entity, T_Instance>, new()
     {
         private float _updateTimeAccumulate = 0;
@@ -108,8 +108,6 @@ namespace GameBase.EntitySystem
 
         public void RegisterEntity(T_Entity e)
         {
-            e.InstanceID = PoolInfo.allocatedID++;
-
             OnRegisterEntityToActives(e);
             if (_inUpdating)
             {

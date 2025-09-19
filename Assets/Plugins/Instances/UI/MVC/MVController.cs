@@ -16,7 +16,7 @@ namespace Instance.UI.MVC
             ShadowMono.CreateShadowMono(this);
         }
 
-        protected abstract IInventoryModel<T_ModelItem> Model { get; }
+        protected abstract IMVCModel<T_ModelItem> Model { get; }
         protected abstract T_View View { get; }
         protected abstract IDataBase<T_ModelItem> DataBase { get; }
 
@@ -183,7 +183,7 @@ namespace Instance.UI.MVC
 
         void IBaseSys.Update()
         {
-            
+            Update();
         }
 
         int IBaseSys.GetEntityCount()

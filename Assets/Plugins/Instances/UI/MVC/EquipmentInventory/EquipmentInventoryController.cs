@@ -22,7 +22,7 @@ namespace Instance.UI.MVC
             Size = 6;
         }
 
-        protected override IInventoryModel<InventoryData> Model => _inventoryModel;
+        protected override IMVCModel<InventoryData> Model => _inventoryModel;
         protected override EquipmentViewPanel View => EquipmentViewPanel.Instance;
         protected override IDataBase<InventoryData> DataBase => InventoryDataBase.Instance;
 

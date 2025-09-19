@@ -5,7 +5,7 @@ using static UnityEditor.Progress;
 
 namespace Instance.UI.MVC
 {
-    public class SpellActionModifierInventoryModel : CInventoryModel<InventoryData>, IInventoryModel<InventoryData>
+    public class SpellActionModifierInventoryModel : CInventoryModel<InventoryData>, IMVCModel<InventoryData>
     {
         internal ISpellActionModifierOwner owner;
         public override int AddItem(InventoryData item, int index)

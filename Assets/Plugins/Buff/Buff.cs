@@ -16,7 +16,7 @@ namespace GameBase.Buffs
         Equipment = 1 << 3,
     }
 
-    public class Buff : IEntity,
+    public class Buff : 
         IPoolable
     {
         internal float durationRemain;
@@ -29,8 +29,6 @@ namespace GameBase.Buffs
         public int textureID;
         public float durationSet;
         public BuffModifyers modifyers = new ();
-
-        int IEntity.InstanceID { get; set; }
 
         public bool ALive => alive;
         public float DurationRemain => durationRemain;

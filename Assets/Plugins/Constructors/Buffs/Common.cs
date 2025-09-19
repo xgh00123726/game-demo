@@ -107,7 +107,7 @@ namespace Constructor.Buffs
                 if (mv.setPercent != int.MinValue)
                 {
                     var ems = ModifyerSys.Instance.NewEntity();
-                    ems.value = mv.setPercent;
+                    ems.value = mv.setPercent / 100f;
                     ems.type = ModifyType.Temporary | ModifyType.Aways;
                     ems.duration = 9999;
                     e.modifyers.AddSet(mk, ems);
@@ -115,7 +115,7 @@ namespace Constructor.Buffs
                 if (mv.currentPercent != int.MinValue)
                 {
                     var emc = ModifyerSys.Instance.NewEntity();
-                    emc.value = mv.currentPercent;
+                    emc.value = mv.currentPercent / 100f;
                     emc.type = ModifyType.Temporary | ModifyType.Aways;
                     emc.duration = 9999;
                     e.modifyers.AddCurr(mk, emc);

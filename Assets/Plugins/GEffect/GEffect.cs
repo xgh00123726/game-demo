@@ -3,7 +3,7 @@ using System;
 
 namespace GameBase.GEffects
 {
-    public class GEffect<T_Owner, T_Target> : IEntity,
+    public class GEffect<T_Owner, T_Target> :
         IPoolable
     {
         public bool trigOnGet;

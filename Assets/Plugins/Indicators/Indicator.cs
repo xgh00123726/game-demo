@@ -36,7 +36,6 @@ namespace GameBase.Indicators
         }
         public GameObject Obj { get; set; }
         public int ObjID { get; set; }
-        int IEntity.InstanceID { get; set; }
     }
 }
 

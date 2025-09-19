@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GameBase.Modify
 {
-    public class Modifyable : IEntity
+    public class Modifyable
     {
         internal float valueSet;
         internal float value;
@@ -23,7 +23,5 @@ namespace GameBase.Modify
         {
             modifyersNeedRemove.AddLast(modifyer);
         }
-
-        int IEntity.InstanceID { get; set; }
     }
 }
