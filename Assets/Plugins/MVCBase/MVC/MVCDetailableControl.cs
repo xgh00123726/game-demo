@@ -1,6 +1,6 @@
 using GameBase.UI;
 
-namespace Instance.UI.MVC
+namespace GameBase.UI.MVC
 {
     public class MVCDetailableControl<T> : IDetailableControl<T>
         where T : BaseViewItem

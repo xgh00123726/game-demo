@@ -1,5 +1,6 @@
 using GameBase.UI;
 using UnityEngine;
+using GameBase.UI.MVC;
 namespace Instance.UI.MVC
 {
     public class CommonDetailControl : IDetailableControl<CommonInventoryViewItem>

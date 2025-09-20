@@ -2,6 +2,7 @@ using GameBase.Config;
 using GameBase.Inventorys;
 using GameBase.Resources;
 using GameBase.UI;
+using GameBase.UI.MVC;
 using UnityEngine;
 
 namespace Instance.UI.MVC

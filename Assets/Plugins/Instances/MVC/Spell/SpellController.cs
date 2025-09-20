@@ -1,8 +1,8 @@
 using GameBase.Inventorys;
-using GameBase.Spells;
-using GameBase.Tools;
 using GameBase.UI;
 using System;
+using GameBase.UI.MVC;
+using GameBase.Creatures;
 
 namespace Instance.UI.MVC
 {
@@ -24,14 +24,12 @@ namespace Instance.UI.MVC
         public override int AddItem(SpellItemData item)
         {
             var ret = base.AddItem(item);
-            View[ret].viewInfo = new SpellViewInfo(_model.owner.GetSpell(ret));
             return ret;
         }
 
         public override int AddItem(SpellItemData item, int index)
         {
             var ret = base.AddItem(item, index);
-            View[ret].viewInfo = new SpellViewInfo(_model.owner.GetSpell(ret));
             return ret;
         }
 
@@ -42,7 +40,7 @@ namespace Instance.UI.MVC
 
         public int LastClickedItemIndex => View.LastClickedItemIndex;
 
-        public void SetOwner<T_Owner>(T_Owner owner) where T_Owner : ISpellModelOwner
+        public void SetOwner(Creature owner)
         {
             _model.owner = owner;
         }

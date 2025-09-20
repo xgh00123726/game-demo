@@ -50,9 +50,9 @@ namespace GameBase.UI
         {
             base.UpdateEntity(e);
 
-            float coolingTimeRemain = e.viewInfo.CoolingRemain;
+            float coolingTimeRemain = e.coolingTimeRemain;
 
-            float fullVal = coolingTimeRemain / e.viewInfo.CoolingSet;
+            float fullVal = coolingTimeRemain / e.coolingTimeSet;
             e.iconMaterial.SetFloat("_MaskFull", fullVal);
 
             string coolingText = string.Empty;
@@ -94,6 +94,16 @@ namespace GameBase.UI
             e.iconMaterial.SetTexture("_Shape", shape);
             e.iconMaterial.SetTexture("_Contour", contour);
             e.iconMaterial.SetTexture("_Target", texture);
+        }
+
+        public void SetCoolingTimeSet(int index, float value)
+        {
+            container[index].coolingTimeSet = value;
+        }
+
+        public void SetCoolingTimeRemain(int index, float value)
+        {
+            container[index].coolingTimeRemain = value;
         }
 
         public int LastClickedItemIndex => _lastClickedItemIndex;

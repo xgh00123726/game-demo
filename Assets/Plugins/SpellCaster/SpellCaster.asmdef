@@ -1,0 +1,20 @@
+{
+    "name": "SpellCaster",
+    "rootNamespace": "",
+    "references": [
+        "GUID:bb95100fcd0cc084ab58148aa14c5255",
+        "GUID:72bc4461359435e408b6ac60501cef38",
+        "GUID:d2d43e0db2807da49945b87c5300548d",
+        "GUID:d8c19839516efdd488fd8a930bde0e4b",
+        "GUID:12d4eac0cbc0bc24f82fe18e8e190470"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

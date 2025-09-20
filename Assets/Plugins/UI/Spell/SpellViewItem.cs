@@ -10,7 +10,11 @@ namespace GameBase.UI
         internal TextMeshProUGUI timeTMP;
         internal TextMeshProUGUI chargeTMP;
 
-        public ISpellViewInfo viewInfo;
+
+        public float coolingTimeRemain;
+        public float coolingTimeSet;
+        
+
         public SpellViewItem()
         {
             ObjID = 11;

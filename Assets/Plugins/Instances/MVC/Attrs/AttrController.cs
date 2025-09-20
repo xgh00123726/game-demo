@@ -2,6 +2,7 @@ using GameBase.Inventorys;
 using GameBase.Modify;
 using GameBase.Tools;
 using GameBase.UI;
+using GameBase.UI.MVC;
 
 namespace Instance.UI.MVC
 {

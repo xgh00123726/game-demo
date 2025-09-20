@@ -1,6 +1,6 @@
 using GameBase.UI;
 
-namespace Instance.UI
+namespace GameBase.UI
 {
     public class PublicDetailableShadowView : DetailableShadowView<BaseViewItem>
     {

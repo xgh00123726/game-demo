@@ -1,8 +1,6 @@
-using GameBase.UI;
-using Instance.UI.MVC;
 using UnityEngine;
 
-namespace Instance.UI
+namespace GameBase.UI
 {
     public class PublicDetailableControl : IDetailableControl<BaseViewItem>
     {

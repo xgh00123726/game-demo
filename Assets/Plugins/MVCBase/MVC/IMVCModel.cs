@@ -1,4 +1,4 @@
-namespace Instance.UI.MVC
+namespace GameBase.UI.MVC
 {
     public interface IMVCModel<T>
     {

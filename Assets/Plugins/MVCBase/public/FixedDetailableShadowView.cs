@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Instance.UI
+namespace GameBase.UI
 {
     public class FixedDetailableShadowView<T> : Singleton<FixedDetailableShadowView<T>>
         where T : InventoryViewItem

@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Instance.UI
+namespace GameBase.UI
 {
     public class DetailableShadowView<T> : Singleton<DetailableShadowView<T>>
         where T : BaseViewItem

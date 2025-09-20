@@ -6,6 +6,7 @@ using GameBase.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using GameBase.UI.MVC;
 namespace Instance.UI.MVC
 {
     public class SpellActionModifierController : InventoryController<InventoryData, 

@@ -1,6 +1,7 @@
 using GameBase.GCamera;
 using GameBase.Tools;
 using GameBase.UI;
+using GameBase.UI.MVC;
 using UnityEngine;
 
 namespace Instance.UI.MVC

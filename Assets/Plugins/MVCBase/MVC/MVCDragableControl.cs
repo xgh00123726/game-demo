@@ -1,7 +1,7 @@
 using GameBase.UI;
 using UnityEngine;
 
-namespace Instance.UI.MVC
+namespace GameBase.UI.MVC
 {
     public abstract class MVCDragableControl<T> : IDragableControl<T>
         where T : BaseViewItem

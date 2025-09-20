@@ -4,7 +4,7 @@ using GameBase.Tools;
 using GameBase.UI;
 using UnityEngine;
 
-namespace Instance.UI.MVC
+namespace GameBase.UI.MVC
 {
     public abstract class MVController<T_ModelItem, T_ViewItem, T_View, T_Controller> : Singleton<T_Controller>, IBaseSys
         where T_ViewItem : BaseViewItem, new()

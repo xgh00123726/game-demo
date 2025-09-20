@@ -4,6 +4,7 @@ using GameBase.Resources;
 using GameBase.UI;
 using Instance.Buffs;
 using UnityEngine;
+using GameBase.UI.MVC;
 
 namespace Instance.UI.MVC
 {

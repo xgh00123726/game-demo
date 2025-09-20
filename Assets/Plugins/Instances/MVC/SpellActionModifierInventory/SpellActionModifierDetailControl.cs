@@ -1,5 +1,5 @@
 using GameBase.UI;
-
+using GameBase.UI.MVC;
 namespace Instance.UI.MVC
 {
     public class SpellActionModifierDetailControl : IDetailableControl<SpellActionModifierViewItem>

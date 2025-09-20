@@ -19,8 +19,6 @@ namespace Constructor.Spells.Interactive
         {
             return new()
             {
-                {Type.KeyCommon, KeyCommonCon.Instance.Get },
-                {Type.KeyFast, KeyFastCon.Instance.Get },
                 {Type.Always, AlwaysCon.Instance.Get },
                 {Type.Invokable, Invokable.Get },
             };
