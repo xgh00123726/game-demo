@@ -8,8 +8,6 @@ namespace GameBase.Flyings
     {
         public static readonly float ProjectileHitDis = 0.1f;
 
-        protected override float FixedFreq => 60;
-
         protected override GameObject InstantiateObj(Flying e)
         {
             var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));

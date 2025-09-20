@@ -14,22 +14,18 @@ namespace GameBase.EntitySystem
         where T_Entity : class, new()
         where T_Instance : CommonEntitySys<T_Entity, T_Instance>, new()
     {
-        private float _updateTimeAccumulate = 0;
         private int _currentIterateIndex = 0;
         private bool _inUpdating = false;
         private IEConstructor<T_Entity> _entityConstructor = new PoolConstructor<T_Entity>();
         private IEContainer<T_Entity> _entities = new LinkListContainer<T_Entity>();
+        protected bool _fixedUpdate = false;
 
         protected internal LinkedList<T_Entity> _entityNeedRegister = new LinkedList<T_Entity>();
         protected internal LinkedList<T_Entity> _entitiesNeedRemove = new LinkedList<T_Entity>();
 
-        protected internal int tick = 0;
-        protected internal int fixedTick = 0;
 
         public int sysID = 0;
         public int entityCount = 0;
-
-        protected internal virtual float FixedFreq => 60f;
 
         protected CommonEntitySys()
         {
@@ -57,6 +53,7 @@ namespace GameBase.EntitySystem
             if (!_inUpdating)
             {
                 Entities.Remove(e);
+                Constructor.ReleaseEntity(e);
             }
             else
             {
@@ -78,8 +75,6 @@ namespace GameBase.EntitySystem
         /// </list></summary>
         protected abstract void UpdateEntity(T_Entity e);
 
-        protected virtual void FixedUpdateEntity(T_Entity e) { }
-
         /// <summary>
         /// new实体时调用
         /// </summary>
@@ -96,10 +91,6 @@ namespace GameBase.EntitySystem
 
         public virtual IEContainer<T_Entity> Entities => _entities;
         public virtual IEConstructor<T_Entity> Constructor => _entityConstructor;
-
-        public int Tick => tick;
-        public int FixedTick => fixedTick;
-
 
         public T_Entity NewFromPool()
         {
@@ -164,24 +155,25 @@ namespace GameBase.EntitySystem
         internal protected virtual void Update()
         {
             SysUpdate();
-            tick++;
-            float fixedPeriod = 1 / FixedFreq;
-            _updateTimeAccumulate += Time.deltaTime;
-            while (_updateTimeAccumulate > fixedPeriod)
-            {
-                _inUpdating = true;
-                foreach (var e in _entities)
-                {
-                    FixedUpdateEntity(e);
-                }
-                _inUpdating = false;
-                _updateTimeAccumulate -= fixedPeriod;
-                fixedTick++;
-            }
         }
 
         void IBaseSys.Update()
         {
+            if (_fixedUpdate)
+            {
+                return;
+            }
+
+            Update();
+        }
+
+        void IBaseSys.FixedUpdate()
+        {
+            if (!_fixedUpdate)
+            {
+                return;
+            }
+
             Update();
         }
 
@@ -199,5 +191,7 @@ namespace GameBase.EntitySystem
         {
             return 0;
         }
+
+
     }
 }

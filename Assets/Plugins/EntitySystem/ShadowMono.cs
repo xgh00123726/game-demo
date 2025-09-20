@@ -5,12 +5,7 @@ namespace GameBase.EntitySystem
 {
     public class ShadowMono : MonoBehaviour
     {
-        private Action _Update;
-
-        private Func<int> _EntityCountGetterDelegate;
-        private Func<int> _EntityReleasedCountGetterDelegate;
-        private Func<int> _EntityActiveCountGetterDelegate;
-
+        private IBaseSys _baseSys;
 
         public int entityCount;
         public int activeCount;
@@ -19,18 +14,20 @@ namespace GameBase.EntitySystem
         public static void CreateShadowMono<T>(T instance) where T : IBaseSys
         {
             var shadowMono = new GameObject(instance.GetType().Name).AddComponent<ShadowMono>();
-            shadowMono._Update = instance.Update;
-            shadowMono._EntityCountGetterDelegate = instance.GetEntityCount;
-            shadowMono._EntityReleasedCountGetterDelegate = instance.GetReleasedCount;
-            shadowMono._EntityActiveCountGetterDelegate = instance.GetActiveCount;
+            shadowMono._baseSys = instance;
         }
 
         private void Update()
         {
-            _Update?.Invoke();
-            entityCount = _EntityCountGetterDelegate();
-            activeCount = _EntityActiveCountGetterDelegate();
-            releasedCount = _EntityReleasedCountGetterDelegate();
+            _baseSys.Update();
+            entityCount = _baseSys.GetEntityCount();
+            activeCount = _baseSys.GetActiveCount();
+            releasedCount = _baseSys.GetReleasedCount();
+        }
+
+        private void FixedUpdate()
+        {
+            _baseSys.FixedUpdate();
         }
 
         private void Awake()

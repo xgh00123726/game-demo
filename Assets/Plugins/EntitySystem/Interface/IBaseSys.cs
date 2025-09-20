@@ -4,6 +4,8 @@ namespace GameBase.EntitySystem
     {
         void Update();
 
+        void FixedUpdate();
+
         int GetEntityCount();
 
         int GetReleasedCount();

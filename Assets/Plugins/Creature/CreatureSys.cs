@@ -2,8 +2,10 @@ using GameBase.Creatures;
 using GameBase.EntitySystem;
 using GameBase.Move;
 using GameBase.Resources;
+using GameBase.Tools;
 using GameBase.UI;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
@@ -19,26 +21,23 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
     /// <item><param name="rangeLimit"><paramref name="rangeLimit"/>:只会寻找到rangeLimit距离内的实体，负数表示无穷</param></item>
     /// </list></summary>
     /// <returns>符合条件最近的实体，没有实体满足条件则返回null</returns>
-    public T NearestEntity<T>(Vector3 position, Func<Creature, bool> filter = null, int id = -1, float rangeLimit = -1) where T : Creature
+    public Creature NearestEntity(Vector3 position, Tag tag, float rangeLimit = -1)
     {
-        Creature ret = null;
-        var sys = Instance as CreatureSys;
+        Creature c = null;
         float minDistance = float.PositiveInfinity;
-        bool hasFilter = filter != null;
 
         if (rangeLimit < 0)
         {
             rangeLimit = infDis;
         }
 
-        foreach (var e in sys.Entities)
+        foreach (var e in Entities)
         {
-            if (hasFilter && !filter(e)) continue; // 不满足过滤需求
-
-            if (id >= 0 && e.ObjID != id)
+            if ((e.tag & tag) == 0)
             {
                 continue;
             }
+            
 
             float dis = (e.Obj.transform.position - position).magnitude;
 
@@ -47,11 +46,11 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
             if (dis < minDistance)
             {
                 minDistance = dis;
-                ret = e;
+                c = e;
             }
         }
 
-        return ret as T;
+        return c;
     }
 
     protected override GameObject InstantiateObj(Creature e)
@@ -101,23 +100,19 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
 
     public void RemoveAll(Tag tag)
     {
+        List<Creature> needRemove = new();
+
         foreach (var e in Entities)
         {
             if (e.tag == tag)
             {
-                RemoveEntity(e);
+                needRemove.Add(e);
             }
         }
-    }
 
-    public void RemoveAll<T_EntityType>() where T_EntityType : Creature
-    {
-        foreach (var c in Entities)
+        foreach(var e in needRemove)
         {
-            if (c.GetType() == typeof(T_EntityType))
-            {
-                RemoveEntity(c);
-            }
+            RemoveEntity(e);
         }
     }
 }

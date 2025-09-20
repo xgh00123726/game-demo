@@ -8,23 +8,35 @@ namespace GameBase.AI
 {
     public class AIFollow : BehaviorTreeAI
     {
-        public GameObject target;
+        private bool _followEnable = true;
+
+        public Creature target;
         public Mover mover;
         public Rotater rotater;
+
         public float arriveDis = 0.2f;
 
         public AIFollow()
         {
             _builder.Selector()
                         .Sequence()
-                            .IF(FollowArrive)
-                            .FF(OnFollowArrive)
+                            .FFF(FindTarget)
                         .Back()
-                        .Selector()
-                            .IF(FollowArrive)
+
+                        .Sequence()
+                            .IF(IsFollowArrive)
+                            .FF(OnFollowArrive)
+                            .FF(DisableFollow)
+                        .Back()
+
+                        .Sequence()
+                            .Inverter()
+                                .IF(IsFollowArrive)
+                            .Back()
+                            .IF(IsFollowEnable)
                             .FF(Follow)
                         .Back()
-            .End().TickRate(10);
+            .End().TickRate(100);
         }
 
         public override void AddTo(Creature c)
@@ -33,19 +45,53 @@ namespace GameBase.AI
             rotater = c.Rotater;
         }
 
-        private bool FollowArrive()
+        private bool IsFollowArrive()
         {
-            return GMath.GameDistance(target.transform.position, mover.owner.Position) <= arriveDis;
+            if (target == null)
+            {
+                return false;
+            }
+
+            return GMath.GameDistance(target.Position, mover.owner.Position) <= arriveDis;
+        }
+
+        private bool IsFollowEnable()
+        {
+            return _followEnable;
         }
 
         private void OnFollowArrive()
         {
+            
+        }
 
+        private void FindTarget()
+        {
+            if (target == null)
+            {
+                target = CreatureSys.Instance.NearestEntity(mover.owner.Position, Tag.Player);
+            }
+        }
+
+        private void EnableFollow()
+        {
+            _followEnable = true;
+        }
+
+        private void DisableFollow()
+        {
+            _followEnable = false;
+            Timer.AddTask(3, EnableFollow);
         }
 
         private void Follow()
         {
-            mover.MoveTo(target.transform.position);
+            if (target == null)
+            {
+                return;
+            }
+
+            mover.MoveTo(target.Position);
         }
     }
 }

@@ -2,7 +2,9 @@ using System.Collections.Generic;
 
 namespace GameBase.Tools
 {
-    // 一个语句失败，就返回失败
+    /// <summary>
+    /// 所有语句都成功时才返回成功，and逻辑
+    /// </summary>
     public class Sequence : Composite
     {
         protected override Status OnUpdate()

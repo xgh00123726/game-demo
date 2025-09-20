@@ -49,6 +49,24 @@ namespace GameBase.Tools
             });
         }
 
+        public static void Register(string key, Action<int, int> action)
+        {
+            Register(key, (string[] args) =>
+            {
+                if (args.Length < 3)
+                {
+                    return;
+                }
+                else
+                {
+                    if (int.TryParse(args[1], out int v1) && int.TryParse(args[2], out int v2))
+                    {
+                        action?.Invoke(v1, v2);
+                    }
+                }
+            });
+        }
+
         public static void Register(string key, Action<string[]> action)
         {
             _commands[key] = action;

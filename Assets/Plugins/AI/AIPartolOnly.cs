@@ -21,25 +21,25 @@ namespace GameBase.AI
         {
             _builder.Selector()
                         .Sequence()
-                            .IF(MoveArriveP1)
+                            .IF(IsMoveArriveP1)
                             .FF(MoveToP2)
                         .Back()
                         .Sequence()
-                            .IF(MoveArriveP2)
+                            .IF(IsMoveArriveP2)
                             .FF(MoveToP1)
                         .Back()
                         .Sequence()
                             .IF(IsIdle)
                             .FF(MoveToP2)
                         .Back()
-            .End().TickRate(10);
+            .End().TickRate(100);
         }
 
-        private bool MoveArriveP1()
+        private bool IsMoveArriveP1()
         {
             return _partolDest == 1 && mover.IsArrive;
         }
-        private bool MoveArriveP2()
+        private bool IsMoveArriveP2()
         {
             return _partolDest == 2 && mover.IsArrive;
         }

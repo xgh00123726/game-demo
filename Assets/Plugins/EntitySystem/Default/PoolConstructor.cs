@@ -1,3 +1,5 @@
+using GameBase.Tools;
+
 namespace GameBase.EntitySystem
 {
     public class PoolConstructor<T> : IEConstructor<T>
@@ -5,7 +7,7 @@ namespace GameBase.EntitySystem
     {
         public PoolConstructor()
         {
-            _pool.InstantiateFunc = () => new T();
+            _pool.InstantiateFunc = static () => new T();
         }
 
         private BaseObjectPool<T> _pool = new();

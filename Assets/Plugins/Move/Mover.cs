@@ -30,5 +30,10 @@ namespace GameBase.Move
             isMoving = true;
             dest = position;
         }
+
+        public void Stop()
+        {
+            isMoving = false;
+        }
     }
 }

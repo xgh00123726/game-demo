@@ -1,12 +1,12 @@
 using GameBase.Animations;
 using GameBase.Buffs;
 using GameBase.EntitySystem;
+using GameBase.Inventorys;
 using GameBase.Modify;
 using GameBase.Move;
 using GameBase.Projectiles;
 using GameBase.Spells;
 using GameBase.UI;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameBase.Creatures
@@ -31,7 +31,7 @@ namespace GameBase.Creatures
         public int radius;
         public Tag tag;
         public Vector3 healthBarOffset = new Vector3(0, 1.6f, 0);
-        public Spell[] spells = new Spell[5];
+        public DynInventoryModel<Spell> spells = new();
         public bool Alive { get; internal protected set; }
         public int InstanceID { get; set; }
         public GameObject Obj { get; set; }

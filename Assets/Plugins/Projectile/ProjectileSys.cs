@@ -6,8 +6,9 @@ namespace GameBase.Projectiles
 {
     public class ProjectileSys : CommonEntitySys<Projectile, ProjectileSys>
     {
-        protected override void UpdateEntity(Projectile e)
-        { 
+        public ProjectileSys()
+        {
+            _fixedUpdate = true;
         }
 
         protected override void OnRegisterEntityToActives(Projectile e)
@@ -41,7 +42,7 @@ namespace GameBase.Projectiles
             }
         }
 
-        protected override void FixedUpdateEntity(Projectile e)
+        protected override void UpdateEntity(Projectile e)
         {
             if (e.owner == null || e.flying == null)
             {

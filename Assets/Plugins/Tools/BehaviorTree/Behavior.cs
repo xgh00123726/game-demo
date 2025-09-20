@@ -20,7 +20,7 @@ namespace GameBase.Tools
         /// <list type="bullet">
         /// <item>节点每次tick都会运行OnUpdate，返回值用于通知当前节点状态</item>
         /// <item>节点状态是private的，只会在tick函数中通过OnUpdate的返回值修改</item>
-        /// <item>节点状态可以通过IsRunning，IsFailure，IsRunning获取</item>
+        /// <item>节点状态可以通过IsSuccess，IsFailure，IsRunning获取</item>
         /// </list></summary>
         /// <returns>节点当前状态</returns>
         protected abstract Status OnUpdate();

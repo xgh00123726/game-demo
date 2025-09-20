@@ -48,6 +48,10 @@ namespace GameBase.Tools
             return this;
         }
 
+        /// <summary>
+        /// and逻辑
+        /// </summary>
+        /// <returns></returns>
         public BehaviorTreeBuilder Sequence()
         {
             var bh = new Sequence();
@@ -55,6 +59,10 @@ namespace GameBase.Tools
             return this;
         }
 
+        /// <summary>
+        /// or逻辑
+        /// </summary>
+        /// <returns></returns>
         public BehaviorTreeBuilder Selector()
         {
             var bh = new Selector();
@@ -89,7 +97,11 @@ namespace GameBase.Tools
             AddBehavior(bh);
             return this;
         }
-
+        /// <summary>
+        /// 如果true，则返回success，否则返回failure
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <returns></returns>
         public BehaviorTreeBuilder IF(Func<bool> condition)
         {
             var bh = new ConditionBehavior(condition);
@@ -97,16 +109,67 @@ namespace GameBase.Tools
             return this;
         }
 
+        /// <summary>
+        /// 如果true，则返回failure，否则返回success
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        public BehaviorTreeBuilder NIF(Func<bool> condition)
+        {
+            var bh = new NConditionBehavior(condition);
+            AddBehavior(bh);
+            return this;
+        }
+
+        /// <summary>
+        /// 自定义返回值的RR行为
+        /// </summary>
+        /// <param name="RRAction"></param>
+        /// <returns></returns>
         public BehaviorTreeBuilder RR(Func<Status> RRAction)
         {
             var bh = new RequestResponseBehavior(RRAction);
             AddBehavior(bh);
             return this;
         }
-
+        /// <summary>
+        /// 返回success的fire forget行为
+        /// </summary>
+        /// <param name="FFAction"></param>
+        /// <returns></returns>
         public BehaviorTreeBuilder FF(Action FFAction)
         {
             var bh = new FireForgetBehavior(FFAction);
+            AddBehavior(bh);
+            return this;
+        }
+        /// <summary>
+        /// 返回success的fire forget行为
+        /// </summary>
+        /// <param name="SFFAction"></param>
+        /// <returns></returns>
+        public BehaviorTreeBuilder SFF(Action SFFAction)
+        {
+            var bh = new SuccessFireForgetBehavior(SFFAction);
+            AddBehavior(bh);
+            return this;
+        }
+
+        /// <summary>
+        /// 返回failure的fire forget行为
+        /// </summary>
+        /// <param name="FFFAction"></param>
+        /// <returns></returns>
+        public BehaviorTreeBuilder FFF(Action FFFAction)
+        {
+            var bh = new FailureFireForgetBehavior(FFFAction);
+            AddBehavior(bh);
+            return this;
+        }
+
+        public BehaviorTreeBuilder Timer(int interruptPeriod)
+        {
+            var bh = new TimerBehavior(interruptPeriod, _tree);
             AddBehavior(bh);
             return this;
         }

@@ -18,7 +18,8 @@ namespace Constructor.Projectiles
                 return _instance;
             }
         }
-        public IEnumerable<IProjectileTarget> TargetsInShape(IShape2D shape)
+
+        IEnumerable<IProjectileTarget> IProjectileTargetsSet.TargetsInShape(IShape2D shape)
         {
             LinkedList<IProjectileTarget> ret = new();
             foreach(var c in CreatureSys.Instance.Entities)
@@ -37,7 +38,7 @@ namespace Constructor.Projectiles
             return ret;
         }
 
-        public IProjectileTarget NearestTarget(Vector3 center, float radius)
+        IProjectileTarget IProjectileTargetsSet.NearestTarget(Vector3 center, float radius)
         {
             float minDis = radius;
             IProjectileTarget ret = null;

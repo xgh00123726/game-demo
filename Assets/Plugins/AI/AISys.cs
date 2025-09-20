@@ -9,7 +9,7 @@ namespace GameBase.AI
     {
         internal LinkedList<Action> actions = new();
 
-        internal Dictionary<Type, BaseObjectPool<BaseAI>> pools = new();
+        internal Dictionary<System.Type, BaseObjectPool<BaseAI>> pools = new();
 
         public AISys()
         {
@@ -33,6 +33,13 @@ namespace GameBase.AI
             return ret;
         }
 
+        void IBaseSys.FixedUpdate()
+        {
+            foreach (var action in actions)
+            {
+                action?.Invoke();
+            }
+        }
 
         int IBaseSys.GetActiveCount()
         {
@@ -51,10 +58,7 @@ namespace GameBase.AI
 
         void IBaseSys.Update()
         {
-            foreach (var action in actions)
-            {
-                action?.Invoke();
-            }
+
         }
     }
 }

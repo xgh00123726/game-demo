@@ -1,0 +1,92 @@
+using Constructor.Spells.Interactive;
+using GameBase.Inventorys;
+using Factory = Constructor.Spells.Main.Factory;
+
+namespace Instance.UI.MVC
+{
+    public struct SpellItemData
+    {
+        public Constructor.Spells.Main.Type type;
+        public int id;
+        public int iconTextureID;
+    }
+    public class SpellModel : IMVCModel<SpellItemData>
+    {
+        public ISpellModelOwner owner;
+        private DynInventoryModel<SpellItemData> _inventoryModel = new();
+
+        SpellItemData IMVCModel<SpellItemData>.this[int index] => _inventoryModel[index];
+
+        int IMVCModel<SpellItemData>.Size
+        {
+            get => _inventoryModel.Size;
+            set => _inventoryModel.Size = value;
+        }
+
+        int IMVCModel<SpellItemData>.AddItem(SpellItemData item)
+        {
+            var ret = _inventoryModel.AddItem(item);
+            var spell = Factory.Instance.Get(item.type, item.id);
+
+            KeyCommon
+                .SetHotKey(spell.interactive, owner.GetKeyFunction(ret));
+
+            spell.speller = owner.Speller;
+            owner.SetSpell(ret, spell);
+            
+            return ret;
+        }
+
+        int IMVCModel<SpellItemData>.AddItem(SpellItemData item, int index)
+        {
+            _inventoryModel.AddItem(item, index);
+            _inventoryModel.SortItems();
+
+            var ret = _inventoryModel.Count - 1;
+            var spell = Factory.Instance.Get(item.type, item.id);
+
+            KeyCommon
+                .SetHotKey(spell.interactive, owner.GetKeyFunction(ret));
+
+            spell.speller = owner.Speller;
+            owner.SetSpell(ret, spell);
+
+            return ret;
+        }
+
+        bool IMVCModel<SpellItemData>.HasItem(int index)
+        {
+            return _inventoryModel.HasItem(index);
+        }
+
+        bool IMVCModel<SpellItemData>.RemoveItem(int index)
+        {
+            if(_inventoryModel.RemoveItem(index))
+            {
+                owner.RemoveSpell(index);
+                return true;
+            }
+
+            return false;
+        }
+
+        void IMVCModel<SpellItemData>.Swap(int p1, int p2)
+        {
+            _inventoryModel.Swap(p1, p2);
+            var s1 = owner.GetSpell(p1);
+            var s2 = owner.GetSpell(p2);
+            
+            owner.SetSpell(p2, s1);
+            if (s1.interactive is KeyCommon keyCommon1)
+            {
+                keyCommon1.readyKey = owner.GetKeyFunction(p2);
+            }
+
+            owner.SetSpell(p1, s2);
+            if (s2.interactive is KeyCommon keyCommon2)
+            {
+                keyCommon2.readyKey = owner.GetKeyFunction(p1);
+            }
+        }
+    }
+}

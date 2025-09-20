@@ -10,7 +10,5 @@ namespace GameBase.UI
         }
 
         public IViewablePassive bindPassive;
-        internal TextMeshProUGUI timeTMP;
-        internal TextMeshProUGUI chargeTMP;
     }
 }
