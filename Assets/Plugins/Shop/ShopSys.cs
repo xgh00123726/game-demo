@@ -19,7 +19,8 @@ namespace GameBase.Shops
 
                 if (!e.isOpen && e.shoper.OpenShop)
                 {
-                    e.shopView.Show();
+                    e.shopView.Show(); 
+                    e.shopView.SetItem(e.model.currGoodIndexInModel);
                     e.isOpen = true;
                 }
                 else if (e.isOpen && e.shoper.CloseShop)
@@ -39,14 +40,27 @@ namespace GameBase.Shops
                 if (e.interactive.TrigRefresh)
                 {
                     e.model.Refresh();
+                    e.shopView.SetItem(e.model.currGoodIndexInModel);
+                    e.interactive.OnTrigRefresh();
                 }
 
                 var currPurchase = e.interactive.CurrentPurchase;
                 if (currPurchase >= 0)
                 {
-                    e.model.Purchase(currPurchase, e.shoper);
+                    var isPurchaseOK = e.model.Purchase(currPurchase, e.shoper);
+                    if (isPurchaseOK)
+                    {
+                        e.shopView.SetItem(e.model.currGoodIndexInModel);
+                    }
                 }
             }
+
+            //if (e.isOpen && !e.lastOpen)
+            //{
+            //    e.shopView.SetItem(e.model.currGoodIndexInModel);
+            //}
+
+            e.lastOpen = e.isOpen;
         }
     }
 }

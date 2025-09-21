@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameBase.Shops
 {
     public interface IShopView
     {
-        int GoodNums { get; set; }
+        void SetItem(List<int> goodIDs);
         void Show();
         void Hide();
     }

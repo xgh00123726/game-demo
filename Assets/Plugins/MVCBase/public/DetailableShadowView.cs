@@ -74,6 +74,7 @@ namespace GameBase.UI
         public void SetPosition(Vector3 position)
         {
             _shadowObj.SetActive(true);
+            position.x = position.x + 50;
             _shadowObj.transform.position = position;
 
             float x = position.x;
@@ -90,6 +91,11 @@ namespace GameBase.UI
                 pivotY = 0;
             }
             SetPivot(pivotX, pivotY);
+        }
+
+        public void Show()
+        {
+            _shadowObj.SetActive(true);
         }
 
         public void Hide()

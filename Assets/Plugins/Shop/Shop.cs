@@ -7,6 +7,7 @@ namespace GameBase.Shops
 {
     public class Shop : IUEntity<GameObject>
     {
+        internal bool lastOpen = false;
         internal bool isOpen = false;
 
         public float detectRange = 2f;
@@ -16,16 +17,6 @@ namespace GameBase.Shops
         public IShopView shopView;
         public IShopInteractive interactive;
         public ShopModel model;
-
-        public int GoodNum
-        {
-            get => model.GoodNums;
-            set
-            {
-                model.GoodNums = value;
-                shopView.GoodNums = value;
-            }
-        }
 
         public GameObject Obj { get; set; }
         public int ObjID { get; set; } = 1;

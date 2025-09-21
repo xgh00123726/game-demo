@@ -18,14 +18,17 @@ namespace GameBase.Shops
     public class ShopModel
     {
         internal int goodNums = 5;
-        internal AutoFillList<int> currGoodIDs = new();
-        internal List<ShopModelData> datas = new();
+        internal AutoFillList<int> currGoodIndexInModel = new(); // 当前商店物品的信息在model中的下标
+
+        internal List<ShopModelData> datas = new(); // 物品id对应的信息
         internal int weightSum = 0;
 
         internal ShopModel(string relativePath)
         {
             Init(relativePath);
             Command.Register($"shop-{relativePath}-init", Init);
+            GoodNums = 5;
+            Refresh();
         }
 
         private void Init(string relativePath)
@@ -59,17 +62,22 @@ namespace GameBase.Shops
             reader.Close();
         }
 
+        /// <summary>
+        /// 获取index位置的商品id
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public int GetGoodID(int index)
         {
-            return datas[index].goodID;
+            return datas[currGoodIndexInModel[index]].goodID;
         }
 
-        internal int GoodNums
+        public int GoodNums
         {
             get => goodNums;
             set
             {
-                currGoodIDs.Resize(value, -1);
+                currGoodIndexInModel.Resize(value, -1);
                 goodNums = value;
             }
         }
@@ -78,13 +86,10 @@ namespace GameBase.Shops
         /// 根据随机数和权重获取一个随机的商品ID下标，随机数范围[0,weightSum)
         /// </summary>
         /// <param name="randomInt"></param>
-        /// <param name="weightSum"></param>
-        /// <param name="goodIDs"></param>
-        /// <param name="weights"></param>
         /// <returns></returns>
         private int RandomToGoodIndex(int randomInt)
         {
-            if (randomInt <= 0 || datas.Count == 0)
+            if (randomInt < 0 || datas.Count == 0)
             {
                 return -1;
             }
@@ -103,18 +108,18 @@ namespace GameBase.Shops
 
         protected internal virtual bool Purchase(int index, IShoper shoper)
         {
-            XLogger.Instance.Log($"purchase:{index}, l:{datas.Count}, ");
-
             if (index < 0 || index >= goodNums)
             {
                 return false;
             }
-            if (shoper.Gold < datas[index].price)
+            var modelIndex = currGoodIndexInModel[index];
+            var price = datas[modelIndex].price;
+            if (shoper.Gold < price)
             {
                 return false;
             }
 
-            currGoodIDs[index] = -1;
+            currGoodIndexInModel[index] = -1;
             return true;
         }
 
@@ -124,8 +129,13 @@ namespace GameBase.Shops
             {
                 int randInt = Random.Range(0, weightSum - 1);
                 int index = RandomToGoodIndex(randInt);
-                currGoodIDs[i] = datas[index].goodID;
+                currGoodIndexInModel[i] = datas[index].goodID;
             }
+        }
+
+        public bool HasItem(int index)
+        {
+            return currGoodIndexInModel[index] >= 0;
         }
     }
 }

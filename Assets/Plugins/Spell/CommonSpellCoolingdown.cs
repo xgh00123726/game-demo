@@ -20,14 +20,21 @@ namespace GameBase.Spells
 
         void ISpellCoolingdown.Recooling()
         {
-            _coolingRemain = 0;
+            _coolingRemain = _coolingSet;
         }
 
         void ISpellCoolingdown.Update(float coolingAccelerate)
         {
             float acc = 1;
             acc = coolingAccelerate * 0.01f + 1;
-            _coolingRemain -= Time.deltaTime * acc;
+            if (_coolingRemain > 0)
+            {
+                _coolingRemain -= Time.deltaTime * acc;
+            }
+            if (_coolingRemain <= 0)
+            {
+                _isCoolingOver = true;
+            }
         }
     }
 }

@@ -3,23 +3,17 @@ using GameBase.UI;
 using GameBase.Shops;
 using UnityEngine;
 using GameBase.Tools;
+using System.Collections.Generic;
 
 namespace Instance.UI.Shops
 {
     public class ShopView : IShopView, IShopInteractive
     {
+        public bool _isTrigRefresh = false;
+
         internal ShopViewPanel SP => ShopViewPanel.Instance;
 
-        int IShopView.GoodNums
-        {
-            get => SP.Entities.Count;
-            set
-            {
-                SP.FillItem(value);
-            }
-        }
-
-        bool IShopInteractive.TrigRefresh => false;
+        bool IShopInteractive.TrigRefresh => _isTrigRefresh;
 
         int IShopInteractive.CurrentPurchase
         {
@@ -39,9 +33,36 @@ namespace Instance.UI.Shops
             SP.Hide();
         }
 
+        void IShopInteractive.OnTrigRefresh()
+        {
+            _isTrigRefresh = false;
+        }
+
+        void IShopView.SetItem(List<int> goodIDs)
+        {
+            SP.FillItem(goodIDs.Count);
+            for (int i = 0; i < goodIDs.Count; ++i)
+            {
+                if (goodIDs[i] < 0)
+                {
+                    SP[i].HideIcon();
+                }
+                else
+                {
+                    SP[i].ShowIcon();
+                    SP[i].SetIconSprite(goodIDs[i]);
+                }
+            }
+        }
+
         void IShopView.Show()
         {
             SP.Show();
+        }
+
+        public void Refresh()
+        {
+            _isTrigRefresh = true;
         }
     }
 }

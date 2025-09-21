@@ -4,5 +4,6 @@ namespace GameBase.Shops
     {
         bool TrigRefresh {  get; }
         int CurrentPurchase { get; }
+        void OnTrigRefresh();
     }
 }
