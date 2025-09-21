@@ -19,7 +19,6 @@ namespace Constructor.Spells.Interactive
         {
             return new()
             {
-                {Type.Always, AlwaysCon.Instance.Get },
                 {Type.Invokable, Invokable.Get },
             };
         }

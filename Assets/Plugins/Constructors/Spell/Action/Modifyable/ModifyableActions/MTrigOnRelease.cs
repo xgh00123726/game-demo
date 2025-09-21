@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Constructor.Spells.Action.Modifyables
 {
-    public class MTrigOnRelease : IAction
+    public class MTrigOnRelease : ISpellAction
     {
         public TrigOnReleaseData data;
 

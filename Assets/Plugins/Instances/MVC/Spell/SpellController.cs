@@ -44,5 +44,14 @@ namespace Instance.UI.MVC
         {
             _model.owner = owner;
         }
+
+        protected override void Update()
+        {
+            for (int i = 0; i < Model.Size; ++i)
+            {
+                View[i].coolingTimeRemain = _model.owner.spells[i].spellCoolingdown.CoolingRemain;
+                View[i].coolingTimeSet = _model.owner.spells[i].spellCoolingdown.CoolingSet;
+            }
+        }
     }
 }

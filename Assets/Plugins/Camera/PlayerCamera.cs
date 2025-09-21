@@ -1,8 +1,7 @@
-using GameBase.GCamera;
 using GameBase.Tools;
 using GameBase.Infos;
 using UnityEngine;
-namespace GameBase.Instance
+namespace GameBase.GCamera
 {
     public class PlayerCamera : MonoBehaviour
     {
@@ -10,8 +9,10 @@ namespace GameBase.Instance
         private Vector3 _dragCameraPosition;
         private Vector3 _dragMousePosition;
 
-        public float dragFactor = 100f;
         public bool enableEdgeAutoDrag = true;
+        public bool enableScrollToChangeFOV = true;
+
+        public float dragFactor = 100f;
         public float xMoveSpeed = 10f;
         public float yMoveSpeed = 10f;
         public float xBorder = 20f;
@@ -104,12 +105,27 @@ namespace GameBase.Instance
             transform.position = transform.position + moveDir * Time.deltaTime;
         }
 
+        private void FOVUpdate()
+        {
+            CameraSys.Main.fieldOfView -= Input.mouseScrollDelta.y;
+        }
+
         private void Update()
         {
             DragUpdate();
             if (enableEdgeAutoDrag)
             {
                 EdgeAutoUpdate();
+            }
+
+            if (Inputs.GetKey(KeyFunction.ResetView))
+            {
+                CameraReset();
+            }
+
+            if (enableScrollToChangeFOV)
+            {
+                FOVUpdate();
             }
         }
     }

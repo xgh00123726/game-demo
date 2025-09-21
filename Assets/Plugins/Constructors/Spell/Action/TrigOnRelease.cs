@@ -22,7 +22,7 @@ namespace Constructor.Spells.Action
         public float zOffset;
     }
 
-    public class TrigOnRelease : IAction
+    public class TrigOnRelease : ISpellAction
     {
         public TrigOnReleaseData data;
 

@@ -27,26 +27,23 @@ namespace GameBase.Inventorys
 
         protected List<CInventoryItem> _items = new();
         protected SortedIntList _nullIndexes = new((x, y) => (y - x));
-        protected int _size = 0;
 
         public virtual int Size
         {
-            get => _size;
+            get => _items.Count;
             set
             {
-                if (value < _size)
+                var size = _items.Count;
+                if (value < size)
                 {
                     return;
                 }
 
-                _items.Capacity = value;
-                for (int i = 0; i < value - _size; ++i)
+                for (int i = 0; i < value - size; ++i)
                 {
                     _items.Add(new CInventoryItem(new T_Item(), false));
                     _nullIndexes.Push(i);
                 }
-
-                _size = value;
             }
         }
 
@@ -65,7 +62,7 @@ namespace GameBase.Inventorys
 
         public bool HasItem(int position)
         {
-            if (position >= _size)
+            if (position >= Size)
             {
                 return false;
             }
@@ -87,10 +84,10 @@ namespace GameBase.Inventorys
 
         public virtual int AddItem(T_Item item, int index)
         {
-            if (index >= _size)
+            if (index >= Size)
             {
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log($"inventory model out of range: i{index}, max size:{_size}");
+                    .Log($"inventory model out of range: i{index}, max size:{Size}");
                 _items.Capacity = index + 1;
 
                 return index;
@@ -126,7 +123,7 @@ namespace GameBase.Inventorys
 
         public virtual void Swap(int p1, int p2)
         {
-            if (p1 >= _size || p2 >= _size)
+            if (p1 >= Size || p2 >= Size)
             {
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
                     .Log($"invalid pos:{p1}, {p2}");
@@ -165,7 +162,7 @@ namespace GameBase.Inventorys
             }
 
             // 第一次需要手动计算p1和p2
-            for (; p1 < _size; ++p1)
+            for (; p1 < Size; ++p1)
             {
                 if (!HasItem(p1))
                 {
@@ -173,7 +170,7 @@ namespace GameBase.Inventorys
                 }
             }
 
-            if (p1 >= _size)
+            if (p1 >= Size)
             {
                 // p1超过size，则代表model是全的，不需要sort，但是上面已经判断过了，
                 // 如果这个分支仍然可以进入，则代表程序有bug
@@ -184,7 +181,7 @@ namespace GameBase.Inventorys
 
             p1Ready = true;
             p2 = p1;
-            for (; p2 < _size; ++p2)
+            for (; p2 < Size; ++p2)
             {
                 if (p1Ready && p2Ready)
                 {
@@ -193,7 +190,7 @@ namespace GameBase.Inventorys
                 }
                 else if (!p1Ready)
                 {
-                    for (; p1 < _size; ++p1)
+                    for (; p1 < Size; ++p1)
                     {
                         if (!HasItem(p1))
                         {
@@ -204,7 +201,7 @@ namespace GameBase.Inventorys
                 }
                 else if (!p2Ready)
                 {
-                    for (; p2 < _size; ++p2)
+                    for (; p2 < Size; ++p2)
                     {
                         if (HasItem(p2))
                         {
@@ -212,7 +209,7 @@ namespace GameBase.Inventorys
                             break;
                         }
                     }
-                    if (p2 == _size)
+                    if (p2 == Size)
                     {
                         // p2到顶，循环结束
                         break;
@@ -221,7 +218,7 @@ namespace GameBase.Inventorys
             }
 
             // 重新设置p1
-            for (; p1 < _size; ++p1)
+            for (; p1 < Size; ++p1)
             {
                 _nullIndexes.Push(p1);
             }

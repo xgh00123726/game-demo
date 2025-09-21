@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using GameBase.UI.MVC;
+using GameBase.Creatures;
 namespace Instance.UI.MVC
 {
     public class SpellActionModifierController : InventoryController<InventoryData, 
@@ -49,7 +50,7 @@ namespace Instance.UI.MVC
         {
             base.Show();
 
-            if (_model.owner.Spell.actionInterface is ModifyableAction mAct)
+            if (_model.owner.Spell.action is ModifyableAction mAct)
             {
                 SpellShadowView.ShowColor(Color.green);
             }
@@ -67,7 +68,7 @@ namespace Instance.UI.MVC
             SpellShadowView.Hide();
         }
 
-        public void SetOwner<T_Owner>(T_Owner owner) where T_Owner : ISpellModelOwner
+        public void SetOwner(Creature owner)
         {
             for (int i = 0; i < _models.Count; ++i)
             {

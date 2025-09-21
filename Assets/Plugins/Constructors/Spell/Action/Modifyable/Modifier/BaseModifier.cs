@@ -6,7 +6,7 @@ namespace Constructor.Spells.Action.Modifyables.Modifier
     {
         private ModifyableAction _action;
 
-        public void ModifyTo(IAction action, int index)
+        public void ModifyTo(ISpellAction action, int index)
         {
             if (action is ModifyableAction mAct)
             {
@@ -17,7 +17,7 @@ namespace Constructor.Spells.Action.Modifyables.Modifier
 
         public void ModifyTo(Spell spell, int index)
         {
-            ModifyTo(spell.actionInterface, index);
+            ModifyTo(spell.action, index);
         }
 
         internal abstract void Modify(ref ModifyableModifyData modifyData);

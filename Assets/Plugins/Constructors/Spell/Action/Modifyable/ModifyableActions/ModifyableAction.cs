@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 
 namespace Constructor.Spells.Action.Modifyables
 {
-    public abstract class ModifyableAction : IAction
+    public abstract class ModifyableAction : ISpellAction
     {
         private ModifyableModifyData _data;
         private ModifyableModifyData _modifiedData;
@@ -75,7 +75,7 @@ namespace Constructor.Spells.Action.Modifyables
 
         protected float AngleDelta => _angleDelta;
 
-        bool IAction.CastAction(Spell spell)
+        bool ISpellAction.CastAction(Spell spell)
         {
             var ret = false;
             ret |= CastAction(spell, in _modifiedData);
@@ -132,7 +132,7 @@ namespace Constructor.Spells.Action.Modifyables
 
         public static void TryRemoveModifyer(Spell spell, int index)
         {
-            if (spell.actionInterface is ModifyableAction mAct)
+            if (spell.action is ModifyableAction mAct)
             {
                 mAct.RemoveModifyer(index);
             }

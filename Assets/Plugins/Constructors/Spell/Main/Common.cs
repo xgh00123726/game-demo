@@ -1,3 +1,5 @@
+using Constructor.Spells.Interactive;
+using GameBase.Indicators;
 using GameBase.Spells;
 using NReco.Csv;
 using System;
@@ -11,6 +13,7 @@ namespace Constructor.Spells.Main
         public Action.Type actionType;
         public int actionInterfaceID; 
         public int coolingTime;
+        public IndicatorType indicatorType;
     }
 
     public class Common : EntityConstructor<CommonData, Spell, SpellSys, Common>
@@ -27,13 +30,20 @@ namespace Constructor.Spells.Main
             Enum.TryParse(line[3], out data.actionType);
             data.actionInterfaceID = int.Parse(line[4]);
             data.coolingTime = int.Parse(line[5]);
+
+            Enum.TryParse(line[6], out data.indicatorType);
         }
 
         protected override void ESet(Spell e, in CommonData data)
         {
             e.interactive = Interactive.Factory.Instance.Get(data.interactiveType, data.interactiveID);
-            e.actionInterface = Action.Factory.Instance.Get(data.actionType, data.actionInterfaceID);
-            e.coolingTimeSet = data.coolingTime;
+            if (e.interactive is Invokable invokable)
+            {
+                invokable.indicatorType = data.indicatorType;
+            }
+
+            e.action = Action.Factory.Instance.Get(data.actionType, data.actionInterfaceID);
+            e.spellCoolingdown.CoolingSet = data.coolingTime;
         }
     }
 }

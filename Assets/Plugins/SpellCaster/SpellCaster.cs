@@ -41,10 +41,11 @@ namespace GameBase.Spells
 
         public SpellCaster()
         {
-            for (int i = 0; i < _spellConfigs.Count; i++)
+            for (int i = 0; i < _spellKeys.Count; i++)
             {
                 _spellConfigs.Add(new SpellConfig());
             }
+            ShadowMono.CreateShadowMono(this);
         }
 
         private void DeReadyAll()
@@ -84,6 +85,8 @@ namespace GameBase.Spells
                 var func = _spellKeys[i];
                 var isFastCast = _spellConfigs[i].isFastCast;
 
+                var indicator = Factory.Get(interactive.IndicatorType);
+
                 if (isFastCast && Inputs.GetKeyDown(func, "spell"))
                 {
                     interactive.Invoke();
@@ -94,21 +97,24 @@ namespace GameBase.Spells
                     if (!_spellConfigs[i].isIndicatorReady && Inputs.GetKeyDown(func, "spell"))
                     {
                         _spellConfigs[i].isIndicatorReady = true;
+                        indicator.Show();
                     }
                     else if (_spellConfigs[i].isIndicatorReady && Inputs.GetKeyDown(KeyFunction.MouseConfirm, "spell"))
                     {
                         interactive.Invoke();
                         _spellConfigs[i].isIndicatorReady = false;
+                        indicator.Hide();
                     }
                     else if (Inputs.GetKeyDown(KeyFunction.Cancel, "spell"))
                     {
                         DeReadyAll();
+                        indicator.Hide();
                     }
                 }
 
                 if (_spellConfigs[i].isIndicatorReady)
                 {
-                    Factory.Get(interactive.IndicatorType).Set(new IndicatorConfig()
+                    indicator.Set(new IndicatorConfig()
                     {
                         length = interactive.Length,
                         position = _speller.Position,

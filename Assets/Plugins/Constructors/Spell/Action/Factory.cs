@@ -15,9 +15,9 @@ namespace Constructor.Spells.Action
         MAreaFixedDis,
         MTrigNearestTarget,
     }
-    public class Factory : ConstructorFactory<Type, IAction, Factory>
+    public class Factory : ConstructorFactory<Type, ISpellAction, Factory>
     {
-        protected override Dictionary<Type, Func<int, IAction>> GetConstructorGetDict()
+        protected override Dictionary<Type, Func<int, ISpellAction>> GetConstructorGetDict()
         {
             return new()
             {

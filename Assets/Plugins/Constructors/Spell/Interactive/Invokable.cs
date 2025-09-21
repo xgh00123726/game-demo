@@ -1,28 +1,28 @@
+using GameBase.Indicators;
 using GameBase.Spells;
+using GameBase.Tools;
 
 namespace Constructor.Spells.Interactive
 {
-    public class Invokable : ISpellInteractive
+    public class Invokable : ISpellInteractive, IKeyInteractive
     {
+        internal IndicatorType indicatorType;
+
         private bool _isTrig = false;
+
+        IndicatorType IKeyInteractive.IndicatorType => indicatorType;
+
+        float IKeyInteractive.Length => 10;
+
+        float IKeyInteractive.Radius => 1;
+
         bool ISpellInteractive.IsTrig => _isTrig;
 
-        void ISpellInteractive.OnTrig(ISpeller speller)
-        {
-            _isTrig = false;
-        }
-
-        void ISpellInteractive.Update(ISpeller speller)
-        {
-            if (_isTrig)
-            {
-                _isTrig = false;
-            }
-        }
-
-        public void Invoke()
+        public bool Invoke()
         {
             _isTrig = true;
+
+            return true;
         }
 
         public static void Invoke(ISpellInteractive interactive)
@@ -36,6 +36,11 @@ namespace Constructor.Spells.Interactive
         public static Invokable Get(int id)
         {
             return new Invokable();
+        }
+
+        void ISpellInteractive.OnTrig()
+        {
+            _isTrig = false;
         }
     }
 }

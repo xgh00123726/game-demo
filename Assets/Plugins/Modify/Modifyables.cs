@@ -60,9 +60,9 @@ namespace GameBase.Modify
         public Modifyable setPer;
         public Modifyable sumPer;
 
-        public Modifyable Set { get => set; set => set = value; }
-        public Modifyable SetPer { get => setPer; set => setPer = value; }
-        public Modifyable SumPer { get => sumPer; set => sumPer = value; }
+        //public Modifyable Set { get => set; set => set = value; }
+        //public Modifyable SetPer { get => setPer; set => setPer = value; }
+        //public Modifyable SumPer { get => sumPer; set => sumPer = value; }
     }
 
     public class Modifyables : IEnumerable<ModifyableGroup>
@@ -79,19 +79,22 @@ namespace GameBase.Modify
         {
             if (_modifyableGroups.ContainsKey(id))
             {
-                XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log("duplicate key");
+                _modifyableGroups[id].set.valueSet = value;
+                _modifyableGroups[id].setPer.valueSet = 0;
+                _modifyableGroups[id].sumPer.valueSet = 0;
             }
-
-            var set = ModifyableSys.Instance.NewEntity(value);
-            var setPer = ModifyableSys.Instance.NewEntity(0);
-            var sumPer = ModifyableSys.Instance.NewEntity(0);
-            _modifyableGroups[id] = new ModifyableGroup()
+            else
             {
-                set = set,
-                setPer = setPer,
-                sumPer = sumPer
-            };
+                var set = ModifyableSys.Instance.NewEntity(value);
+                var setPer = ModifyableSys.Instance.NewEntity(0);
+                var sumPer = ModifyableSys.Instance.NewEntity(0);
+                _modifyableGroups[id] = new ModifyableGroup()
+                {
+                    set = set,
+                    setPer = setPer,
+                    sumPer = sumPer
+                };
+            }
         }
 
         public void Clear()

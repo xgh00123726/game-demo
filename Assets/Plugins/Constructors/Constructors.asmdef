@@ -17,7 +17,8 @@
         "EntitySystem",
         "Effects",
         "Indicators",
-        "Creature"
+        "Creature",
+        "SpellCaster"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

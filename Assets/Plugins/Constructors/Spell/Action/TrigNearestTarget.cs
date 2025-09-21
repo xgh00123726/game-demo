@@ -18,10 +18,10 @@ namespace Constructor.Spells.Action
         public int flyingID;
     }
 
-    public class TrigNearestTarget : IAction
+    public class TrigNearestTarget : ISpellAction
     {
         public TrigNearestTargetData data;
-        bool IAction.CastAction(Spell spell)
+        bool ISpellAction.CastAction(Spell spell)
         {
             var mOwner = spell.speller as IModifieder;
             if (mOwner == null)

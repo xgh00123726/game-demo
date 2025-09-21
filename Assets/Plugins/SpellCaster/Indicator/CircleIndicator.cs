@@ -21,7 +21,7 @@ namespace GameBase.Indicators
 
         public override void Set(IndicatorConfig config)
         {
-            indicator.Obj.transform.position = config.position;
+            indicator.Obj.transform.position = config.targetPosition;
         }
     }
 }

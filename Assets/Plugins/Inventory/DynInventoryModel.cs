@@ -16,14 +16,13 @@ namespace GameBase.Inventorys
             else
             {
                 _items.Add(new CInventoryItem(item, true));
-
                 return _items.Count - 1;
             }
         }
 
         public override int AddItem(T item, int index)
         {
-            if (index >= _size)
+            if (index >= Size)
             {
                 Size = index + 1;
                 this[index] = item;

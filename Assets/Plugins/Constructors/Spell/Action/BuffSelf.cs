@@ -13,10 +13,10 @@ namespace Constructor.Spells.Action
         public float duration;
     }
 
-    public class BuffSelf : IAction
+    public class BuffSelf : ISpellAction
     {
         public BuffSelfData data;
-        bool IAction.CastAction(Spell spell)
+        bool ISpellAction.CastAction(Spell spell)
         {
             var bOwner = spell.speller as IBuffOwner;
             if (bOwner == null)

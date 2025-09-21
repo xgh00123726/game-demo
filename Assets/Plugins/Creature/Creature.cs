@@ -16,6 +16,7 @@ namespace GameBase.Creatures
         CommonCreature = 1 << 0,
         Player = 1 << 1,
     }
+
     public class Creature : IUEntity<GameObject>,
         IPoolable,
         IProjectileOwner,
@@ -26,7 +27,8 @@ namespace GameBase.Creatures
         IBuffOwner,
         IMover,
         IRotater,
-        IPlayerAnimable
+        IPlayerAnimable,
+        IKeySpeller
     {
         public int radius;
         public Tag tag;
@@ -96,6 +98,8 @@ namespace GameBase.Creatures
 
         public Vector3 Dir { get; set; }
 
+        Vector3 IKeySpeller.Position => Obj.transform.position;
+
         bool IPlayerAnimable.IsMoving()
         {
             return mover.IsMoving;
@@ -113,6 +117,16 @@ namespace GameBase.Creatures
 
         public void BeforeRelease()
         {
+        }
+
+        Spell IKeySpeller.GetSpell(int index)
+        {
+            if (spells.HasItem(index))
+            {
+                return spells[index];
+            }
+
+            return null;
         }
     }
 }

@@ -16,10 +16,10 @@ namespace Constructor.Spells.Action
         public int distance;
     }
 
-    public class AreaFixedDis : IAction
+    public class AreaFixedDis : ISpellAction
     {
         public AreaFixedDisData data;
-        bool IAction.CastAction(Spell spell)
+        bool ISpellAction.CastAction(Spell spell)
         {
             var pOwner = spell.speller as IProjectileOwner;
             if (pOwner == null)

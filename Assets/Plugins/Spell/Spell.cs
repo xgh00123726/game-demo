@@ -4,19 +4,17 @@ namespace GameBase.Spells
 {
     public class Spell
     {
-        public float coolingTimeSet;   // 冷却时间
+        internal float spellMoment;             // 施法时刻
+
         public float point;            // 前摇
         public float backswing;        // 后摇
         public float duration;         // 持续时间
 
+        public int iconTextureID;
+
         public ISpeller speller;
-        public IAction actionInterface;
+        public ISpellAction action;
+        public ISpellCoolingdown spellCoolingdown = new CommonSpellCoolingdown();
         public ISpellInteractive interactive;
-
-        internal bool coolReady; // 技能冷却完成，可以进行交互
-        internal float spellMoment;             // 施法时刻
-        internal float coolingTimeRemain;       // 剩余冷却时间
-
-        public float CoolingTimeRemain => coolingTimeRemain;
     }
 }

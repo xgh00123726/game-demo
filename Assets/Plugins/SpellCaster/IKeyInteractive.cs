@@ -7,6 +7,6 @@ namespace GameBase.Spells
         IndicatorType IndicatorType { get; }
         float Length { get; }
         float Radius { get; }
-        void Invoke();
+        bool Invoke();
     }
 }

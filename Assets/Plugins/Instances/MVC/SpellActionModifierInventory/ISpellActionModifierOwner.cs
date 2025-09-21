@@ -1,3 +1,4 @@
+using GameBase.Creatures;
 using GameBase.Spells;
 
 namespace Instance.UI.MVC
@@ -9,15 +10,15 @@ namespace Instance.UI.MVC
 
     public class SpellActionModifierOwner : ISpellActionModifierOwner
     {
-        private ISpellModelOwner _owner;
+        private Creature _owner;
         private int _index;
 
-        public SpellActionModifierOwner(ISpellModelOwner owner, int index)
+        public SpellActionModifierOwner(Creature owner, int index)
         {
             _owner = owner;
             _index = index;
         }
 
-        Spell ISpellActionModifierOwner.Spell => _owner.GetSpell(_index);
+        Spell ISpellActionModifierOwner.Spell => _owner.spells[_index];
     }
 }
