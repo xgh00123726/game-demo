@@ -4,6 +4,7 @@ using GameBase.Shops;
 using UnityEngine;
 using GameBase.Tools;
 using System.Collections.Generic;
+using Instance.UI.MVC;
 
 namespace Instance.UI.Shops
 {
@@ -46,11 +47,39 @@ namespace Instance.UI.Shops
                 if (goodIDs[i] < 0)
                 {
                     SP[i].HideIcon();
+                    SP[i].HideColor();
                 }
                 else
                 {
+                    var info = ShopItemInfos.Get(goodIDs[i]);
+                    if (info.reflectType == ReflectType.InventoryItem)
+                    {
+                        if (info.iconTextureID >= 0)
+                        {
+                            SP[i].SetIconSprite(info.iconTextureID);
+                        }
+                        else
+                        {
+                            var inventoryDataID = info.reflectID;
+                            var iconTextureID = InventoryDataBase.Get(inventoryDataID).iconTextureID;
+                            SP[i].SetIconSprite(iconTextureID);
+                        }
+
+                        SP[i].SetIconColor(ViewConfig.GetColor(info.rarity));
+                    }
+                    else if (info.reflectType == ReflectType.Buff)
+                    {
+                        SP[i].SetIconSprite(info.iconTextureID);
+
+                        SP[i].SetIconColor(ViewConfig.GetColor(info.rarity));
+                    }
+                    else
+                    {
+                        SP[i].SetIconSprite(0);
+
+                        SP[i].HideColor();
+                    }
                     SP[i].ShowIcon();
-                    SP[i].SetIconSprite(goodIDs[i]);
                 }
             }
         }

@@ -18,7 +18,6 @@ namespace GameBase.UI.MVC
 
         protected abstract IMVCModel<T_ModelItem> Model { get; }
         protected abstract T_View View { get; }
-        protected abstract IDataBase<T_ModelItem> DataBase { get; }
 
         protected abstract void SetItem(T_ModelItem modelData, T_ViewItem viewItem);
 
@@ -71,7 +70,7 @@ namespace GameBase.UI.MVC
         }
 
         /// <summary>
-        /// 尝试获取index位置的物品数据
+        /// 尝试从model中获取index位置的物品数据
         /// </summary>
         /// <param name="index"></param>
         /// <param name="data"></param>
@@ -93,26 +92,6 @@ namespace GameBase.UI.MVC
         }
 
         /// <summary>
-        /// 尝试获取database中index位置的物品数据
-        /// </summary>
-        /// <param name="index"></param>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public bool TryGetDataFromDataBase(int index, out T_ModelItem data)
-        {
-            if (index >= DataBase.Count)
-            {
-                data = default;
-                return false;
-            }
-            else
-            {
-                data = DataBase.Read(index);
-                return true;
-            }
-        }
-
-        /// <summary>
         /// 尝试获取position位置（屏幕空间）的UI和位置
         /// </summary>
         /// <param name="position"></param>
@@ -125,20 +104,8 @@ namespace GameBase.UI.MVC
         }
 
         /// <summary>
-        /// 从数据库中添加物品到背包
-        /// <list type="bullet">
-        /// <item><param name="dataBaseIndex"><paramref name="dataBaseIndex"/>物品在数据库中的位置</param></item>
-        /// <item><param name="index"><paramref name="index"/>需要添加到背包的位置</param></item>
-        /// </list></summary>
-        public int AddItem(int dataBaseIndex, int index)
-        {
-            if (TryGetDataFromDataBase(dataBaseIndex, out T_ModelItem item))
-            {
-                return AddItem(item, index);
-            }
-            return -1;
-        }
-
+        /// 强制刷新View
+        /// </summary>
         public virtual void ForceRefreshView()
         {
             for (int i = 0; i < Model.Size; i++)
@@ -154,26 +121,50 @@ namespace GameBase.UI.MVC
             }
         }
 
+        /// <summary>
+        /// 获取index处的model数据
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public T_ModelItem GetModelItem(int index)
         {
             return Model[index];
         }
 
+        public bool HasItem(int index)
+        {
+            return Model.HasItem(index);
+        }
+
+        /// <summary>
+        /// 获取index处view数据
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public T_ViewItem GetViewItem(int index)
         {
             return View[index];
         }
 
+        /// <summary>
+        /// 显示视图
+        /// </summary>
         public virtual void Show()
         {
             View.Show();
         }
 
+        /// <summary>
+        /// 隐藏视图
+        /// </summary>
         public virtual void Hide()
         {
             View.Hide();
         }
 
+        /// <summary>
+        /// 切换视图可见性
+        /// </summary>
         public virtual void Toggle()
         {
             View.Toggle();

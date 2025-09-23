@@ -13,14 +13,21 @@ namespace Instance.UI.MVC
 
         void IDetailableControl<EquipmentViewItem>.OnDetail(EquipmentViewItem e)
         {
-            ShadowView.SetPosition(Input.mousePosition);
+            ShadowView.Show();
         }
 
         void IDetailableControl<EquipmentViewItem>.OnEnterDetail(EquipmentViewItem e)
         {
             ShadowView.SetPosition(Input.mousePosition);
 
-            ShadowView.SetText(InventoryDataBase.Instance.GetText(e.ItemIndex));
+            if (EquipmentInventoryController.Instance.TryGetData(e.ItemIndex, out var data))
+            {
+                ShadowView.SetText(InventoryDataBase.GetText(data.ID));
+            }
+            else
+            {
+                ShadowView.SetText("NNN");
+            }
         }
 
         void IDetailableControl<EquipmentViewItem>.OnExitDetail(EquipmentViewItem e)

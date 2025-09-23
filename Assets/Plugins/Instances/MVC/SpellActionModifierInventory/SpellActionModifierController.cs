@@ -44,8 +44,6 @@ namespace Instance.UI.MVC
 
         protected override SpellActionModifierViewPanel View => SpellActionModifierViewPanel.Instance;
 
-        protected override IDataBase<InventoryData> DataBase => throw new System.NotImplementedException();
-
         public override void Show()
         {
             base.Show();

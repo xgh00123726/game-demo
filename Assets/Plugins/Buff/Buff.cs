@@ -48,5 +48,13 @@ namespace GameBase.Buffs
             alive = false;
             owner = null;
         }
+
+        public void AddTo(IBuffOwner owner, float duration = 999999, UIStyle uiStyle = UIStyle.None)
+        {
+            durationSet = duration;
+            durationRemain = duration;
+            this.uiStyle = uiStyle;
+            owner.RegisterBuff(this);
+        }
     }
 }

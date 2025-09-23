@@ -10,22 +10,20 @@ namespace Instance.UI.MVC
     {
         private AttrModel _model = new()
         {
-            0,1,2,3,4,5,6,7,
+            0,1,3,2,5,7,4,12,14,6,8,9
         };
 
         private IModifieder _owner;
 
         public AttrController()
         {
-            Size = 8;
+            Size = 12;
             ForceRefreshView();
         }
 
         protected override IMVCModel<int> Model => _model;
 
         protected override AttrViewPanel View => AttrViewPanel.Instance;
-
-        protected override IDataBase<int> DataBase => throw new System.NotImplementedException();
 
         protected override void SetItem(int modelData, AttrViewItem viewItem)
         {

@@ -34,6 +34,8 @@ namespace GameBase.UI
             
         }
 
+
+
         public void SetIconSprite(int iconTextureID)
         {
             if (this.iconTextureID == iconTextureID)
@@ -84,6 +86,15 @@ namespace GameBase.UI
             }
         }
 
+        public void SetIconColor(int rarity)
+        {
+            iconImage.color = ViewConfig.GetColor(rarity);
+        }
+
+        public void SetIconColor(Color color)
+        {
+            iconImage.color = color;
+        }
         public void ShowColor()
         {
             iconImage.color = colorShow;

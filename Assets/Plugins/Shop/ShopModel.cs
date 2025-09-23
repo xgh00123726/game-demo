@@ -69,7 +69,12 @@ namespace GameBase.Shops
         /// <returns></returns>
         public int GetGoodID(int index)
         {
-            return datas[currGoodIndexInModel[index]].goodID;
+            var dataIndex = currGoodIndexInModel[index];
+            if (dataIndex < 0)
+            {
+                return -1;
+            }
+            return datas[dataIndex].goodID;
         }
 
         public int GoodNums
@@ -113,14 +118,24 @@ namespace GameBase.Shops
                 return false;
             }
             var modelIndex = currGoodIndexInModel[index];
+
+            if (modelIndex < 0)
+            {
+                return false;
+            }
+
             var price = datas[modelIndex].price;
             if (shoper.Gold < price)
             {
                 return false;
             }
 
-            currGoodIndexInModel[index] = -1;
             return true;
+        }
+
+        protected internal virtual void RemoveItem(int index)
+        {
+            currGoodIndexInModel[index] = -1;
         }
 
         internal void Refresh()

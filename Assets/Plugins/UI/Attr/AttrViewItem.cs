@@ -10,7 +10,7 @@ namespace GameBase.UI
         {
             set
             {
-                valueTMP.text = value.ToString();
+                valueTMP.text = String.Format("{0:0.##}", value);
             }
         }
         public AttrViewItem()

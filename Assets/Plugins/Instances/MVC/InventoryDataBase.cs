@@ -1,24 +1,29 @@
-using GameBase.Inventorys;
 using GameBase.Texts;
-using GameBase.Tools;
 using NReco.Csv;
 using System;
-using GameBase.UI.MVC;
 using System.IO;
 using UnityEngine;
+
 namespace Instance.UI.MVC
 {
-    public class InventoryDataBase : IDataBase<InventoryData>
+    public class InventoryDataBase
     {
-        private InventoryData[] _datas;
+        private static InventoryData[] _datas;
         private static InventoryDataBase _instance = new();
-        protected InventoryDataBase()
+        private static string textFileName = "CommonDataBase.csv";
+
+        static InventoryDataBase()
         {
-            if (RelativePath == null || RelativePath.Length == 0 || RelativePath == "")
+            Init("Instance/Inventory/CommonInventory/CommonDataBase.csv");
+        }
+
+        private static void Init(string relativePath)
+        {
+            if (relativePath == null || relativePath.Length == 0 || relativePath == "")
             {
                 return;
             }
-            StreamReader reader = File.OpenText($"{Application.streamingAssetsPath}/{RelativePath}");
+            StreamReader reader = File.OpenText($"{Application.streamingAssetsPath}/{relativePath}");
             CsvReader csvReader = new CsvReader(reader);
             csvReader.Read();
             _datas = new InventoryData[int.Parse(csvReader[0])];
@@ -26,41 +31,41 @@ namespace Instance.UI.MVC
             {
                 csvReader.Read();
 
-                var data = new InventoryData();
-                data.ID = int.Parse(csvReader[0]);
-                Enum.TryParse(csvReader[1], out data.tag);
-                data.IconTextureID = int.Parse(csvReader[2]);
-                data.buffID = int.Parse(csvReader[3]);
-                Enum.TryParse(csvReader[4], out data.spellActionModifierType);
-                data.spellActionModifyerID = int.Parse(csvReader[5]);
-
-                _datas[i] = data;
+                _datas[i] = new InventoryData()
+                {
+                    ID = int.Parse(csvReader[0]),
+                    iconTextureID = int.Parse(csvReader[2]),
+                    buffID = int.Parse(csvReader[3]),
+                    spellActionModifyerID = int.Parse(csvReader[5]),
+                    rarity = int.Parse(csvReader[6])
+                };
+                Enum.TryParse(csvReader[1], out _datas[i].tag);
+                Enum.TryParse(csvReader[4], out _datas[i].spellActionModifierType);
             }
 
             reader.Close();
 
-            TextMgr.Init(TextFileName);
+            TextMgr.Init(textFileName);
         }
 
-        public static InventoryDataBase Instance => _instance;
+        public static int Count => _datas.Length;
 
-        public string RelativePath => "Instance/Inventory/CommonInventory/CommonDataBase.csv";
-
-        public string TextFileName => "CommonDataBase.csv";
-
-        public int Count => _datas.Length;
-
-        public string GetText(int index, params string[] args)
+        public static string GetText(int index, params string[] args)
         {
-            return TextMgr.Get(TextFileName, index, args);
+            return TextMgr.Get(textFileName, index, args);
         }
 
-        public InventoryData Read(int index)
+        public static InventoryData Read(int index)
         {
             return _datas[index];
         }
 
-        public void Write(InventoryData data, int index)
+        public static InventoryData Get(int index)
+        {
+            return _datas[index];
+        }
+
+        public static void Write(InventoryData data, int index)
         {
             _datas[index] = data;
         }

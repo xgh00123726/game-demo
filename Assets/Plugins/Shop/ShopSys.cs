@@ -50,6 +50,8 @@ namespace GameBase.Shops
                     var isPurchaseOK = e.model.Purchase(currPurchase, e.shoper);
                     if (isPurchaseOK)
                     {
+                        e.shoper.OnPurchaseItem(e.model.GetGoodID(currPurchase));
+                        e.model.RemoveItem(currPurchase);
                         e.shopView.SetItem(e.model.currGoodIndexInModel);
                     }
                 }

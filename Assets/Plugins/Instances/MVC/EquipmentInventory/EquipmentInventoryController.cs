@@ -25,7 +25,6 @@ namespace Instance.UI.MVC
 
         protected override IMVCModel<InventoryData> Model => _inventoryModel;
         protected override EquipmentViewPanel View => EquipmentViewPanel.Instance;
-        protected override IDataBase<InventoryData> DataBase => InventoryDataBase.Instance;
 
         public void SetOwner<T_Owner>(T_Owner owner) where T_Owner : IBuffOwner
         {

@@ -73,7 +73,6 @@ namespace GameBase.UI
 
         public void SetPosition(Vector3 position)
         {
-            _shadowObj.SetActive(true);
             position.x = position.x + 50;
             _shadowObj.transform.position = position;
 

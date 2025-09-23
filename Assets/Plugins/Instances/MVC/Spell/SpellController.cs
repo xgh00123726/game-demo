@@ -19,8 +19,6 @@ namespace Instance.UI.MVC
 
         protected override SpellViewPanel View => SpellViewPanel.Instance;
 
-        protected override IDataBase<SpellItemData> DataBase => throw new System.NotImplementedException();
-
         public override int AddItem(SpellItemData item)
         {
             var ret = base.AddItem(item);

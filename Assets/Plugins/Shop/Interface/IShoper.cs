@@ -8,5 +8,6 @@ namespace GameBase.Shops
         Vector3 Position { get; }
         bool OpenShop { get; }
         bool CloseShop { get; }
+        void OnPurchaseItem(int goodID);
     }
 }

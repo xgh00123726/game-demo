@@ -1,9 +1,5 @@
-using GameBase.Inventorys;
-using GameBase.Resources;
-using GameBase.Tools;
 using GameBase.UI;
 using GameBase.UI.MVC;
-using UnityEngine;
 
 namespace Instance.UI.MVC
 {
@@ -12,7 +8,7 @@ namespace Instance.UI.MVC
         T_ViewItem,
         T_View,
         T_Controller>
-        where T_ModelItem : IInventoryItem
+        where T_ModelItem : InventoryData
         where T_ViewItem : InventoryViewItem, new()
         where T_View : InventoryViewPanel<T_ViewItem, T_View>, new()
         where T_Controller : InventoryController<T_ModelItem, T_ViewItem, T_View, T_Controller>, new()
@@ -21,9 +17,9 @@ namespace Instance.UI.MVC
 
         protected override void SetItem(T_ModelItem modelData, T_ViewItem viewItem)
         {
-            viewItem.SetIconSprite(modelData.IconTextureID);
+            viewItem.SetIconSprite(modelData.iconTextureID);
+            viewItem.SetIconColor(modelData.rarity); 
             viewItem.ShowIcon();
-            viewItem.ShowColor();
         }
 
         protected override void SetNullItem(T_ModelItem modelData, T_ViewItem viewItem)
@@ -37,7 +33,7 @@ namespace Instance.UI.MVC
         {
             if (Model.HasItem(index))
             {
-                View[index].ShowColor();
+                View[index].SetIconColor(Model[index].rarity);
             }
             else
             {
