@@ -31,8 +31,6 @@ namespace GameBase.UI
         internal RectTransform rectTransform;
         internal TextMeshProUGUI textObj;
 
-        public int InstanceID { get; set; }
-
         public GameObject Obj { get; set; }
         public int ObjID { get; set; } = 5;
     }

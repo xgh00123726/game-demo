@@ -10,6 +10,8 @@ namespace GameBase.UI
         void Awake()
         {
             instance = this;
+
+
         }
     }
 }

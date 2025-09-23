@@ -8,6 +8,8 @@ namespace GameBase.UI
 {
     public abstract class BaseViewItem : IUEntity<BaseUI>
     {
+        internal ViewTag tag;
+
         internal GameObject iconObject;
         internal Image iconImage;
         internal Sprite iconSprite;
@@ -31,9 +33,7 @@ namespace GameBase.UI
         {
             var texture = ResourcesLoader.GetTexture2D(iconTextureID);
             return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-            
         }
-
 
 
         public void SetIconSprite(int iconTextureID)
@@ -52,12 +52,6 @@ namespace GameBase.UI
             }
 
             IconSprite = InstantiateSpriteFromIconTextureID(iconTextureID);
-        }
-
-        public void SetIconSprite(Sprite iconSprite)
-        {
-            this.iconSprite = iconSprite;
-            iconImage.sprite = iconSprite;
         }
 
         public void HideIcon()
@@ -94,10 +88,6 @@ namespace GameBase.UI
         public void SetIconColor(Color color)
         {
             iconImage.color = color;
-        }
-        public void ShowColor()
-        {
-            iconImage.color = colorShow;
         }
 
         public void HideColor()
