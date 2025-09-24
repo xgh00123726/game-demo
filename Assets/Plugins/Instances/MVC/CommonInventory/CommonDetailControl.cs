@@ -1,15 +1,22 @@
 using GameBase.UI;
 using UnityEngine;
-using GameBase.UI.MVC;
+
 namespace Instance.UI.MVC
 {
     public class CommonDetailControl : IDetailableControl<CommonInventoryViewItem>
     {
-        protected DetailableShadowView<BaseViewItem> ShadowView => PublicDetailableShadowView.Instance;
+        private CommonInventoryController _CC;
+        private DefaultDetailableShadowView _shadowView = new();
+        protected DefaultDetailableShadowView ShadowView => _shadowView;
+
+        public CommonDetailControl(CommonInventoryController CC)
+        {
+            _CC = CC;
+        }
 
         bool IDetailableControl<CommonInventoryViewItem>.IsDetail(CommonInventoryViewItem e)
         {
-            return e.Obj.EnterTime > 0.2f && CommonInventoryController.Instance.HasItem(e.ItemIndex);
+            return e.Obj.EnterTime > 0.2f && _CC.HasItem(e.ItemIndex);
         }
 
         void IDetailableControl<CommonInventoryViewItem>.OnDetail(CommonInventoryViewItem e)
@@ -21,9 +28,9 @@ namespace Instance.UI.MVC
         {
             ShadowView.SetPosition(Input.mousePosition);
 
-            if (CommonInventoryController.Instance.TryGetData(e.ItemIndex, out var data))
+            if (_CC.HasItem(e.ItemIndex))
             {
-                ShadowView.SetText(InventoryDataBase.GetText(data.ID));
+                ShadowView.SetText(InventoryDataBase.GetText(_CC[e.ItemIndex].dItem.ID));
             }
             else
             {

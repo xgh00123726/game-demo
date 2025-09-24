@@ -2,6 +2,10 @@ using GameBase.Tools;
 
 namespace GameBase.Inventorys
 {
+    /// <summary>
+    /// 可以动态扩容的仓库模型
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class DynInventoryModel<T> : InventoryModel<T>
         where T : new()
     {

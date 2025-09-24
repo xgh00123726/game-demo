@@ -17,13 +17,15 @@ namespace Instance.UI.MVC
 
         public AttrController()
         {
+            _view = new AttrViewPanel();
             Size = 12;
             ForceRefreshView();
         }
 
-        protected override IMVCModel<int> Model => _model;
+        public override IMVCModel<int> Model => _model;
+        private AttrViewPanel _view;
 
-        protected override AttrViewPanel View => AttrViewPanel.Instance;
+        public override AttrViewPanel View => _view;
 
         protected override void SetItem(int modelData, AttrViewItem viewItem)
         {

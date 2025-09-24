@@ -7,28 +7,19 @@ using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public class BuffViewPanel : BaseViewPanel<BuffViewItem, BuffViewPanel>
+    public class BuffViewPanel : BaseViewPanel<BuffViewItem>
     {
-        internal override int PanelObjID => UIPanelConfig.Int.Buff_panelObjID;
-        internal override int ShapeTexureID => UIPanelConfig.Int.Buff_shapeTexureID;
-        internal override int ContourTexureID => UIPanelConfig.Int.Buff_contourTexureID;
-        internal override float ItemWidth => UIPanelConfig.Float.Buff_itemWidth;
-        internal override float ItemHeight => UIPanelConfig.Float.Buff_itemHeight;
-        internal override float XInterval => UIPanelConfig.Float.Buff_xInterval;
-        internal override float YInterval => UIPanelConfig.Float.Buff_yInterval;
-        internal override float MaxPanelWidth => UIPanelConfig.Float.Buff_maxPanelWidth;
-        internal override float PanelX => UIPanelConfig.Float.Buff_panelX;
-        internal override float PanelY => UIPanelConfig.Float.Buff_panelY;
-        internal override int ItemAlign => UIPanelConfig.Int.Buff_itemAlign;
-
-        protected override void AfterInstantiateEUObject(BuffViewItem e)
+        //protected override void AfterInstantiateEUObject(BuffViewItem e)
+        //{
+        //    var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.iconTextureID)); 
+        //    e.iconMaterial.SetTexture("_Target", texture);
+        //}
+        public BuffViewPanel(int prefabID = 10,
+            int defaultObjID = 9) : base(
+            prefabID,
+            defaultObjID)
         {
-            base.AfterInstantiateEUObject(e);
-
-            var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.iconTextureID)); 
-            e.iconMaterial.SetTexture("_Target", texture);
         }
-
         protected override BaseUI InstantiateObj(BuffViewItem e)
         {
             var obj = base.InstantiateObj(e);
@@ -40,11 +31,7 @@ namespace GameBase.UI
             e.iconMaterial.SetFloat("_Dir2", -1f);
 
             var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.iconTextureID));
-            var shape = GameObject.Instantiate(ResourcesLoader.GetTexture2D(ShapeTexureID));
-            var contour = GameObject.Instantiate(ResourcesLoader.GetTexture2D(ContourTexureID));
 
-            e.iconMaterial.SetTexture("_Shape", shape);
-            e.iconMaterial.SetTexture("_Contour", contour);
             e.iconMaterial.SetTexture("_Target", texture);
 
             e.stackNumTMP = obj.transform.Find("StackNum").GetComponent<TextMeshProUGUI>();
@@ -56,7 +43,7 @@ namespace GameBase.UI
         {
             base.UpdateEntity(e);
 
-            if (!e.bindBuff.Alive)
+            if (!e.removeFlag)
             {
                 RemoveEntity(e);
             }

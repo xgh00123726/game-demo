@@ -1,48 +1,55 @@
 using GameBase.Shops;
+using GameBase.Tools;
 using GameBase.UI;
 using Instance.UI.MVC;
 using UnityEngine;
 
 namespace Instance.UI.Shops
 {
-    public class ShopDetailableControl : IDetailableControl<ShopViewItem>
+    public class ShopDetailableControl : IDetailableControl<BaseViewItem>
     {
-        public ShopModel model;
+        private IDetailableShadowView _shadowView = new DefaultDetailableShadowView();
+        internal ShopModel model;
+        public ShopDetailableControl(ShopModel model)
+        {
+            this.model = model;
+        }
 
-        bool IDetailableControl<ShopViewItem>.IsDetail(ShopViewItem e)
+
+        bool IDetailableControl<BaseViewItem>.IsDetail(BaseViewItem e)
         {
             return e.Obj.EnterTime > 0.2f && model.GetGoodID(e.ItemIndex) >= 0;
         }
 
-        void IDetailableControl<ShopViewItem>.OnDetail(ShopViewItem e)
+        void IDetailableControl<BaseViewItem>.OnDetail(BaseViewItem e)
         {
-            ShopDetailShadowView.Instance.SetPosition(Input.mousePosition);
+            _shadowView.SetPosition(Input.mousePosition);
         }
 
-        void IDetailableControl<ShopViewItem>.OnEnterDetail(ShopViewItem e)
+        void IDetailableControl<BaseViewItem>.OnEnterDetail(BaseViewItem e)
         {
-            ShopDetailShadowView.Instance.Show();
+            _shadowView.Show();
 
             var goodID = model.GetGoodID(e.ItemIndex);
             var info = ShopItemInfos.Get(goodID);
 
             if (info.reflectType == ReflectType.InventoryItem)
             {
-                ShopDetailShadowView.Instance.SetText("装备\n" + InventoryDataBase.GetText(info.reflectID));
+                _shadowView.SetText("装备\n" + InventoryDataBase.GetText(info.reflectID));
             }
             else if (info.reflectType == ReflectType.Buff)
             {
-                ShopDetailShadowView.Instance.SetText("成长\n" + InventoryDataBase.GetText(info.reflectID));
+                _shadowView.SetText("成长\n" + InventoryDataBase.GetText(info.reflectID));
             }
             else
             {
-                ShopDetailShadowView.Instance.Hide();
+                _shadowView.Hide();
             }
         }
 
-        void IDetailableControl<ShopViewItem>.OnExitDetail(ShopViewItem e)
+        void IDetailableControl<BaseViewItem>.OnExitDetail(BaseViewItem e)
         {
-            ShopDetailShadowView.Instance.Hide();
+            _shadowView.Hide();
         }
     }
 }

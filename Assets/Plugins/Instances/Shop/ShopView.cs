@@ -11,8 +11,7 @@ namespace Instance.UI.Shops
     public class ShopView : IShopView, IShopInteractive
     {
         public bool _isTrigRefresh = false;
-
-        internal ShopViewPanel SP => ShopViewPanel.Instance;
+        public BaseViewPanel<BaseViewItem> view;
 
         bool IShopInteractive.TrigRefresh => _isTrigRefresh;
 
@@ -20,7 +19,7 @@ namespace Instance.UI.Shops
         {
             get
             {
-                if(Inputs.GetKeyDown(KeyFunction.ShopPurchase) && SP.TryGetItem(Input.mousePosition, out var e, out var index))
+                if(Inputs.GetKeyDown(KeyFunction.ShopPurchase) && view.TryGetItem(Input.mousePosition, out var e, out var index))
                 {
                     return index;
                 }
@@ -31,7 +30,7 @@ namespace Instance.UI.Shops
 
         void IShopView.Hide()
         {
-            SP.Hide();
+            view.Hide();
         }
 
         void IShopInteractive.OnTrigRefresh()
@@ -41,13 +40,13 @@ namespace Instance.UI.Shops
 
         void IShopView.SetItem(List<int> goodIDs)
         {
-            SP.FillItem(goodIDs.Count);
+            view.FillItem(goodIDs.Count);
             for (int i = 0; i < goodIDs.Count; ++i)
             {
                 if (goodIDs[i] < 0)
                 {
-                    SP[i].HideIcon();
-                    SP[i].HideColor();
+                    view[i].HideIcon();
+                    view[i].HideColor();
                 }
                 else
                 {
@@ -56,37 +55,37 @@ namespace Instance.UI.Shops
                     {
                         if (info.iconTextureID >= 0)
                         {
-                            SP[i].SetIconSprite(info.iconTextureID);
+                            view[i].SetIconSprite(info.iconTextureID);
                         }
                         else
                         {
                             var inventoryDataID = info.reflectID;
                             var iconTextureID = InventoryDataBase.Get(inventoryDataID).iconTextureID;
-                            SP[i].SetIconSprite(iconTextureID);
+                            view[i].SetIconSprite(iconTextureID);
                         }
 
-                        SP[i].SetIconColor(ViewConfig.GetColor(info.rarity));
+                        view[i].SetIconColor(ViewConfig.GetColor(info.rarity));
                     }
                     else if (info.reflectType == ReflectType.Buff)
                     {
-                        SP[i].SetIconSprite(info.iconTextureID);
+                        view[i].SetIconSprite(info.iconTextureID);
 
-                        SP[i].SetIconColor(ViewConfig.GetColor(info.rarity));
+                        view[i].SetIconColor(ViewConfig.GetColor(info.rarity));
                     }
                     else
                     {
-                        SP[i].SetIconSprite(0);
+                        view[i].SetIconSprite(0);
 
-                        SP[i].HideColor();
+                        view[i].HideColor();
                     }
-                    SP[i].ShowIcon();
+                    view[i].ShowIcon();
                 }
             }
         }
 
         void IShopView.Show()
         {
-            SP.Show();
+            view.Show();
         }
 
         public void Refresh()

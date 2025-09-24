@@ -8,7 +8,7 @@ namespace GameBase.UI.MVC
 {
     public abstract class MVController<T_ModelItem, T_ViewItem, T_View, T_Controller> : Singleton<T_Controller>, IBaseSys
         where T_ViewItem : BaseViewItem, new()
-        where T_View : BaseViewPanel<T_ViewItem, T_View>, new()
+        where T_View : BaseViewPanel<T_ViewItem>
         where T_Controller : MVController<T_ModelItem, T_ViewItem, T_View, T_Controller>, new()
     {
         public MVController()
@@ -16,8 +16,8 @@ namespace GameBase.UI.MVC
             ShadowMono.CreateShadowMono(this);
         }
 
-        protected abstract IMVCModel<T_ModelItem> Model { get; }
-        protected abstract T_View View { get; }
+        public abstract IMVCModel<T_ModelItem> Model { get; }
+        public abstract T_View View { get; }
 
         protected abstract void SetItem(T_ModelItem modelData, T_ViewItem viewItem);
 
@@ -41,7 +41,8 @@ namespace GameBase.UI.MVC
         public virtual int AddItem(T_ModelItem item)
         {
             var index = Model.AddItem(item);
-            var viewItem = View.FillGet(index);
+            View.FillItem(index + 1);
+            var viewItem = View[index];
             SetItem(item, viewItem);
             return index;
         }
@@ -55,7 +56,8 @@ namespace GameBase.UI.MVC
         public virtual int AddItem(T_ModelItem item, int index)
         {
             Model.AddItem(item, index);
-            var viewItem = View.FillGet(index);
+            View.FillItem(index + 1);
+            var viewItem = View[index];
             SetItem(item, viewItem);
             return index;
         }

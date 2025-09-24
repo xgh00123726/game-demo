@@ -11,10 +11,10 @@ namespace GameBase.UI
         internal float pointerDownTime;
         internal bool isPointerOn;
         internal bool isPointerDown;
-        internal Action enterAction;
-        internal Action exitAction;
-        internal Action pointerDownAction;
-        internal Action pointerRightDownAction;
+        public Action enterAction;
+        public Action exitAction;
+        public Action pointerDownAction;
+        public Action pointerRightDownAction;
 
         public float EnterTime => enterTime;
         public float PointerDownTime => pointerDownTime;

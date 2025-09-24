@@ -6,7 +6,9 @@ namespace GameBase.UI
 {
     public enum ViewTag
     {
-        None,
+        None = 1,
+
+        All = 0x7FFFFFFF,
     };
 
     public class ViewManager
@@ -42,6 +44,27 @@ namespace GameBase.UI
         public static int GetViewCount(ViewTag tag)
         {
             return _views[tag].Count;
+        }
+
+        public BaseViewItem GetItem(Vector3 position, ViewTag tag = ViewTag.All)
+        {
+            foreach (var k in _views.Keys)
+            {
+                if ((k & tag) != 0)
+                {
+                    foreach (var e in _views[k])
+                    {
+                        Rect r = e.RectTransform.rect;
+                        r.center = e.Obj.transform.position;
+                        if (r.Contains(position))
+                        {
+                            return e;
+                        }
+                    }
+                }
+            }
+            
+            return null;
         }
 
         public static Transform GetRootCanvas()

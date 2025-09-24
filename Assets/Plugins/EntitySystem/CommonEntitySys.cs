@@ -124,7 +124,10 @@ namespace GameBase.EntitySystem
             return e;
         }
 
-        private void SysUpdate()
+        /// <summary>
+        /// 不推荐重写Update
+        /// </summary>
+        internal protected virtual void Update()
         {
             foreach (T_Entity e in _entityNeedRegister)
             {
@@ -147,14 +150,6 @@ namespace GameBase.EntitySystem
                 Constructor.ReleaseEntity(e);
             }
             _entitiesNeedRemove.Clear();
-        }
-
-        /// <summary>
-        /// 不推荐重写Update
-        /// </summary>
-        internal protected virtual void Update()
-        {
-            SysUpdate();
         }
 
         void IBaseSys.Update()
@@ -191,7 +186,5 @@ namespace GameBase.EntitySystem
         {
             return 0;
         }
-
-
     }
 }

@@ -8,23 +8,18 @@ using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public class SpellViewPanel : BaseViewPanel<SpellViewItem, SpellViewPanel>
+    public class SpellViewPanel : BaseViewPanel<SpellViewItem>
     {
         private int _lastClickedItemIndex = -1;
 
         public Action<int> OnClickedItem;
 
-        internal override int PanelObjID => UIPanelConfig.Int.Spell_panelObjID;
-        internal override int ShapeTexureID => UIPanelConfig.Int.Spell_shapeTexureID;
-        internal override int ContourTexureID => UIPanelConfig.Int.Spell_contourTexureID;
-        internal override float ItemWidth => UIPanelConfig.Float.Spell_itemWidth;
-        internal override float ItemHeight => UIPanelConfig.Float.Spell_itemHeight;
-        internal override float XInterval => UIPanelConfig.Float.Spell_xInterval;
-        internal override float YInterval => UIPanelConfig.Float.Spell_yInterval;
-        internal override float MaxPanelWidth => UIPanelConfig.Float.Spell_maxPanelWidth;
-        internal override float PanelX => UIPanelConfig.Float.Spell_panelX;
-        internal override float PanelY =>  UIPanelConfig.Float.Spell_panelY;
-        internal override int ItemAlign =>  UIPanelConfig.Int.Spell_itemAlign;
+        public SpellViewPanel(int prefabID = 12,
+            int defaultObjID = 11) : base(
+            prefabID,
+            defaultObjID)
+        {
+        }
 
         protected override BaseUI InstantiateObj(SpellViewItem e)
         {
@@ -68,8 +63,8 @@ namespace GameBase.UI
 
             if (e.Obj.isPointerDown)
             {
-                OnClickedItem(CurrentIterateIndex);
-                _lastClickedItemIndex = CurrentIterateIndex;
+                OnClickedItem(e.ItemIndex);
+                _lastClickedItemIndex = e.ItemIndex;
             }
         }
 
@@ -88,11 +83,7 @@ namespace GameBase.UI
             e.iconMaterial.SetFloat("_Dir2", -1f);
 
             var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.iconTextureID));
-            var shape = GameObject.Instantiate(ResourcesLoader.GetTexture2D(ShapeTexureID));
-            var contour = GameObject.Instantiate(ResourcesLoader.GetTexture2D(ContourTexureID));
 
-            e.iconMaterial.SetTexture("_Shape", shape);
-            e.iconMaterial.SetTexture("_Contour", contour);
             e.iconMaterial.SetTexture("_Target", texture);
         }
 

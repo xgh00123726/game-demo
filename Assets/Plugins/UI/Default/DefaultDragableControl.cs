@@ -1,9 +1,8 @@
-using GameBase.UI;
 using UnityEngine;
 
-namespace GameBase.UI.MVC
+namespace GameBase.UI
 {
-    public abstract class MVCDragableControl<T> : IDragableControl<T>
+    public abstract class DefaultDragableControl<T> : IDragableControl<T>
         where T : BaseViewItem
     {
         public float dragJugTime = 0.1f;

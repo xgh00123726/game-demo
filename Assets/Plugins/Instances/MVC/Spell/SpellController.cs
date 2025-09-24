@@ -9,15 +9,16 @@ namespace Instance.UI.MVC
     public class SpellController : MVController<SpellItemData, SpellViewItem, SpellViewPanel, SpellController>
     {
         private SpellModel _model = new();
+        private SpellViewPanel _view = new();
         public Action<int> OnClickedItem
         {
             get => View.OnClickedItem;
             set => View.OnClickedItem = value;
         }
 
-        protected override IMVCModel<SpellItemData> Model => _model;
+        public override IMVCModel<SpellItemData> Model => _model;
 
-        protected override SpellViewPanel View => SpellViewPanel.Instance;
+        public override SpellViewPanel View => _view;
 
         public override int AddItem(SpellItemData item)
         {

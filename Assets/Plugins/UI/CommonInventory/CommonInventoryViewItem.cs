@@ -1,10 +1,7 @@
 namespace GameBase.UI
 {
-    public class CommonInventoryViewItem : InventoryViewItem
+    public class CommonInventoryViewItem : BaseViewItem
     {
-        public CommonInventoryViewItem()
-        {
-            ObjID = 34;
-        }
+
     }
 }

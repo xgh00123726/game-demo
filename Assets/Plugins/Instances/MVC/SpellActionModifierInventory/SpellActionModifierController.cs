@@ -24,11 +24,12 @@ namespace Instance.UI.MVC
         };
 
         private SpellActionModifierInventoryModel _model;
+        private SpellActionModifierViewPanel _view;
 
         public SpellActionModifierController()
         {
+            _view = new SpellActionModifierViewPanel(43, 42);
             View.FillItem(5);
-            View.DragableControl = new SpellActionModifierDragableControl();
             Hide();
             _model = _models[0];
             SpellController.Instance.OnClickedItem += (int index) =>
@@ -40,9 +41,9 @@ namespace Instance.UI.MVC
             };
         }
 
-        protected override IMVCModel<InventoryData> Model => _model;
+        public override IMVCModel<InventoryData> Model => _model;
 
-        protected override SpellActionModifierViewPanel View => SpellActionModifierViewPanel.Instance;
+        public override SpellActionModifierViewPanel View => _view;
 
         public override void Show()
         {

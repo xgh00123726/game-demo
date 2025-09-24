@@ -1,10 +1,6 @@
 namespace GameBase.UI
 {
-    public class SpellActionModifierViewItem : InventoryViewItem
+    public class SpellActionModifierViewItem : BaseViewItem
     {
-        public SpellActionModifierViewItem()
-        {
-            ObjID = 42;
-        }
     }
 }

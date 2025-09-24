@@ -6,7 +6,7 @@ namespace Instance.UI.MVC
     {
         void IEnterExitControl<CommonInventoryViewItem>.OnPointerDown(CommonInventoryViewItem e)
         {
-            CommonFixedDetailableShadowView.Instance.SetText($"hello\nlast spell panel click:{SpellViewPanel.Instance.LastClickedItemIndex}");
+            CommonFixedDetailableShadowView.Instance.SetText($"hello\nlast spell panel click:{SpellController.Instance.LastClickedItemIndex}");
             CommonFixedDetailableShadowView.Instance.Show();
         }
 

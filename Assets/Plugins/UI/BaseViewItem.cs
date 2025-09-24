@@ -6,9 +6,10 @@ using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public abstract class BaseViewItem : IUEntity<BaseUI>
+    public class BaseViewItem
     {
-        internal ViewTag tag;
+        internal ViewTag tag = ViewTag.None;
+        
 
         internal GameObject iconObject;
         internal Image iconImage;

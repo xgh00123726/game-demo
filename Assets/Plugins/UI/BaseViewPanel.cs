@@ -1,117 +1,52 @@
 using GameBase.EntitySystem;
 using GameBase.Resources;
 using GameBase.Tools;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public abstract class BaseViewPanel<T, T_Instance> : UObjEntitySys<T, BaseUI, T_Instance>
+    public class BaseViewPanel<T> : IBaseSys
         where T : BaseViewItem, new()
-        where T_Instance : BaseViewPanel<T, T_Instance>, new()
     {
-        public enum Align
-        {
-            Left = 0, Right, Center
-        }
+        protected internal LinkedList<T> _entityNeedRegister = new LinkedList<T>();
+        protected internal LinkedList<T> _entitiesNeedRemove = new LinkedList<T>();
+        private bool _inUpdating = false;
 
+        internal int defaultObjID = 34;
         internal ListContainer<T> container = new();
-        internal IDragableControl<T> dragableControl;
-        internal IEnterExitControl<T> enterExitControl;
-        internal ISwitchable<T> switchable;
-        internal IDetailableControl<T> detailableControl;
+        internal GameObject panel;
 
-        public GameObject panel;
+        public ILayout layout;
+        public IDetailableControl<T> detailableControl;
+        public IEnterExitControl<T> enterExitControl;
+        public IDragableControl<T> dragableControl;
+        
 
-        public IDragableControl<T> DragableControl
+        public BaseViewPanel(int prefabID,
+            int defaultObjID)
         {
-            get => dragableControl;
-            set => dragableControl = value;
-        }
+            ShadowMono.CreateShadowMono(this); 
 
-        public IEnterExitControl<T> EnterExitControl
-        {
-            get => enterExitControl;
-            set => enterExitControl = value;
-        }
+            panel = GameObject.Instantiate(ResourcesLoader.GetPrefab(prefabID));
+            panel.transform.SetParent(RootCanvas.Instance.Layer(0), false);
+            panel.SetActive(false);
 
-        public ISwitchable<T> Switchable
-        {
-            get => switchable;
-            set => switchable = value;
-        }
-
-        public IDetailableControl<T> DetailableControl
-        {
-            get => detailableControl;
-            set => detailableControl = value;
-        }
-
-        internal abstract float ItemWidth { get; }
-        internal abstract float ItemHeight { get; }
-        internal abstract float XInterval { get; }
-        internal abstract float YInterval { get; }
-        internal abstract float MaxPanelWidth { get; }
-        internal abstract float PanelX { get; }
-        internal abstract float PanelY { get; }
-        internal abstract int PanelObjID {  get; }
-        internal abstract int ShapeTexureID { get; }
-        internal abstract int ContourTexureID { get; }
-        internal abstract int ItemAlign { get; }
-
-        public BaseViewPanel()
-        {
-            panel = GameObject.Instantiate(ResourcesLoader.GetPrefab(PanelObjID));
-            panel.transform.SetParent(RootCanvas.Instance.transform, false);
+            this.defaultObjID = defaultObjID;
         }
 
         protected virtual RectTransform GetRectTransform(T e)
         {
-            return null;
+            return e.iconImage.GetComponent<RectTransform>();
         }
 
-        protected virtual void GetItemNumXYStyle(int index, out int itemPerLine, out int x, out int y)
-        {
-            itemPerLine = (int)Mathf.Floor(MaxPanelWidth / (ItemWidth + XInterval));
-            x = index % itemPerLine;
-            y = index / itemPerLine;
-        }
+        public virtual IEContainer<T> Entities => container;
 
-        protected virtual Vector3 GetItemLocalPosition(int index)
-        {
-            GetItemNumXYStyle(index, out int itemPerLine, out int x, out int y);
-
-            float vx = 0f;
-            if (ItemAlign == (int)Align.Left)
-            {
-                vx = (ItemWidth + XInterval) * x;
-            }
-            else if (ItemAlign == (int)Align.Center)
-            {
-                vx = (ItemWidth + XInterval) * x;
-                float remainWidth = itemPerLine * (ItemWidth + XInterval);
-                vx -= remainWidth / 2;
-            }
-            float vy = (ItemHeight + YInterval) * y;
-
-
-            return new Vector3(vx, vy, 0);
-        }
-
-        public override IEContainer<T> Entities => container;
-
-        protected override void AfterInstantiateEUObject(T e)
-        {            
-            e.Obj.gameObject.SetActive(true);
-        }
-
-        protected override void BeforeReleaseEUObject(T e)
-        {
-            e.Obj.gameObject.SetActive(false);
-        }
-
-        protected override BaseUI InstantiateObj(T e)
+        protected virtual BaseUI InstantiateObj(T e)
         {
             var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
 
@@ -133,6 +68,8 @@ namespace GameBase.UI
             obj.transform.SetParent(panel.transform, false);
 
             e.rectTransform = GetRectTransform(e);
+
+            e.colorHide = e.iconImage.color;
 
             return ui;
         }
@@ -188,11 +125,18 @@ namespace GameBase.UI
             if (enterExitControl == null) return;
         }
 
-        protected override void UpdateEntity(T e)
+        private void LayoutUpdate(T e)
         {
-            e.itemIndex = CurrentIterateIndex;
-            e.Obj.transform.localPosition = GetItemLocalPosition(CurrentIterateIndex);
+            if (layout == null)
+            {
+                return;
+            }
 
+            e.Obj.transform.localPosition = layout.GetItemLocalPosition(e.itemIndex);
+        }
+
+        protected virtual void UpdateEntity(T e)
+        {
             if (e.Obj.isPointerOn)
             {
                 e.Obj.enterTime += Time.deltaTime;
@@ -202,17 +146,79 @@ namespace GameBase.UI
                 e.Obj.pointerDownTime += Time.deltaTime;
             }
 
+            LayoutUpdate(e);
             DragableUpdate(e);
             DetailbleUpdate(e);
             EnterExitUpdate(e);
         }
 
-        protected override void Update()
+        protected virtual void Update()
         {
-            base.Update();
-
-            panel.transform.localPosition = new Vector3(PanelX, PanelY, 0);
+            int index = 0;
+            foreach (var e in Entities)
+            {
+                e.itemIndex = index;
+                UpdateEntity(e);
+                index++;
+            }
         }
+
+        public virtual T NewEntity(int objID = -1)
+        {
+            var e = new T();
+            if (objID > 0)
+            {
+                e.ObjID = objID;
+            }
+            else
+            {
+                e.ObjID = defaultObjID;
+            }
+            return NewEntity(e);
+        }
+
+        public virtual T NewEntity(T e)
+        {
+            Entities.Add(e);
+            e.Obj = InstantiateObj(e);
+            ViewManager.RegisterView(e);
+            return e;
+        }
+
+        ///// <summary>
+        ///// 将实体标记为删除
+        ///// </summary>
+        //protected void RemoveEntity(T e)
+        //{
+        //    if (e == null) return;
+
+        //    if (_entitiesNeedRemove.Contains(e))
+        //    {
+        //        return;
+        //    }
+
+        //    if (!_inUpdating)
+        //    {
+        //        Entities.Remove(e);
+        //    }
+        //    else
+        //    {
+        //        _entitiesNeedRemove.AddLast(e);
+        //    }
+        //}
+
+        public virtual void RemoveEntity(T e)
+        {
+            Entities.Remove(e);
+            ViewManager.RemoveView(e);
+        }
+
+        public virtual void SetLocalPosition(float x, float y)
+        {
+            panel.transform.localPosition = new Vector3(x, y, 0);
+        }
+
+        public virtual bool IsShow => panel.activeSelf;
 
         public void FillItem(int targetCount)
         {
@@ -225,24 +231,6 @@ namespace GameBase.UI
             {
                 NewEntity();
             }
-        }
-
-        public T FillGet(int index)
-        {
-            if (index >= container.Count)
-            {
-                FillItem(index + 1);
-            }
-            return container[index];
-        }
-
-        public void FillSet(int index, T e)
-        {
-            if (index >= container.Count)
-            {
-                FillItem(index + 1);
-            }
-            container[index] = e;
         }
 
         public virtual T this[int index]
@@ -281,6 +269,16 @@ namespace GameBase.UI
             this[p1].SwapIconSprite(this[p2]);
         }
 
+        public void AddChild(GameObject child)
+        {
+            child.transform.SetParent(panel.transform, false);
+        }
+
+        public Transform FindChild(string name)
+        {
+            return panel.transform.Find(name);
+        }
+
         public void Show()
         {
             panel.SetActive(true);
@@ -294,6 +292,31 @@ namespace GameBase.UI
         public void Toggle()
         {
             panel.SetActive(!panel.activeSelf);
+        }
+
+        void IBaseSys.Update()
+        {
+            Update();
+        }
+
+        void IBaseSys.FixedUpdate()
+        {
+            
+        }
+
+        int IBaseSys.GetEntityCount()
+        {
+            return Entities.Count;
+        }
+
+        int IBaseSys.GetReleasedCount()
+        {
+            return 0;
+        }
+
+        int IBaseSys.GetActiveCount()
+        {
+            return 0;
         }
     }
 }

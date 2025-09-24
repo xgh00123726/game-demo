@@ -9,8 +9,8 @@ namespace Instance.UI.MVC
         T_View,
         T_Controller>
         where T_ModelItem : InventoryData
-        where T_ViewItem : InventoryViewItem, new()
-        where T_View : InventoryViewPanel<T_ViewItem, T_View>, new()
+        where T_ViewItem : BaseViewItem, new()
+        where T_View : BaseViewPanel<T_ViewItem>
         where T_Controller : InventoryController<T_ModelItem, T_ViewItem, T_View, T_Controller>, new()
     {
         protected virtual void OnSwap(int p1, int p2) { }
@@ -64,7 +64,7 @@ namespace Instance.UI.MVC
         public virtual void Swap(int p1, int p2)
         {
             Model.Swap(p1, p2);
-            View.Swap(p1, p2);
+            View.SwapIconSprite(p1, p2);
             OnSwap(p1, p2);
             SetColor(p1);
             SetColor(p2);
