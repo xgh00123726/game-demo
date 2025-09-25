@@ -1,19 +1,17 @@
 using GameBase.Buffs;
 using GameBase.Tools;
 using GameBase.UI;
-using Instance.Buffs;
 
 public partial class Player
 {
+    BuffViewPanel _buffPanel;
     private void OnAddBuff(Buff buff)
     {
         if (buff.uiStyle == UIStyle.Buff)
         {
-            var item = BuffViewPanel.Instance.NewEntity((BuffViewItem e) =>
-            {
-                e.iconTextureID = buff.textureID;
-                e.bindBuff = new ViewableBuff(buff);
-            });
+            var item = _buffPanel.NewEntity();
+            item.SetIcon(buff.textureID);
+            item.SetOwner(buff);
         }
     }
 
@@ -23,7 +21,15 @@ public partial class Player
 
     private void BuffUIInit()
     {
-        var e = BuffViewPanel.Instance;
+        _buffPanel = BuffViewPanel.Instance;
+        _buffPanel.layout = new DefaultLayout()
+        {
+            xInterval = 31.5f,
+            yInterval = 31.5f,
+            width = 1000
+        };
+
+        _buffPanel.Show();
         character.BuffContainer.OnAddBuff = OnAddBuff;
         character.BuffContainer.OnRemoveBuff = OnRemoveBuff;
     }

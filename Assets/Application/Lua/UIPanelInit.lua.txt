@@ -70,7 +70,7 @@ Equipment_maxPanelWidth = 315
 Equipment_panelX = 690
 Equipment_panelY = -495
 
-Attr_itemWidth = 200
+Attr_itemWidth = 150
 Attr_itemHeight = 0
 Attr_xInterval = 0
 Attr_yInterval = 35
@@ -99,5 +99,5 @@ SpellActionModifier_itemHeight = 80;
 SpellActionModifier_xInterval = 100;
 SpellActionModifier_yInterval = 35;
 SpellActionModifier_maxPanelWidth = 1200;
-SpellActionModifier_panelX = -300;
-SpellActionModifier_panelY = 200;
+SpellActionModifier_panelX = -600;
+SpellActionModifier_panelY = 450;

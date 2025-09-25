@@ -4,18 +4,29 @@ using GameBase.Projectiles;
 using GameBase.Tools;
 using GameBase.Modify;
 using UnityEngine;
-using Instance.Shops;
-using GameBase.Shops;
+using GameBase.Texts;
+using GameBase.AI;
+using GameBase.UI;
 public class Initer : MonoBehaviour
 {
+    public bool testTextMgr = true;
     void Start()
     {
-
         var builder = new BehaviorTreeBuilder();
 
         builder.Repeat(3)
                     .Sequence()
-                        .Log("this is test for behavior tree builder")
+                        .IF(() => testTextMgr)
+                        .Log(TextMgr.Get(0))
+                        .Log(TextMgr.Get(1))
+                        .Log(TextMgr.Get(2))
+                        .Log(TextMgr.Get(3))
+                        .Log(TextMgr.Get(4))
+                        .Log(TextMgr.Get(5))
+                        .Log(TextMgr.Get(6))
+                        .Log(TextMgr.Get(7))
+                        .Log(TextMgr.Get(8))
+                        .Log(TextMgr.Get(9))
                     .Back()
                 .End();
         builder.Tree.Tick();
@@ -26,25 +37,35 @@ public class Initer : MonoBehaviour
         {
             var c = Constructor.Creatures.Factory.Instance.Get(Constructor.Creatures.Type.Common, 1);
             c.Position = CameraSys.MouseHitPosition;
-            c.ModifyableContainer["maxHP"].AddModify(ModifyerSys<float>.Instance.NewEntity((Modifyer<float> e) =>
+            c.Modifyables.ModifySet("maxHP", ModifyerSys.Instance.NewEntity((Modifyer e) =>
             {
-                e.ModifyFunc = ConvientModifyerFunc.FloatFixedValue(10000);
+                e.value = 10000;
                 e.type = ModifyType.Once | ModifyType.Forever;
             }));
-            c.ModifyableContainer["currHP"].AddModify(ModifyerSys<float>.Instance.NewEntity((Modifyer<float> e) =>
+            c.Modifyables.ModifySet("currHP", ModifyerSys.Instance.NewEntity((Modifyer e) =>
             {
-                e.ModifyFunc = ConvientModifyerFunc.FloatFixedValue(10000);
+                e.value = 10000;
                 e.type = ModifyType.Once | ModifyType.Forever;
             }));
         });
 
-        Command.Register("generate-enermy", (int id) =>
+        Command.Register("gen-creature", (int id) =>
         {
             var c = Constructor.Creatures.Factory.Instance.Get(Constructor.Creatures.Type.Common, 1);
             c.Position = CameraSys.MouseHitPosition;
+
+            AIFactory.Get(Type.FollowAttack).AddTo(c);
         });
 
-        Command.Register("generate-many-enermy", (int num) =>
+        Command.Register("gen-ai-creature", (int id, int aiID) =>
+        {
+            var c = Constructor.Creatures.Factory.Instance.Get(Constructor.Creatures.Type.Common, 1);
+            c.Position = CameraSys.MouseHitPosition;
+
+            AIFactory.Get(aiID).AddTo(c);
+        });
+
+        Command.Register("gen-many-creature", (int num) =>
         {
             for (int i = 0; i < num; i++)
             {
@@ -64,16 +85,6 @@ public class Initer : MonoBehaviour
         character.Position = new Vector3(-6, -7, 4);
 
         ProjectileGizmos.Instance.ToggleShow();
-
-        var shop = ShopSys.Instance.NewEntity();
-        shop.Obj.transform.position = character.Position + new Vector3(3, 0, 0);
-        var shopView = new ShopView();
-        shop.shopView = shopView;
-        shop.newrView = new NearView();
-        shop.shoper = player;
-        shop.interactive = shopView;
-        shop.model = new ShopModel();
-        shop.GoodNum = 5;
     }
 
     private void Update()
