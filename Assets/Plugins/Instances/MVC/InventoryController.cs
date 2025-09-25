@@ -8,7 +8,7 @@ namespace Instance.UI.MVC
         T_ViewItem,
         T_View,
         T_Controller>
-        where T_ModelItem : InventoryData
+        where T_ModelItem : CommonInventoryData
         where T_ViewItem : BaseViewItem, new()
         where T_View : BaseViewPanel<T_ViewItem>
         where T_Controller : InventoryController<T_ModelItem, T_ViewItem, T_View, T_Controller>, new()
@@ -17,27 +17,27 @@ namespace Instance.UI.MVC
 
         protected override void SetItem(T_ModelItem modelData, T_ViewItem viewItem)
         {
-            viewItem.SetIconSprite(modelData.iconTextureID);
-            viewItem.SetIconColor(modelData.rarity); 
-            viewItem.ShowIcon();
+            viewItem.triggerImage.SetIcon(modelData.iconTextureID);
+            viewItem.triggerImage.SetColor(modelData.rarity); 
+            viewItem.triggerImage.Show();
         }
 
         protected override void SetNullItem(T_ModelItem modelData, T_ViewItem viewItem)
         {
-            viewItem.SetIconSprite(-1);
-            viewItem.HideIcon();
-            viewItem.HideColor();
+            viewItem.triggerImage.SetIcon(-1);
+            viewItem.triggerImage.Hide();
+            viewItem.triggerImage.HideColor();
         }
 
         private void SetColor(int index)
         {
             if (Model.HasItem(index))
             {
-                View[index].SetIconColor(Model[index].rarity);
+                View[index].triggerImage.SetColor(Model[index].rarity);
             }
             else
             {
-                View[index].HideColor();
+                View[index].triggerImage.HideColor();
             }
         }
 

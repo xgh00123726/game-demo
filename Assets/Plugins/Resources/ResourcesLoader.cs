@@ -33,6 +33,12 @@ namespace GameBase.Resources
             return _sprites[id];
         }
 
+        public static Sprite GetSpriteFromTextureID(int id)
+        {
+            var texture = ResourcesLoader.GetTexture2D(id);
+            return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        }
+
         public static Texture2D GetTexture2D(int id)
         {
             if (id >= _textures.Length || id < 0)

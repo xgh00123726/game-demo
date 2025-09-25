@@ -4,10 +4,10 @@ using GameBase.UI.MVC;
 
 namespace Instance.UI.MVC
 {
-    public class SpellActionModifierInventoryModel : InventoryModel<InventoryData>, IMVCModel<InventoryData>
+    public class SpellActionModifierInventoryModel : CommonInventory<CommonInventoryData>, IMVCModel<CommonInventoryData>
     {
         public ISpellActionModifierOwner owner;
-        public override int AddItem(InventoryData item, int index)
+        public override int AddItem(CommonInventoryData item, int index)
         {
             var ret = base.AddItem(item, index);
 

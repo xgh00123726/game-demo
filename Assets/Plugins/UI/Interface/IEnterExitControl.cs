@@ -1,10 +1,10 @@
 namespace GameBase.UI
 {
-    public interface IEnterExitControl<T>
+    public interface IEnterExitControl
     {
-        void OnPointerEnter(T e);
-        void OnPointerExit(T e);
-        void OnPointerDown(T e);
-        void OnPointerRightDown(T e);
+        void OnPointerEnter(int i);
+        void OnPointerExit(int i);
+        void OnPointerDown(int i);
+        void OnPointerRightDown(int i);
     }
 }

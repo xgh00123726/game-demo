@@ -14,6 +14,7 @@ namespace Constructor.Spells.Main
         public int actionInterfaceID; 
         public int coolingTime;
         public IndicatorType indicatorType;
+        public int iconTextureID;
     }
 
     public class Common : EntityConstructor<CommonData, Spell, SpellSys, Common>
@@ -32,6 +33,7 @@ namespace Constructor.Spells.Main
             data.coolingTime = int.Parse(line[5]);
 
             Enum.TryParse(line[6], out data.indicatorType);
+            data.iconTextureID = int.Parse(line[7]);
         }
 
         protected override void ESet(Spell e, in CommonData data)
@@ -44,6 +46,7 @@ namespace Constructor.Spells.Main
 
             e.action = Action.Factory.Instance.Get(data.actionType, data.actionInterfaceID);
             e.spellCoolingdown.CoolingSet = data.coolingTime;
+            e.iconTextureID = data.iconTextureID;
         }
     }
 }

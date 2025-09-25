@@ -14,13 +14,13 @@
 //            if (EC.TryGetItemUI(Input.mousePosition, out var eEntity, out var eIndex))
 //            {
 //                EC.Swap(dragedIndex, eIndex);
-//                eEntity.ShowIcon();
+//                eEntity.ShowTriggerIcon();
 //            }
 
 //            if (CC.TryGetItemUI(Input.mousePosition, out var cEntity, out var cIndex))
 //            {
-//                cEntity.SwapIconSprite(dragedItem);
-//                cEntity.ShowIcon();
+//                cEntity.SwapTriggerIconSprite(dragedItem);
+//                cEntity.ShowTriggerIcon();
 
 //                if (EC.TryGetData(dragedIndex, out var data))
 //                {

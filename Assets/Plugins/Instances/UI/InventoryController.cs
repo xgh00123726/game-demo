@@ -1,4 +1,5 @@
 using GameBase.Inventorys;
+using GameBase.Tools;
 using Instance.UI.MVC;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace GameBase.UI
 {
     public class InventoryController<T_View, T_Data>
         where T_View : BaseViewItem, new()
-        where T_Data : InventoryData, new()
+        where T_Data : new()
     {
         public struct VDPair
         {
@@ -15,16 +16,24 @@ namespace GameBase.UI
         }
 
         protected BaseViewPanel<T_View> _view;
-        protected InventoryModel<T_Data> _model;
+        protected CommonInventory<T_Data> _model;
 
         public InventoryController(BaseViewPanel<T_View> view, 
-            InventoryModel<T_Data> model)
+            CommonInventory<T_Data> model)
         {
             _view = view;
             _model = model;
         }
 
-        public int Size => _model.Size;
+        public int Size
+        {
+            get => _model.Size;
+            set
+            {
+                _model.Size = value;
+                _view.FillItem(value);
+            }
+        }
         public virtual bool IsShow => _view.IsShow;
 
         public VDPair this[int i] => new VDPair() { vItem = _view[i], dItem = _model[i] };
@@ -36,9 +45,7 @@ namespace GameBase.UI
         /// <param name="viewItem"></param>
         protected virtual void SetViewItem(T_Data data, T_View viewItem)
         {
-            viewItem.SetIconSprite(data.iconTextureID);
-            viewItem.SetIconColor(data.rarity);
-            viewItem.ShowIcon();
+
         }
 
         /// <summary>
@@ -47,9 +54,10 @@ namespace GameBase.UI
         /// <param name="viewItem"></param>
         protected virtual void SetNullViewItem(T_View viewItem)
         {
-            viewItem.SetIconSprite(-1);
-            viewItem.HideIcon();
-            viewItem.HideColor();
+            viewItem.obj.SetActive(false);
+            viewItem.triggerImage.SetIcon(-1);
+            viewItem.triggerImage.Hide();
+            viewItem.triggerImage.HideColor();
         }
 
         /// <summary>
@@ -79,25 +87,25 @@ namespace GameBase.UI
         /// 移除指定位置的物品
         /// </summary>
         /// <param name="index"></param>
-        public void Remove(int index)
+        public virtual void Remove(int index)
         {
             _model.RemoveItem(index);
-            _view.RemoveEntity(_view[index]);
+            SetNullViewItem(_view[index]);
         }
 
         public void Swap(int p1, int p2)
         {
             _model.Swap(p1, p2);
             _view.SwapIconSprite(p1, p2);
-            Refresh(p1);
-            Refresh(p2);
+            RefreshView(p1);
+            RefreshView(p2);
         }
 
         /// <summary>
         /// 刷新index位置的视图
         /// </summary>
         /// <param name="index"></param>
-        public void Refresh(int index)
+        public void RefreshView(int index)
         {
             if (_model.HasItem(index))
             {
@@ -112,11 +120,11 @@ namespace GameBase.UI
         /// <summary>
         /// 强制刷新所有显示界面
         /// </summary>
-        public void Refresh()
+        public void RefreshView()
         {
             for (int i = 0; i < Size; i++)
             {
-                Refresh(i);
+                RefreshView(i);
             }
         }
 
@@ -135,7 +143,7 @@ namespace GameBase.UI
             foreach (var e in _view.Entities)
             {
                 Rect r = e.RectTransform.rect;
-                r.center = e.Obj.transform.position;
+                r.center = e.uiScript.transform.position;
                 if (r.Contains(position))
                 {
                     return e;

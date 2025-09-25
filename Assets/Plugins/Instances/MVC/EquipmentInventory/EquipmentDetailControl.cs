@@ -8,7 +8,7 @@
 //        protected IDetailableShadowView _shadowView = new DefaultDetailableShadowView();
 //        bool IDetailableControl<EquipmentViewItem>.IsDetail(EquipmentViewItem e)
 //        {
-//            return e.Obj.EnterTime > 0.2f;
+//            return e.uiScript.EnterTime > 0.2f;
 //        }
 
 //        void IDetailableControl<EquipmentViewItem>.OnDetail(EquipmentViewItem e)

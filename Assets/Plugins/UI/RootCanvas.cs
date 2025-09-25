@@ -22,13 +22,12 @@ namespace GameBase.UI
                     layer.SetParent(transform, false);
                     layers.Add(layer, i);
                 }
+                return layers[level];
             }
             else
             {
                 return layers[level];
             }
-
-            return transform;
         }
 
         void Awake()

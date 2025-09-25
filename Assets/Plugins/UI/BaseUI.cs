@@ -6,18 +6,18 @@ using UnityEngine.EventSystems;
 namespace GameBase.UI
 {
     public class BaseUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
-    {        
-        internal float enterTime;
-        internal float pointerDownTime;
-        internal bool isPointerOn;
-        internal bool isPointerDown;
-        public Action enterAction;
-        public Action exitAction;
-        public Action pointerDownAction;
-        public Action pointerRightDownAction;
+    {
+        protected internal float enterTime;
+        protected internal float pointerDownTime;
+        protected internal bool isPointerOn;
+        protected internal bool isPointerDown;
+        protected internal int index;
+        public IEnterExitControl enterExitControl;
 
         public float EnterTime => enterTime;
         public float PointerDownTime => pointerDownTime;
+        public bool IsPointerOn => isPointerOn;
+        public bool IsPointerDown => isPointerDown;
 
         void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
         {
@@ -27,25 +27,25 @@ namespace GameBase.UI
                 {
                     isPointerDown = true;
                 }
-                pointerDownAction?.Invoke();
+                enterExitControl?.OnPointerDown(index);
             }
             else if (eventData.button == PointerEventData.InputButton.Right)
             {
-                pointerRightDownAction?.Invoke();
+                enterExitControl?.OnPointerRightDown(index);
             }
         }
 
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
         {
             isPointerOn = true;
-            enterAction?.Invoke();
+            enterExitControl?.OnPointerEnter(index);
         }
 
         void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
         {
             enterTime = 0;
             isPointerOn = false;
-            exitAction?.Invoke();
+            enterExitControl?.OnPointerExit(index);
         }
 
         void IPointerUpHandler.OnPointerUp(PointerEventData eventData)

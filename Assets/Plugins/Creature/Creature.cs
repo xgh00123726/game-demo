@@ -33,7 +33,7 @@ namespace GameBase.Creatures
         public int radius;
         public Tag tag;
         public Vector3 healthBarOffset = new Vector3(0, 1.6f, 0);
-        public DynInventoryModel<Spell> spells = new();
+        public DynInventory<Spell> spells = new();
         public bool Alive { get; internal protected set; }
         public int InstanceID { get; set; }
         public GameObject Obj { get; set; }

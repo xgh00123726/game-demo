@@ -10,7 +10,7 @@ using GameBase.UI.MVC;
 using GameBase.Creatures;
 namespace Instance.UI.MVC
 {
-    public class SpellActionModifierController : InventoryController<InventoryData, 
+    public class SpellActionModifierController : InventoryController<CommonInventoryData, 
         SpellActionModifierViewItem, 
         SpellActionModifierViewPanel, 
         SpellActionModifierController>
@@ -32,16 +32,16 @@ namespace Instance.UI.MVC
             View.FillItem(5);
             Hide();
             _model = _models[0];
-            SpellController.Instance.OnClickedItem += (int index) =>
-            {
-                _model = _models[index];
-                SpellShadowView.CopyIcon(SpellController.Instance.GetViewItem(index));
-                ForceRefreshView();
-                Show();
-            };
+            //SpellController.Instance.OnClickedItem += (int index) =>
+            //{
+            //    _model = _models[index];
+            //    SpellShadowView.CopyIcon(SpellController.Instance.GetViewItem(index));
+            //    ForceRefreshView();
+            //    Show();
+            //};
         }
 
-        public override IMVCModel<InventoryData> Model => _model;
+        public override IMVCModel<CommonInventoryData> Model => _model;
 
         public override SpellActionModifierViewPanel View => _view;
 

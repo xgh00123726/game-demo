@@ -15,17 +15,31 @@ namespace GameBase.UI
     {
         protected internal LinkedList<T> _entityNeedRegister = new LinkedList<T>();
         protected internal LinkedList<T> _entitiesNeedRemove = new LinkedList<T>();
-        private bool _inUpdating = false;
+        protected internal bool _inUpdating = false;
 
-        internal int defaultObjID = 34;
-        internal ListContainer<T> container = new();
-        internal GameObject panel;
+        protected internal int defaultObjID = 34;
+        protected internal ListContainer<T> container = new();
+        protected internal GameObject panel;
+
+        protected internal IEnterExitControl enterExitControl;
 
         public ILayout layout;
-        public IDetailableControl<T> detailableControl;
-        public IEnterExitControl<T> enterExitControl;
-        public IDragableControl<T> dragableControl;
+        public IDetailableControl detailableControl;
+        public IDragableControl dragableControl;
         
+        public IEnterExitControl EnterExitControl
+        {
+            get => enterExitControl;
+            set
+            {
+                enterExitControl = value;
+                foreach (var e in Entities)
+                {
+                    e.uiScript.enterExitControl = value;
+                }
+            }
+        }
+
 
         public BaseViewPanel(int prefabID,
             int defaultObjID)
@@ -35,41 +49,35 @@ namespace GameBase.UI
             panel = GameObject.Instantiate(ResourcesLoader.GetPrefab(prefabID));
             panel.transform.SetParent(RootCanvas.Instance.Layer(0), false);
             panel.SetActive(false);
-
             this.defaultObjID = defaultObjID;
-        }
-
-        protected virtual RectTransform GetRectTransform(T e)
-        {
-            return e.iconImage.GetComponent<RectTransform>();
         }
 
         public virtual IEContainer<T> Entities => container;
 
+        protected virtual GameObject GetGameObject(int id)
+        {
+            return GameObject.Instantiate(ResourcesLoader.GetPrefab(id));
+        }
+
         protected virtual BaseUI InstantiateObj(T e)
         {
-            var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
+            var obj = GetGameObject(e.objID);
+            e.obj = obj;
 
-            var ui = obj.AddComponent<BaseUI>();
-            ui.enterAction = () => enterExitControl?.OnPointerEnter(e);
-            ui.exitAction = () => enterExitControl?.OnPointerExit(e);
-            ui.pointerDownAction = () => enterExitControl?.OnPointerDown(e);
-            ui.pointerRightDownAction = () => enterExitControl?.OnPointerRightDown(e);
+            var triggerObj = obj.transform.Find("Trigger").gameObject;
+            var ui = triggerObj.AddComponent<BaseUI>();
 
-            var iconObj = obj.transform.Find("Icon");
+            var image = triggerObj.GetComponent<Image>();
+            e.triggerImage = new SuperImage(image);
+            e.triggerImage.SetHideColor(image.color);
 
-            if (iconObj != null) 
-            {
-                e.iconImage = iconObj.GetComponent<Image>();
-            }
-
-            e.Obj = ui;
+            e.triggerObject = triggerObj;
 
             obj.transform.SetParent(panel.transform, false);
 
-            e.rectTransform = GetRectTransform(e);
+            e.triggerRectTransform = e.triggerObject.GetComponent<RectTransform>();
 
-            e.colorHide = e.iconImage.color;
+            e.uiScript = ui;
 
             return ui;
         }
@@ -78,10 +86,10 @@ namespace GameBase.UI
         {
             if (dragableControl == null) return;   
 
-            var isDrag = dragableControl.IsDrag(e);
+            var isDrag = dragableControl.IsDrag(e.itemIndex);
             if (isDrag && !e.lastDrag)
             {
-                dragableControl.OnEnterDrag(e);
+                dragableControl.OnEnterDrag(e.itemIndex);
             }
             else if (!isDrag && e.lastDrag)
             {
@@ -100,19 +108,19 @@ namespace GameBase.UI
         {
             if (detailableControl == null) return;
 
-            var isDetail = detailableControl.IsDetail(e);
+            var isDetail = detailableControl.IsDetail(e.itemIndex);
             if (isDetail && !e.lastDetail)
             {
-                detailableControl.OnEnterDetail(e);
+                detailableControl.OnEnterDetail(e.itemIndex);
             }
             else if (!isDetail && e.lastDetail)
             {
-                detailableControl.OnExitDetail(e);
+                detailableControl.OnExitDetail(e.itemIndex);
             }
 
             if (isDetail)
             {
-                detailableControl.OnDetail(e);
+                detailableControl.OnDetail(e.itemIndex);
             }
 
             e.lastDetail = isDetail;
@@ -120,9 +128,9 @@ namespace GameBase.UI
 
         private void EnterExitUpdate(T e)
         {
-            e.lastClicked = e.Obj.isPointerDown;
+            e.lastClicked = e.uiScript.isPointerDown;
 
-            if (enterExitControl == null) return;
+            if (EnterExitControl == null) return;
         }
 
         private void LayoutUpdate(T e)
@@ -132,18 +140,25 @@ namespace GameBase.UI
                 return;
             }
 
-            e.Obj.transform.localPosition = layout.GetItemLocalPosition(e.itemIndex);
+            e.obj.transform.localPosition = layout.GetItemLocalPosition(e.itemIndex);
         }
 
         protected virtual void UpdateEntity(T e)
         {
-            if (e.Obj.isPointerOn)
+            if (e.uiScript.isPointerOn)
             {
-                e.Obj.enterTime += Time.deltaTime;
+                e.uiScript.enterTime += Time.deltaTime;
             }
-            if (e.Obj.isPointerDown)
+            if (e.uiScript.isPointerDown)
             {
-                e.Obj.pointerDownTime += Time.deltaTime;
+                e.uiScript.pointerDownTime += Time.deltaTime;
+            }
+            if (!e.obj.activeSelf)
+            {
+                e.uiScript.isPointerOn = false;
+                e.uiScript.isPointerDown = false;
+                e.uiScript.enterTime = 0;
+                e.uiScript.pointerDownTime = 0;
             }
 
             LayoutUpdate(e);
@@ -158,21 +173,28 @@ namespace GameBase.UI
             foreach (var e in Entities)
             {
                 e.itemIndex = index;
+                e.uiScript.index = index;
+                _inUpdating = true;
                 UpdateEntity(e);
                 index++;
             }
+            foreach (var e in _entitiesNeedRemove)
+            {
+                Remove(e);
+            }
+            _entitiesNeedRemove.Clear();
         }
 
-        public virtual T NewEntity(int objID = -1)
+        public T NewEntity(int objID = -1)
         {
             var e = new T();
             if (objID > 0)
             {
-                e.ObjID = objID;
+                e.objID = objID;
             }
             else
             {
-                e.ObjID = defaultObjID;
+                e.objID = defaultObjID;
             }
             return NewEntity(e);
         }
@@ -180,34 +202,35 @@ namespace GameBase.UI
         public virtual T NewEntity(T e)
         {
             Entities.Add(e);
-            e.Obj = InstantiateObj(e);
+            e.uiScript = InstantiateObj(e);
+            e.uiScript.enterExitControl = enterExitControl;
             ViewManager.RegisterView(e);
             return e;
         }
 
-        ///// <summary>
-        ///// 将实体标记为删除
-        ///// </summary>
-        //protected void RemoveEntity(T e)
-        //{
-        //    if (e == null) return;
+        /// <summary>
+        /// 将实体标记为删除
+        /// </summary>
+        public void RemoveEntity(T e)
+        {
+            if (e == null) return;
 
-        //    if (_entitiesNeedRemove.Contains(e))
-        //    {
-        //        return;
-        //    }
+            if (_entitiesNeedRemove.Contains(e))
+            {
+                return;
+            }
 
-        //    if (!_inUpdating)
-        //    {
-        //        Entities.Remove(e);
-        //    }
-        //    else
-        //    {
-        //        _entitiesNeedRemove.AddLast(e);
-        //    }
-        //}
+            if (!_inUpdating)
+            {
+                Remove(e);
+            }
+            else
+            {
+                _entitiesNeedRemove.AddLast(e);
+            }
+        }
 
-        public virtual void RemoveEntity(T e)
+        protected virtual void Remove(T e)
         {
             Entities.Remove(e);
             ViewManager.RemoveView(e);
@@ -242,31 +265,27 @@ namespace GameBase.UI
         /// <summary>
         /// 尝试从panel中获取position位置的UI，和下标，并返回获取结果
         /// </summary>
-        /// <param name="position"></param>
+        /// <param name="triggerPosition"></param>
         /// <param name="e"></param>
         /// <returns></returns>
-        public bool TryGetItem(Vector3 position, out T e, out int index)
+        public T GetItemFromTriggerPosition(Vector3 triggerPosition)
         {
-            index = 0;
-            foreach (var ie in Entities)
+            foreach (var e in Entities)
             {
-                Rect r = ie.RectTransform.rect;
-                r.center = ie.Obj.transform.position;
-                if (r.Contains(position))
+                Rect r = e.RectTransform.rect;
+                r.center = e.uiScript.transform.position;
+                if (r.Contains(triggerPosition))
                 {
-                    e = ie;
-                    return true;
+                    return e;
                 }
-                index++;
             }
 
-            e = null;
-            return false;
+            return null;
         }
 
         public void SwapIconSprite(int p1, int p2)
         {
-            this[p1].SwapIconSprite(this[p2]);
+            this[p1].triggerImage.Swap(this[p2].triggerImage);
         }
 
         public void AddChild(GameObject child)

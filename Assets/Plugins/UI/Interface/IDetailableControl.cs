@@ -1,10 +1,10 @@
 namespace GameBase.UI
 {
-    public interface IDetailableControl<T>
+    public interface IDetailableControl
     {
-        public bool IsDetail(T e);
-        public void OnDetail(T e);
-        public void OnEnterDetail(T e);
-        public void OnExitDetail(T e);
+        public bool IsDetail(int i);
+        public void OnDetail(int i);
+        public void OnEnterDetail(int i);
+        public void OnExitDetail(int i);
     }
 }
