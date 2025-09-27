@@ -10,8 +10,6 @@ namespace Instance
     public class CommonInventoryDataBase
     {
         private static CommonInventoryData[] _datas;
-        private static CommonInventoryDataBase _instance = new();
-        private static string textFileName = "CommonDataBase.csv";
 
         static CommonInventoryDataBase()
         {
@@ -34,27 +32,19 @@ namespace Instance
 
                 _datas[i] = new CommonInventoryData()
                 {
-                    ID = int.Parse(csvReader[0]),
-                    iconTextureID = int.Parse(csvReader[2]),
-                    buffID = int.Parse(csvReader[3]),
-                    spellActionModifyerID = int.Parse(csvReader[5]),
-                    rarity = int.Parse(csvReader[6])
+                    id = int.Parse(csvReader[0]),
+                    secondID = int.Parse(csvReader[2]),
+                    iconTextureID = int.Parse(csvReader[3]),
+                    rarity = int.Parse(csvReader[4])
                 };
-                Enum.TryParse(csvReader[1], out _datas[i].tag);
-                Enum.TryParse(csvReader[4], out _datas[i].spellActionModifierType);
+                Enum.TryParse(csvReader[1], out _datas[i].type);
             }
 
             reader.Close();
-
-            TextMgr.Init(textFileName);
         }
 
         public static int Count => _datas.Length;
 
-        public static string GetText(int index, params string[] args)
-        {
-            return TextMgr.Get(textFileName, index, args);
-        }
         public static CommonInventoryData Get(int index)
         {
             return _datas[index];

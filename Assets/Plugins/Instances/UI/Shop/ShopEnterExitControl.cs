@@ -1,20 +1,23 @@
+using GameBase.Inventorys;
 using GameBase.UI;
 
 namespace Instance
 {
     public class ShopEnterExitControl : IEnterExitControl
     {
-        private ShopController _controller;
+        private ShopInventory _model;
+        private ShopViewPanel _viewPanel;
 
-        public ShopEnterExitControl(ShopController controller)
+        public ShopEnterExitControl(ShopInventory model, ShopViewPanel viewPanel)
         {
-            _controller = controller;
+            _model = model;
+            _viewPanel = viewPanel;
         }
 
         void IEnterExitControl.OnPointerDown(int i)
         {
-            _controller.Remove(i);
-            _controller.RefreshView(i);
+            _model.Remove(i);
+            _viewPanel.UpdateInventoryItem(_model, i);
         }
 
         void IEnterExitControl.OnPointerEnter(int i)

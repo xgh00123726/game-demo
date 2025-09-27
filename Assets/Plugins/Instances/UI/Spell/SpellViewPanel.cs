@@ -66,18 +66,18 @@ namespace GameBase.UI
             }
         }
 
-        public void SetOwner(Creature c)
+        public void UpdateOwner(Creature c)
         {
-            FillItem(c.spells.Count);
-            for (int i = 0; i < c.spells.Count; i++)
+            FillItem(c.spells.Size);
+            for (int i = 0; i < c.spells.Size; i++)
             {
                 SetIcon(this[i], c.spells[i].iconTextureID);
             }
         }
 
-        public void SetCooling(Creature c)
+        public void UpdateCooling(Creature c)
         {
-            for (int i = 0; i < c.spells.Count; ++i)
+            for (int i = 0; i < c.spells.Size; ++i)
             {
                 this[i].coolingTimeRemain = c.spells[i].spellCoolingdown.CoolingRemain;
                 this[i].coolingTimeSet = c.spells[i].spellCoolingdown.CoolingSet;

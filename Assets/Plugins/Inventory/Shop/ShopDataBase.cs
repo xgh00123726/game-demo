@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace GameBase.Inventorys
 {
-    public enum ReflectType
+    public enum ShopItemType
     {
         InventoryItem,
         Buff
@@ -14,8 +14,8 @@ namespace GameBase.Inventorys
     public struct ShopItemInfo
     {
         public int goodID;
-        public ReflectType reflectType;
-        public int reflectID;
+        public ShopItemType type;
+        public int secondID;
         public int iconTextureID;
         public int rarity;
         public int price;
@@ -47,13 +47,13 @@ namespace GameBase.Inventorys
                 _datas[i] = new ShopItemInfo()
                 {
                     goodID = int.Parse(csvReader[1]),
-                    reflectID = int.Parse(csvReader[3]),
+                    secondID = int.Parse(csvReader[3]),
                     iconTextureID = int.Parse(csvReader[4]),
                     rarity = int.Parse(csvReader[5]),
                     price = int.Parse(csvReader[6]),
                 };
 
-                Enum.TryParse(csvReader[2], out _datas[i].reflectType);
+                Enum.TryParse(csvReader[2], out _datas[i].type);
             }
 
             reader.Close();

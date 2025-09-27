@@ -24,8 +24,8 @@
 
 //                if (EC.TryGetData(dragedIndex, out var data))
 //                {
-//                    CC.AddItem(data, cIndex);
-//                    EC.RemoveItem(dragedIndex);
+//                    CC.Add(data, cIndex);
+//                    EC.Remove(dragedIndex);
 //                }
 //            }
 //        }

@@ -1,23 +1,23 @@
+using GameBase.Buffs;
 using GameBase.Inventorys;
+using GameBase.Texts;
 using GameBase.UI;
 using UnityEngine;
-using GameBase.Texts;
 
 namespace Instance
 {
-    public class CommonDetailControl : IDetailableControl
+    public class EquipmentDetailableControl : IDetailableControl
     {
-        private CommonInventory<CommonInventoryData> _model;
-        private CommonInventoryViewPanel _viewPanel;
+        private CommonInventory<Buff> _model;
+        private EquipmentPanel _viewPanel;
         private DefaultDetailableView _detailableView;
 
-        public CommonDetailControl(CommonInventory<CommonInventoryData> inventory, CommonInventoryViewPanel viewPanel, DefaultDetailableView detailableView)
+        public EquipmentDetailableControl(CommonInventory<Buff> model, EquipmentPanel viewPanel, DefaultDetailableView detailableView)
         {
-            _model = inventory;
+            _model = model;
             _viewPanel = viewPanel;
             _detailableView = detailableView;
         }
-
         bool IDetailableControl.IsDetail(int i)
         {
             var e = _viewPanel[i];
@@ -35,20 +35,7 @@ namespace Instance
 
             if (_model.HasItem(i))
             {
-                var info = _model[i];
-
-                if (info.type == SecondType.Equipment)
-                {
-                    _detailableView.SetText(TextMgr.GetBuffText(info.secondID));
-                }
-                else if (info.type == SecondType.SpellActionModifier)
-                {
-                    _detailableView.SetText(TextMgr.GetSpellActionModifierText(info.secondID));
-                }
-                else
-                {
-                    _detailableView.SetText("NNN");
-                }
+                _detailableView.SetText(TextMgr.GetBuffText(_model[i].id));
             }
             else
             {

@@ -8,7 +8,6 @@ namespace Constructor.Spells.Action
 {
     public struct BuffSelfData
     {
-        public Buffs.Type buffType;
         public int buffID;
         public float duration;
     }
@@ -25,10 +24,7 @@ namespace Constructor.Spells.Action
                 return false;
             }
 
-            var eb = Buffs.Factory.Instance.Get(data.buffType, data.buffID);
-            eb.durationSet = data.duration;
-            eb.uiStyle = UIStyle.Buff;
-            bOwner.RegisterBuff(eb);
+            BuffFactory.Get(data.buffID).AddTo(bOwner, data.duration);
 
             return true;
         }
@@ -45,9 +41,8 @@ namespace Constructor.Spells.Action
 
         protected override void Parse(CsvReader line, ref BuffSelfData data)
         {
-            Enum.TryParse(line[1], out data.buffType);
-            data.buffID = int.Parse(line[2]);
-            data.duration = float.Parse(line[3]);
+            data.buffID = int.Parse(line[1]);
+            data.duration = float.Parse(line[2]);
         }
 
         protected override void Set(BuffSelf e, in BuffSelfData data)

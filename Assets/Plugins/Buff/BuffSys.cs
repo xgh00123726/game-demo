@@ -37,7 +37,16 @@ namespace GameBase.Buffs
                 return;
             }
 
-            e.durationRemain = e.durationSet - (Time.time - e.instantiateTime);
+            if (e.isInfiDuration)
+            {
+                e.durationSet = 9999f;
+                e.durationRemain = e.durationSet;
+            }
+            else
+            {
+                e.durationRemain = e.durationSet - (Time.time - e.instantiateTime);
+            }
+                
 
             if (e.durationRemain <= 0)
             {

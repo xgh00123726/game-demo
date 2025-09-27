@@ -31,9 +31,9 @@
 //            }
 //        }
 
-//        public override bool RemoveItem(int index)
+//        public override bool Remove(int index)
 //        {
-//            if (base.RemoveItem(index))
+//            if (base.Remove(index))
 //            {
 //                owner.RemoveBuff(buffs[index]);
 //                buffs[index] = null;
@@ -44,9 +44,9 @@
 //            return false;
 //        }
 
-//        public override int AddItem(InventoryData item, int index)
+//        public override int Add(InventoryData item, int index)
 //        {
-//            var ret = base.AddItem(item, index);
+//            var ret = base.Add(item, index);
 //            var eb = Constructor.Buffs.Factory.Instance.Get(Constructor.Buffs.Type.Common, item.buffID);
 //            eb.uiStyle = GameBase.Buffs.UIStyle.None;
 //            eb.durationSet = 9999;

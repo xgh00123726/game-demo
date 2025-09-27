@@ -9,7 +9,7 @@ namespace GameBase.Inventorys
     public class DynInventory<T> : CommonInventory<T>
         where T : new()
     {
-        public override int AddItem(T item)
+        public override int Add(T item)
         {
             if (_nullIndexes.Count > 0)
             {
@@ -24,7 +24,7 @@ namespace GameBase.Inventorys
             }
         }
 
-        public override int AddItem(T item, int index)
+        public override int Add(T item, int index)
         {
             if (index >= Size)
             {

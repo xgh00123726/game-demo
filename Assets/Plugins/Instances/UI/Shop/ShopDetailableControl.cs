@@ -1,4 +1,5 @@
 using GameBase.Inventorys;
+using GameBase.Texts;
 using GameBase.Tools;
 using GameBase.UI;
 using Instance.UI.MVC;
@@ -8,52 +9,51 @@ namespace Instance.UI.Shops
 {
     public class ShopDetailableControl : IDetailableControl
     {
-        private IDetailableShadowView _shadowView = new DefaultDetailableShadowView();
-        private ShopController _controller;
+        private DefaultDetailableView _detailableView;
         private ShopViewPanel _viewPanel;
-        internal ShopInventory model;
-        public ShopDetailableControl(ShopInventory model, ShopController controller)
+        internal ShopInventory _model;
+        public ShopDetailableControl(ShopInventory model, ShopViewPanel viewPanel, DefaultDetailableView detailableView)
         {
-            this.model = model;
-            this._viewPanel = ShopViewPanel.Instance;
-            _controller = controller;
+            _model = model;
+            _viewPanel = viewPanel;
+            _detailableView = detailableView;
         }
 
 
         bool IDetailableControl.IsDetail(int i)
         {
             var e = _viewPanel[i];
-            return e.uiScript.EnterTime > 0.2f && model.HasItem(e.ItemIndex) && _controller.IsShow && e.obj.activeSelf;
+            return e.uiScript.EnterTime > 0.2f && _model.HasItem(e.ItemIndex) && _viewPanel.IsShow;
         }
 
         void IDetailableControl.OnDetail(int i)
         {
-            _shadowView.SetPosition(Input.mousePosition);
+            _detailableView.SetPosition(Input.mousePosition);
         }
 
         void IDetailableControl.OnEnterDetail(int i)
         {
-            _shadowView.Show();
+            _detailableView.Show();
 
-            var info = model.GetItemInfoFromShoppingPosition(i);
+            var info = _model.GetItemInfoFromShoppingPosition(i);
 
-            if (info.reflectType == ReflectType.InventoryItem)
+            if (info.type == ShopItemType.InventoryItem)
             {
-                _shadowView.SetText("装备\n" + CommonInventoryDataBase.GetText(info.reflectID));
+                _detailableView.SetText("装备\n" + TextMgr.GetBuffText(info.secondID));
             }
-            else if (info.reflectType == ReflectType.Buff)
+            else if (info.type == ShopItemType.Buff)
             {
-                _shadowView.SetText("成长\n" + CommonInventoryDataBase.GetText(info.reflectID));
+                _detailableView.SetText("成长\n" + TextMgr.GetBuffText(info.secondID));
             }
             else
             {
-                _shadowView.Hide();
+                _detailableView.Hide();
             }
         }
 
         void IDetailableControl.OnExitDetail(int i)
         {
-            _shadowView.Hide();
+            _detailableView.Hide();
         }
     }
 }

@@ -98,6 +98,11 @@ namespace GameBase.Inventorys
             return ShopDataBase.Get(goodID);
         }
 
+        /// <summary>
+        /// 获取商品库存的第index个物品的信息
+        /// </summary>
+        /// <param name="shopDataIndex"></param>
+        /// <returns></returns>
         public ShopItemInfo GetItemInfoFromShopDataIndex(int shopDataIndex)
         {
             var goodID = _datas[shopDataIndex].goodID;

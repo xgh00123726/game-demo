@@ -267,7 +267,7 @@ namespace GameBase.UI
         /// </summary>
         /// <param name="triggerPosition"></param>
         /// <param name="e"></param>
-        /// <returns></returns>
+        /// <returns>找到后返回结果，否则为null</returns>
         public T GetItemFromTriggerPosition(Vector3 triggerPosition)
         {
             foreach (var e in Entities)
@@ -298,19 +298,26 @@ namespace GameBase.UI
             return panel.transform.Find(name);
         }
 
-        public void Show()
+        public virtual void Show()
         {
             panel.SetActive(true);
         }
 
-        public void Hide()
+        public virtual void Hide()
         {
             panel.SetActive(false);
         }
 
         public void Toggle()
         {
-            panel.SetActive(!panel.activeSelf);
+            if (IsShow)
+            {
+                Hide();
+            }
+            else
+            {
+                Show();
+            }
         }
 
         void IBaseSys.Update()

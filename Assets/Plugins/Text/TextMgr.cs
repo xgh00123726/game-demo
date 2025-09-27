@@ -1,14 +1,13 @@
 using NReco.Csv;
 using System.Collections.Generic;
 using System.IO;
-using System.Xml.Linq;
 using UnityEngine;
 
 namespace GameBase.Texts
 {
-    public class TextMgr
+    public partial class TextMgr
     {
-        public static string RelativePath => "zh-cn";
+        public static string languagePath = "zh-cn";
         private static string[] keywords;
         private static string[] commons;
         private static Dictionary<string, string[]> _dataTexts = new();
@@ -20,7 +19,7 @@ namespace GameBase.Texts
 
         private static void WriteTo(string fileName, out string[] buffer)
         {
-            StreamReader reader = File.OpenText($"{Application.streamingAssetsPath}/Texts/{RelativePath}/{fileName}");
+            StreamReader reader = File.OpenText($"{Application.streamingAssetsPath}/Texts/{languagePath}/{fileName}");
             CsvReader csvReader = new CsvReader(reader);
             csvReader.Read();
             buffer = new string[int.Parse(csvReader[0])];
@@ -35,12 +34,13 @@ namespace GameBase.Texts
 
         private static void Init()
         {
-            if (RelativePath == null || RelativePath.Length == 0 || RelativePath == "")
+            if (languagePath == null || languagePath.Length == 0 || languagePath == "")
             {
                 return;
             }
             WriteTo("common.csv", out commons);
             WriteTo("keywords.csv", out keywords);
+            ExtendInit();
         }
 
 

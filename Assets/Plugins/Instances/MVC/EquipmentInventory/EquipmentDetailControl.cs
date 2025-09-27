@@ -5,7 +5,7 @@
 //{
 //    public class EquipmentDetailControl : IDetailableControl<EquipmentViewItem>
 //    {
-//        protected IDetailableShadowView _shadowView = new DefaultDetailableShadowView();
+//        protected IDetailableShadowView _detailableView = new DefaultDetailableShadowView();
 //        bool IDetailableControl<EquipmentViewItem>.IsDetail(EquipmentViewItem e)
 //        {
 //            return e.uiScript.EnterTime > 0.2f;
@@ -13,26 +13,26 @@
 
 //        void IDetailableControl<EquipmentViewItem>.OnDetail(EquipmentViewItem e)
 //        {
-//            _shadowView.Show();
+//            _detailableView.UpdateSpell();
 //        }
 
 //        void IDetailableControl<EquipmentViewItem>.OnEnterDetail(EquipmentViewItem e)
 //        {
-//            _shadowView.SetPosition(Input.mousePosition);
+//            _detailableView.SetPosition(Input.mousePosition);
 
 //            if (EquipmentInventoryController.Instance.TryGetData(e.ItemIndex, out var data))
 //            {
-//                _shadowView.SetText(InventoryDataBase.GetText(data.ID));
+//                _detailableView.SetText(InventoryDataBase.GetText(data.ID));
 //            }
 //            else
 //            {
-//                _shadowView.SetText("NNN");
+//                _detailableView.SetText("NNN");
 //            }
 //        }
 
 //        void IDetailableControl<EquipmentViewItem>.OnExitDetail(EquipmentViewItem e)
 //        {
-//            _shadowView.Hide();
+//            _detailableView.Hide();
 //        }
 //    }
 //}

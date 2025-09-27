@@ -10,6 +10,7 @@ namespace GameBase.UI
         private Sprite _sprite;
         private Image _image;
         private Color _colorHide;
+        private Color _colorShow;
         public int TextureID => _textureID;
         public Sprite Sprite => _sprite;
 
@@ -31,6 +32,7 @@ namespace GameBase.UI
                 return;
             }
             
+            _textureID = textureID;
             _sprite = ResourcesLoader.GetSpriteFromTextureID(textureID);
             _image.sprite = _sprite;
         }
@@ -48,8 +50,20 @@ namespace GameBase.UI
         public void Swap(SuperImage other)
         {
             (_sprite, other._sprite) = (other._sprite, _sprite);
-            _image.sprite = _sprite;
-            other._image.sprite = other._sprite;
+
+            (_image.sprite, other._image.sprite) = (_sprite, other._sprite);
+
+            (_image.color, other._image.color) = (other._image.color, _image.color);
+            (_colorHide, other._colorHide) = (other._colorHide, _colorHide);
+            (_colorShow, other._colorShow) = (other._colorShow, _colorShow);
+            (_textureID, other._textureID) = (other._textureID, _textureID);
+        }
+
+        public void Copy(SuperImage other)
+        {
+            SetIcon(other.TextureID);
+            SetColor(other._image.color);
+            SetHideColor(other._colorHide);
         }
 
         public void SetColor(int rarity)
@@ -69,7 +83,13 @@ namespace GameBase.UI
 
         public void HideColor()
         {
+            _colorShow = _image.color;
             _image.color = _colorHide;
+        }
+
+        public void ShowColor()
+        {
+            _image.color = _colorShow;
         }
     }
 }

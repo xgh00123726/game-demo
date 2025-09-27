@@ -1,19 +1,17 @@
 namespace Instance
 {
-    public enum InventoryTag
+    public enum SecondType
     {
         None = 0,
         Equipment,
-        SpellActionModify,
+        SpellActionModifier,
     }
     public class CommonInventoryData
     {
-        public InventoryTag tag;
-        public int buffID;
-        public Constructor.Spells.Action.Modifyables.Modifier.Type spellActionModifierType;
-        public int spellActionModifyerID;
-        public int rarity;
+        public int id;
+        public SecondType type;
+        public int secondID;
         public int iconTextureID;
-        public int ID;
+        public int rarity;
     }
 }

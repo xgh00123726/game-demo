@@ -5,30 +5,6 @@ namespace GameBase.Buffs
 {
     public interface IBuffOwner : IModifieder
     {
-        BuffContainer Buffs { get; }
-        public void RegisterBuff(Buff e)
-        {
-            Buffs.AddBuff(e);
-            e.owner = this;
-
-            foreach (var em in e.modifyers.FixedModifyers)
-            {
-                e.owner.Modifyables.ModifySet(em.Key, em.Value);
-            }
-            foreach (var em in e.modifyers.SetModifyers)
-            {
-                e.owner.Modifyables.ModifySetPer(em.Key, em.Value);
-            }
-            foreach (var em in e.modifyers.CurrModifyers)
-            {
-                e.owner.Modifyables.ModifySumPer(em.Key, em.Value);
-            }
-        }
-
-        public void RemoveBuff(Buff e)
-        {
-            BuffSys.Instance.RemoveBuff(e);
-            Buffs.RemoveBuff(e);
-        }
+        void OnGetBuff(Buff buff);
     }
 }

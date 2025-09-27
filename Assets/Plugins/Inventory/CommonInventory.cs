@@ -47,8 +47,6 @@ namespace GameBase.Inventorys
             }
         }
 
-        public int Count => _items.Count - _nullIndexes.Count;
-
         public T_Item this[int i]
         {
             get => _items[i].item;
@@ -60,17 +58,17 @@ namespace GameBase.Inventorys
         }
 
 
-        public bool HasItem(int position)
+        public bool HasItem(int index)
         {
-            if (position >= Size)
+            if (index >= Size)
             {
                 return false;
             }
 
-            return _items[position].exist;
+            return _items[index].exist;
         }
 
-        public virtual int AddItem(T_Item item)
+        public virtual int Add(T_Item item)
         {
             if (_nullIndexes.Count > 0)
             {
@@ -82,7 +80,7 @@ namespace GameBase.Inventorys
             return -1;
         }
 
-        public virtual int AddItem(T_Item item, int index)
+        public virtual int Add(T_Item item, int index)
         {
             if (index >= Size)
             {
@@ -108,15 +106,15 @@ namespace GameBase.Inventorys
             }
         }
 
-        public virtual bool RemoveItem(int position)
+        public virtual bool Remove(int index)
         {
-            if (!HasItem(position))
+            if (!HasItem(index))
             {
                 return false;
             }
 
-            _nullIndexes.Push(position);
-            _items[position].exist = false;
+            _nullIndexes.Push(index);
+            _items[index].exist = false;
 
             return true;
         }
@@ -143,7 +141,7 @@ namespace GameBase.Inventorys
             }
         }
 
-        public void SortItems()
+        public void Sort()
         {
             int p1 = 0; // p1指针指向当前需要被填充的地址
             int p2 = 0; // p2指针指向当前寻找到的需要用于填充的地址

@@ -1,3 +1,4 @@
+using GameBase.Inventorys;
 using GameBase.Math;
 using GameBase.UI;
 using System.Collections.Generic;
@@ -7,16 +8,16 @@ namespace Instance
 {
     public class ShopMgr
     {
-        private static Dictionary<GameObject, ShopController> _shopObjs = new();
+        private static Dictionary<GameObject, Shop> _shopObjs = new();
 
-        public static void Register(GameObject obj, ShopController controller)
+        public static void Register(Shop shop)
         {
-            _shopObjs.Add(obj, controller);
+            _shopObjs.Add(shop.obj, shop);
         }
 
-        public static ShopController NearestShop(Vector3 postion, float rangeLimit = 2)
+        public static Shop NearestShop(Vector3 postion, float rangeLimit = 2)
         {
-            ShopController ret = null;
+            Shop ret = null;
             float minDis = rangeLimit;
             foreach (var kvp in _shopObjs)
             {
@@ -29,6 +30,17 @@ namespace Instance
             }
 
             return ret;
+        }
+
+        public static Shop New(ShopInventory model, GameObject obj)
+        {
+            var shop = new Shop()
+            {
+                inventory = model,
+                obj = obj,
+            };
+            Register(shop);
+            return shop;
         }
     }
 }

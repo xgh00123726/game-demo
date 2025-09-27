@@ -51,7 +51,7 @@
 //                    if (isPurchaseOK)
 //                    {
 //                        e.shoper.OnPurchaseItem(e.model.GetGoodID(currPurchase));
-//                        e.model.RemoveItem(currPurchase);
+//                        e.model.Remove(currPurchase);
 //                        e.shopView.SetItem(e.model.currGoodIndexInModel);
 //                    }
 //                }

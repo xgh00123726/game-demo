@@ -1,7 +1,4 @@
-using NReco.Csv;
 using System.Collections.Generic;
-using System.IO;
-using System.Xml.Linq;
 
 namespace Constructor.Spells.Action.Modifyables.Modifier
 {
@@ -24,14 +21,8 @@ namespace Constructor.Spells.Action.Modifyables.Modifier
                 {Type.MultipleModifier, (val) => new MultipleModifier(val) },
             };
         }
-        
-        public BaseModifier Get(int id)
-        {
-            Type type = (Type)(id >> 16);
-            id = id & 0xFFFF;
 
-            return Get(type, id);
-        }
+        protected override string RelativePath => "Spell/Action/Modifyable/Modifier/ModifierInfo.csv";
     }
 }
 

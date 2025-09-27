@@ -6,14 +6,12 @@ namespace GameBase.UI
         where T : BaseViewItem, new()
     {
         private BaseViewPanel<T> _viewPanel;
-        private DefaultDetailableShadowView _shadowView;
-        public DefaultDetailableControl(BaseViewPanel<T> viewPanel)
+        private DefaultDetailableView _detailableView;
+        public DefaultDetailableControl(BaseViewPanel<T> viewPanel, DefaultDetailableView detailableView)
         {
-            _shadowView = new();
+            _detailableView = detailableView;
             _viewPanel = viewPanel;
         }
-
-        protected virtual IDetailableShadowView ShadowView => _shadowView;
 
         bool IDetailableControl.IsDetail(int i)
         {
@@ -22,26 +20,26 @@ namespace GameBase.UI
 
         void IDetailableControl.OnDetail(int i)
         {
-            ShadowView.SetPosition(Input.mousePosition);
+            _detailableView.SetPosition(Input.mousePosition);
         }
 
         void IDetailableControl.OnEnterDetail(int i)
         {
-            ShadowView.SetPosition(Input.mousePosition);
+            _detailableView.SetPosition(Input.mousePosition);
 
             if (i >= 0)
             {
-                ShadowView.SetText($"index:{i}");
+                _detailableView.SetText($"index:{i}");
             }
             else
             {
-                ShadowView.SetText($"NNN");
+                _detailableView.SetText($"NNN");
             }
         }
 
         void IDetailableControl.OnExitDetail(int i)
         {
-            ShadowView.Hide();
+            _detailableView.Hide();
         }
     }
 }

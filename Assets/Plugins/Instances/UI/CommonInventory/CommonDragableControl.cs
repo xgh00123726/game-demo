@@ -1,24 +1,35 @@
-using GameBase.GCamera;
-using GameBase.Tools;
+using GameBase.Inventorys;
 using GameBase.UI;
-using GameBase.UI.MVC;
 using UnityEngine;
 
 namespace Instance
 {
     public class CommonDragableControl : DefaultDragableControl<CommonInventoryViewItem>
     {
-        private CommonInventoryController _CC;
+        private DynInventory<CommonInventoryData> _inventory;
+        private new CommonInventoryViewPanel _viewPanel;
 
-        public CommonDragableControl(CommonInventoryController CC, CommonInventoryViewPanel viewPanel) : base(viewPanel) 
+        public CommonDragableControl(DynInventory<CommonInventoryData> inventory, CommonInventoryViewPanel viewPanel) : base(viewPanel) 
         {
-            _CC = CC;
+            _inventory = inventory;
+            _viewPanel = viewPanel;
         }
         //public EquipmentInventoryController EC => EquipmentInventoryController.Instance;
         //public SpellActionModifierController SC => SpellActionModifierController.Instance;
 
-        protected override void OnExitDrag(CommonInventoryViewItem dragedItem, int dragedIndex)
+        protected override void OnExitDragOver(int dragedIndex, int dragedOverIndex)
         {
+            _inventory.Swap(dragedIndex, dragedOverIndex);
+            base.OnExitDragOver(dragedIndex, dragedOverIndex);
+        }
+
+        protected override void OnExitDragOut(int dragedIndex)
+        {
+            base.OnExitDragOut(dragedIndex);
+        }
+
+        //protected override void OnExitDrag(CommonInventoryViewItem dragedItem, int dragedIndex)
+        //{
             // 如果拖动的位置是装备栏
             //if (EC.TryGetItemUI(Input.mousePosition, out var eEntity, out var eIndex))
             //{
@@ -28,8 +39,8 @@ namespace Instance
 
             //    if (CC.TryGetData(dragedIndex, out var data))
             //    {
-            //        EC.AddItem(data, eIndex);
-            //        CC.RemoveItem(dragedIndex);
+            //        EC.Add(data, eIndex);
+            //        CC.Remove(dragedIndex);
             //    }
             //}
 
@@ -41,19 +52,13 @@ namespace Instance
 
             //    if (_CC.HasItem(dragedIndex))
             //    {
-            //        SC.AddItem(_CC[dragedIndex].dItem, sIndex);
+            //        SC.Add(_CC[dragedIndex].dItem, sIndex);
             //        _CC.Remove(dragedIndex);
             //    }
             //}
 
             // 如果拖动终点是背包
-            var cViewItem = _CC.GetView(Input.mousePosition);
 
-            if (cViewItem != null)
-            {
-                _CC.Swap(dragedIndex, cViewItem.ItemIndex);
-                cViewItem.triggerImage.Show();
-            }
-        }
+        //}
     }
 }

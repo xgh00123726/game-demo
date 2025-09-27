@@ -9,7 +9,6 @@ namespace GameBase.Indicators
     {
         public int textureID;
 
-        internal bool lastActive;
         internal Material decalMaterial;
         internal bool setSize;
         internal bool setPivot;

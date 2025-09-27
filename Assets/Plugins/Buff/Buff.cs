@@ -6,27 +6,16 @@ using UnityEngine;
 
 namespace GameBase.Buffs
 {
-    public enum UIStyle
-    {
-        None = 0,
-
-        Buff = 1 << 0,
-        Passive = 1 << 1,
-        Spell = 1 << 2,
-        Equipment = 1 << 3,
-    }
-
-    public class Buff : 
-        IPoolable
+    public class Buff : IPoolable
     {
         internal float durationRemain;
         internal float instantiateTime;
         internal int stackNum = 1;
         internal bool alive;
         internal IBuffOwner owner;
+        internal bool isInfiDuration;
 
-        public UIStyle uiStyle = UIStyle.None;
-        public int textureID;
+        public int id;
         public float durationSet;
         public BuffModifyers modifyers = new ();
 
@@ -35,26 +24,42 @@ namespace GameBase.Buffs
 
         void IPoolable.AfterGet()
         {
-            textureID = 0;
+            isInfiDuration = false;
             alive = true;
-            uiStyle = UIStyle.None;
             durationRemain = 0;
             instantiateTime = Time.time;
         }
 
         void IPoolable.BeforeRelease()
         {
-            textureID = 0;
             alive = false;
             owner = null;
         }
 
-        public void AddTo(IBuffOwner owner, float duration = 999999, UIStyle uiStyle = UIStyle.None)
+        public void AddTo(IBuffOwner owner, float duration = 999999)
         {
             durationSet = duration;
             durationRemain = duration;
-            this.uiStyle = uiStyle;
-            owner.RegisterBuff(this);
+            this.owner = owner;
+            owner.OnGetBuff(this);
+
+            foreach (var em in modifyers.FixedModifyers)
+            {
+                owner.Modifyables.ModifySet(em.Key, em.Value);
+            }
+            foreach (var em in modifyers.SetModifyers)
+            {
+                owner.Modifyables.ModifySetPer(em.Key, em.Value);
+            }
+            foreach (var em in modifyers.CurrModifyers)
+            {
+                owner.Modifyables.ModifySumPer(em.Key, em.Value);
+            }
+        }
+
+        public void Remove()
+        {
+            BuffSys.Instance.RemoveBuff(this);
         }
     }
 }

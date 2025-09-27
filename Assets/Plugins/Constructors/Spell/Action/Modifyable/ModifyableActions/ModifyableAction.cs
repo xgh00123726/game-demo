@@ -8,12 +8,8 @@ using UnityEngine.UIElements;
 
 namespace Constructor.Spells.Action.Modifyables
 {
-    public abstract class ModifyableAction : ISpellAction
+    public abstract partial class ModifyableAction : ISpellAction
     {
-        private ModifyableModifyData _data;
-        private ModifyableModifyData _modifiedData;
-        private AutoFillList<BaseModifier> _modifiers = new();
-
         private float _processedDisfuse = 0f;
         private float _angleInit = 0f;
         private float _angleDelta = 0f;
@@ -109,59 +105,6 @@ namespace Constructor.Spells.Action.Modifyables
         protected float GetAngleOffset(int index)
         {
             return _angleInit + _angleDelta * index;
-        }
-
-
-
-        public void AddModifier(BaseModifier modifier, int index)
-        {
-            _modifiers.Add(modifier, index);
-            ResolveModifiedData();
-        }
-
-        public void RemoveModifyer(int index)
-        {
-            if (index < 0 || index >= _modifiers.Count)
-            {
-                XLogger.Instance.Log($"invalid index:{index}, max:{_modifiers.Count}");
-                return;
-            }
-            _modifiers[index] = null;
-            ResolveModifiedData();
-        }
-
-        public static void TryRemoveModifyer(Spell spell, int index)
-        {
-            if (spell.action is ModifyableAction mAct)
-            {
-                mAct.RemoveModifyer(index);
-            }
-        }
-
-        public void ResolveModifiedData()
-        {
-            _modifiedData = _data;
-            foreach (var modifier in _modifiers)
-            {
-                if (modifier == null)
-                {
-                    continue;
-                }
-
-                modifier.Modify(ref _modifiedData);
-            }
-
-            if (_modifiedData.flyingNums < 0)
-            {
-                _modifiedData.flyingNums = 0;
-            }
-
-            _processedDisfuse = ProcessDisfuse(_modifiedData.fireDisfuse);
-            if (_modifiedData.flyingNums > 0)
-            {
-                _angleInit = -_processedDisfuse / 2;
-                _angleDelta = _processedDisfuse / _modifiedData.flyingNums;
-            }
         }
     }
 }
