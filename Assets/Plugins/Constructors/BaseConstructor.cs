@@ -18,8 +18,6 @@ namespace Constructor
             Init();
             Command.Register($"{typeof(T_Constructor).FullName}-init", Init);
         }
-
-        protected abstract void Parse(CsvReader line, ref T_Data data);
         protected abstract string RelativePath { get; }
         protected abstract void Set(T_Entity e, in T_Data data);
 
@@ -44,18 +42,8 @@ namespace Constructor
             {
                 return;
             }
-            StreamReader reader = File.OpenText($"{Application.streamingAssetsPath}/ConstructorData/{RelativePath}");
-            CsvReader csvReader = new CsvReader(reader);
-            csvReader.Read();
-            _datas = new T_Data[int.Parse(csvReader[0])];
-            for (int i = 0; i < _datas.Length; i++)
-            {
-                csvReader.Read();
-                int index = int.Parse(csvReader[0]);
-                Parse(csvReader, ref _datas[index]);
-            }
-
-            reader.Close();
+            _datas = new CsvReaderReflect<T_Data>()
+                .Parse($"{Application.streamingAssetsPath}/ConstructorData/{RelativePath}");
         }
     }
 }

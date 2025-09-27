@@ -29,11 +29,6 @@ namespace Constructor.Spells.Action.Modifyables.Modifier
             return new FlyingNumModifier(0);
         }
 
-        protected override void Parse(CsvReader line, ref FlyingNumModifierData data)
-        {
-            data.flyingNumsModify = int.Parse(line[1]);
-        }
-
         protected override void Set(FlyingNumModifier e, in FlyingNumModifierData data)
         {
             e.data = data;

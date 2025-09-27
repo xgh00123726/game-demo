@@ -33,33 +33,8 @@ namespace GameBase.Inventorys
 
         private void Init(string relativePath)
         {
-            if (relativePath == null || relativePath.Length == 0 || relativePath == "")
-            {
-                return;
-            }
-            StreamReader reader = File.OpenText($"{Application.streamingAssetsPath}/ShopData/{relativePath}");
-            CsvReader csvReader = new CsvReader(reader);
-            csvReader.Read();
-            int len = int.Parse(csvReader[0]);
-            _datas = new ShopData[len];
-            weightSum = 0;
-            for (int i = 0; i < len; i++)
-            {
-                csvReader.Read();
-                int index = int.Parse(csvReader[0]);
-                int goodID = int.Parse(csvReader[1]);
-                int weight = int.Parse(csvReader[2]);
-                int price = int.Parse(csvReader[3]);
-
-                _datas[i] = new ShopData()
-                {
-                    goodID = goodID,
-                    weight = weight,
-                };
-                weightSum += weight;
-            }
-
-            reader.Close();
+            _datas = new CsvReaderReflect<ShopData>()
+                .Parse($"{Application.streamingAssetsPath}/ShopData/{relativePath}");
         }
 
         /// <summary>

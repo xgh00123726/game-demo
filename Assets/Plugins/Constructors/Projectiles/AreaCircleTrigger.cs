@@ -21,14 +21,6 @@ namespace Constructor.Projectiles
 
         protected override ProjectileSys SysInstance => ProjectileSys.Instance;
 
-        protected override void Parse(CsvReader line, ref AreaCircleTriggerData data)
-        {
-            data.maxEffectTimes = int.Parse(line[1]);
-            data.hasWhite = bool.Parse(line[2]);
-            data.radius = float.Parse(line[3]);
-            data.damage = int.Parse(line[4]);
-        }
-
         protected override void ESet(Projectile e, in AreaCircleTriggerData data)
         {
             e.maxeffectTimes = data.maxEffectTimes;

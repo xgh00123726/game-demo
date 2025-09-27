@@ -86,14 +86,6 @@ namespace Constructor.Spells.Action.Modifyables
             return new MTrigNearestTarget();
         }
 
-        protected override void Parse(CsvReader line, ref TrigNearestTargetData data)
-        {
-            Enum.TryParse(line[1], out data.projectileType);
-            data.projectileID = int.Parse(line[2]);
-            Enum.TryParse(line[3], out data.flyingType);
-            data.flyingID = int.Parse(line[4]);
-        }
-
         protected override void Set(MTrigNearestTarget e, in TrigNearestTargetData data)
         {
             e.data = data;

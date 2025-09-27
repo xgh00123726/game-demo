@@ -45,19 +45,6 @@ namespace Constructor.Spells.Action.Modifyables
             return new MTrigOnRelease();
         }
 
-        protected override void Parse(CsvReader line, ref TrigOnReleaseData data)
-        {
-            Enum.TryParse(line[1], out data.flying1Type);
-            data.flying1ID = int.Parse(line[2]);
-            Enum.TryParse(line[3], out data.flying2Type);
-            data.flying2ID = int.Parse(line[4]);
-            Enum.TryParse(line[5], out data.projType);
-            data.projectileID = int.Parse(line[6]);
-            data.xOffset = float.Parse(line[7]);
-            data.yOffset = float.Parse(line[8]);
-            data.zOffset = float.Parse(line[9]);
-        }
-
         protected override void Set(MTrigOnRelease e, in TrigOnReleaseData data)
         {
             e.data = data;

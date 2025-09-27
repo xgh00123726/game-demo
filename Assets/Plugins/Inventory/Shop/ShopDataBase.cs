@@ -26,37 +26,13 @@ namespace GameBase.Inventorys
 
         static ShopDataBase()
         {
-            Init("ShopItemInfos.csv");
+            Init();
         }
 
-        private static void Init(string relativePath)
+        private static void Init()
         {
-            if (relativePath == null || relativePath.Length == 0 || relativePath == "")
-            {
-                return;
-            }
-            StreamReader reader = File.OpenText($"{Application.streamingAssetsPath}/ShopData/{relativePath}");
-            CsvReader csvReader = new CsvReader(reader);
-            csvReader.Read();
-            int len = int.Parse(csvReader[0]);
-            _datas = new ShopItemInfo[len];
-            for (int i = 0; i < len; i++)
-            {
-                csvReader.Read();
-
-                _datas[i] = new ShopItemInfo()
-                {
-                    goodID = int.Parse(csvReader[1]),
-                    secondID = int.Parse(csvReader[3]),
-                    iconTextureID = int.Parse(csvReader[4]),
-                    rarity = int.Parse(csvReader[5]),
-                    price = int.Parse(csvReader[6]),
-                };
-
-                Enum.TryParse(csvReader[2], out _datas[i].type);
-            }
-
-            reader.Close();
+            _datas = new CsvReaderReflect<ShopItemInfo>()
+                .Parse($"{Application.streamingAssetsPath}/ShopData/ShopItemInfos.csv");
         }
 
         public static ShopItemInfo Get(int goodID)

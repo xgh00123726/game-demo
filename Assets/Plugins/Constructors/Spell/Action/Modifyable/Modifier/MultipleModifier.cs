@@ -29,11 +29,6 @@ namespace Constructor.Spells.Action.Modifyables.Modifier
             throw new System.NotImplementedException();
         }
 
-        protected override void Parse(CsvReader line, ref MultipleModifierData data)
-        {
-            throw new System.NotImplementedException();
-        }
-
         protected override void Set(MultipleModifier e, in MultipleModifierData data)
         {
             throw new System.NotImplementedException();

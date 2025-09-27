@@ -28,11 +28,6 @@ namespace Constructor.Spells.Action.Modifyables.Modifier
             return new FlyingDistanceModifier(0);
         }
 
-        protected override void Parse(CsvReader line, ref FlyingDistanceModifierData data)
-        {
-            data.distanceModify = float.Parse(line[1]);
-        }
-
         protected override void Set(FlyingDistanceModifier e, in FlyingDistanceModifierData data)
         {
             e.data = data;

@@ -28,12 +28,6 @@ namespace Constructor.Spells.Action.Modifyables.Modifier
         {
             return new FireDisfuseModifier(0);
         }
-
-        protected override void Parse(CsvReader line, ref FireDisfuseModifierData data)
-        {
-            data.fireDisfuseModify = float.Parse(line[1]);
-        }
-
         protected override void Set(FireDisfuseModifier e, in FireDisfuseModifierData data)
         {
             e.data = data;

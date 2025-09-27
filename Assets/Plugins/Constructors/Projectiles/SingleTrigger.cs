@@ -13,11 +13,6 @@ namespace Constructor.Projectiles
 
         protected override ProjectileSys SysInstance => ProjectileSys.Instance;
 
-        protected override void Parse(CsvReader line, ref SingleTriggerData data)
-        {
-            data.damage = int.Parse(line[1]);
-        }
-
         protected override void ESet(Projectile e, in SingleTriggerData data)
         {
             e.maxeffectTimes = 1;

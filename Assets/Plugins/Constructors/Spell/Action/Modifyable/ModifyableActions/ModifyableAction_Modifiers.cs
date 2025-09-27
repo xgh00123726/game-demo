@@ -24,8 +24,8 @@ namespace Constructor.Spells.Action.Modifyables
 
         public void AddModifier(int inventoryID, int index)
         {
-            var info = Modifier.Factory.Instance.GetInfo(inventoryID);
-            var obj = Modifier.Factory.Instance.Get(info.type, info.typeID);
+            var info = Modifier.SpellActionModifierDataBase.GetInfo(inventoryID);
+            var obj = Modifier.SpellActionModifierFactory.Instance.Get(info.type, info.id);
             _modifiers.Add(new ModifierStore()
             {
                 obj = obj,
@@ -33,7 +33,7 @@ namespace Constructor.Spells.Action.Modifyables
                 {
                     inventoryID = info.id,
                     type = info.type,
-                    modifierID = info.typeID,
+                    modifierID = info.id,
                 }
             });
             ResolveModifiedData();

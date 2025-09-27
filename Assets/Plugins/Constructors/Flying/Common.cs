@@ -23,18 +23,6 @@ namespace Constructor.Flyings
 
         protected override FlyingSys SysInstance => FlyingSys.Instance;
 
-        protected override void Parse(CsvReader line, ref CommonData data)
-        {
-            data.objID = int.Parse(line[1]);
-            Enum.TryParse(line[2], out data.releaseEffectType);
-            data.releaseEffectID = int.Parse(line[3]);
-            data.speed = float.Parse(line[4]);
-            data.minExistTime = float.Parse(line[5]);
-            Enum.TryParse(line[6], out data.curveType);
-            Enum.TryParse(line[7], out data.hitEffectType);
-            data.hitEffectID = int.Parse(line[8]);
-        }
-
         protected override void ESet(Flying e, in CommonData data)
         {
             e.ObjID = data.objID;

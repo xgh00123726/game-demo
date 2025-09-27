@@ -42,8 +42,8 @@ namespace GameBase.UI
                     {
                         var inventoryID = mAct.GetData(i).inventoryID;
                         var inventoryInfo = CommonInventoryDataBase.Get(inventoryID);
-                        this[i].triggerImage.SetIcon(inventoryInfo.iconTextureID);
-                        this[i].triggerImage.SetColor(inventoryInfo.rarity);
+                        //this[i].triggerImage.SetIcon(inventoryInfo.iconTextureID);
+                        //this[i].triggerImage.SetColor(inventoryInfo.rarity);
                         this[i].triggerImage.Show();
                     }
                     else

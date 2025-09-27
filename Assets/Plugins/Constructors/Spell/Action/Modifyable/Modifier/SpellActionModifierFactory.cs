@@ -9,7 +9,7 @@ namespace Constructor.Spells.Action.Modifyables.Modifier
         FlyingNumModifier,
         MultipleModifier
     }
-    public class Factory : ConstructorFactory<Type, BaseModifier, Factory>
+    public class SpellActionModifierFactory : ConstructorFactory<Type, BaseModifier, SpellActionModifierFactory>
     {
         protected override Dictionary<Type, System.Func<int, BaseModifier>> GetConstructorGetDict()
         {
@@ -21,8 +21,6 @@ namespace Constructor.Spells.Action.Modifyables.Modifier
                 {Type.MultipleModifier, (val) => new MultipleModifier(val) },
             };
         }
-
-        protected override string RelativePath => "Spell/Action/Modifyable/Modifier/ModifierInfo.csv";
     }
 }
 

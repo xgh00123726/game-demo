@@ -48,15 +48,6 @@ namespace Constructor.Spells.Action
             return new AreaFixedDis();
         }
 
-        protected override void Parse(CsvReader line, ref AreaFixedDisData data)
-        {
-            Enum.TryParse(line[1], out data.flyingType);
-            data.flyingID = int.Parse(line[2]);
-            Enum.TryParse(line[3], out data.projectileType);
-            data.projectileID = int.Parse(line[4]);
-            data.distance = int.Parse(line[5]);
-        }
-
         protected override void Set(AreaFixedDis e, in AreaFixedDisData data)
         {
             e.data = data;

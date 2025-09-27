@@ -4,6 +4,7 @@ using NReco.Csv;
 using System;
 using System.IO;
 using UnityEngine;
+using GameBase.Tools;
 
 namespace Instance
 {
@@ -13,7 +14,9 @@ namespace Instance
 
         static CommonInventoryDataBase()
         {
-            Init("Instance/Inventory/CommonInventory/CommonDataBase.csv");
+            _datas = new CsvReaderReflect<CommonInventoryData>()
+                .Parse($"{Application.streamingAssetsPath}/Instance/Inventory/CommonInventory/CommonDataBase.csv");
+            //Init("Instance/Inventory/CommonInventory/CommonDataBase.csv");
         }
 
         private static void Init(string relativePath)
@@ -32,10 +35,7 @@ namespace Instance
 
                 _datas[i] = new CommonInventoryData()
                 {
-                    id = int.Parse(csvReader[0]),
-                    secondID = int.Parse(csvReader[2]),
-                    iconTextureID = int.Parse(csvReader[3]),
-                    rarity = int.Parse(csvReader[4])
+                    secondID = int.Parse(csvReader[2])
                 };
                 Enum.TryParse(csvReader[1], out _datas[i].type);
             }

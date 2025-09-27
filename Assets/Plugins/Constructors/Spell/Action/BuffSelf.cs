@@ -39,11 +39,6 @@ namespace Constructor.Spells.Action
             return new BuffSelf();
         }
 
-        protected override void Parse(CsvReader line, ref BuffSelfData data)
-        {
-            data.buffID = int.Parse(line[1]);
-            data.duration = float.Parse(line[2]);
-        }
 
         protected override void Set(BuffSelf e, in BuffSelfData data)
         {

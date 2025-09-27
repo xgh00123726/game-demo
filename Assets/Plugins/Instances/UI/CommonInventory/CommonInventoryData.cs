@@ -8,10 +8,7 @@ namespace Instance
     }
     public class CommonInventoryData
     {
-        public int id;
         public SecondType type;
         public int secondID;
-        public int iconTextureID;
-        public int rarity;
     }
 }

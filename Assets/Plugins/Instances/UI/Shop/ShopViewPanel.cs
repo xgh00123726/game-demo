@@ -56,7 +56,7 @@ namespace GameBase.UI
                 // 如果表中没有配置材质贴图，并且商品是背包物品，那就使用其物品的材质号
                 if (info.iconTextureID < 0 && info.type == ShopItemType.InventoryItem)
                 {
-                    viewItem.triggerImage.SetIcon(CommonInventoryDataBase.Get(info.secondID).iconTextureID);
+                    //viewItem.triggerImage.SetIcon(CommonInventoryDataBase.Get(info.secondID).iconTextureID);
                     viewItem.identifyImage.SetIcon(62);
                 }
                 // 如果是增益效果，那就使用在表格中配置的材质贴图

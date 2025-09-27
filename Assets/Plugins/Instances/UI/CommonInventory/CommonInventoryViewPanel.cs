@@ -1,3 +1,5 @@
+using Constructor.Spells.Action.Modifyables.Modifier;
+using GameBase.Buffs;
 using GameBase.Config;
 using GameBase.Infos;
 using GameBase.Inventorys;
@@ -95,25 +97,41 @@ namespace Instance
             _fixedDetailableShadowView.Hide();
         }
 
-        public void UpdateInventory(DynInventory<CommonInventoryData> inventory)
+        public void UpdateInventory(DynInventory<CommonInventoryData> model)
         {
-            FillItem(inventory.Size);
-            for (int i = 0; i < inventory.Size; ++i)
+            FillItem(model.Size);
+            for (int i = 0; i < model.Size; ++i)
             {
-                UpdateInventoryItem(inventory, i);
+                UpdateInventoryItem(model, i);
             }
         }
 
-        public void UpdateInventoryItem(DynInventory<CommonInventoryData> inventory, int index)
+        public void UpdateInventoryItem(DynInventory<CommonInventoryData> model, int index)
         {
             var viewItem = this[index];
 
-            if (inventory.HasItem(index))
+            if (model.HasItem(index))
             {
-                var data = inventory[index]; 
+                var info = model[index];
 
-                viewItem.triggerImage.SetIcon(data.iconTextureID);
-                viewItem.triggerImage.SetColor(data.rarity);
+                int iconTextureID = -1;
+                int rarity = -1;
+
+                if (info.type == SecondType.Equipment)
+                {
+                    var eInfo = BuffFactory.GetInfo(info.secondID);
+                    iconTextureID = eInfo.iconTextureID;
+                    rarity = eInfo.rarity;
+                }
+                else if (info.type == SecondType.SpellActionModifier)
+                {
+                    var samInfo = SpellActionModifierDataBase.GetInfo(info.secondID);
+                    iconTextureID = samInfo.iconTextureID;
+                    rarity = samInfo.rarity;
+                }
+
+                    viewItem.triggerImage.SetIcon(iconTextureID);
+                viewItem.triggerImage.SetColor(rarity);
                 viewItem.triggerImage.Show();
             }
             else

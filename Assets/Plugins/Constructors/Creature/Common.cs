@@ -20,14 +20,6 @@ namespace Constructor.Creatures
 
         protected override CreatureSys SysInstance => CreatureSys.Instance;
 
-        protected override void Parse(CsvReader line, ref CommonData data)
-        {
-            data.ObjID = int.Parse(line[1]);
-            Enum.TryParse(line[2], out data.tag);
-            data.healthBarXOffset = float.Parse(line[3]);
-            data.healthBarYOffset = float.Parse(line[4]);
-            data.healthBarZOffset = float.Parse(line[5]);
-        }
 
         protected override void ESet(Creature e, in CommonData data)
         {

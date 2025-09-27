@@ -97,24 +97,8 @@ namespace GameBase.Buffs
 
         private static void ParseInfoFromCsv(string path, out BuffInfo[] info)
         {
-            StreamReader reader = File.OpenText(path);
-            CsvReader csvReader = new CsvReader(reader);
-            csvReader.Read();
-            info = new BuffInfo[int.Parse(csvReader[0])];
-            for (int i = 0; i < _infos.Length; i++)
-            {
-                csvReader.Read();
-                BuffType type;
-                Enum.TryParse(csvReader[1], out type);
-                _infos[i] = new BuffInfo()
-                {
-                    type = type,
-                    iconTextureID = int.Parse(csvReader[2]),
-                    rarity = int.Parse(csvReader[3]),
-                };
-            }
-
-            reader.Close();
+            info = new CsvReaderReflect<BuffInfo>()
+                .Parse(path);
         }
 
         

@@ -15,12 +15,6 @@ namespace Constructor.Effects
 
         protected override EffectSys SysInstance => EffectSys.Instance;
 
-        protected override void Parse(CsvReader line, ref CommonData data)
-        {
-            data.ObjID = int.Parse(line[1]);
-            data.existTime = float.Parse(line[2]);
-        }
-
         protected override void ESet(Effect e, in CommonData data)
         {
             e.ObjID = data.ObjID;
