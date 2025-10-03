@@ -34,7 +34,7 @@ namespace GameBase.Modify
             {
                 if (modifyer.isRelease) // modifyer触发自身的移除条件后，也要从modifyerable的列表中移除
                 {
-                    e.RemoveModify(modifyer);
+                    e.RemoveModifier(modifyer);
                     continue;
                 }
 

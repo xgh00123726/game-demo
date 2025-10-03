@@ -1,7 +1,6 @@
 using Constructor.Spells.Action.Modifyables.Modifier;
 using GameBase.Buffs;
 using GameBase.Config;
-using GameBase.Infos;
 using GameBase.Inventorys;
 using GameBase.Tools;
 using GameBase.UI;
@@ -9,7 +8,7 @@ using UnityEngine;
 
 namespace Instance
 {
-    public class CommonInventoryViewPanel : BaseViewPanel<CommonInventoryViewItem>
+    public class InventoryViewPanel : BaseViewPanel<InventoryViewItem>
     {
         protected bool _showFlag = false;
         protected float initX;
@@ -23,8 +22,8 @@ namespace Instance
         public float panelXOffsetTarget = 0f;
         public float panelYOffsetTarget = 0f;
 
-        private static CommonInventoryViewPanel _instance = new CommonInventoryViewPanel();
-        public static CommonInventoryViewPanel Instance => _instance;
+        private static InventoryViewPanel _instance;
+        public static InventoryViewPanel Instance => _instance;
 
         public override bool IsShow => _showFlag;
 
@@ -39,7 +38,7 @@ namespace Instance
             }
         }
 
-        public CommonInventoryViewPanel(int prefabID = 35,
+        public InventoryViewPanel(int prefabID = 35,
             int defaultObjID = 34) : base(
             prefabID,
             defaultObjID)
@@ -49,6 +48,7 @@ namespace Instance
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
                     .Log("error");
             }
+            _instance = this;
             SetLocalPosition(panel.transform.localPosition.x, panel.transform.localPosition.y);
         }
 
@@ -97,16 +97,16 @@ namespace Instance
             _fixedDetailableShadowView.Hide();
         }
 
-        public void UpdateInventory(DynInventory<CommonInventoryData> model)
+        public void UpdatePanel(DynInventory<InventoryData> model)
         {
             FillItem(model.Size);
             for (int i = 0; i < model.Size; ++i)
             {
-                UpdateInventoryItem(model, i);
+                UpdateItem(model, i);
             }
         }
 
-        public void UpdateInventoryItem(DynInventory<CommonInventoryData> model, int index)
+        public void UpdateItem(DynInventory<InventoryData> model, int index)
         {
             var viewItem = this[index];
 
@@ -117,20 +117,20 @@ namespace Instance
                 int iconTextureID = -1;
                 int rarity = -1;
 
-                if (info.type == SecondType.Equipment)
+                if (info.type == InventoryType.Equipment)
                 {
-                    var eInfo = BuffFactory.GetInfo(info.secondID);
+                    var eInfo = BuffDataBase.Instance[info.id];
                     iconTextureID = eInfo.iconTextureID;
                     rarity = eInfo.rarity;
                 }
-                else if (info.type == SecondType.SpellActionModifier)
+                else if (info.type == InventoryType.SpellActionModifier)
                 {
-                    var samInfo = SpellActionModifierDataBase.GetInfo(info.secondID);
+                    var samInfo = SpellActionModifierDataBase.Instance[info.id];
                     iconTextureID = samInfo.iconTextureID;
                     rarity = samInfo.rarity;
                 }
 
-                    viewItem.triggerImage.SetIcon(iconTextureID);
+                viewItem.triggerImage.SetIcon(iconTextureID);
                 viewItem.triggerImage.SetColor(rarity);
                 viewItem.triggerImage.Show();
             }

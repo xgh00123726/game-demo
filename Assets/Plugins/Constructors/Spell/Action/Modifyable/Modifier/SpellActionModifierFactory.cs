@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using GameBase.EntitySystem;
 
 namespace Constructor.Spells.Action.Modifyables.Modifier
 {

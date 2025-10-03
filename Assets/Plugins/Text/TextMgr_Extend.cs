@@ -7,11 +7,13 @@ namespace GameBase.Texts
     {
         private static string _buffTextFilePath = "BuffText.csv";
         private static string _spellActionModifierText = "SpellActionModifierText.csv";
+        private static string _modifierTextFilePath = "ModifierText.csv";
 
         private static void ExtendInit()
         {
-            Init(_buffTextFilePath);
-            Init(_spellActionModifierText);
+            InitFile(_buffTextFilePath);
+            InitFile(_spellActionModifierText);
+            InitFile(_modifierTextFilePath);
         }
 
         public static string GetBuffText(int id)
@@ -22,6 +24,11 @@ namespace GameBase.Texts
         public static string GetSpellActionModifierText(int id)
         {
             return Get(_spellActionModifierText, id);
+        }
+
+        public static string GetModifierText(int id)
+        {
+            return Get(_modifierTextFilePath, id);
         }
     }
 }

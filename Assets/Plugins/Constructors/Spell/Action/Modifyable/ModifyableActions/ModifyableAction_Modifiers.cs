@@ -24,7 +24,7 @@ namespace Constructor.Spells.Action.Modifyables
 
         public void AddModifier(int inventoryID, int index)
         {
-            var info = Modifier.SpellActionModifierDataBase.GetInfo(inventoryID);
+            var info = Modifier.SpellActionModifierDataBase.Instance[inventoryID];
             var obj = Modifier.SpellActionModifierFactory.Instance.Get(info.type, info.id);
             _modifiers.Add(new ModifierStore()
             {

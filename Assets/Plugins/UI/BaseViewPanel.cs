@@ -1,10 +1,7 @@
 using GameBase.EntitySystem;
 using GameBase.Resources;
-using GameBase.Tools;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,21 +18,73 @@ namespace GameBase.UI
         protected internal ListContainer<T> container = new();
         protected internal GameObject panel;
 
-        protected internal IEnterExitControl enterExitControl;
 
         public ILayout layout;
         public IDetailableControl detailableControl;
         public IDragableControl dragableControl;
-        
-        public IEnterExitControl EnterExitControl
+
+        private Action<int> _OnPointerDown;
+        private Action<int> _OnPointerRightDown;
+        private Action<int> _OnPointerUp;
+        private Action<int> _OnPointerEnter;
+        private Action<int> _OnPointerExit;
+        public Action<int> OnPointerDown
         {
-            get => enterExitControl;
+            get => _OnPointerDown;
             set
             {
-                enterExitControl = value;
+                _OnPointerDown = value;
                 foreach (var e in Entities)
                 {
-                    e.uiScript.enterExitControl = value;
+                    e.uiScript.OnPointerDown = value;
+                }
+            }
+        }
+        public Action<int> OnPointerRightDown
+        {
+            get => _OnPointerRightDown;
+            set
+            {
+                _OnPointerRightDown = value;
+                foreach (var e in Entities)
+                {
+                    e.uiScript.OnPointerRightDown += value;
+                }
+            }
+        }
+        public Action<int> OnPointerUp
+        {
+            get => _OnPointerUp;
+            set
+            {
+                _OnPointerUp = value;
+                foreach (var e in Entities)
+                {
+                    e.uiScript.OnPointerUp += value;
+                }
+            }
+        }
+        public Action<int> OnPointerEnter
+        {
+            get => _OnPointerEnter;
+            set
+            {
+                _OnPointerEnter = value;
+                foreach (var e in Entities)
+                {
+                    e.uiScript.OnPointerEnter += value;
+                }
+            }
+        }
+        public Action<int> OnPointerExit
+        {
+            get => _OnPointerExit;
+            set
+            {
+                _OnPointerExit = value;
+                foreach (var e in Entities)
+                {
+                    e.uiScript.OnPointerExit += value;
                 }
             }
         }
@@ -129,8 +178,6 @@ namespace GameBase.UI
         private void EnterExitUpdate(T e)
         {
             e.lastClicked = e.uiScript.isPointerDown;
-
-            if (EnterExitControl == null) return;
         }
 
         private void LayoutUpdate(T e)
@@ -203,7 +250,11 @@ namespace GameBase.UI
         {
             Entities.Add(e);
             e.uiScript = InstantiateObj(e);
-            e.uiScript.enterExitControl = enterExitControl;
+            e.uiScript.OnPointerDown = _OnPointerDown;
+            e.uiScript.OnPointerEnter = _OnPointerEnter;
+            e.uiScript.OnPointerRightDown = _OnPointerRightDown;
+            e.uiScript.OnPointerExit = _OnPointerExit;
+            e.uiScript.OnPointerUp = _OnPointerUp;
             ViewManager.RegisterView(e);
             return e;
         }

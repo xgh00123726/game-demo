@@ -4,13 +4,13 @@ using GameBase.Move;
 using GameBase.Resources;
 using GameBase.Tools;
 using GameBase.UI;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
 {
-    public static float infDis = 9999f;
+    internal int instanceNum = 0;
+    internal Dictionary<int, Creature> _creatrues = new();
 
     /// <summary>
     /// 返回指定位置最近的游戏实体
@@ -18,18 +18,13 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
     /// <item><param name="position"><paramref name="position"/>:指定的位置</param></item>
     /// <item><param name="id"><paramref name="id"/>:限定的ID，负数表示无限制</param></item>
     /// <item><param name="filter"><paramref name="filter"/>:寻找过滤器</param></item>
-    /// <item><param name="rangeLimit"><paramref name="rangeLimit"/>:只会寻找到rangeLimit距离内的实体，负数表示无穷</param></item>
+    /// <item><param name="rangeLimit"><paramref name="rangeLimit"/>:只会寻找到rangeLimit距离内的实体</param></item>
     /// </list></summary>
     /// <returns>符合条件最近的实体，没有实体满足条件则返回null</returns>
-    public Creature NearestEntity(Vector3 position, Tag tag, float rangeLimit = -1)
+    public Creature NearestEntity(Vector3 position, Tag tag, float rangeLimit = 10)
     {
         Creature c = null;
         float minDistance = float.PositiveInfinity;
-
-        if (rangeLimit < 0)
-        {
-            rangeLimit = infDis;
-        }
 
         foreach (var e in Entities)
         {
@@ -71,7 +66,8 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
             eh.ObjID = 6;
         });
         e.healthBar.owner = e;
-        
+
+        e.instanceID = instanceNum++;
 
         return obj;
     }
@@ -80,12 +76,16 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
     {
         e.Alive = true;
 
+        _creatrues.Add(e.instanceID, e);
+
         e.Obj.SetActive(true);
     }
 
     protected override void BeforeReleaseEUObject(Creature e)
     {
         e.Alive = false;
+
+        _creatrues.Remove(e.instanceID);
 
         e.Obj.SetActive(false);
     }
@@ -96,6 +96,21 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
         {
             RemoveEntity(e);
         }
+    }
+
+    public bool Exist(int  instanceID)
+    {
+        return _creatrues.ContainsKey(instanceID);
+    }
+
+    public Creature GetCreature(int instanceID)
+    {
+        if (_creatrues.ContainsKey(instanceID))
+        {
+            return _creatrues[instanceID];
+        }
+
+        return null;
     }
 
     public void RemoveAll(Tag tag)

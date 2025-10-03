@@ -9,6 +9,7 @@ namespace GameBase.UI
         internal SuperImage identifyImage;
         internal GameObject identifyIconObj; 
         internal TextMeshProUGUI priceText;
+        internal TextMeshProUGUI identifyText;
 
         public int Value
         {
@@ -16,6 +17,11 @@ namespace GameBase.UI
             {
                 priceText.text = $"${value}";
             }
+        }
+
+        public void HideValue()
+        {
+            priceText.text = "";
         }
     }
 }

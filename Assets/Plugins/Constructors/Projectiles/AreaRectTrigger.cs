@@ -1,6 +1,6 @@
 using GameBase.Math;
 using GameBase.Projectiles;
-using NReco.Csv;
+using GameBase.EntitySystem;
 
 namespace Constructor.Projectiles
 {

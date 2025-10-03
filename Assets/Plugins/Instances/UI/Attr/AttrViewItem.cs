@@ -6,6 +6,8 @@ namespace GameBase.UI
     public class AttrViewItem : BaseViewItem
     {
         internal TextMeshProUGUI valueTMP;
+
+        internal int attrKey = -1;
         public float Value
         {
             set

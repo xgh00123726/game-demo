@@ -1,8 +1,7 @@
 using GameBase.Buffs;
 using GameBase.Spells;
 using GameBase.Tools;
-using NReco.Csv;
-using System;
+using GameBase.EntitySystem;
 
 namespace Constructor.Spells.Action
 {

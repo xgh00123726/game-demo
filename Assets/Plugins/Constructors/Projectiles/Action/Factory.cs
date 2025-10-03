@@ -1,4 +1,5 @@
 using GameBase.Projectiles;
+using GameBase.EntitySystem;
 using System.Collections.Generic;
 
 namespace Constructor.Projectiles.Action

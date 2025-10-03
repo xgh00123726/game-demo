@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace GameBase.Modify
 {
+
     public class ModifyTable
     {
         private static List<string> _modifyableNames = new();
@@ -16,27 +17,18 @@ namespace GameBase.Modify
 
         static ModifyTable()
         {
-            StreamReader reader = File.OpenText($"{Application.streamingAssetsPath}/ConstructorData/ModifyContainer/ModifyTable_Single.csv");
-            CsvReader csvReader = new CsvReader(reader);
+            Init();
+        }
 
-            while (csvReader.Read())
+        private static void Init()
+        {
+            for (int i = 0; i < ModifyableDataBase.Instance.Size; i++)
             {
-                string label = csvReader[0];
-                if (label != "-")
-                {
-                    continue;
-                }
-
-                int id = int.Parse(csvReader[1]);
-                string name = csvReader[2];
-                int iconTextureID = int.Parse(csvReader[3]);
-
-                _modifyableNames.Add(name);
-                _modifyableIDs.Add(name, id);
-                _modifyableTextureIDs.Add(iconTextureID);
+                var data = ModifyableDataBase.Instance[i];
+                _modifyableNames.Add(data.name);
+                _modifyableIDs.Add(data.name, i);
+                _modifyableTextureIDs.Add(data.iconTextureID);
             }
-
-            reader.Close();
         }
 
         public static string GetName(int id) => _modifyableNames[id];
@@ -157,7 +149,7 @@ namespace GameBase.Modify
                     .Log($"trying modify a unexist modifyable value which key is {key}");
             }
 
-            _modifyableGroups[key].set.AddModify(modifyer);
+            _modifyableGroups[key].set.AddModifier(modifyer);
         }
 
         public void ModifySet(string key, Modifyer modifyer)
@@ -173,7 +165,7 @@ namespace GameBase.Modify
                     .Log($"trying modify a unexist modifyable value which key is {key}");
             }
 
-            _modifyableGroups[key].setPer.AddModify(modifyer);
+            _modifyableGroups[key].setPer.AddModifier(modifyer);
         }
 
         public void ModifySetPer(string key, Modifyer modifyer)
@@ -189,7 +181,7 @@ namespace GameBase.Modify
                     .Log($"trying modify a unexist modifyable value which key is {key}");
             }
 
-            _modifyableGroups[key].sumPer.AddModify(modifyer);
+            _modifyableGroups[key].sumPer.AddModifier(modifyer);
         }
 
         public void ModifySumPer(string key, Modifyer modifyer)

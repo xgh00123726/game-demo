@@ -36,7 +36,7 @@ namespace GameBase.Buffs
             owner = null;
         }
 
-        public void AddTo(IBuffOwner owner, float duration = 999999)
+        public void AddTo(IBuffOwner owner, float duration = 10)
         {
             durationSet = duration;
             durationRemain = duration;

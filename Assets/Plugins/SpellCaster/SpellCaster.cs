@@ -19,6 +19,7 @@ namespace GameBase.Spells
         public bool isIndicatorReady;
         public bool isFastCast;
         public IKeyInteractive interactive;
+        public Spell spell;
     }
 
     public class SpellCaster : Singleton<SpellCaster>, IBaseSys
@@ -65,6 +66,7 @@ namespace GameBase.Spells
                 if (spell != null && spell.interactive is IKeyInteractive interactive)
                 {
                     _spellConfigs[i].interactive = interactive;
+                    _spellConfigs[i].spell = spell;
                 }
             }
         }
@@ -78,6 +80,13 @@ namespace GameBase.Spells
                 var interactive = _spellConfigs[i].interactive;
 
                 if (interactive == null)
+                {
+                    continue;
+                }
+
+                var spell = _spellConfigs[i].spell;
+
+                if (!spell.spellCoolingdown.IsCoolingOver)
                 {
                     continue;
                 }

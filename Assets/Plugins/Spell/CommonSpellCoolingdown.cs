@@ -30,6 +30,7 @@ namespace GameBase.Spells
             if (_coolingRemain > 0)
             {
                 _coolingRemain -= Time.deltaTime * acc;
+                _isCoolingOver = false;
             }
             if (_coolingRemain <= 0)
             {

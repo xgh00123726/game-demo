@@ -5,6 +5,7 @@ using GameBase.Tools;
 using NReco.Csv;
 using System;
 using UnityEngine;
+using GameBase.EntitySystem;
 
 namespace Constructor.Projectiles
 {

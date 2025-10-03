@@ -14,19 +14,8 @@ namespace Constructor.Spells.Action.Modifyables.Modifier
         public int rarity;
     }
 
-    public class SpellActionModifierDataBase
+    public class SpellActionModifierDataBase : CsvDataBase<SpellActionModifierInfo,  SpellActionModifierDataBase>
     {
-        private static SpellActionModifierInfo[] _infos;
-        
-        static SpellActionModifierDataBase()
-        {
-            _infos = new CsvReaderReflect<SpellActionModifierInfo>()
-                .Parse($"{Application.streamingAssetsPath}/ConstructorData/Spell/Action/Modifyable/Modifier/SpellActionModifierInfo.csv");
-        }
-
-        public static SpellActionModifierInfo GetInfo(int id)
-        {
-            return _infos[id];
-        }
+        protected override string DataBasePath => CsvDataBasePath.DefaultFolder("SpellActionModifierInfo.csv");
     }
 }

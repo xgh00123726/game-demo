@@ -1,5 +1,6 @@
 using GameBase.Spells;
 using System.Collections.Generic;
+using GameBase.EntitySystem;
 
 namespace Constructor.Spells.Main
 {

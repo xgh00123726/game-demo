@@ -1,3 +1,4 @@
+using GameBase.Tools;
 using NReco.Csv;
 using System.Collections.Generic;
 using System.IO;
@@ -5,11 +6,20 @@ using UnityEngine;
 
 namespace GameBase.Texts
 {
+    internal enum ParseState
+    {
+        Normal,
+        MeetPlaceHolder,
+        MeetKeywordsFirstK,
+        MeetKeywordsKDot,
+        ParsingKeywordStr,
+
+    }
+
     public partial class TextMgr
     {
         public static string languagePath = "zh-cn";
-        private static string[] keywords;
-        private static string[] commons;
+        private static Dictionary<string, string> keywords = new();
         private static Dictionary<string, string[]> _dataTexts = new();
 
         static TextMgr()
@@ -17,12 +27,12 @@ namespace GameBase.Texts
             Init();
         }
 
-        private static void WriteTo(string fileName, out string[] buffer)
+        private static string[] GetStrings(string fileName)
         {
             StreamReader reader = File.OpenText($"{Application.streamingAssetsPath}/Texts/{languagePath}/{fileName}");
             CsvReader csvReader = new CsvReader(reader);
             csvReader.Read();
-            buffer = new string[int.Parse(csvReader[0])];
+            string[] buffer = new string[int.Parse(csvReader[0])];
             for (int i = 0; i < buffer.Length; i++)
             {
                 csvReader.Read();
@@ -30,6 +40,7 @@ namespace GameBase.Texts
             }
 
             reader.Close();
+            return buffer;
         }
 
         private static void Init()
@@ -38,45 +49,48 @@ namespace GameBase.Texts
             {
                 return;
             }
-            WriteTo("common.csv", out commons);
-            WriteTo("keywords.csv", out keywords);
+            InitKeywords();
             ExtendInit();
         }
 
-
-
-        public static void Init(string path)
+        private static void InitKeywords()
         {
-            WriteTo(path, out string[] buffer);
-            _dataTexts[path] = buffer;
+            StreamReader reader = File.OpenText($"{Application.streamingAssetsPath}/Texts/Keywords.csv");
+            CsvReader csvReader = new CsvReader(reader);
+            csvReader.Read();
+            while (csvReader.Read())
+            {
+                keywords.Add(csvReader[0], csvReader[1]);
+            }
+            reader.Close();
         }
 
-        private static string GetReplaceString(char tag, int index, string[] args)
+        private static string GetReplaceString(string raw)
         {
-            // 从keywords中替换
-            if (tag == 'k')
+            if (raw == "\\n")
             {
-                if (index >= keywords.Length)
-                {
-                    return "";
-                }
-
-                return keywords[index];
+                return "\n";
             }
 
-            // 从输入中替换
-            if (tag == 'v')
+            if (raw.StartsWith("K.") || raw.StartsWith("k."))
             {
-                if (index >= args.Length)
+                var str = raw.Substring(2);
+                if (str != null && str.Length > 0)
                 {
-                    return "";
+                    return keywords[raw.Substring(2)];
                 }
-
-                return args[index];
             }
+
 
             return "";
         }
+
+
+        public static void InitFile(string path)
+        {
+            _dataTexts[path] = GetStrings(path);
+        }
+
 
         public static string Get(string path, int index, params string[] args)
         {
@@ -89,19 +103,23 @@ namespace GameBase.Texts
             string ret = "";
 
             bool meetPlaceHolder = false;
-            char replaceTag = ' ';
-            int replaceIndex = 0;
             int subStrLp = 0;
             int subStrLen = 0;
+
+            int replaceStrLp = 0;
+            int replaceStrLen = 0;
 
             for(int i = 0; i < val.Length; i++)
             {
                 char c = val[i];
+
                 if (!meetPlaceHolder)
                 {
                     if (c == '{')
                     {
                         ret += val.Substring(subStrLp, subStrLen);
+                        replaceStrLp = i + 1;
+                        replaceStrLen = 0;
                         meetPlaceHolder = true;
                     }
                     else
@@ -113,29 +131,19 @@ namespace GameBase.Texts
                 {
                     if (c == '}')
                     {
-                        ret += GetReplaceString(replaceTag, replaceIndex, args);
-                        replaceTag = ' ';
-                        replaceIndex = 0;
-                        meetPlaceHolder = false;
+                        ret += GetReplaceString(val.Substring(replaceStrLp, replaceStrLen));
                         subStrLp = i + 1;
                         subStrLen = 0;
+                        meetPlaceHolder = false;
                     }
-                    else if (replaceTag == ' ')
+                    else
                     {
-                        replaceTag = c;
-                    }
-                    else if (replaceTag != ' ')
-                    {
-                        replaceIndex = replaceIndex * 10 + c - '0';
+                        replaceStrLen++;
                     }
                 }
             }
 
             return ret;
         }
-
-        public static string Get(int index) => commons[index];
-
-        public static string GetKeyword(int index) => keywords[index];
     }
 }

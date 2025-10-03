@@ -7,8 +7,9 @@ namespace GameBase.UI
 {
     public class AttrViewPanel : BaseViewPanel<AttrViewItem>
     {
-        private static AttrViewPanel _instance = new(15, 16);
+        private static AttrViewPanel _instance;
         public static AttrViewPanel Instance => _instance;
+
         public AttrViewPanel(int prefabID = 15, int defaultObjID = 16) : base(
             prefabID,
             defaultObjID)
@@ -18,6 +19,7 @@ namespace GameBase.UI
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
                     .Log("error");
             }
+            _instance = this;
         }
         protected override BaseUI InstantiateObj(AttrViewItem e)
         {
@@ -28,27 +30,26 @@ namespace GameBase.UI
             return obj;
         }
 
-        public void SetAttrValue(int[] attrIDs, Creature c)
+        public void SetAttrKey(int key, int index)
         {
-            SetAttrValue(attrIDs, c.Modifyables);
+            FillItem(index + 1);
+            this[index].attrKey = key;
+            this[index].triggerImage.SetIcon(ModifyTable.GetIconTextureID(key));
         }
 
-        public void SetAttrValue(int[] attrIDs, Modifyables modifyables)
+        public void SetAttrValue(Creature c)
         {
-            for (int i = 0; i < attrIDs.Length; i++) 
-            {
-                int id = attrIDs[i];
-                float value = modifyables[id];
-                this[i].Value = value;
-            }
+            SetAttrValue(c.Modifyables);
         }
-        public void SetAttrIcon(int[] attrIDs)
+
+        public void SetAttrValue(Modifyables modifyables)
         {
-            FillItem(attrIDs.Length);
-            for (int i = 0; i < attrIDs.Length; i++)
+            foreach (var e in Entities)
             {
-                int id = attrIDs[i];
-                this[i].triggerImage.SetIcon(ModifyTable.GetIconTextureID(id));
+                if (modifyables.ContainsKey(e.attrKey))
+                {
+                    e.Value = modifyables[e.attrKey];
+                }
             }
         }
     }

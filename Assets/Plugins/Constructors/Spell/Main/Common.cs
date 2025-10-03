@@ -1,8 +1,7 @@
 using Constructor.Spells.Interactive;
 using GameBase.Indicators;
 using GameBase.Spells;
-using NReco.Csv;
-using System;
+using GameBase.EntitySystem;
 
 namespace Constructor.Spells.Main
 {

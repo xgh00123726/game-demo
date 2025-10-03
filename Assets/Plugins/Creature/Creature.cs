@@ -37,14 +37,15 @@ namespace GameBase.Creatures
         public Vector3 healthBarOffset = new Vector3(0, 1.6f, 0);
         public DynInventory<Spell> spells = new();
         public bool Alive { get; internal protected set; }
-        public int InstanceID { get; set; }
+        public int InstanceID => instanceID;
         public GameObject Obj { get; set; }
         public int ObjID { get; set; }
         public virtual bool ReleaseTrigger => _fModifyables["currHP"] <= 0f;
 
         protected Modifyables _fModifyables = new();
         protected CommonInventory<Buff> _equipments = new() { Size = 6 };
-        
+
+        internal int instanceID;
         internal Mover mover;
         internal Rotater rotater;
         internal HealthBar healthBar;
@@ -120,7 +121,7 @@ namespace GameBase.Creatures
         {
         }
 
-        public void AddBuff(int id, float duration)
+        public void AddBuff(int id, float duration = 10)
         {
             Buffs.BuffFactory.Get(id).AddTo(this, duration);
         }

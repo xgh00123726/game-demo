@@ -5,6 +5,7 @@ namespace Instance
 {
     public class Shop
     {
+        public int instanceID;
         public ShopInventory inventory;
         public GameObject obj;
     }

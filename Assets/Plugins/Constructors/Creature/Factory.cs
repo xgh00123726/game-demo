@@ -1,4 +1,5 @@
 using GameBase.Creatures;
+using GameBase.EntitySystem;
 using System.Collections.Generic;
 
 namespace Constructor.Creatures

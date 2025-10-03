@@ -9,10 +9,10 @@ namespace Instance
     {
         private new EquipmentPanel _viewPanel;
         private CommonInventory<Buff> _model;
-        private CommonInventoryViewPanel _commonViewPanel;
+        private InventoryViewPanel _commonViewPanel;
 
         public EquipmentDragableControl(EquipmentPanel viewPanel, CommonInventory<Buff> model,
-            CommonInventoryViewPanel commonInventoryViewPanel) : base(viewPanel)
+            InventoryViewPanel commonInventoryViewPanel) : base(viewPanel)
         {
             _viewPanel = viewPanel;
             _model = model;

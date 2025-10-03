@@ -11,7 +11,7 @@ namespace GameBase.UI
 {
     public class BuffViewPanel : BaseViewPanel<BuffViewItem>
     {
-        private static BuffViewPanel _instance = new ();
+        private static BuffViewPanel _instance;
         public static BuffViewPanel Instance => _instance;
 
         private BaseObjectPool<GameObject> _pool = new();
@@ -26,7 +26,7 @@ namespace GameBase.UI
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
                     .Log("error");
             }
-
+            _instance = this;
             _pool.InstantiateFunc = () => GameObject.Instantiate(ResourcesLoader.GetPrefab(defaultObjID));
             _pool.InstantiateAction = static (e) => e.SetActive(true);
             _pool.ReleaseAction = static (e) => e.SetActive(false);

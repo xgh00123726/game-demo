@@ -64,17 +64,26 @@ namespace GameBase.Tools
             for (int i = 0; i < fieldInfos.Length; ++i)
             {
                 var field = fieldInfos[i];
+                var readerIndex = i + 1;
                 if (field.FieldType.IsEnum)
                 {
-                    field.SetValue(ret, Enum.Parse(field.FieldType, csvReader[i + 1]));
+                    field.SetValue(ret, Enum.Parse(field.FieldType, csvReader[readerIndex]));
                 }
                 else if (field.FieldType == typeof(int))
                 {
-                    field.SetValue(ret, int.Parse(csvReader[i + 1]));
+                    field.SetValue(ret, int.Parse(csvReader[readerIndex]));
                 }
                 else if (field.FieldType == typeof(float))
                 {
-                    field.SetValue(ret, float.Parse(csvReader[i + 1]));
+                    field.SetValue(ret, float.Parse(csvReader[readerIndex]));
+                }
+                else if (field.FieldType == typeof(bool))
+                {
+                    field.SetValue(ret, bool.Parse(csvReader[readerIndex]));
+                }
+                else if (field.FieldType == typeof(string))
+                {
+                    field.SetValue(ret, csvReader[readerIndex]);
                 }
                 else
                 {
@@ -92,17 +101,26 @@ namespace GameBase.Tools
             for (int i = 0; i < fieldInfos.Length; ++i)
             {
                 var field = fieldInfos[i];
+                var readerIndex = i + 1;
                 if (field.FieldType.IsEnum)
                 {
-                    field.SetValueDirect(retRef, Enum.Parse(field.FieldType, csvReader[i + 1]));
+                    field.SetValueDirect(retRef, Enum.Parse(field.FieldType, csvReader[readerIndex]));
                 }
                 else if (field.FieldType == typeof(int))
                 {
-                    field.SetValueDirect(retRef, int.Parse(csvReader[i + 1]));
+                    field.SetValueDirect(retRef, int.Parse(csvReader[readerIndex]));
                 }
                 else if (field.FieldType == typeof(float))
                 {
-                    field.SetValueDirect(retRef, float.Parse(csvReader[i + 1]));
+                    field.SetValueDirect(retRef, float.Parse(csvReader[readerIndex]));
+                }
+                else if (field.FieldType == typeof(bool))
+                {
+                    field.SetValueDirect(retRef, bool.Parse(csvReader[readerIndex]));
+                }
+                else if (field.FieldType == typeof(string))
+                {
+                    field.SetValueDirect(retRef, csvReader[readerIndex]);
                 }
                 else
                 {

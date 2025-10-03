@@ -1,7 +1,4 @@
-using GameBase.EntitySystem;
-using System;
-
-namespace Constructor
+namespace GameBase.EntitySystem
 {
     public abstract class EntityConstructor<T_Data, T_Entity, T_EntitySys, T_Constructor> : BaseConstructor<T_Data, T_Entity, T_Constructor>
         where T_Data : struct

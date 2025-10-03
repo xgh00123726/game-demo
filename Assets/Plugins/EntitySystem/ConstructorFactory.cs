@@ -1,12 +1,8 @@
 using GameBase.Tools;
-using NReco.Csv;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Xml.Linq;
-using UnityEngine;
 
-namespace Constructor
+namespace GameBase.EntitySystem
 {
     public abstract class ConstructorFactory<T_EntityEnum, T_Entity, T_Factory> : Singleton<T_Factory>
         where T_Factory : ConstructorFactory<T_EntityEnum, T_Entity, T_Factory>, new()

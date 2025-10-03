@@ -7,14 +7,13 @@ using UnityEngine;
 namespace GameBase.Inventorys
 {
 
-    internal struct ShopData
+    public struct ShopData
     {
         public int goodID;
         public int weight;
     }    
     /// <summary>
-    /// inventory中保存的内容是商店库存index
-    /// 需要根据库存index转换成商品id,再通过商品id获取商品信息
+    /// inventory中保存的内容是商品id
     /// </summary>
     public class ShopInventory : CommonInventory<int>
     {
@@ -24,7 +23,7 @@ namespace GameBase.Inventorys
         private ShopData[] _datas;
         internal int weightSum = 0;
 
-        public void BindFile(string relativePath)
+        public ShopInventory(string relativePath)
         {
             Init(relativePath);
             Command.Register($"shop-{relativePath}-init", Init);
@@ -35,6 +34,12 @@ namespace GameBase.Inventorys
         {
             _datas = new CsvReaderReflect<ShopData>()
                 .Parse($"{Application.streamingAssetsPath}/ShopData/{relativePath}");
+
+            weightSum = 0;
+            for (int i = 0; i < _datas.Length; i++)
+            {
+                weightSum += _datas[i].weight;
+            }
         }
 
         /// <summary>
@@ -66,23 +71,11 @@ namespace GameBase.Inventorys
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public ShopItemInfo GetItemInfoFromShoppingPosition(int index)
+        public ShopItemInfo GetItemInfoOfShoppingPosition(int index)
         {
-            var shopDataIndex = this[index];
-            var goodID = _datas[shopDataIndex].goodID;
-            return ShopDataBase.Get(goodID);
+            return ShopDataBase.Instance[this[index]];
         }
 
-        /// <summary>
-        /// 获取商品库存的第index个物品的信息
-        /// </summary>
-        /// <param name="shopDataIndex"></param>
-        /// <returns></returns>
-        public ShopItemInfo GetItemInfoFromShopDataIndex(int shopDataIndex)
-        {
-            var goodID = _datas[shopDataIndex].goodID;
-            return ShopDataBase.Get(goodID);
-        }
          
         /// <summary>
         /// 将当前商店的商品信息打乱
@@ -92,8 +85,8 @@ namespace GameBase.Inventorys
             for (int i = 0; i < Size; ++i)
             {
                 int randInt = Random.Range(0, weightSum - 1);
-                int shopIndex = RandomToGoodIndex(randInt);
-                this[i] = shopIndex;
+                int datasIndex = RandomToGoodIndex(randInt);
+                this[i] = _datas[datasIndex].goodID;
             }
         }
     }

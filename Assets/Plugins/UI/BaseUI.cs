@@ -12,7 +12,12 @@ namespace GameBase.UI
         protected internal bool isPointerOn;
         protected internal bool isPointerDown;
         protected internal int index;
-        public IEnterExitControl enterExitControl;
+
+        public Action<int> OnPointerDown;
+        public Action<int> OnPointerRightDown;
+        public Action<int> OnPointerUp;
+        public Action<int> OnPointerEnter;
+        public Action<int> OnPointerExit;
 
         public float EnterTime => enterTime;
         public float PointerDownTime => pointerDownTime;
@@ -27,31 +32,32 @@ namespace GameBase.UI
                 {
                     isPointerDown = true;
                 }
-                enterExitControl?.OnPointerDown(index);
+                OnPointerDown?.Invoke(index);
             }
             else if (eventData.button == PointerEventData.InputButton.Right)
             {
-                enterExitControl?.OnPointerRightDown(index);
+                OnPointerRightDown?.Invoke(index);
             }
         }
 
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
         {
             isPointerOn = true;
-            enterExitControl?.OnPointerEnter(index);
+            OnPointerEnter?.Invoke(index);
         }
 
         void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
         {
             enterTime = 0;
             isPointerOn = false;
-            enterExitControl?.OnPointerExit(index);
+            OnPointerExit?.Invoke(index);
         }
 
         void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
         {
             isPointerDown = false;
             pointerDownTime = 0;
+            OnPointerUp?.Invoke(index);
         }
     }
 }

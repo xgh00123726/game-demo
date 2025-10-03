@@ -1,6 +1,5 @@
-using Constructor.Spells.Action;
 using GameBase.Spells;
-using GameBase.Tools;
+using GameBase.EntitySystem;
 using System;
 using System.Collections.Generic;
 

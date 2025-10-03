@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Instance
 {
-    public class CommonDragableControl : DefaultDragableControl<CommonInventoryViewItem>
+    public class InventoryDragableControl : DefaultDragableControl<InventoryViewItem>
     {
-        private DynInventory<CommonInventoryData> _inventory;
-        private new CommonInventoryViewPanel _viewPanel;
+        private DynInventory<InventoryData> _inventory;
+        private new InventoryViewPanel _viewPanel;
 
-        public CommonDragableControl(DynInventory<CommonInventoryData> inventory, CommonInventoryViewPanel viewPanel) : base(viewPanel) 
+        public InventoryDragableControl(DynInventory<InventoryData> inventory, InventoryViewPanel viewPanel) : base(viewPanel) 
         {
             _inventory = inventory;
             _viewPanel = viewPanel;

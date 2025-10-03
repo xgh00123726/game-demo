@@ -28,6 +28,9 @@ namespace GameBase.Inventorys
         protected List<CInventoryItem> _items = new();
         protected SortedIntList _nullIndexes = new((x, y) => (y - x));
 
+        public Action<int> OnAddItem;
+        public Action<int> OnRemoveItem;
+
         public virtual int Size
         {
             get => _items.Count;
@@ -54,6 +57,7 @@ namespace GameBase.Inventorys
             {
                 _items[i].item = value;
                 _items[i].exist = true;
+                OnAddItem?.Invoke(i);
             }
         }
 
@@ -115,6 +119,7 @@ namespace GameBase.Inventorys
 
             _nullIndexes.Push(index);
             _items[index].exist = false;
+            OnRemoveItem?.Invoke(index);
 
             return true;
         }

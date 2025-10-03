@@ -14,12 +14,12 @@ namespace GameBase.Modify
         public float Value => value;
         public float ValueSet => valueSet;
 
-        public void AddModify(Modifyer modifyer)
+        public void AddModifier(Modifyer modifyer)
         {
             modifyersNeedAdd.AddLast(modifyer);
         }
 
-        public void RemoveModify(Modifyer modifyer)
+        public void RemoveModifier(Modifyer modifyer)
         {
             modifyersNeedRemove.AddLast(modifyer);
         }

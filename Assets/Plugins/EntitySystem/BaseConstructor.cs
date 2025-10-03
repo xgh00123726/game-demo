@@ -1,10 +1,7 @@
 using GameBase.Tools;
-using NReco.Csv;
-using System;
-using System.IO;
 using UnityEngine;
 
-namespace Constructor
+namespace GameBase.EntitySystem
 {
     public abstract class BaseConstructor<T_Data, T_Entity, T_Constructor> : Singleton<T_Constructor>
         where T_Data : struct

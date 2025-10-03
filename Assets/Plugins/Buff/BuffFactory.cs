@@ -11,102 +11,12 @@ using UnityEngine;
 
 namespace GameBase.Buffs
 {
-    public enum BuffType
-    {
-        Common,
-        Equipment,
-    }
-    public struct BuffInfo
-    {
-        public BuffType type;
-        public int iconTextureID;
-        public int rarity;
-    }
-    public struct BuffData
-    {
-        public float duration;
-        public int fixedValue;
-        public int currentPercent;
-        public int setPercent;
-    }
+
     public class BuffFactory
     {
-        private static List<Dictionary<int, BuffData>> _datas = new();
-        private static BuffInfo[] _infos;
-
         static BuffFactory()
         {
-            Init();
-            Command.Register($"ReloadBuffData", Init);
-        }
 
-        private static void Init()
-        {
-            ParseDataFromJson($"{Application.streamingAssetsPath}/Buffs/BuffData.json", _datas);
-            ParseInfoFromCsv($"{Application.streamingAssetsPath}/Buffs/BuffInfo.csv", out _infos);
-        }
-        
-        private static void ParseDataFromJson(string path, List<Dictionary<int, BuffData>> data)
-        {
-            StreamReader reader = File.OpenText(path);
-            JsonTextReader jReader = new JsonTextReader(reader);
-            JObject jObj = (JObject)JToken.ReadFrom(jReader);
-
-            foreach (var item in jObj)
-            {
-                JObject buffIns = (JObject)item.Value;
-                Dictionary<int, BuffData> buffData = new();
-                foreach (var kv in buffIns)
-                {
-                    var modifyKey = kv.Key;
-                    var modifyValues = kv.Value;
-                    int modifyID = ModifyTable.GetID(modifyKey);
-                    BuffData itemData = new();
-
-                    if (modifyValues["setPer"] != null)
-                    {
-                        itemData.setPercent = int.Parse(modifyValues["setPer"].ToString());
-                    }
-                    else
-                    {
-                        itemData.setPercent = int.MinValue;
-                    }
-                    if (modifyValues["fixed"] != null)
-                    {
-                        itemData.fixedValue = int.Parse(modifyValues["fixed"].ToString());
-                    }
-                    else
-                    {
-                        itemData.fixedValue = int.MinValue;
-                    }
-                    if (modifyValues["currPer"] != null)
-                    {
-                        itemData.currentPercent = int.Parse(modifyValues["currPer"].ToString());
-                    }
-                    else
-                    {
-                        itemData.currentPercent = int.MinValue;
-                    }
-                    buffData.Add(modifyID, itemData);
-                }
-                _datas.Add(buffData);
-            }
-            jReader.Close();
-            reader.Close();
-        }
-
-        private static void ParseInfoFromCsv(string path, out BuffInfo[] info)
-        {
-            info = new CsvReaderReflect<BuffInfo>()
-                .Parse(path);
-        }
-
-        
-        
-        
-        public static BuffInfo GetInfo(int id)
-        {
-            return _infos[id];
         }
 
         /// <summary>
@@ -116,7 +26,7 @@ namespace GameBase.Buffs
         /// <returns></returns>
         public static Buff Get(int id)
         {
-            var info = _infos[id];
+            var info = BuffDataBase.Instance[id];
             var buff = GetCommon(id);
             if (info.type == BuffType.Common)
             {
@@ -132,13 +42,13 @@ namespace GameBase.Buffs
 
         private static Buff GetCommon(int id)
         {
-            if (id < 0 || id >= _datas.Count)
+            if (id < 0 || id >= BuffDataBase.datas.Count)
             {
                 return null;
             }
             var e = BuffSys.Instance.NewEntity();
             e.id = id;
-            var buffData = _datas[id];
+            var buffData = BuffDataBase.datas[id];
             foreach (var mData in buffData)
             {
                 var mk = mData.Key;

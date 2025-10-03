@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using GameBase.Resources;
 using GameBase.Tools;
@@ -13,22 +14,22 @@ namespace GameBase.LifeTime
         public List<string> backgroundScenes = new List<string> { "BackGround" };
         public List<string> entityScenes = new List<string>{ "ProjTextTest" };
         public bool _sceneLoaded = false;
-        public int managerNum = 0;
-        private static List<string> _managerNames = new List<string>();
-        public List<string> managerNames = _managerNames;
-        private static LinkedList<IManager> _managersWillAdd = new LinkedList<IManager>();
-        private static LinkedList<IManager> _managers = new LinkedList<IManager>();
 
         private static int _updateTick = 0;
         private static int _fixedUpdateTick = 0;
+        
+        private static List<Action> _updatesNeedAdd = new List<Action>();
+        private static List<Action> _updates = new List<Action>();
+
         public static int UpdateTick => _updateTick;
         public static int FixedUpdateTick => _fixedUpdateTick;
 
-        public static void RegisterMgr(IManager manager)
+        public static void AddUpdate(Action action)
         {
-            _managersWillAdd.AddLast(manager);
-            _managerNames.Add(manager.GetType().Name);
+            _updatesNeedAdd.Add(action);
         }
+
+
         void Start()
         {
             DontDestroyOnLoad(gameObject);
@@ -59,16 +60,16 @@ namespace GameBase.LifeTime
         void Update()
         {
             ++_updateTick;
-            foreach (IManager manager in _managersWillAdd)
+            foreach (var update in _updatesNeedAdd)
             {
-                _managers.AddLast(manager);
+                _updates.Add(update);
             }
-            _managersWillAdd.Clear();
-            foreach (IManager manager in _managers)
+            _updatesNeedAdd.Clear();
+
+            foreach (var update in _updates)
             {
-                manager.Update();
+                update?.Invoke();
             }
-            managerNum = _managers.Count;
         }
     }
 }

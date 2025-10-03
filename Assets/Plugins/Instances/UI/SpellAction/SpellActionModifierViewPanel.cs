@@ -8,7 +8,7 @@ namespace GameBase.UI
 {
     public class SpellActionModifierViewPanel : BaseViewPanel<SpellActionModifierViewItem>
     {
-        private static SpellActionModifierViewPanel _instance = new();
+        private static SpellActionModifierViewPanel _instance;
         public static SpellActionModifierViewPanel Instance => _instance;
 
         private SpellShadowView _spellShadowView;
@@ -23,7 +23,7 @@ namespace GameBase.UI
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
                     .Log("instance has only one");
             }
-
+            _instance = this;
             _spellShadowView = new SpellShadowView(panel.transform);
         }
 
@@ -41,7 +41,7 @@ namespace GameBase.UI
                     if (mAct.HasItem(i))
                     {
                         var inventoryID = mAct.GetData(i).inventoryID;
-                        var inventoryInfo = CommonInventoryDataBase.Get(inventoryID);
+                        var inventoryInfo = InventoryDataBase.Instance[inventoryID];
                         //this[i].triggerImage.SetIcon(inventoryInfo.iconTextureID);
                         //this[i].triggerImage.SetColor(inventoryInfo.rarity);
                         this[i].triggerImage.Show();

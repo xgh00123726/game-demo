@@ -8,7 +8,7 @@ namespace Instance
     public class EquipmentPanel : BaseViewPanel<EquipmentItem>
     {
         public const int EQUIPMENT_NUM = 6;
-        private static EquipmentPanel _instance = new();
+        private static EquipmentPanel _instance;
         public static EquipmentPanel Instance => _instance;
         public EquipmentPanel(int prefabID = 17, int defaultObjID = 18) : base(prefabID, defaultObjID)
         {
@@ -17,6 +17,7 @@ namespace Instance
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
                     .Log("instance has only one");
             }
+            _instance = this;
             FillItem(EQUIPMENT_NUM);
             Show();
         }
@@ -28,7 +29,7 @@ namespace Instance
                 if (c.HasEquipment(i))
                 {
                     Buff equipment = c.GetEquipment(i);
-                    var info = BuffFactory.GetInfo(equipment.id);
+                    var info = BuffDataBase.Instance[equipment.id];
                     this[i].triggerImage.SetIcon(info.iconTextureID);
                     this[i].triggerImage.SetColor(info.rarity);
                 }

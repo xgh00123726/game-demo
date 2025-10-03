@@ -10,8 +10,8 @@ namespace GameBase.Modify
         Periodoic = 1 << 1 ,    // 周期生效，当达到dt时，触发modify
         Once      = 1 << 2 ,    // 生效一次
 
-        Temporary = 1 << 13,    // 属性永久变更，常用于掉血掉蓝，吃永久增益等
-        Forever   = 1 << 14,    // 属性暂时变更，用于buff，装备等
+        Temporary = 1 << 13,    // 属性暂时变更，用于buff，装备等
+        Forever   = 1 << 14,    // 属性永久变更，常用于掉血掉蓝，吃永久增益等
     }
 
     public class Modifyer :

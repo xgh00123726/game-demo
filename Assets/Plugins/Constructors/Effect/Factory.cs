@@ -1,4 +1,5 @@
 using GameBase.Effects;
+using GameBase.EntitySystem;
 using System.Collections.Generic;
 
 namespace Constructor.Effects

@@ -14,7 +14,7 @@ namespace GameBase.UI
         private int _lastClickedItemIndex = -1;
 
         public Action<int> OnClickedItem;
-        private static SpellViewPanel _instance = new ();
+        private static SpellViewPanel _instance;
         public static SpellViewPanel Instance => _instance;
         public SpellViewPanel(int prefabID = 12,
             int defaultObjID = 11) : base(
@@ -26,6 +26,7 @@ namespace GameBase.UI
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
                     .Log("instance has only one");
             }
+            _instance = this;
         }
 
         protected override BaseUI InstantiateObj(SpellViewItem e)

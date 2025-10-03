@@ -2,7 +2,7 @@ using GameBase.UI;
 
 namespace Instance
 {
-    public class CommonInventoryViewItem : BaseViewItem
+    public class InventoryViewItem : BaseViewItem
     {
 
     }

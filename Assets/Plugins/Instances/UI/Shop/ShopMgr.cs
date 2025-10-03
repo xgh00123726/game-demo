@@ -8,24 +8,29 @@ namespace Instance
 {
     public class ShopMgr
     {
-        private static Dictionary<GameObject, Shop> _shopObjs = new();
+        private static List<Shop> _shops = new();
 
-        public static void Register(Shop shop)
+        public static Shop GetShop(int id)
         {
-            _shopObjs.Add(shop.obj, shop);
+            if (id >= _shops.Count)
+            {
+                return null;
+            }
+
+            return _shops[id];
         }
 
         public static Shop NearestShop(Vector3 postion, float rangeLimit = 2)
         {
             Shop ret = null;
             float minDis = rangeLimit;
-            foreach (var kvp in _shopObjs)
+            foreach (var shop in _shops)
             {
-                var shopPos = kvp.Key.transform.position;
+                var shopPos = shop.obj.transform.position;
 
                 if (GMath.GameDistance(postion, shopPos) <= minDis)
                 {
-                    ret = kvp.Value;
+                    ret = shop;
                 }
             }
 
@@ -36,10 +41,11 @@ namespace Instance
         {
             var shop = new Shop()
             {
+                instanceID = _shops.Count,
                 inventory = model,
                 obj = obj,
             };
-            Register(shop);
+            _shops.Add(shop);
             return shop;
         }
     }

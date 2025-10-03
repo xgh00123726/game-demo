@@ -1,4 +1,4 @@
-using NReco.Csv;
+using GameBase.EntitySystem;
 
 namespace Constructor.Spells.Action.Modifyables.Modifier
 {
