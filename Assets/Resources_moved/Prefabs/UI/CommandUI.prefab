@@ -780,6 +780,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6fe0a562b91ffc44bf2909baab2fc96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxTipNum: 10
   _inCmdMode: 0
+  maxTipNum: 10
   _inputTextField: {fileID: 0}

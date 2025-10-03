@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 5824826782607746845}
   - component: {fileID: 4124950739687839268}
   m_Layer: 0
-  m_Name: Icon
+  m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
