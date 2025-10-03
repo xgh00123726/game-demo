@@ -7,29 +7,13 @@ using UnityEngine;
 using GameBase.Texts;
 using GameBase.AI;
 using GameBase.UI;
+using LuaUtil;
 public class Initer : MonoBehaviour
 {
     public bool testTextMgr = true;
     void Start()
     {
         var builder = new BehaviorTreeBuilder();
-
-        builder.Repeat(3)
-                    .Sequence()
-                        .IF(() => testTextMgr)
-                        .Log(TextMgr.Get(0))
-                        .Log(TextMgr.Get(1))
-                        .Log(TextMgr.Get(2))
-                        .Log(TextMgr.Get(3))
-                        .Log(TextMgr.Get(4))
-                        .Log(TextMgr.Get(5))
-                        .Log(TextMgr.Get(6))
-                        .Log(TextMgr.Get(7))
-                        .Log(TextMgr.Get(8))
-                        .Log(TextMgr.Get(9))
-                    .Back()
-                .End();
-        builder.Tree.Tick();
 
         Physics.gravity = new Vector3(0, -100, 0);
 
@@ -80,6 +64,10 @@ public class Initer : MonoBehaviour
         });
 
         var character = Constructor.Creatures.Factory.Instance.Get(Constructor.Creatures.Type.Common, 0);
+
+        PlayerUtil.SetPlayer(character.InstanceID);
+        LuaMain.OnInitOK?.Invoke();
+        
         var player = character.Obj.AddComponent<Player>();
         player.character = character;
         character.Position = new Vector3(-6, -7, 4);

@@ -1,9 +1,0 @@
-yFactorAMin = -4
-yFactorAMax = -5
-yFactorBMin = 1
-yFactorBMax = 1.2
-yFactorCMin = 5
-yFactorCMax = 5
-horizontalSpeedMin = 0.3
-horizontalSpeedMax = 0.4
-existTime = 0.5

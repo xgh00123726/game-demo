@@ -11,10 +11,12 @@ using GameBase.Creatures;
 using Instance.Move;
 using Instance.UI.Shops;
 using Instance.UI.MVC;
+using Instance;
 
 public partial class Player : MonoBehaviour,
     IPlayerGlobal
 {
+    public int Gold { get; set; } = 100;
     private static Player _instance;
 
     public Creature character;
@@ -58,16 +60,9 @@ public partial class Player : MonoBehaviour,
         EpicBarInit();
         AnimatorInit();
         GlobalInfoInit();
-        AttrInit();
-        //AttrUIInit();
 
-        BuffUIInit();
-        //EquipmentUIInit();
-        InventoryUIInit();
-
-        //EquipmentInit();
-
-        GenerateInitShop();
+        BuffInit();
+        EquipmentInit();
 
         _instance = this;
     }
@@ -81,23 +76,8 @@ public partial class Player : MonoBehaviour,
             MoveIndicator.Show(CameraSys.MouseHitPosition);
         }
 
-        if (Inputs.GetKeyDown(KeyFunction.ToggleAttrPanel, "inventory"))
-        {
-            inventoryController.Toggle();
-            if (inventoryController.IsShow)
-            {
-                Inputs.LockOthers("inventory");
-            }
-            else
-            {
-                Inputs.ReleaseAll();
-                SpellActionModifierController.Instance.Hide();
-            }
-        }
-
-        ShopUpdate();
-        AttrUpdate();
         SpellUpdate();
+        EquipmentUpdate();
         animCtrler2.Update();
     }
 }

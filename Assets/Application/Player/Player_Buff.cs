@@ -5,23 +5,20 @@ using GameBase.UI;
 public partial class Player
 {
     BuffViewPanel _buffPanel;
-    private void OnAddBuff(Buff buff)
+    private void OnGetBuff(Buff buff)
     {
-        if (buff.uiStyle == UIStyle.Buff)
+        var info = BuffDataBase.Instance[buff.id];
+        if (info.type == BuffType.Common)
         {
             var item = _buffPanel.NewEntity();
-            item.SetIcon(buff.textureID);
+            item.SetIcon(info.iconTextureID);
             item.SetOwner(buff);
         }
     }
 
-    private void OnRemoveBuff(Buff buff)
+    private void BuffInit()
     {
-    }
-
-    private void BuffUIInit()
-    {
-        _buffPanel = BuffViewPanel.Instance;
+        _buffPanel = new BuffViewPanel();
         _buffPanel.layout = new DefaultLayout()
         {
             xInterval = 31.5f,
@@ -30,7 +27,11 @@ public partial class Player
         };
 
         _buffPanel.Show();
-        character.BuffContainer.OnAddBuff = OnAddBuff;
-        character.BuffContainer.OnRemoveBuff = OnRemoveBuff;
+        character.OnGetBuffAction += OnGetBuff;
+    }
+
+    private void BuffUpdate()
+    {
+        
     }
 }
