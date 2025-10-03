@@ -1,12 +1,4 @@
-3,flying1Type,flying1ID,flying2Type,flying2ID,projectileType,projectileID,x,y,z
-0,Common,1,Common,2,AreaCircleTrigger,0,0,0,0
-1,Common,1,Common,2,AreaCircleTrigger,0,0,10,0
-2,Common,3,Common,2,AreaCircleTrigger,0,0,0,0
-
-
-// 技能效果：类似陨石降落造成伤害，斗魂竞技场残忍的落星，老版龙王Q的爆炸
-// 发射一个flying1飞向targetPosition，flying1被release后在原地生成一个flying2
-// flying：由flyingType, flyingID生成
-// targetPosition：鼠标所在位置
-// projectile：由projectileType, projectileID生成
-// x,y,z：flying1生成位置偏移
+3, flying1Type, flying1ID, flying2Type, flying2ID, projectileType   , projectileID, x, y , z
+0, Common     ,         1, Common     ,         2, AreaCircleTrigger,            0, 0,  0, 0
+1, Common     ,         1, Common     ,         2, AreaCircleTrigger,            0, 0, 10, 0
+2, Common     ,         3, Common     ,         2, AreaCircleTrigger,            0, 0,  0, 0

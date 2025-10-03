@@ -1,46 +1,46 @@
-45
-0,Prefabs/Entity/Player1
-1,Prefabs/Entity/Enemy1
-2,Prefabs/Projectile/Lighting
-3,Prefabs/Projectile/Frisbee
-4,Prefabs/UI/DetailUI
-5,Prefabs/UI/FloatText
-6,Prefabs/UI/HealthBar
-7,Prefabs/UI/EpicHealthBar
-8,Prefabs/UI/EpicManaBar
-9,Prefabs/UI/BuffItem
-10,Prefabs/UI/BuffPanel
-11,Prefabs/UI/SpellItem
-12,Prefabs/UI/SpellPanel
-13,Prefabs/UI/PassiveItem
-14,Prefabs/UI/PassivePanel
-15,Prefabs/UI/AttrPanel
-16,Prefabs/UI/AttrItem
-17,Prefabs/UI/EquipmentPanel
-18,Prefabs/UI/EquipmentItem
-19,Prefabs/Info/CircleIndicator
-20,Prefabs/Projectile/FallingStone
-21,Prefabs/Info/RectIndicator
-22,Prefabs/Projectile/Sword12_Green
-23,Prefabs/Projectile/Sword12_Purple
-24,Prefabs/Projectile/Sword12_Red
-25,Prefabs/Effect/Hit/Hit2
-26,Prefabs/Effect/Hit/Explosion
-27,Prefabs/Entity/PicoChan
-28,Prefabs/Projectile/Empty
-29,Prefabs/Projectile/Sword15_Earth
-30,Prefabs/Projectile/Sword15_Frost
-31,Prefabs/Projectile/Sword15_Iron
-32,Prefabs/Projectile/Sword15_Lava
-33,Prefabs/Projectile/FallingStone2
-34,Prefabs/UI/InventoryItem
-35,Prefabs/UI/InventoryPanel
-36,Prefabs/Effect/Move/RightClickEffect
-37,Prefabs/UI/InventoryShadowItem
-38,Prefabs/UI/FixedDetailUI
-39,Prefabs/UI/ShopNearView.prefab
-40,Prefabs/UI/ShopItem.prefab
-41,Prefabs/UI/ShopPanel.prefab
-42,Prefabs/UI/SpellActionModifierItem.prefab
-43,Prefabs/UI/SpellActionModifierPanel.prefab
-44,Prefabs/UI/SpellItemShadowView.prefab
+45, path
+ 0, Prefabs/Entity/Player1
+ 1, Prefabs/Entity/Enemy1
+ 2, Prefabs/Projectile/Lighting
+ 3, Prefabs/Projectile/Frisbee
+ 4, Prefabs/UI/DetailUI
+ 5, Prefabs/UI/FloatText
+ 6, Prefabs/UI/HealthBar
+ 7, Prefabs/UI/EpicHealthBar
+ 8, Prefabs/UI/EpicManaBar
+ 9, Prefabs/UI/BuffItem
+10, Prefabs/UI/BuffPanel
+11, Prefabs/UI/SpellItem
+12, Prefabs/UI/SpellPanel
+13, Prefabs/UI/PassiveItem
+14, Prefabs/UI/PassivePanel
+15, Prefabs/UI/AttrPanel
+16, Prefabs/UI/AttrItem
+17, Prefabs/UI/EquipmentPanel
+18, Prefabs/UI/EquipmentItem
+19, Prefabs/Info/CircleIndicator
+20, Prefabs/Projectile/FallingStone
+21, Prefabs/Info/RectIndicator
+22, Prefabs/Projectile/Sword12_Green
+23, Prefabs/Projectile/Sword12_Purple
+24, Prefabs/Projectile/Sword12_Red
+25, Prefabs/Effect/Hit/Hit2
+26, Prefabs/Effect/Hit/Explosion
+27, Prefabs/Entity/PicoChan
+28, Prefabs/Projectile/Empty
+29, Prefabs/Projectile/Sword15_Earth
+30, Prefabs/Projectile/Sword15_Frost
+31, Prefabs/Projectile/Sword15_Iron
+32, Prefabs/Projectile/Sword15_Lava
+33, Prefabs/Projectile/FallingStone2
+34, Prefabs/UI/InventoryItem
+35, Prefabs/UI/InventoryPanel
+36, Prefabs/Effect/Move/RightClickEffect
+37, Prefabs/UI/InventoryShadowItem
+38, Prefabs/UI/FixedDetailUI
+39, Prefabs/UI/ShopNearView.prefab
+40, Prefabs/UI/ShopItem.prefab
+41, Prefabs/UI/ShopPanel.prefab
+42, Prefabs/UI/SpellActionModifierItem.prefab
+43, Prefabs/UI/SpellActionModifierPanel.prefab
+44, Prefabs/UI/SpellItemShadowView.prefab

@@ -1,0 +1,18 @@
+17, type                  , id, iconTextureID, rarity
+ 0, FireDisfuseModifier   ,  0,            44,      0
+ 1, FireDisfuseModifier   ,  1,            45,      0
+ 2, FireDisfuseModifier   ,  2,            46,      0
+ 3, FireDisfuseModifier   ,  3,            47,      0
+ 4, FlyingDistanceModifier,  0,            40,      1
+ 5, FlyingDistanceModifier,  1,            41,      1
+ 6, FlyingDistanceModifier,  2,            42,      1
+ 7, FlyingDistanceModifier,  3,            43,      1
+ 8, FlyingDistanceModifier,  4,            43,      1
+ 9, FlyingNumModifier     ,  1,            48,      1
+10, FlyingNumModifier     ,  2,            49,      2
+11, FlyingNumModifier     ,  3,            50,      3
+12, FlyingNumModifier     ,  4,            51,      4
+13, MultipleModifier      ,  1,            36,      2
+14, MultipleModifier      ,  2,            37,      3
+15, MultipleModifier      ,  3,            38,      4
+16, MultipleModifier      ,  4,            39,      5

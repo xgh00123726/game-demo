@@ -1,10 +1,2 @@
-1,projectileType,projectileID,flyingType,flyingID
-0,SingleTrigger,0,Common,0
-
-
-// 技能效果：发射一个射弹，总体效果类似dota中的普通攻击
-// 视觉表现效果是flyingType,flyingID
-// 触发效果是projectileType，projectileID
-// 生成位置是射弹拥有者手部位置
-// 无dest，target为发射时寻找，寻找范围为speller的attackRange属性，寻找中心为speller的position
-// projectileOwner是speller
+1, projectileType, projectileID, flyingType, flyingID
+0, SingleTrigger ,            0, Common    ,        0

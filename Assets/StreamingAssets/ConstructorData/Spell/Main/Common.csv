@@ -1,16 +1,7 @@
-6,interactiveType,interactiveID,actionType,actionInterfaceID,coolingTime
-0,KeyCommon,0,TrigOnRelease,1,1
-1,KeyCommon,1,MTrigNearestTarget,0,2
-2,Always,0,TrigNearestTarget,0,10
-3,KeyCommon,3,AreaFixedDis,0,1
-4,KeyFast,0,BuffSelf,0,3
-5,KeyCommon,3,MAreaFixedDis,0,1
-
-// 按键型技能
-
-// 在交互后触发action
-// interactiveType：交互类型
-// interactiveID：交互ID
-// actionType：执行动作类型
-// actionInterfaceID：执行动作ID
-// coolingTime：冷却时间
+6, interactiveType, interactiveID, actionType        , actionInterfaceID, coolingTime, indicatorType, iconTextureID
+0, Invokable      ,             0, TrigOnRelease     ,                 1,           1, Circle       ,            34
+1, Invokable      ,             1, MTrigNearestTarget,                 0,           2, Circle       ,            35
+2, Always         ,             0, TrigNearestTarget ,                 0,          10, Circle       ,            35
+3, Invokable      ,             3, AreaFixedDis      ,                 0,           1, Circle       ,            35
+4, Invokable      ,             0, BuffSelf          ,                 0,           1, Circle       ,            22
+5, Invokable      ,             3, MAreaFixedDis     ,                 0,           1, FixedLinear  ,            33

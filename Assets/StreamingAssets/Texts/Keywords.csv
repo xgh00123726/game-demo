@@ -1,0 +1,23 @@
+keywordName, zh-cn
+Inc        , 增加
+MovSpd     , <color=#66ccff>移动速度</color>
+SplAcc     , <color=#66ccff>技能急速</color>
+Dmg        , <color=#66ccff>攻击力</color>
+Curr       , 当前
+Sum        , 总
+Uni        , <color=#66ccff>全能</color>
+Strn       , <color=#66ccff>力量</color>
+Agi        , <color=#66ccff>敏捷</color>
+Intl       , <color=#66ccff>智力</color>
+Def        , <color=#66ccff>防御</color>
+AtkSpd     , <color=#66ccff>攻击速度</color>
+SplMuti    , <color=#66ccff>施法次数</color>
+SplDis     , <color=#66ccff>法术距离</color>
+ProjDfu    , <color=#66ccff>弹幕扩散</color>
+ProjNum    , <color=#66ccff>弹幕数量</color>
+CurHP      , <color=green>当前生命值</color>
+MaxHP      , <color=green>最大生命值</color>
+CurMN      , <color=blue>当前魔法值</color>
+MaxMN      , <color=blue>当前魔法值</color>
+RotSpd     , <color=#66ccff>转身速度</color>
+Range      , <color=#66ccff>攻击距离</color>

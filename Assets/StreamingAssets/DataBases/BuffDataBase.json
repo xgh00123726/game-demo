@@ -1,0 +1,116 @@
+{
+    "0": {
+        "moveSpeed": {
+            "setPer": "50"
+        }
+    },
+    "1": {
+        "coolingAccelerate": {
+            "fixed": "100"
+        }
+    },
+    "2": {
+        "moveSpeed": {
+            "fixed": "1",
+            "setPer": "10",
+            "currPer": "10"
+        }
+    },
+    "3": {
+        "coolingAccelerate": {
+            "fixed": "1000"
+        }
+    },
+    "4": {
+        "damage": {
+            "fixed": "10"
+        }
+    },
+    "5": {
+        "universal": {
+            "fixed": "10"
+        }
+    },
+    "6": {
+        "defense": {
+            "fixed": "10"
+        }
+    },
+    "7": {
+        "attackSpeed": {
+            "fixed": "100"
+        }
+    },
+    "8": {
+        "agility": {
+            "fixed": "10"
+        }
+    },
+    "9": {
+        "intelligence": {
+            "fixed": "10"
+        }
+    },
+    "10": {
+        "strength": {
+            "fixed": "10"
+        }
+    },
+    "11": {
+        "moveSpeed": {
+            "setPer": "50"
+        }
+    },
+    "12": {
+        "coolingAccelerate": {
+            "fixed": "100"
+        }
+    },
+    "13": {
+        "moveSpeed": {
+            "fixed": "1",
+            "setPer": "10",
+            "currPer": "10"
+        }
+    },
+    "14": {
+        "coolingAccelerate": {
+            "fixed": "1000"
+        }
+    },
+    "15": {
+        "damage": {
+            "fixed": "10"
+        }
+    },
+    "16": {
+        "universal": {
+            "fixed": "10"
+        }
+    },
+    "17": {
+        "defense": {
+            "fixed": "10"
+        }
+    },
+    "18": {
+        "attackSpeed": {
+            "fixed": "100"
+        }
+    },
+    "19": {
+        "agility": {
+            "fixed": "10"
+        }
+    },
+    "20": {
+        "intelligence": {
+            "fixed": "10"
+        }
+    },
+    "21": {
+        "strength": {
+            "fixed": "10"
+        }
+    }
+}
