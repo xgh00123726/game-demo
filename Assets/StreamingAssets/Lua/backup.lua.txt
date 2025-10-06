@@ -1,0 +1,84 @@
+local function ProfierTest()
+    local t0 = CS.UnityEngine.Time.realtimeSinceStartup
+
+    local GetItemImageStatic = CS.LuaUtil.InventoryUIUtil.GetItemImageStatic
+    for i = 1, 1000000 do
+        local itemImage = GetItemImageStatic(0)
+    end
+    local itemImageS = GetItemImageStatic(0)
+    local t1 = CS.UnityEngine.Time.realtimeSinceStartup
+
+    for i = 1, 1000000 do
+        local itemImage = UI.Inventory.GetItemImage(0)
+    end
+    local t2 = CS.UnityEngine.Time.realtimeSinceStartup
+
+    for i = 1, 1000000 do
+        local itemImage = UI.Inventory.Panel[0].triggerImage
+    end
+    local t3 = CS.UnityEngine.Time.realtimeSinceStartup
+
+    for i = 1, 1000000 do
+        local itemImage = UI.Inventory.Panel:GetItemImage(0)
+    end
+    local t4 = CS.UnityEngine.Time.realtimeSinceStartup
+
+    local panel = UI.Inventory.Panel
+    for i = 1, 1000000 do
+        local itemImage = panel:GetItemImage(0)
+    end
+    local t5 = CS.UnityEngine.Time.realtimeSinceStartup
+
+    local GetItemImageStaticNoReturn = CS.LuaUtil.InventoryUIUtil.GetItemImageStaticNoReturn
+    for i = 1, 1000000 do
+        GetItemImageStaticNoReturn(0)
+    end
+    local t6 = CS.UnityEngine.Time.realtimeSinceStartup
+
+    local GetItemImageStaticIntReturn = CS.LuaUtil.InventoryUIUtil.GetItemImageStaticIntReturn
+    for i = 1, 1000000 do
+        local itemImage = GetItemImageStaticIntReturn(0)
+    end
+    local t7 = CS.UnityEngine.Time.realtimeSinceStartup
+
+    local GetItemImageStaticNoReturn10000 = CS.LuaUtil.InventoryUIUtil.GetItemImageStaticNoReturn10000
+    GetItemImageStaticNoReturn10000(0)
+    local t8 = CS.UnityEngine.Time.realtimeSinceStartup
+
+    local GetItemImageStaticNoReturnNoPara = CS.LuaUtil.InventoryUIUtil.GetItemImageStaticNoReturnNoPara
+    for i = 1, 1000000 do
+        GetItemImageStaticNoReturnNoPara()
+    end
+    local t9 = CS.UnityEngine.Time.realtimeSinceStartup
+
+    local Nop = CS.LuaUtil.InventoryUIUtil.Nop
+    for i = 1, 1000000 do
+        Nop()
+    end
+    local t10 = CS.UnityEngine.Time.realtimeSinceStartup
+
+    local GetItemImageStaticNoReturnRefPara = CS.LuaUtil.InventoryUIUtil.GetItemImageStaticNoReturnRefPara
+    for i = 1, 1000000 do
+        GetItemImageStaticNoReturnRefPara(itemImageS)
+    end
+    local t11 = CS.UnityEngine.Time.realtimeSinceStartup
+
+    local GetItemImageStaticNoReturn5Para = CS.LuaUtil.InventoryUIUtil.GetItemImageStaticNoReturn5Para
+    for i = 1, 1000000 do
+        GetItemImageStaticNoReturn5Para(0, 0, 0, 0, 0)
+    end
+    local t12 = CS.UnityEngine.Time.realtimeSinceStartup
+
+    print("真的静态函数: "..(t1 - t0))
+    print("使用静态函数: "..(t2 - t1))
+    print("使用对象引用.下标.成员: "..(t3 - t2))
+    print("使用对象引用的目标方法: "..(t4 - t3))
+    print("提前缓存引用: "..(t5 - t4))
+    print("真静态但是没有返回值: "..(t6 - t5))
+    print("真静态但是返回整数: "..(t7 - t6))
+    print("真静态但是没有返回值但是C#侧执行循环: "..(t8 - t7))
+    print("真静态但是不返回值也不传参: "..(t9 - t8))
+    print("真静态但是其实啥都没干: "..(t10 - t9))
+    print("真静态但是没返回但是传了个引用: "..(t11 - t10))
+    print("真静态但是没返回但是传了5个整数: "..(t12 - t11))
+end

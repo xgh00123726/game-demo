@@ -1,29 +1,38 @@
 require("InventoryData")
 
 local InventoryUtil = CS.LuaUtil.InventoryUtil
+local InventoryInteractive = CS.Instance.InventoryInteractive
+local InventoryDataBase = CS.Instance.InventoryDataBase.Instance
 
 local function Init()
     -- 初始化背包
-    InventoryUtil.Init()
+    local instance = InventoryUtil.NewInventory()
     -- 背包设置容量
-    InventoryUtil.SetSize(InventoryData.Size)
+    instance.Size = InventoryData.Size
+
+    InventoryInteractive.Instance:SetActive(true)
+    InventoryInteractive.OnActive = Inventory.OnActive
+    InventoryInteractive.OnInActive = Inventory.OnInActive
+
+    Inventory.Instance = instance
 end
 
 local function GenInitItem()
+    local instance = Inventory.Instance
     -- 向背包中添加27个物品
-    for i = 1, InventoryData.InitItemNum do
-        InventoryUtil.AddItemFromDataBase(i - 1)
+    for i = 0, InventoryData.InitItemNum - 1 do
+        local itemData = InventoryDataBase[i]
+        instance:Add(itemData)
     end
 end
 
 Inventory = {
-    --- @nopara
+    --- @noarg
     Init = Init,
 
-    --- @nopara
+    --- @noarg
     GenInitItem = GenInitItem,
 
-    --- @arg1 dataBaseIndex : int
-    --- @ret addPosition : int
-    AddItemFromDataBase = InventoryUtil.AddItemFromDataBase
+    --- data
+    DataBase = InventoryDataBase,
 }

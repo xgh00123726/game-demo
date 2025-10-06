@@ -1,4 +1,4 @@
-27, secondType         , secondId
+28, secondType         , secondId
  0, Equipment          ,       11
  1, Equipment          ,       12
  2, Equipment          ,       13
@@ -26,3 +26,4 @@
 24, SpellActionModifier,       10
 25, SpellActionModifier,       11
 26, SpellActionModifier,       12
+27, Equipment          ,       22

@@ -1,4 +1,4 @@
-22, buffType , iconTextureID, rarity
+23, buffType , iconTextureID, rarity
  0, Common   ,            22,      0
  1, Common   ,            24,      0
  2, Common   ,            23,      2
@@ -21,3 +21,4 @@
 19, Equipment,            30,      2
 20, Equipment,            31,      2
 21, Equipment,            32,      2
+22, Equipment,            32,      5

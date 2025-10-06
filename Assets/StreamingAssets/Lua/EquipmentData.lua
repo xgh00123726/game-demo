@@ -1,0 +1,3 @@
+EquipmentData = {
+    Size = 6,
+}

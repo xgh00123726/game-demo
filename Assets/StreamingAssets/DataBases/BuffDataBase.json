@@ -112,5 +112,10 @@
         "strength": {
             "fixed": "10"
         }
+    },
+    "22": {
+        "strength": {
+            "fixed": "100"
+        }
     }
 }

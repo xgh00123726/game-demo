@@ -1,4 +1,4 @@
-22, infomation
+23, infomation
  0, "{K.Inc} <color=green>50%</color> {K.MovSpd}"
  1, "{K.Inc} <color=green>100</color> {K.SplAcc}"
  2, "{K.Inc} <color=green>1</color> {K.MovSpd}{\n}{K.Inc} <color=green>10%</color>{K.Curr}{K.MovSpd}{\n}{K.Inc}<color=green>10%</color> {K.Sum}{K.MovSpd}"
@@ -21,3 +21,4 @@
 19, "{K.Inc} <color=green>10</color> {K.Agi}"
 20, "{K.Inc} <color=green>10</color> {K.Intl}"
 21, "{K.Inc} <color=green>10</color> {K.Strn}"
+22, "{K.Inc} <color=green>100</color> {K.Strn}"

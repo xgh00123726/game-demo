@@ -1,6 +1,11 @@
 local PlayerUtil = CS.LuaUtil.PlayerUtil
 
 Player = {
-    --- @nopara
+    --- @ret playerID : int
     GetPlayerID = PlayerUtil.GetPlayerID,
+
+    --- @ret player : Creature
+    GetPlayer = function ()
+        return PlayerUtil.Player
+    end
 }
