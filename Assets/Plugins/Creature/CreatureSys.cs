@@ -21,7 +21,7 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
     /// <item><param name="rangeLimit"><paramref name="rangeLimit"/>:只会寻找到rangeLimit距离内的实体</param></item>
     /// </list></summary>
     /// <returns>符合条件最近的实体，没有实体满足条件则返回null</returns>
-    public Creature NearestEntity(Vector3 position, Tag tag, float rangeLimit = 10)
+    public Creature NearestEntity(Vector3 position, CreatureTag tag, float rangeLimit = 10)
     {
         Creature c = null;
         float minDistance = float.PositiveInfinity;
@@ -61,11 +61,7 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
         e.rotater = RotateSys.Instance.NewEntity();
         e.rotater.owner = e;
 
-        e.healthBar = HealthBarSys.Instance.NewEntity((HealthBar eh) =>
-        {
-            eh.ObjID = 6;
-        });
-        e.healthBar.owner = e;
+        e.animController = new GameBase.Animations.HumanAnimController(e);
 
         e.instanceID = instanceNum++;
 
@@ -75,6 +71,12 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
     protected override void AfterInstantiateEUObject(Creature e)
     {
         e.Alive = true;
+
+        e.healthBar = HealthBarSys.Instance.NewEntity((HealthBar eh) =>
+        {
+            eh.ObjID = 6;
+        });
+        e.healthBar.owner = e;
 
         _creatrues.Add(e.instanceID, e);
 
@@ -96,6 +98,8 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
         {
             RemoveEntity(e);
         }
+
+        e.animController.Update();
     }
 
     public bool Exist(int  instanceID)
@@ -113,7 +117,7 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
         return null;
     }
 
-    public void RemoveAll(Tag tag)
+    public void RemoveAll(CreatureTag tag)
     {
         List<Creature> needRemove = new();
 

@@ -11,9 +11,9 @@ namespace GameBase.Texts
 
         private static void ExtendInit()
         {
-            InitFile(_buffTextFilePath);
-            InitFile(_spellActionModifierText);
-            InitFile(_modifierTextFilePath);
+            //InitFile(_buffTextFilePath);
+            //InitFile(_spellActionModifierText);
+            //InitFile(_modifierTextFilePath);
         }
 
         public static string GetBuffText(int id)

@@ -92,7 +92,7 @@ namespace GameBase.Texts
         }
 
 
-        public static string Get(string path, int index, params string[] args)
+        public static string Get(string path, int index)
         {
             if (index >= _dataTexts[path].Length)
             {

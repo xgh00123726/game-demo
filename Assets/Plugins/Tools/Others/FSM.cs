@@ -25,8 +25,8 @@ namespace GameBase.Tools
         }
 
         private State _currState;
-        private List<State> _states;
-        private List<Transition> _transitions;
+        private List<State> _states = new();
+        private List<Transition> _transitions = new();
 
         public void NewState(Action OnEnter, Action OnExit, Action OnExec)
         {

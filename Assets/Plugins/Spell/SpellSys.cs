@@ -15,7 +15,7 @@ namespace GameBase.Spells
                 return;
             }
 
-            if (e.interactive.IsTrig)
+            if (e.isTrig)
             {
                 if (e.spellCoolingdown.IsCoolingOver)
                 {
@@ -27,6 +27,7 @@ namespace GameBase.Spells
                         e.spellCoolingdown.Recooling();
                     }
                 }
+                e.isTrig = false;
                 e.interactive.OnTrig();
             }
 

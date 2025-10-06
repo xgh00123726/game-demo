@@ -4,6 +4,8 @@ namespace GameBase.Spells
 {
     public class Spell
     {
+        internal bool isTrig;
+
         public float point;            // 前摇
         public float backswing;        // 后摇
         public float duration;         // 持续时间
@@ -14,5 +16,10 @@ namespace GameBase.Spells
         public ISpellAction action;
         public ISpellCoolingdown spellCoolingdown = new CommonSpellCoolingdown();
         public ISpellInteractive interactive;
+
+        public void TryCast()
+        {
+            isTrig = true;
+        }
     }
 }

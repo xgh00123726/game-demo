@@ -96,7 +96,7 @@ namespace GameBase.AI
         {
             if (target == null)
             {
-                target = CreatureSys.Instance.NearestEntity(mover.owner.Position, Tag.Player);
+                target = CreatureSys.Instance.NearestEntity(mover.owner.Position, CreatureTag.Player);
             }
         }
 

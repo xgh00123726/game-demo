@@ -47,9 +47,6 @@ namespace GameBase.GCamera
 
         private void CameraReset()
         {
-            var position = Globals.GetPlayerPosition(0);
-            position.y = transform.position.y;
-            transform.position = position;
         }
 
         private void DragUpdate()

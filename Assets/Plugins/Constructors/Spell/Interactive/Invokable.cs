@@ -4,17 +4,13 @@ using GameBase.Tools;
 
 namespace Constructor.Spells.Interactive
 {
-    public class Invokable : ISpellInteractive, IKeyInteractive
+    public class Invokable : ISpellInteractive
     {
-        internal IndicatorType indicatorType;
+        public IndicatorType indicatorType;
+        public float indicatorLength = 10;
+        public float indicatorRadius;
 
         private bool _isTrig = false;
-
-        IndicatorType IKeyInteractive.IndicatorType => indicatorType;
-
-        float IKeyInteractive.Length => 10;
-
-        float IKeyInteractive.Radius => 1;
 
         bool ISpellInteractive.IsTrig => _isTrig;
 

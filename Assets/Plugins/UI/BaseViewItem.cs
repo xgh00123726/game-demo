@@ -11,11 +11,12 @@ namespace GameBase.UI
         protected internal ViewTag tag = ViewTag.None;
         protected internal GameObject triggerObject;
         protected internal RectTransform triggerRectTransform;
-        protected internal bool lastDrag;
-        protected internal bool lastDetail;
         protected internal bool lastClicked;
         protected internal int itemIndex;
+        protected internal bool inDragState;
+        protected internal bool inDetailState;
 
+        public bool interactiveEnable = true;
         public int objID;
         public GameObject obj;
         public int iconTextureID;

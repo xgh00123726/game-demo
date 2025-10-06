@@ -1,24 +1,9 @@
-using GameBase.Buffs;
 using GameBase.Modify;
-using GameBase.Tools;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using NReco.Csv;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using UnityEngine;
 
 namespace GameBase.Buffs
 {
-
     public class BuffFactory
     {
-        static BuffFactory()
-        {
-
-        }
-
         /// <summary>
         /// ¥”info idªÒ»°buff
         /// </summary>

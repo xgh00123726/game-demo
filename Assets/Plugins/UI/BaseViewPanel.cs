@@ -1,7 +1,9 @@
 using GameBase.EntitySystem;
 using GameBase.Resources;
+using GameBase.Tools;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,7 +23,14 @@ namespace GameBase.UI
 
         public ILayout layout;
         public IDetailableControl detailableControl;
-        public IDragableControl dragableControl;
+
+        public Action<int> OnEnterDrag;
+        public Action<int> OnExitDrag;
+        public Action<int> OnDrag;
+
+        public Action<int> OnEnterDetail;
+        public Action<int> OnExitDetail;
+        public Action<int> OnDetail;
 
         private Action<int> _OnPointerDown;
         private Action<int> _OnPointerRightDown;
@@ -133,51 +142,26 @@ namespace GameBase.UI
 
         private void DragableUpdate(T e)
         {
-            if (dragableControl == null) return;   
-
-            var isDrag = dragableControl.IsDrag(e.itemIndex);
-            if (isDrag && !e.lastDrag)
+            if (!e.interactiveEnable)
             {
-                dragableControl.OnEnterDrag(e.itemIndex);
+                return;
             }
-            else if (!isDrag && e.lastDrag)
+            if (e.inDragState)
             {
-                dragableControl.OnExitDrag();
+                OnDrag?.Invoke(e.itemIndex);
             }
-
-            if (isDrag)
-            {
-                dragableControl.OnDrag();
-            }
-
-            e.lastDrag = isDrag;
         }
 
         private void DetailbleUpdate(T e)
         {
-            if (detailableControl == null) return;
-
-            var isDetail = detailableControl.IsDetail(e.itemIndex);
-            if (isDetail && !e.lastDetail)
+            if (!e.interactiveEnable)
             {
-                detailableControl.OnEnterDetail(e.itemIndex);
+                return;
             }
-            else if (!isDetail && e.lastDetail)
+            if (e.inDetailState)
             {
-                detailableControl.OnExitDetail(e.itemIndex);
+                OnDetail?.Invoke(e.itemIndex);
             }
-
-            if (isDetail)
-            {
-                detailableControl.OnDetail(e.itemIndex);
-            }
-
-            e.lastDetail = isDetail;
-        }
-
-        private void EnterExitUpdate(T e)
-        {
-            e.lastClicked = e.uiScript.isPointerDown;
         }
 
         private void LayoutUpdate(T e)
@@ -211,7 +195,6 @@ namespace GameBase.UI
             LayoutUpdate(e);
             DragableUpdate(e);
             DetailbleUpdate(e);
-            EnterExitUpdate(e);
         }
 
         protected virtual void Update()
@@ -255,7 +238,7 @@ namespace GameBase.UI
             e.uiScript.OnPointerRightDown = _OnPointerRightDown;
             e.uiScript.OnPointerExit = _OnPointerExit;
             e.uiScript.OnPointerUp = _OnPointerUp;
-            ViewManager.RegisterView(e);
+            ViewMgr.RegisterView(e);
             return e;
         }
 
@@ -284,7 +267,7 @@ namespace GameBase.UI
         protected virtual void Remove(T e)
         {
             Entities.Remove(e);
-            ViewManager.RemoveView(e);
+            ViewMgr.RemoveView(e);
         }
 
         public virtual void SetLocalPosition(float x, float y)
@@ -334,9 +317,12 @@ namespace GameBase.UI
             return null;
         }
 
-        public void SwapIconSprite(int p1, int p2)
+        public void Swap(int p1, int p2)
         {
-            this[p1].triggerImage.Swap(this[p2].triggerImage);
+            var item1 = this[p1];
+            var item2 = this[p2];
+            item1.triggerImage.Swap(item2.triggerImage);
+            (item1.interactiveEnable, item2.interactiveEnable) = (item2.interactiveEnable, item1.interactiveEnable);
         }
 
         public void AddChild(GameObject child)
@@ -347,6 +333,58 @@ namespace GameBase.UI
         public Transform FindChild(string name)
         {
             return panel.transform.Find(name);
+        }
+
+        public void EnterDragState(int index)
+        {
+            if (!this[index].interactiveEnable)
+            {
+                return;
+            }
+            if (!this[index].inDragState)
+            {
+                OnEnterDrag?.Invoke(index);
+            }
+            this[index].inDragState = true;
+        }
+
+        public void ExitDragState(int index)
+        {
+            if (!this[index].interactiveEnable)
+            {
+                return;
+            }
+            if (this[index].inDragState)
+            {
+                OnExitDrag?.Invoke(index);
+            }
+            this[index].inDragState = false;
+        }
+
+        public void EnterDetailState(int index)
+        {
+            if (!this[index].interactiveEnable)
+            {
+                return;
+            }
+            if (!this[index].inDetailState)
+            {
+                OnEnterDetail?.Invoke(index);
+            }
+            this[index].inDetailState = true;
+        }
+
+        public void ExitDetailState(int index)
+        {
+            if (!this[index].interactiveEnable)
+            {
+                return;
+            }
+            if (this[index].inDetailState)
+            {
+                OnExitDetail?.Invoke(index);
+            }
+            this[index].inDetailState = false;
         }
 
         public virtual void Show()
@@ -369,6 +407,11 @@ namespace GameBase.UI
             {
                 Show();
             }
+        }
+
+        public SuperImage GetItemImage(int index)
+        {
+            return this[index].triggerImage;
         }
 
         void IBaseSys.Update()

@@ -29,6 +29,7 @@ namespace GameBase.UI
             {
                 _sprite = null;
                 _image.sprite = null;
+                _textureID = textureID;
                 return;
             }
             

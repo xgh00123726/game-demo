@@ -1,15 +1,12 @@
 using GameBase.Creatures;
 using GameBase.EntitySystem;
-using GameBase.Modify;
-using NReco.Csv;
-using System;
 
 namespace Constructor.Creatures
 {
     public struct CommonData
     {
         public int ObjID;
-        public GameBase.Creatures.Tag tag;
+        public CreatureTag tag;
         public float healthBarXOffset;
         public float healthBarYOffset;
         public float healthBarZOffset;

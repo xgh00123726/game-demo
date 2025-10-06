@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Instance.Move
+namespace Instance
 {
     public class MoveIndicator
     {

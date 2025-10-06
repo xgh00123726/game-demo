@@ -7,12 +7,12 @@ using GameBase.Move;
 using GameBase.Projectiles;
 using GameBase.Spells;
 using GameBase.UI;
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameBase.Creatures
 {
-    public enum Tag
+    public enum CreatureTag
     {
         CommonCreature = 1 << 0,
         Player = 1 << 1,
@@ -28,36 +28,39 @@ namespace GameBase.Creatures
         IBuffOwner,
         IMover,
         IRotater,
-        IPlayerAnimable,
-        IKeySpeller
+        IAnimatable
     {
         public int radius;
-        public Tag tag;
-        public Action<Buff> OnGetBuffAction;
+        public CreatureTag tag;
         public Vector3 healthBarOffset = new Vector3(0, 1.6f, 0);
-        public DynInventory<Spell> spells = new();
+        
         public bool Alive { get; internal protected set; }
         public int InstanceID => instanceID;
         public GameObject Obj { get; set; }
         public int ObjID { get; set; }
         public virtual bool ReleaseTrigger => _fModifyables["currHP"] <= 0f;
 
+        protected DynInventory<Spell> _spells = new();
         protected Modifyables _fModifyables = new();
         protected CommonInventory<Buff> _equipments = new() { Size = 6 };
+        protected List<Buff> _buffs = new();
 
         internal int instanceID;
         internal Mover mover;
         internal Rotater rotater;
         internal HealthBar healthBar;
         internal Animator animator;
+        internal HumanAnimController animController;
 
         public Modifyables Modifyables => _fModifyables;
         public Mover Mover => mover;
         public Rotater Rotater => rotater;
         public HealthBar HealthBar => healthBar;
         public Animator Animator => animator;
-
+        public HumanAnimController AnimController => animController;
+        public DynInventory<Spell> Spells => _spells;
         public CommonInventory<Buff> Equipments => _equipments;
+        public List<Buff> Buffs => _buffs;
 
         Vector3 IHealthBarOwner.HealthBarPosition => Obj.transform.position 
             + (CreatureGizmosDraw.Instance.healthBarDebugMode ? CreatureGizmosDraw.Instance.healthbarOffset : healthBarOffset);
@@ -96,41 +99,55 @@ namespace GameBase.Creatures
 
         public bool IsRotating { get; set; }
 
-        Animator IPlayerAnimable.Animator => animator;
+        Animator IAnimatable.Animator => animator;
 
         public Vector3 Dir { get; set; }
 
-        Vector3 IKeySpeller.Position => Obj.transform.position;
-
-        bool IPlayerAnimable.IsMoving()
+        bool IAnimatable.IsMoving()
         {
             return mover.IsMoving;
         }
 
-        bool IPlayerAnimable.IsIdle()
+        bool IAnimatable.IsIdle()
         {
             return !mover.IsMoving;
         }
 
-        public virtual void AfterGet()
+        void IPoolable.AfterGet()
         {
-            tag = Tag.CommonCreature;
+            tag = CreatureTag.CommonCreature;
         }
 
-        public void BeforeRelease()
+        void IPoolable.BeforeRelease()
         {
+        }
+
+        public void AddModifier(int modifierID)
+        {
+            var modifyInfo = ModifierDataBase.Instance[modifierID];
+            var modifier = ModifyerSys.Instance.NewEntity();
+            modifier.value = modifyInfo.value;
+            modifier.type = modifyInfo.type1 | modifyInfo.type2;
+            Modifyables.ModifySet(modifyInfo.key, modifier);
         }
 
         public void AddBuff(int id, float duration = 10)
         {
-            Buffs.BuffFactory.Get(id).AddTo(this, duration);
+            BuffFactory.Get(id).AddTo(this, duration);
         }
 
-        public void AddEquipment(int id, int index)
+        public bool AddEquipment(int id, int index)
         {
-            var buff = Buffs.BuffFactory.Get(id);
-            buff.AddTo(this);
-            _equipments[index] = buff;
+            var info = BuffDataBase.Instance[id];
+            if (info.type == BuffType.Equipment)
+            {
+                var buff = BuffFactory.Get(id);
+                buff.AddTo(this);
+                _equipments[index] = buff;
+                return true;
+            }
+
+            return false;
         }
 
         public bool HasEquipment(int index)
@@ -153,19 +170,20 @@ namespace GameBase.Creatures
             return _equipments[index];
         }
 
-        Spell IKeySpeller.GetSpell(int index)
+        public void AddSpell(Spell spell)
         {
-            if (spells.HasItem(index))
-            {
-                return spells[index];
-            }
-
-            return null;
+            _spells.Add(spell);
+            spell.speller = this;
         }
 
-        public void OnGetBuff(Buff buff)
+       void IBuffOwner.OnGetBuff(Buff buff)
         {
-            OnGetBuffAction?.Invoke(buff);  
+            _buffs.Add(buff);
+        }
+
+        void IBuffOwner.OnRemoveBuff(Buff buff)
+        {
+            _buffs.Remove(buff);
         }
     }
 }

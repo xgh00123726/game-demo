@@ -24,7 +24,7 @@ namespace Constructor.Projectiles
             LinkedList<IProjectileTarget> ret = new();
             foreach(var c in CreatureSys.Instance.Entities)
             {
-                if (c.tag != Tag.CommonCreature) continue;
+                if (c.tag != CreatureTag.CommonCreature) continue;
 
                 if (c is IProjectileTarget tar)
                 {
@@ -44,7 +44,7 @@ namespace Constructor.Projectiles
             IProjectileTarget ret = null;
             foreach (var c in CreatureSys.Instance.Entities)
             {
-                if (c.tag != Tag.CommonCreature) continue;
+                if (c.tag != CreatureTag.CommonCreature) continue;
 
                 if (c is IProjectileTarget tar)
                 {

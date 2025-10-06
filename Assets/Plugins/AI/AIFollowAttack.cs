@@ -83,7 +83,7 @@ namespace GameBase.AI
         {
             if (target == null)
             {
-                target = CreatureSys.Instance.NearestEntity(mover.owner.Position, Tag.Player, missDis);
+                target = CreatureSys.Instance.NearestEntity(mover.owner.Position, CreatureTag.Player, missDis);
                 if (target != null)
                 {
                     _followEnableTime = Time.time;

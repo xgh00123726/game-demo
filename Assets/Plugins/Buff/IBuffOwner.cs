@@ -6,5 +6,6 @@ namespace GameBase.Buffs
     public interface IBuffOwner : IModifieder
     {
         void OnGetBuff(Buff buff);
+        void OnRemoveBuff(Buff buff);
     }
 }

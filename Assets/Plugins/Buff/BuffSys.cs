@@ -34,6 +34,7 @@ namespace GameBase.Buffs
                 XLogger.Instance.Level(XLogger.LogLevel.Warning)
                     .Log("buff has no owner");
                 RemoveEntity(e);
+                e.owner.OnRemoveBuff(e);
                 return;
             }
 
@@ -51,6 +52,7 @@ namespace GameBase.Buffs
             if (e.durationRemain <= 0)
             {
                 RemoveEntity(e);
+                e.owner.OnRemoveBuff(e);
             }
         }
 

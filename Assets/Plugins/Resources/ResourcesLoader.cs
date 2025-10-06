@@ -23,20 +23,28 @@ namespace GameBase.Resources
             return _prefabs[id];
         }
 
-        public static Sprite GetSprite(int id)
+        public static GameObject InstantiateGameObject(int id)
         {
-            if (id >= _sprites.Length || id < 0)
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log($"resource id out of the bound, id:{id}, max:{_sprites.Length}");
-            }
-            return _sprites[id];
+            return GameObject.Instantiate(GetPrefab(id));
         }
 
         public static Sprite GetSpriteFromTextureID(int id)
         {
-            var texture = ResourcesLoader.GetTexture2D(id);
-            return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            if (id >= _sprites.Length || id < 0)
+            {
+                XLogger.Instance.Level(XLogger.LogLevel.Error)
+                    .Log($"resource id out of the bound, id:{id}, max:{_textures.Length}");
+            }
+
+            var sprite = _sprites[id];
+
+            if (sprite == null)
+            {
+                var texture = ResourcesLoader.GetTexture2D(id);
+                sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+                _sprites[id] = sprite;
+            }
+            return sprite;
         }
 
         public static Texture2D GetTexture2D(int id)
@@ -47,6 +55,16 @@ namespace GameBase.Resources
                     .Log($"resource id out of the bound, id:{id}, max:{_textures.Length}");
             }
             return _textures[id];
+        }
+
+        private static void CopyTexturesToSprite()
+        {
+            for (int i = 0; i < _textures.Length; i++)
+            {
+                var texture = ResourcesLoader.GetTexture2D(i);
+                var sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+                _sprites[i] = sprite;
+            }
         }
 
         private static void LoadCsvAsset<T>(string csvPath, out T[] container)
@@ -71,8 +89,10 @@ namespace GameBase.Resources
         public static void LoadAllAsset()
         {
             LoadCsvAsset($"{Application.streamingAssetsPath}/public/PrefabIDDictionary.csv", out _prefabs);
-            LoadCsvAsset($"{Application.streamingAssetsPath}/public/SpriteIDDictionary.csv", out _sprites);
             LoadCsvAsset($"{Application.streamingAssetsPath}/public/Texture2DIDDictionary.csv", out _textures);
+
+            _sprites = new Sprite[_textures.Length];
+            CopyTexturesToSprite();
         }
 
     }
