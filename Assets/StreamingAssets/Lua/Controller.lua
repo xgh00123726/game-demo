@@ -2,6 +2,7 @@ local PlayerMoveController = CS.Instance.PlayerMoveController
 local PlayerSpellCaster = CS.Instance.PlayerSpellCaster
 local EpicBarController = CS.Instance.EpicBarController
 local AutoSpellCaster = CS.Instance.AutoSpellCaster
+local DrawCreatureRadius = CS.Instance.DrawCreatureRadius
 
 local function ControllerInit()
     PlayerMoveController.Instance:SetActive(true)
@@ -12,6 +13,11 @@ local function ControllerInit()
     EpicBarController.Instance:SetActive(true)
 
     AutoSpellCaster.Instance:SetActive(true)
+
+    -- DrawCreatureRadius.Instance:SetActive(true)
+
+    CS.GameBase.Projectiles.ProjectileGizmos.ToggleShow()
+    CS.GameBase.Creatures.CreatureGizmosDraw.ToggleShow()
 end
 
 Controller = {

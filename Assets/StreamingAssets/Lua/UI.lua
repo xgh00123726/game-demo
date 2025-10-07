@@ -109,6 +109,8 @@ local function ShopUIInit()
 
     SetLayout(panel, UIData.Shop.Layout)
 
+    nearView:Hide()
+
     ShopUIInteractive.Instance:SetActive(true)
     ShopUIInteractive.enterDetailTime = UIData.Shop.EnterDetailTime
 

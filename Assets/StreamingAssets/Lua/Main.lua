@@ -48,9 +48,11 @@ function OnInitOK()
     Controller.PlayerMove.SetTarget(Creature.Player)
     Controller.SpellCast.SetTarget(Creature.Player)
     Controller.PlayerEpicBar.SetTarget(Creature.Player)
-    Controller.AutoCaster.Register(Creature.Player.Spells[1])
+    -- Controller.AutoCaster.Register(Creature.Player.Spells[1])
 
     Text.Init()
+
+    Creature.CreateBase(CreatureData.CreatureBase.Base1)
 
     print("lua init ok")
 end
