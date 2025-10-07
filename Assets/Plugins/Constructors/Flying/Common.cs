@@ -41,7 +41,7 @@ namespace Constructor.Flyings
                 e.OnReleased += () =>
                 {
                     var er = Constructor.Effects.Common.Instance.Get(releaseEffectID);
-                    er.Position = e.Obj.transform.position;
+                    er.Obj.transform.position = e.Obj.transform.position;
                 };
             }
             var hitEffectID = data.hitEffectID;
@@ -50,7 +50,7 @@ namespace Constructor.Flyings
                 e.OnHit += () =>
                 {
                     var er = Effects.Common.Instance.Get(hitEffectID);
-                    er.Position = e.Obj.transform.position;
+                    er.Obj.transform.position = e.Obj.transform.position;
                 };
             }
         }

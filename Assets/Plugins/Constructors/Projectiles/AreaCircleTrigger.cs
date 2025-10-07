@@ -27,7 +27,7 @@ namespace Constructor.Projectiles
             e.maxeffectTimes = data.maxEffectTimes;
             e.hasWhite = data.hasWhite;
             e.shape = new GMath.Circle(Vector2.zero, data.radius);
-            e.targetsSet = TargetSetFactorary.GetTargetSet("Common");
+            e.targetsSet = TargetSetFactorary.Get(TargetSetType.Common);
             e.action = Constructor.Projectiles.Action.Factory.Instance.Get(Projectiles.Action.Type.Damage, data.damage);
         }
     }

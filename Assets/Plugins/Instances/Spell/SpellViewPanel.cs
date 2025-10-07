@@ -71,12 +71,12 @@ namespace Instance
 
         public void UpdatePanel(Creature c)
         {
-            var spells = c.Spells;
-            var size = c.Spells.Size;
+            var spells = c.spells;
+            var size = c.spells.Size;
             FillItem(size);
             for (int i = 0; i < size; ++i)
             {
-                this[i].maskImage.SetIcon(spells[i].iconTextureID);
+                this[i].maskImage.SetIcon((int)spells[i].iconTextureID);
             }
             for (int i = 0; i < spells.Size; ++i)
             {

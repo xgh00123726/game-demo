@@ -7,7 +7,7 @@ namespace Instance
         public static void Show(Vector3 position)
         {
             var effect = Constructor.Effects.Factory.Instance.Get(Constructor.Effects.Type.Common, 2);
-            effect.Position = position;
+            effect.Obj.transform.position = position;
         }
     }
 }

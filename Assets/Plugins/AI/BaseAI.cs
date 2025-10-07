@@ -5,17 +5,24 @@ namespace GameBase.AI
 {
     public abstract class BaseAI : IPoolable
     {
+        internal protected Creature owner;
         internal protected abstract void Update();
         void IPoolable.AfterGet()
         {
-            AISys.Instance.actions.AddLast(Update);
+            AISys.Instance.AIList.AddLast(this);
         }
 
         void IPoolable.BeforeRelease()
         {
-            AISys.Instance.actions.Remove(Update);
+            AISys.Instance.AINeedRemove.AddLast(this);
         }
 
-        public abstract void AddTo(Creature c);
+        public void AddTo(Creature c)
+        {
+            owner = c;
+            OnAddTo(c);
+        }
+
+        protected abstract void OnAddTo(Creature c);
     }
 }

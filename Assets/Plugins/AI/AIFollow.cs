@@ -36,13 +36,13 @@ namespace GameBase.AI
                             .IF(IsFollowEnable)
                             .FF(Follow)
                         .Back()
-            .End().TickRate(100);
+            .End().TickRate(1);
         }
 
-        public override void AddTo(Creature c)
+        protected override void OnAddTo(Creature c)
         {
-            mover = c.Mover;
-            rotater = c.Rotater;
+            mover = c.mover;
+            rotater = c.rotater;
         }
 
         private bool IsFollowArrive()
@@ -91,7 +91,8 @@ namespace GameBase.AI
                 return;
             }
 
-            mover.MoveTo(target.Position);
+            mover.MoveTo(target.Obj.transform.position);
+            rotater.owner.Dir = target.Obj.transform.position - owner.Obj.transform.position;
         }
     }
 }

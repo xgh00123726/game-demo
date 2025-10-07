@@ -15,7 +15,7 @@ namespace GameBase.EntitySystem
             return SysInstance.NewFromPool();
         }
 
-        protected sealed override void Set(T_Entity e, in T_Data data)
+        protected override void Set(T_Entity e, in T_Data data)
         {
             ESet(e, in data);
             SysInstance.RegisterEntity(e);

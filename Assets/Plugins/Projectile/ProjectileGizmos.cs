@@ -5,18 +5,17 @@ namespace GameBase.Projectiles
 {
     public class ProjectileGizmos : MonoBehaviour
     {
-        public bool isInit = false;
-        public bool drawGizmos = false;
+        public static bool isInit = false;
+        public static bool drawGizmos = false;
+        public static float drawY = -7;
         public static ProjectileSys sysInstance;
-        public static ProjectileGizmos Instance => _instance;
-        public static ProjectileGizmos _instance;
 
-        private void Init()
+        private static void Init()
         {
             sysInstance = ProjectileSys.Instance;
         }
 
-        public void ToggleShow()
+        public static void ToggleShow()
         {
             if (!isInit)
             {
@@ -29,7 +28,6 @@ namespace GameBase.Projectiles
 
         private void Awake()
         {
-            _instance = this;
             Command.Register("toggle-projectile-gizmos", ToggleShow);
         }
 
@@ -42,7 +40,7 @@ namespace GameBase.Projectiles
             foreach (var e in sysInstance.Entities)
             {
                 Gizmos.color = Color.green;
-                GizmosAppend.DrawShape(e.shape, -7);
+                GizmosAppend.DrawShape(e.shape, drawY);
             }
         }
     }

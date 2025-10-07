@@ -7,7 +7,8 @@ namespace GameBase.AI
 {
     public class AISys : Singleton<AISys>, IBaseSys
     {
-        internal LinkedList<Action> actions = new();
+        internal LinkedList<BaseAI> AIList = new();
+        internal LinkedList<BaseAI> AINeedRemove = new();
 
         internal Dictionary<System.Type, BaseObjectPool<BaseAI>> pools = new();
 
@@ -35,20 +36,36 @@ namespace GameBase.AI
 
         void IBaseSys.FixedUpdate()
         {
-            foreach (var action in actions)
+            foreach (var ai in AINeedRemove)
             {
-                action?.Invoke();
+                AIList.Remove(ai);
+            }
+            AINeedRemove.Clear();
+            foreach (var ai in AIList)
+            {
+                ai?.Update();
+                if (ai.owner == null)
+                {
+                    XLogger.Instance.Level(XLogger.LogLevel.Warning)
+                        .Log("ai has null owner");
+                    pools[ai.GetType()].Release(ai);
+                    continue;
+                }
+                if (!ai.owner.Alive)
+                {
+                    pools[ai.GetType()].Release(ai);
+                }
             }
         }
 
         int IBaseSys.GetActiveCount()
         {
-            return actions.Count;
+            return AIList.Count;
         }
 
         int IBaseSys.GetEntityCount()
         {
-            return actions.Count;
+            return AIList.Count;
         }
 
         int IBaseSys.GetReleasedCount()

@@ -6,5 +6,7 @@ namespace GameBase.Move
     {
         float Speed { get; }
         Vector3 Position { get; set; }
+        float Radius { get; }
+        Collider Collider { get; }
     }
 }

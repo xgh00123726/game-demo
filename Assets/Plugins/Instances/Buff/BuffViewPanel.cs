@@ -76,7 +76,7 @@ namespace Instance
         public void UpdatePanel(Creature c)
         {
             int index = 0;
-            foreach (var buff in c.Buffs)
+            foreach (var buff in c.buffs)
             {
                 var info = BuffDataBase.Instance[buff.id];
                 if (info.type == BuffType.Common)

@@ -18,7 +18,7 @@ namespace GameBase.Tools
         /// <item><param name="isImmediateTrig"><paramref name="isImmediateTrig"/>:true:立刻触发, false:等待一个周期后触发</param></item>
         /// <item><param name="callback"><paramref name="callback"/>:中断回调函数</param></item>
         /// </list></summary>
-        public static void AddTask(float period, int trigTimes, bool isImmediateTrig, Action callback)
+        public static void AddPeriodTask(float period, int trigTimes, bool isImmediateTrig, Action callback)
         {
             TimerTaskManager.AddTask(period, trigTimes, isImmediateTrig, callback);
         }

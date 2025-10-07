@@ -1,7 +1,12 @@
 {
     "name": "Animations",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:395d68f7c408915498db5a37425ea660",
+        "GUID:d8c19839516efdd488fd8a930bde0e4b",
+        "GUID:d2d43e0db2807da49945b87c5300548d",
+        "GUID:d5866e03ab82e784190599551e0068cd"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

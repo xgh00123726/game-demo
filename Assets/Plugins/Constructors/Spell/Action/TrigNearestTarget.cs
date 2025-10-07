@@ -1,3 +1,4 @@
+using Constructor.Projectiles;
 using GameBase.EntitySystem;
 using GameBase.GCamera;
 using GameBase.Modify;
@@ -37,7 +38,7 @@ namespace Constructor.Spells.Action
             float attackRange = mOwner.Modifyables["attackRange"];
             Vector3 center = new Vector3(spell.speller.Position.x, 0, spell.speller.Position.z);
 
-            var target = TargetSetFactorary.GetTargetSet("Common").NearestTarget(center, attackRange);
+            var target = TargetSetFactorary.Get(TargetSetType.Common).NearestTarget(center, attackRange);
             if (target == null)
             {
                 return false;
@@ -50,6 +51,7 @@ namespace Constructor.Spells.Action
             e.Flying.Src = pOwner.HandPosition + new Vector3(0, 1, 0);
             e.Flying.dest = target.Center;
             e.Flying.curve.DirInit();
+            e.Flying.releaseDistance += e.target.Radius;
             e.owner = pOwner;
             e.target = target;
 

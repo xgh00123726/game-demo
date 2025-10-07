@@ -47,10 +47,10 @@ namespace GameBase.AI
             .End().TickRate(5);
         }
 
-        public override void AddTo(Creature c)
+        protected override void OnAddTo(Creature c)
         {
-            mover = c.Mover;
-            rotater = c.Rotater;
+            mover = c.mover;
+            rotater = c.rotater;
         }
 
         private bool IsFollowArrive()

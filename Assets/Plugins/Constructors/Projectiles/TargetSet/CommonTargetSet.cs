@@ -9,15 +9,8 @@ namespace Constructor.Projectiles
 {
     public class CommonTargetSet : IProjectileTargetsSet
     {
-        private static CommonTargetSet _instance;
-        public static CommonTargetSet Instance
-        {
-            get
-            {
-                _instance ??= new CommonTargetSet();
-                return _instance;
-            }
-        }
+        private static CommonTargetSet _instance = new();
+        public static CommonTargetSet Instance => _instance;
 
         IEnumerable<IProjectileTarget> IProjectileTargetsSet.TargetsInShape(IShape2D shape)
         {

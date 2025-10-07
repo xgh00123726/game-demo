@@ -16,8 +16,6 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
     /// 返回指定位置最近的游戏实体
     /// <list type="bullet">
     /// <item><param name="position"><paramref name="position"/>:指定的位置</param></item>
-    /// <item><param name="id"><paramref name="id"/>:限定的ID，负数表示无限制</param></item>
-    /// <item><param name="filter"><paramref name="filter"/>:寻找过滤器</param></item>
     /// <item><param name="rangeLimit"><paramref name="rangeLimit"/>:只会寻找到rangeLimit距离内的实体</param></item>
     /// </list></summary>
     /// <returns>符合条件最近的实体，没有实体满足条件则返回null</returns>
@@ -52,19 +50,6 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
     {
         var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
 
-        e.animator = obj.GetComponent<Animator>();
-        e.Obj = obj;
-
-        e.mover = MoveSys.Instance.NewEntity();
-        e.mover.owner = e;
-
-        e.rotater = RotateSys.Instance.NewEntity();
-        e.rotater.owner = e;
-
-        e.animController = new GameBase.Animations.HumanAnimController(e);
-
-        e.instanceID = instanceNum++;
-
         return obj;
     }
 
@@ -72,11 +57,21 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
     {
         e.Alive = true;
 
+        e.instanceID = instanceNum++;
+
         e.healthBar = HealthBarSys.Instance.NewEntity((HealthBar eh) =>
         {
             eh.ObjID = 6;
         });
         e.healthBar.owner = e;
+
+        e.mover = MoveSys.Instance.NewEntity();
+        e.mover.owner = e;
+
+        e.rotater = RotateSys.Instance.NewEntity();
+        e.rotater.owner = e;
+
+        e.animator = e.Obj.GetComponent<Animator>();
 
         _creatrues.Add(e.instanceID, e);
 
@@ -89,17 +84,23 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
 
         _creatrues.Remove(e.instanceID);
 
+        MoveSys.Instance.RemoveEntity(e.mover);
+        RotateSys.Instance.RemoveEntity(e.rotater);
+        if (e.collider != null)
+        {
+            CollideSys.Instance.RemoveEntity(e.collider);
+        }
+
         e.Obj.SetActive(false);
     }
 
     protected override void UpdateEntity(Creature e)
     {
-        if (e.ReleaseTrigger)
+        if (e.modifyables["currHP"] <= 0)
         {
             RemoveEntity(e);
+            return;
         }
-
-        e.animController.Update();
     }
 
     public bool Exist(int  instanceID)

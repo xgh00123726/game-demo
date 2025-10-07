@@ -1,7 +1,8 @@
 namespace GameBase.AI
 {
-    public enum Type
+    public enum AIType
     {
+        None,
         Follow,
         MissFollow,
         PartolOnly,
@@ -10,24 +11,24 @@ namespace GameBase.AI
 
     public class AIFactory
     {
-        public static BaseAI Get(Type type)
+        public static BaseAI Get(AIType type)
         {
-            if (type == Type.Follow)
+            if (type == AIType.Follow)
             {
                 return AISys.Instance.NewEntity<AIFollow>();
             }
 
-            if (type == Type.MissFollow)
+            if (type == AIType.MissFollow)
             {
                 return AISys.Instance.NewEntity<AIMissFollow>();
             }
 
-            if (type == Type.PartolOnly)
+            if (type == AIType.PartolOnly)
             {
                 return AISys.Instance.NewEntity<AIPartolOnly>();
             }
 
-            if (type == Type.FollowAttack)
+            if (type == AIType.FollowAttack)
             {
                 return AISys.Instance.NewEntity<AIFollowAttack>();
             }
@@ -37,7 +38,7 @@ namespace GameBase.AI
 
         public static BaseAI Get(int type)
         {
-            return Get((Type)type);
+            return Get((AIType)type);
         }
     }
 }

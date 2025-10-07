@@ -4,7 +4,7 @@ using GameBase.Tools;
 
 namespace Constructor.Spells.Interactive
 {
-    public class Invokable : ISpellInteractive
+    public class HasIndicator : ISpellInteractive
     {
         public IndicatorType indicatorType;
         public float indicatorLength = 10;
@@ -23,15 +23,15 @@ namespace Constructor.Spells.Interactive
 
         public static void Invoke(ISpellInteractive interactive)
         {
-            if (interactive is Invokable e)
+            if (interactive is HasIndicator e)
             {
                 e.Invoke();
             }
         }
 
-        public static Invokable Get(int id)
+        public static HasIndicator Get(int id)
         {
-            return new Invokable();
+            return new HasIndicator();
         }
 
         void ISpellInteractive.OnTrig()

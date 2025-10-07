@@ -20,7 +20,7 @@ namespace Constructor.Projectiles
             e.maxeffectTimes = 100;
             e.hasWhite = true;
             e.shape = new GMath.Rect2D(data.width, 1f);
-            e.targetsSet = TargetSetFactorary.GetTargetSet("Common");
+            e.targetsSet = TargetSetFactorary.Get(TargetSetType.Common);
             var damage = data.damage;
             e.action = Constructor.Projectiles.Action.Factory.Instance.Get(Projectiles.Action.Type.Damage, data.damage);
         }

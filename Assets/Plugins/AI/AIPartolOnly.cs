@@ -60,10 +60,10 @@ namespace GameBase.AI
             return !mover.IsMoving;
         }
 
-        public override void AddTo(Creature c)
+        protected override void OnAddTo(Creature c)
         {
-            mover = c.Mover;
-            rotater = c.Rotater;
+            mover = c.mover;
+            rotater = c.rotater;
             partolP1 = c.Position;
             var delta = GMath.RollRandomDir(Random.Range(randomDisMin, randomDisMax));
             delta.y = 0;

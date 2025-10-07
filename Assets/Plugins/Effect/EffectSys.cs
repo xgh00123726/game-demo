@@ -12,10 +12,7 @@ namespace GameBase.Effects
             e.instantiateTime = Time.time;
             e.Obj.gameObject.SetActive(true);
 
-            if (e.hasParticle)
-            {
-                e.Obj.Play();
-            }
+            e.Obj.Play();
         }
 
         protected override void BeforeReleaseEUObject(Effect e)
@@ -30,12 +27,7 @@ namespace GameBase.Effects
             var particle = obj.GetComponent<ParticleSystem>();
             if (particle == null)
             {
-                e.hasParticle = false;
                 XLogger.Instance.Log($"this prefab has no particle, id:{e.ObjID}");
-            }
-            else
-            {
-                e.hasParticle = true;
             }
 
             return particle;

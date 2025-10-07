@@ -1,4 +1,3 @@
-using GameBase.Animations;
 using GameBase.Buffs;
 using GameBase.EntitySystem;
 using GameBase.Inventorys;
@@ -7,6 +6,7 @@ using GameBase.Move;
 using GameBase.Projectiles;
 using GameBase.Spells;
 using GameBase.UI;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,40 +27,29 @@ namespace GameBase.Creatures
         ISpeller,
         IBuffOwner,
         IMover,
-        IRotater,
-        IAnimatable
+        IRotater
     {
-        public int radius;
+        public float radius = 0.3f;
         public CreatureTag tag;
         public Vector3 healthBarOffset = new Vector3(0, 1.6f, 0);
-        
+        public Action OnRelease;
+       
+        public DynInventory<Spell> spells = new();
+        public Modifyables modifyables = new();
+        public CommonInventory<Buff> equipments = new() { Size = 6 };
+        public List<Buff> buffs = new();
+
+        public int instanceID;
+        public Mover mover;
+        public Rotater rotater;
+        public HealthBar healthBar;
+        public Animator animator;
+        public GameBase.Move.Collider collider;
+
         public bool Alive { get; internal protected set; }
         public int InstanceID => instanceID;
         public GameObject Obj { get; set; }
         public int ObjID { get; set; }
-        public virtual bool ReleaseTrigger => _fModifyables["currHP"] <= 0f;
-
-        protected DynInventory<Spell> _spells = new();
-        protected Modifyables _fModifyables = new();
-        protected CommonInventory<Buff> _equipments = new() { Size = 6 };
-        protected List<Buff> _buffs = new();
-
-        internal int instanceID;
-        internal Mover mover;
-        internal Rotater rotater;
-        internal HealthBar healthBar;
-        internal Animator animator;
-        internal HumanAnimController animController;
-
-        public Modifyables Modifyables => _fModifyables;
-        public Mover Mover => mover;
-        public Rotater Rotater => rotater;
-        public HealthBar HealthBar => healthBar;
-        public Animator Animator => animator;
-        public HumanAnimController AnimController => animController;
-        public DynInventory<Spell> Spells => _spells;
-        public CommonInventory<Buff> Equipments => _equipments;
-        public List<Buff> Buffs => _buffs;
 
         Vector3 IHealthBarOwner.HealthBarPosition => Obj.transform.position 
             + (CreatureGizmosDraw.Instance.healthBarDebugMode ? CreatureGizmosDraw.Instance.healthbarOffset : healthBarOffset);
@@ -69,15 +58,15 @@ namespace GameBase.Creatures
 
         float IProjectileTarget.Radius => radius;
 
-        float IHealthBarOwner.CurrHP => _fModifyables["currHP"];
+        float IHealthBarOwner.CurrHP => modifyables["currHP"];
 
-        float IHealthBarOwner.MaxHP => _fModifyables["maxHP"];
+        float IHealthBarOwner.MaxHP => modifyables["maxHP"];
 
         bool IHealthBarOwner.ALive => Alive;
 
         Vector3 IProjectileOwner.HandPosition => Obj.transform.position + new Vector3(0, 1, 0);
 
-        float ISpeller.CoolingAccelerate => _fModifyables["coolingAccelerate"];
+        float ISpeller.CoolingAccelerate => modifyables["coolingAccelerate"];
 
         public Vector3 Position
         {
@@ -85,7 +74,7 @@ namespace GameBase.Creatures
             set => Obj.transform.position = value;
         }
 
-        float IMover.Speed => _fModifyables["moveSpeed"];
+        float IMover.Speed => modifyables["moveSpeed"];
 
         Vector3 IMover.Position
         {
@@ -93,33 +82,29 @@ namespace GameBase.Creatures
             set => Obj.transform.position = value;
         }
 
-        float IRotater.Speed => _fModifyables["rotateSpeed"];
+        float IRotater.Speed => modifyables["rotateSpeed"];
 
-        GameObject IRotater.GO => Obj;
+        GameObject IRotater.Obj => Obj;
 
-        public bool IsRotating { get; set; }
-
-        Animator IAnimatable.Animator => animator;
+        bool IRotater.IsRotating { get; set; }
 
         public Vector3 Dir { get; set; }
 
-        bool IAnimatable.IsMoving()
-        {
-            return mover.IsMoving;
-        }
+        float IMover.Radius => radius;
 
-        bool IAnimatable.IsIdle()
-        {
-            return !mover.IsMoving;
-        }
+        Move.Collider IMover.Collider => collider;
+
+        Modifyables IModifieder.Modifyables => modifyables;
 
         void IPoolable.AfterGet()
         {
+            OnRelease = null;
             tag = CreatureTag.CommonCreature;
         }
 
         void IPoolable.BeforeRelease()
         {
+            OnRelease?.Invoke();
         }
 
         public void AddModifier(int modifierID)
@@ -128,7 +113,7 @@ namespace GameBase.Creatures
             var modifier = ModifyerSys.Instance.NewEntity();
             modifier.value = modifyInfo.value;
             modifier.type = modifyInfo.type1 | modifyInfo.type2;
-            Modifyables.ModifySet(modifyInfo.key, modifier);
+            modifyables.ModifySet(modifyInfo.key, modifier);
         }
 
         public void AddBuff(int id, float duration = 10)
@@ -143,7 +128,7 @@ namespace GameBase.Creatures
             {
                 var buff = BuffFactory.Get(id);
                 buff.AddTo(this);
-                _equipments[index] = buff;
+                equipments[index] = buff;
                 return true;
             }
 
@@ -152,7 +137,7 @@ namespace GameBase.Creatures
 
         public bool HasEquipment(int index)
         {
-            return _equipments.HasItem(index);
+            return equipments.HasItem(index);
         }
 
         public void RemoveEquipment(int index)
@@ -162,28 +147,35 @@ namespace GameBase.Creatures
                 return;
             }
             GetEquipment(index).Remove();
-            _equipments.Remove(index);
+            equipments.Remove(index);
         }
 
         public Buff GetEquipment(int index)
         {
-            return _equipments[index];
+            return equipments[index];
         }
 
         public void AddSpell(Spell spell)
         {
-            _spells.Add(spell);
+            spells.Add(spell);
             spell.speller = this;
         }
 
        void IBuffOwner.OnGetBuff(Buff buff)
         {
-            _buffs.Add(buff);
+            buffs.Add(buff);
         }
 
         void IBuffOwner.OnRemoveBuff(Buff buff)
         {
-            _buffs.Remove(buff);
+            buffs.Remove(buff);
+        }
+
+        public void AddCollider()
+        {
+            collider = CollideSys.Instance.NewEntity();
+            collider.owner = Obj.transform;
+            collider.r = radius;
         }
     }
 }

@@ -60,6 +60,7 @@ namespace Instance
                         OnTargetFarFromShop?.Invoke(shop);
                     }
                     shop.isTargetNear = false;
+                    shop.isActive = false;
                 }
                 else
                 {

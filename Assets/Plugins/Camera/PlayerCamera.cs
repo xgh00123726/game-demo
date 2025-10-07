@@ -24,6 +24,14 @@ namespace GameBase.GCamera
         void Start()
         {
             CameraSys.Main = GetComponent<Camera>();
+            Command.Register("enableScrollChangeFOV", () =>
+            {
+                enableScrollToChangeFOV = true;
+            });
+            Command.Register("disableScrollChangeFOV", () =>
+            {
+                enableScrollToChangeFOV = false;
+            });
         }
 
         private Vector3 DirUp()

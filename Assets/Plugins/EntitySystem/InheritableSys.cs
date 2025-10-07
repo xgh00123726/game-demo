@@ -1,29 +1,23 @@
+using GameBase.Tools;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using GameBase.Tools;
 
 namespace GameBase.EntitySystem
 {
-    /// <summary>
-    /// 基本的实体系统
-    /// <list type="bullet">
-    /// <item><typeparam name="T_Entity"><typeparamref name="T_Entity"/>:实体类型</typeparam></item>
-    /// </list></summary>
-    public abstract class CommonEntitySys<T_Entity, T_Instance> : Singleton<T_Instance>, IBaseSys
-        where T_Entity : class, new()
-        where T_Instance : CommonEntitySys<T_Entity, T_Instance>, new()
+    public abstract class InheritableSys<T_Entity, T_Sys> : Singleton<T_Sys>, IBaseSys
+        where T_Entity : class
+        where T_Sys : InheritableSys<T_Entity, T_Sys>, new()
     {
         private int _currentIterateIndex = 0;
         private bool _inUpdating = false;
-        private IEConstructor<T_Entity> _entityConstructor = new PoolConstructor<T_Entity>();
+        private Dictionary<Type, BaseObjectPool<T_Entity>> _pools = new();
         private IEContainer<T_Entity> _entities = new LinkListContainer<T_Entity>();
         protected bool _fixedUpdate = false;
 
         protected internal LinkedList<T_Entity> _entityNeedRegister = new LinkedList<T_Entity>();
         protected internal LinkedList<T_Entity> _entitiesNeedRemove = new LinkedList<T_Entity>();
 
-        protected CommonEntitySys()
+        protected InheritableSys()
         {
             ShadowMono.CreateShadowMono(this);
         }
@@ -40,12 +34,10 @@ namespace GameBase.EntitySystem
                 return;
             }
 
-            OnRemoveEntityFromActives(e);
-
             if (!_inUpdating)
             {
                 Entities.Remove(e);
-                Constructor.ReleaseEntity(e);
+                _pools[e.GetType()].Release(e);
             }
             else
             {
@@ -53,12 +45,6 @@ namespace GameBase.EntitySystem
             }
         }
 
-        protected void AddToNeedRegister(T_Entity e)
-        {
-            if (e == null) return;
-
-            _entityNeedRegister.AddLast(e);
-        }
 
         /// <summary>
         /// 当实体活跃时调用
@@ -67,34 +53,16 @@ namespace GameBase.EntitySystem
         /// </list></summary>
         protected abstract void UpdateEntity(T_Entity e);
 
-        /// <summary>
-        /// new实体时调用
-        /// </summary>
-        /// <param name="e"></param>
-        protected virtual void OnRegisterEntityToActives(T_Entity e) { }
-
-        /// <summary>
-        /// release实体时调用
-        /// </summary>
-        /// <param name="e"></param>
-        protected virtual void OnRemoveEntityFromActives(T_Entity e) { }
-
         protected int CurrentIterateIndex => _currentIterateIndex;
 
         public virtual IEContainer<T_Entity> Entities => _entities;
-        public virtual IEConstructor<T_Entity> Constructor => _entityConstructor;
 
-        public T_Entity NewFromPool()
-        {
-            return Constructor.GetEntity();
-        }
 
         public void RegisterEntity(T_Entity e)
         {
-            OnRegisterEntityToActives(e);
             if (_inUpdating)
             {
-                AddToNeedRegister(e);
+                _entityNeedRegister.AddLast(e);
             }
             else
             {
@@ -108,19 +76,21 @@ namespace GameBase.EntitySystem
         /// </summary>
         /// <typeparam name="T_EntityType"></typeparam>
         /// <returns></returns>
-        public T_Entity NewEntity(Action<T_Entity> Init = null)
+        public T NewEntity<T>() where T : class, T_Entity, new()
         {
-            var e = NewFromPool();
-            Init?.Invoke(e);
+            var type = typeof(T);
+            if (!_pools.ContainsKey(type))
+            {
+                _pools[type] = new BaseObjectPool<T_Entity>();
+                _pools[type].InstantiateFunc = static () => new T();
+            }
+            var e = _pools[type].Get();
             RegisterEntity(e);
-            return e;
+            return e as T;
         }
 
         /// <summary>
-        /// <list type="bullet">
-        /// <item>不推荐重写Update</item>级
-        /// <item>重写的update中_index计数失效，且remove是基于原生命周期，重写的update中无法根据迭代器状态remove</item>
-        /// </list>
+        /// 不推荐重写Update
         /// </summary>
         internal protected virtual void Update()
         {
@@ -130,13 +100,6 @@ namespace GameBase.EntitySystem
             }
             _entityNeedRegister.Clear();
 
-            foreach (var e in _entitiesNeedRemove)
-            {
-                Entities.Remove(e);
-                Constructor.ReleaseEntity(e);
-            }
-            _entitiesNeedRemove.Clear();
-
             _currentIterateIndex = 0;
             _inUpdating = true;
             foreach (var e in Entities)
@@ -145,6 +108,13 @@ namespace GameBase.EntitySystem
                 _currentIterateIndex++;
             }
             _inUpdating = false;
+
+            foreach (var e in _entitiesNeedRemove)
+            {
+                Entities.Remove(e);
+                _pools[e.GetType()].Release(e);
+            }
+            _entitiesNeedRemove.Clear();
         }
 
         void IBaseSys.Update()
@@ -174,7 +144,12 @@ namespace GameBase.EntitySystem
 
         int IBaseSys.GetReleasedCount()
         {
-            return Constructor.Count;
+            var sum = 0;
+            foreach (var c in _pools.Values)
+            {
+                sum += c.Count;
+            }
+            return sum;
         }
 
         int IBaseSys.GetActiveCount()
@@ -183,3 +158,4 @@ namespace GameBase.EntitySystem
         }
     }
 }
+

@@ -71,8 +71,11 @@ namespace GameBase.Modify
         {
             if (_modifyableGroups.ContainsKey(id))
             {
+                _modifyableGroups[id].set.value = value;
                 _modifyableGroups[id].set.valueSet = value;
+                _modifyableGroups[id].setPer.value = 0;
                 _modifyableGroups[id].setPer.valueSet = 0;
+                _modifyableGroups[id].sumPer.value = 0;
                 _modifyableGroups[id].sumPer.valueSet = 0;
             }
             else

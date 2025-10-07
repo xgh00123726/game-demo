@@ -18,7 +18,7 @@ namespace Constructor.Spells.Interactive
         {
             return new()
             {
-                {Type.Invokable, Invokable.Get },
+                {Type.Invokable, HasIndicator.Get },
             };
         }
     }

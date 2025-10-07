@@ -9,16 +9,6 @@ namespace GameBase.Effects
         internal float instantiateTime;
         internal bool hasParticle;
 
-        public Vector3 Position
-        {
-            set
-            {
-                if (hasParticle)
-                {
-                    Obj.gameObject.transform.position = value;
-                }
-            }
-        }
         public ParticleSystem Obj { get; set; }
         public int ObjID {  get; set; }
     }

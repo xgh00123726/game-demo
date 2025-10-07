@@ -86,6 +86,14 @@ namespace GameBase.Math
             return r1.width + r2.width < diff.x || r2.height + r1.height < diff.y;
         }
 
+        public static bool IsIntersect(float x1, float y1, float r1, float x2, float y2, float r2)
+        {
+            float dx = x2 - x1;
+            float dy = y2 - y1;
+            float dis2 = dx * dx + dy * dy;
+            return dis2 <= r1 + r2;
+        }
+
         public static int BoolToInt(bool b)
         {
             return b ? 1 : 0;

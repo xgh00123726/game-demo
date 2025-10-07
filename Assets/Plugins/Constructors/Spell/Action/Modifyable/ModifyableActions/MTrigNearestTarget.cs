@@ -1,3 +1,4 @@
+using Constructor.Projectiles;
 using GameBase.EntitySystem;
 using GameBase.Flyings;
 using GameBase.GCamera;
@@ -46,7 +47,7 @@ namespace Constructor.Spells.Action.Modifyables
             _attackRange = _mOwner.Modifyables["attackRange"];
 
             Vector3 center = new Vector3(spell.speller.Position.x, 0, spell.speller.Position.z);
-            _target = TargetSetFactorary.GetTargetSet("Common").NearestTarget(center, _attackRange);
+            _target = TargetSetFactorary.Get(TargetSetType.Common).NearestTarget(center, _attackRange);
             if (_target == null)
             {
                 return false;

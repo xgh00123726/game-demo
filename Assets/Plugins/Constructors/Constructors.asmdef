@@ -18,8 +18,8 @@
         "Effects",
         "Indicators",
         "Creature",
-        "SpellCaster",
-        "Inventory"
+        "Inventory",
+        "AI"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

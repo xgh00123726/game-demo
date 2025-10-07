@@ -9,9 +9,9 @@ namespace Constructor.Spells.Action.Modifyables
 {
     //public struct MAreaFixedDisData
     //{
-    //    public Flyings.Type flyingType;
+    //    public Flyings.AIType flyingType;
     //    public int flyingID;
-    //    public Projectiles.Type projectileType;
+    //    public Projectiles.AIType projectileType;
     //    public int projectileID;
     //    public int distance;
     //}

@@ -44,7 +44,7 @@ namespace Instance
         public static void SetTarget(Creature c)
         {
             _target = c;
-            _spellsNum = c.Spells.Size;
+            _spellsNum = c.spells.Size;
             _isIndicatorReadys.Resize(_spellsNum, false);
             _isFastCasts.Resize(_spellsNum, false);
         }
@@ -53,9 +53,9 @@ namespace Instance
         {
             for (int i = 0; i < _spellsNum; ++i)
             {
-                var spell = _target.Spells[i];
+                var spell = _target.spells[i];
 
-                var interactive = spell.interactive as Invokable;
+                var interactive = spell.interactive as HasIndicator;
 
                 if (interactive == null)
                 {

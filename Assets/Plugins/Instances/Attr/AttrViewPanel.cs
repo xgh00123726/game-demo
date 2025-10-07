@@ -44,7 +44,7 @@ namespace Instance
             {
                 return;
             }
-            SetAttrValue(c.Modifyables);
+            SetAttrValue(c.modifyables);
         }
 
         public void SetAttrValue(Modifyables modifyables)
