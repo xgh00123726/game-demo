@@ -17,7 +17,7 @@ namespace Constructor.Spells.Action.Modifyables
             var interactive = spell.interactive as IDotInput;
             if (speller != null && interactive != null)
             {
-                var f = Flyings.Factory.Instance.Get(data.flying1Type, data.flying1ID);
+                var f = Flyings.Factory.Instance.Get(data.flyingType, data.flyingID);
                 f.Src = speller.HandPosition + new Vector3(data.xOffset, data.yOffset, data.zOffset);
                 f.target = new FixedFlyingTarget()
                 {

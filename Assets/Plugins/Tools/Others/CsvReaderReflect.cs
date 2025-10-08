@@ -44,7 +44,13 @@ namespace GameBase.Tools
                 datas = new T[len];
                 for (int i = 0; i < len; ++i)
                 {
-                    csvReader.Read();
+                    var ret = csvReader.Read();
+                    if (!ret)
+                    {
+                        XLogger.Instance.Level(XLogger.LogLevel.Error)
+                            .Log($"table{path}'s line num is invalid, may cast null reference");
+                        break;
+                    }
 
                     if (_isStruct)
                     {

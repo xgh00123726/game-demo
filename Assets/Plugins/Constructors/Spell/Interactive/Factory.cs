@@ -8,7 +8,8 @@ namespace Constructor.Spells.Interactive
     public enum Type
     {
         DotInternalSet,
-        MouseInput
+        MouseInput,
+        DotExternalSet
     }
     public class Factory : ConstructorFactory<Type, ISpellInteractive, Factory>
     {
@@ -18,6 +19,7 @@ namespace Constructor.Spells.Interactive
             {
                 {Type.MouseInput, MouseInput.Get },
                 {Type.DotInternalSet, DotInternalSet.Get },
+                {Type.DotExternalSet, DotExternalSetCon.Instance.Get },
             };
         }
     }

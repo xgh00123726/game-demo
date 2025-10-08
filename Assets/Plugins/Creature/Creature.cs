@@ -15,6 +15,7 @@ namespace GameBase.Creatures
 {
     public enum CreatureTag
     {
+        None = 0,
         CommonCreature = 1 << 0,
         Player = 1 << 1,
     }
