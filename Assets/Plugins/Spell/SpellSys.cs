@@ -19,6 +19,7 @@ namespace GameBase.Spells
             {
                 if (e.spellCoolingdown.IsCoolingOver)
                 {
+                    e.interactive.OnTrig();
                     if (e.action?.CastAction(e) != true)
                     {
                     }
@@ -28,7 +29,6 @@ namespace GameBase.Spells
                     }
                 }
                 e.isTrig = false;
-                e.interactive.OnTrig();
             }
 
             e.spellCoolingdown.Update(e.speller.CoolingAccelerate);

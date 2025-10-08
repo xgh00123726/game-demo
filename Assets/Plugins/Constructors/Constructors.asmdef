@@ -2,7 +2,6 @@
     "name": "Constructors",
     "rootNamespace": "",
     "references": [
-        "Projectiles",
         "Buff",
         "Camera",
         "Tools",
@@ -19,7 +18,7 @@
         "Indicators",
         "Creature",
         "Inventory",
-        "AI"
+        "Triggers"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

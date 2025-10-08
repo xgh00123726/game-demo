@@ -1,6 +1,6 @@
 using GameBase.Flyings;
 using GameBase.GCamera;
-using GameBase.Projectiles;
+using GameBase.Triggers;
 using GameBase.Spells;
 using GameBase.EntitySystem;
 using UnityEngine;
@@ -11,8 +11,8 @@ namespace Constructor.Spells.Action.Modifyables
     //{
     //    public Flyings.AIType flyingType;
     //    public int flyingID;
-    //    public Projectiles.AIType projectileType;
-    //    public int projectileID;
+    //    public Triggers.AIType triggerType;
+    //    public int triggerID;
     //    public int distance;
     //}
     public class MAreaFixedDis : ModifyableAction
@@ -23,21 +23,25 @@ namespace Constructor.Spells.Action.Modifyables
         {
             float flyingDistance = data.distance + flyingDistanceModify;
 
-            var ef = Flyings.Factory.Instance.Get(data.flyingType, data.flyingID);
-            ef.Src = spell.speller.Position;
+            var f = Flyings.Factory.Instance.Get(data.flyingType, data.flyingID);
+            f.Src = spell.speller.Position;
             Vector3 dir = (CameraSys.MouseHitPosition - spell.speller.Position).normalized;
             Quaternion rotate = Quaternion.Euler(0, angleOffset, 0);
-            ef.dest = ef.Src + rotate * dir * flyingDistance;
+            f.target = new FixedFlyingTarget()
+            {
+                Position = f.Src + rotate * dir * flyingDistance,
+            };
 
-            return ef;
+            return f;
         }
 
-        protected override Projectile GenProjectile(Flying flying)
+        protected override Trigger GenProjectile(Flying flying)
         {
-            var ep = Projectiles.Factory.Instance.Get(data.projectileType, data.projectileID);
-            ep.Flying = flying;
+            var t = Triggers.Factory.Instance.Get(data.projectileType, data.projectileID);
+            t.attach = flying;
+            flying.OnHit = t.Trig;
 
-            return ep;
+            return t;
         }
     }
     public class MAreaFixedDisCon : BaseConstructor<AreaFixedDisData, MAreaFixedDis, MAreaFixedDisCon>

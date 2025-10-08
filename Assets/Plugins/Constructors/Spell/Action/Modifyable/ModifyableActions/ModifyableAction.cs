@@ -1,6 +1,6 @@
 using Constructor.Spells.Action.Modifyables.Modifier;
 using GameBase.Flyings;
-using GameBase.Projectiles;
+using GameBase.Triggers;
 using GameBase.Spells;
 using GameBase.Tools;
 
@@ -30,7 +30,7 @@ namespace Constructor.Spells.Action.Modifyables
             return null;
         }
 
-        protected virtual Projectile GenProjectile(Flying flying)
+        protected virtual Trigger GenProjectile(Flying flying)
         {
             return null;
         }
@@ -48,7 +48,7 @@ namespace Constructor.Spells.Action.Modifyables
             {
                 var flying = GenFlying(spell, GetAngleOffset(i), modifyData.flyingDistance);
 
-                if (flying != null && spell.speller is IProjectileOwner pOwner) 
+                if (flying != null && spell.speller is ITriggerOwner pOwner) 
                 {
                     var projectile = GenProjectile(flying);
                     if (projectile != null)

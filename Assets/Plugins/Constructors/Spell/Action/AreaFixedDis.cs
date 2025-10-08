@@ -1,8 +1,10 @@
 using GameBase.GCamera;
-using GameBase.Projectiles;
+using GameBase.Triggers;
 using GameBase.Spells;
 using GameBase.EntitySystem;
 using UnityEngine;
+using Constructor.Spells.Interactive;
+using GameBase.Flyings;
 
 namespace Constructor.Spells.Action
 {
@@ -10,7 +12,7 @@ namespace Constructor.Spells.Action
     {
         public Flyings.Type flyingType;
         public int flyingID;
-        public Projectiles.Type projectileType;
+        public Triggers.Type projectileType;
         public int projectileID;
         public int distance;
     }
@@ -20,19 +22,25 @@ namespace Constructor.Spells.Action
         public AreaFixedDisData data;
         bool ISpellAction.CastAction(Spell spell)
         {
-            var pOwner = spell.speller as IProjectileOwner;
-            if (pOwner == null)
+            var speller = spell.speller as ITriggerOwner;
+            var interactive = spell.interactive as IDotInput;
+            if (speller == null || interactive == null)
             {
                 return false;
             }
 
-            var ef = Flyings.Factory.Instance.Get(data.flyingType, data.flyingID);
-            ef.Src = spell.speller.Position;
-            Vector3 dir = (CameraSys.MouseHitPosition - spell.speller.Position).normalized;
-            ef.dest = ef.Src + dir * data.distance;
-            var ep = Projectiles.Factory.Instance.Get(data.projectileType, data.projectileID);
-            ep.owner = pOwner;
-            ep.Flying = ef;
+            var f = Flyings.Factory.Instance.Get(data.flyingType, data.flyingID);
+            f.Src = spell.speller.Position;
+            Vector3 dir = (interactive.Position - spell.speller.Position).normalized;
+            f.target = new FixedFlyingTarget()
+            {
+                Position = f.Src + dir * data.distance,
+            };
+
+            var t = Triggers.Factory.Instance.Get(data.projectileType, data.projectileID);
+            t.owner = speller;
+            t.attach = f;
+            f.OnHit = t.Trig;
 
             return true;
         }

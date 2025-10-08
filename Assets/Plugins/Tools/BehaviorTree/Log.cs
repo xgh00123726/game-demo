@@ -5,14 +5,16 @@ namespace GameBase.Tools
     public class Log : Behavior
     {
         private string _word;
-        public Log(string word)
+        private Status _ret;
+        public Log(string word, Status ret)
         {
             _word = word;
+            _ret = ret;
         }
         protected override Status OnUpdate()
         {
             XLogger.Instance.Log(_word);
-            return Status.Success;
+            return _ret;
         }
     }
 }

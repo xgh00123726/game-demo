@@ -7,10 +7,8 @@ namespace Constructor.Spells.Interactive
 {
     public enum Type
     {
-        KeyCommon,
-        KeyFast,
-        Always,
-        Invokable
+        DotInternalSet,
+        MouseInput
     }
     public class Factory : ConstructorFactory<Type, ISpellInteractive, Factory>
     {
@@ -18,7 +16,8 @@ namespace Constructor.Spells.Interactive
         {
             return new()
             {
-                {Type.Invokable, HasIndicator.Get },
+                {Type.MouseInput, MouseInput.Get },
+                {Type.DotInternalSet, DotInternalSet.Get },
             };
         }
     }

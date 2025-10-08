@@ -1,23 +1,24 @@
 using System;
 using GameBase.EntitySystem;
+using GameBase.Triggers;
 using UnityEngine;
 
 namespace GameBase.Flyings
 {
     public class Flying : ICurveable,
         IUEntity<GameObject>,
-        IPoolable
+        IPoolable,
+        ITriggerAttach
     {
         public float releaseDistance;
         public int trailID;
         public float maxExistTime;
         public float minExistTime;
 
-        
-        public Vector3 dest;
         public CurveBase curve;
         public float speed;
         public CurveFactory.CurveType curveType;
+        public IFlyingTarget target;
 
         public Action OnHit;
         public Action OnReleased;
@@ -60,7 +61,7 @@ namespace GameBase.Flyings
             get => Obj.transform.forward;
             set => Obj.transform.forward = value;
         }
-        Vector3 ICurveable.Dest => dest;
+        Vector3 ICurveable.Dest => target.Position;
 
         public Vector3 Src
         {
@@ -76,5 +77,7 @@ namespace GameBase.Flyings
 
         public GameObject Obj { get; set; }
         public int ObjID { get; set; }
+
+        Vector3 ITriggerAttach.Position => Obj.transform.position;
     }
 }

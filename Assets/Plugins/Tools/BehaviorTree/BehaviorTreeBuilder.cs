@@ -42,8 +42,13 @@ namespace GameBase.Tools
             return this;
         }
         
-        public BehaviorTreeBuilder End()
+        public BehaviorTreeBuilder Check()
         {
+            if (_nodeStack.Count > 0)
+            {
+                XLogger.Instance.Level(XLogger.LogLevel.Warning)
+                    .Log("your behavior tree get incorrect build");
+            }
             _nodeStack.Clear();
             return this;
         }
@@ -59,11 +64,25 @@ namespace GameBase.Tools
             return this;
         }
 
+        public BehaviorTreeBuilder And()
+        {
+            var bh = new Sequence();
+            AddBehavior(bh);
+            return this;
+        }
+
         /// <summary>
         /// orÂß¼­
         /// </summary>
         /// <returns></returns>
         public BehaviorTreeBuilder Selector()
+        {
+            var bh = new Selector();
+            AddBehavior(bh);
+            return this;
+        }
+
+        public BehaviorTreeBuilder Or()
         {
             var bh = new Selector();
             AddBehavior(bh);
@@ -86,7 +105,14 @@ namespace GameBase.Tools
 
         public BehaviorTreeBuilder Log(string word)
         {
-            var bh = new Log(word);
+            var bh = new Log(word, Status.Success);
+            AddBehavior(bh);
+            return this;
+        }
+
+        public BehaviorTreeBuilder FLog(string word)
+        {
+            var bh = new Log(word, Status.Failure);
             AddBehavior(bh);
             return this;
         }

@@ -28,7 +28,15 @@ namespace GameBase.Tools
         public T[] Parse(string path)
         {
             T[] datas = null;
+
+            if (!File.Exists(path))
+            {
+                XLogger.Instance.Level(XLogger.LogLevel.Error)
+                    .Log($"invalid file path:{path}");
+            }
+
             StreamReader reader = File.OpenText(path);
+
             CsvReader csvReader = new CsvReader(reader);
             csvReader.Read();
             if (int.TryParse(csvReader[0], out var len))
@@ -67,7 +75,13 @@ namespace GameBase.Tools
                 var readerIndex = i + 1;
                 if (field.FieldType.IsEnum)
                 {
-                    field.SetValue(ret, Enum.Parse(field.FieldType, csvReader[readerIndex]));
+                    var enumParse = Enum.TryParse(field.FieldType, csvReader[readerIndex], out var val);
+                    if (!enumParse)
+                    {
+                        XLogger.Instance.Level(XLogger.LogLevel.Warning)
+                            .Log($"{csvReader[readerIndex]} is not a valid enum");
+                    }
+                    field.SetValue(ret, val);
                 }
                 else if (field.FieldType == typeof(int))
                 {
@@ -104,7 +118,13 @@ namespace GameBase.Tools
                 var readerIndex = i + 1;
                 if (field.FieldType.IsEnum)
                 {
-                    field.SetValueDirect(retRef, Enum.Parse(field.FieldType, csvReader[readerIndex]));
+                    var enumParse = Enum.TryParse(field.FieldType, csvReader[readerIndex], out var val);
+                    if (!enumParse)
+                    {
+                        XLogger.Instance.Level(XLogger.LogLevel.Warning)
+                            .Log($"{csvReader[readerIndex]} is not a valid enum");
+                    }
+                    field.SetValueDirect(retRef, val);
                 }
                 else if (field.FieldType == typeof(int))
                 {

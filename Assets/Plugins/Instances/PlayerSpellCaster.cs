@@ -55,7 +55,7 @@ namespace Instance
             {
                 var spell = _target.spells[i];
 
-                var interactive = spell.interactive as HasIndicator;
+                var interactive = spell.interactive as MouseInput;
 
                 if (interactive == null)
                 {
@@ -105,7 +105,7 @@ namespace Instance
                 {
                     indicator.Set(new IndicatorConfig()
                     {
-                        length = interactive.indicatorLength,
+                        length = interactive.length,
                         position = _target.Position,
                         targetPosition = CameraSys.MouseHitPosition
                     });

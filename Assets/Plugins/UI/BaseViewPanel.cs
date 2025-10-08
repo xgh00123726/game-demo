@@ -102,7 +102,7 @@ namespace GameBase.UI
         public BaseViewPanel(int prefabID,
             int defaultObjID)
         {
-            ShadowMono.CreateShadowMono(this); 
+            SingletonEntitySysInstance.CreateShadowMono(this); 
 
             panel = GameObject.Instantiate(ResourcesLoader.GetPrefab(prefabID));
             panel.transform.SetParent(RootCanvas.Instance.Layer(0), false);

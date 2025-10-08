@@ -25,7 +25,7 @@ namespace GameBase.EntitySystem
 
         protected CommonEntitySys()
         {
-            ShadowMono.CreateShadowMono(this);
+            SingletonEntitySysInstance.CreateShadowMono(this);
         }
 
         /// <summary>

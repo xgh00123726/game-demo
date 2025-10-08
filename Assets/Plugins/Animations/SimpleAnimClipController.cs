@@ -1,3 +1,4 @@
+using GameBase.Tools;
 using System;
 using UnityEngine;
 
@@ -29,8 +30,14 @@ namespace GameBase.Animations
                 if (!lastAnim && isAnim)
                 {
                     animator.SetTrigger($"Trigger_{clipName}");
+                    XLogger.Instance.IF(false).Log($"clip:{clipName} set trigger, frame:{Time.frameCount}");
                 }
-                animator.SetBool($"Loop_{clipName}", isAnim);
+
+                if (isAnim != lastAnim)
+                {
+                    animator.SetBool($"Loop_{clipName}", isAnim);
+                    XLogger.Instance.IF(false).Log($"clip:{clipName} set loop:{isAnim}, frame:{Time.frameCount}");
+                }
             }
 
             if (lastAnim == isAnim)

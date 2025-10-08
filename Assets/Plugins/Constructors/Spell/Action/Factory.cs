@@ -8,13 +8,13 @@ namespace Constructor.Spells.Action
 {
     public enum Type
     {
-        TrigOnRelease,
-        TrigNearestTarget,
+        TriggerOnHit,
+        NearestTarget,
         AreaFixedDis,
         BuffSelf,
 
         MAreaFixedDis,
-        MTrigNearestTarget,
+        MNearestTarget,
     }
     public class Factory : ConstructorFactory<Type, ISpellAction, Factory>
     {
@@ -22,12 +22,12 @@ namespace Constructor.Spells.Action
         {
             return new()
             {
-                {Type.TrigOnRelease, TrigOnReleaseCon.Instance.Get },
-                {Type.TrigNearestTarget, TrigNearestTargetCon.Instance.Get },
+                {Type.TriggerOnHit, TriggerOnHitCon.Instance.Get },
+                {Type.NearestTarget, NearestTargetCon.Instance.Get },
                 {Type.AreaFixedDis, AreaFixedDisCon.Instance.Get },
                 {Type.BuffSelf, BuffSelfCon.Instance.Get },
                 {Type.MAreaFixedDis, MAreaFixedDisCon.Instance.Get },
-                {Type.MTrigNearestTarget, MTrigNearestTargetCon.Instance.Get },
+                {Type.MNearestTarget, MNearestTargetCon.Instance.Get },
             };
         }
     }

@@ -1,9 +1,10 @@
+using GameBase.AI;
 using GameBase.Buffs;
 using GameBase.EntitySystem;
 using GameBase.Inventorys;
 using GameBase.Modify;
 using GameBase.Move;
-using GameBase.Projectiles;
+using GameBase.Triggers;
 using GameBase.Spells;
 using GameBase.UI;
 using System;
@@ -20,8 +21,8 @@ namespace GameBase.Creatures
 
     public class Creature : IUEntity<GameObject>,
         IPoolable,
-        IProjectileOwner,
-        IProjectileTarget,
+        ITriggerOwner,
+        ITriggerTarget,
         IHealthBarOwner,
         IModifieder,
         ISpeller,
@@ -29,6 +30,8 @@ namespace GameBase.Creatures
         IMover,
         IRotater
     {
+        private Dictionary<string, float> _possibleAttr = new();
+
         public float radius = 0.3f;
         public CreatureTag tag;
         public Vector3 healthBarOffset = new Vector3(0, 1.6f, 0);
@@ -40,6 +43,7 @@ namespace GameBase.Creatures
         public List<Buff> buffs = new();
 
         public int instanceID;
+        public BaseAI ai;
         public Mover mover;
         public Rotater rotater;
         public HealthBar healthBar;
@@ -51,12 +55,11 @@ namespace GameBase.Creatures
         public GameObject Obj { get; set; }
         public int ObjID { get; set; }
 
-        Vector3 IHealthBarOwner.HealthBarPosition => Obj.transform.position 
-            + (CreatureGizmosDraw.Instance.healthBarDebugMode ? CreatureGizmosDraw.Instance.healthbarOffset : healthBarOffset);
+        Vector3 IHealthBarOwner.HealthBarPosition => Obj.transform.position + healthBarOffset;
 
-        Vector3 IProjectileTarget.Center => Obj.transform.position;
+        Vector3 ITriggerTarget.Center => Obj.transform.position;
 
-        float IProjectileTarget.Radius => radius;
+        float ITriggerTarget.Radius => radius;
 
         float IHealthBarOwner.CurrHP => modifyables["currHP"];
 
@@ -64,7 +67,7 @@ namespace GameBase.Creatures
 
         bool IHealthBarOwner.ALive => Alive;
 
-        Vector3 IProjectileOwner.HandPosition => Obj.transform.position + new Vector3(0, 1, 0);
+        Vector3 ITriggerOwner.HandPosition => Obj.transform.position + new Vector3(0, 1, 0);
 
         float ISpeller.CoolingAccelerate => modifyables["coolingAccelerate"];
 
@@ -107,6 +110,26 @@ namespace GameBase.Creatures
             OnRelease?.Invoke();
         }
 
+        public bool HasPossibleAttr(string name)
+        {
+            return _possibleAttr.ContainsKey(name);
+        }
+
+        public void AddPossibleAttr(string name)
+        {
+            _possibleAttr.Add(name, default);
+        }
+
+        public void SetPossibleAttr(string name, float value)
+        {
+            _possibleAttr[name] = value;
+        }
+
+        public float GetPossibleAttr(string name)
+        {
+            return _possibleAttr[name];
+        }
+
         public void AddModifier(int modifierID)
         {
             var modifyInfo = ModifierDataBase.Instance[modifierID];
@@ -119,6 +142,11 @@ namespace GameBase.Creatures
         public void AddBuff(int id, float duration = 10)
         {
             BuffFactory.Get(id).AddTo(this, duration);
+        }
+
+        public void AddAI(AIType type)
+        {
+            AIFactory.Get(type).AddTo(this);
         }
 
         public bool AddEquipment(int id, int index)

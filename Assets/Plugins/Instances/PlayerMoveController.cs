@@ -17,7 +17,7 @@ namespace Instance
             if (Inputs.GetKeyDown(KeyFunction.MoveTo, "mover"))
             {
                 _target.mover.MoveTo(CameraSys.MouseHitPosition);
-                _target.Dir = CameraSys.MouseHitPosition - _target.Obj.transform.position;
+                _target.rotater.LookAt(CameraSys.MouseHitPosition);
                 MoveIndicator.Show(CameraSys.MouseHitPosition);
 
                 OnMoveInput?.Invoke();

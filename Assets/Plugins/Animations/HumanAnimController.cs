@@ -16,9 +16,9 @@ namespace GameBase.Animations
 
         public override void Update()
         {
-            idleController.Update();
             moveController.Update();
             boringController.Update();
+            idleController.Update();
         }
 
         private bool IsMoving()

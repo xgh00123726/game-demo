@@ -25,7 +25,7 @@ namespace GameBase.EntitySystem
             if (index >= _datas.Length || index < 0)
             {
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log($"index out off array:{index}");
+                    .Log($"Entity:{typeof(T_Entity).Name} index out off array:{index}");
             }
 
             var e = Get();

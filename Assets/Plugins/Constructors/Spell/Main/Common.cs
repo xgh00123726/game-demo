@@ -2,6 +2,7 @@ using Constructor.Spells.Interactive;
 using GameBase.Indicators;
 using GameBase.Spells;
 using GameBase.EntitySystem;
+using GameBase.Tools;
 
 namespace Constructor.Spells.Main
 {
@@ -25,7 +26,7 @@ namespace Constructor.Spells.Main
         protected override void ESet(Spell e, in CommonData data)
         {
             e.interactive = Interactive.Factory.Instance.Get(data.interactiveType, data.interactiveID);
-            if (e.interactive is HasIndicator invokable)
+            if (e.interactive is MouseInput invokable)
             {
                 invokable.indicatorType = data.indicatorType;
             }

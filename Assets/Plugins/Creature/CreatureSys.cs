@@ -2,6 +2,7 @@ using GameBase.Creatures;
 using GameBase.EntitySystem;
 using GameBase.Move;
 using GameBase.Resources;
+using GameBase.Spells;
 using GameBase.Tools;
 using GameBase.UI;
 using System.Collections.Generic;
@@ -89,6 +90,13 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
         if (e.collider != null)
         {
             CollideSys.Instance.RemoveEntity(e.collider);
+        }
+
+        for(int i = 0; i < e.spells.Size; i++)
+        {
+            var spell = e.spells[i];
+            e.spells.Remove(i);
+            SpellSys.Instance.RemoveEntity(spell);
         }
 
         e.Obj.SetActive(false);

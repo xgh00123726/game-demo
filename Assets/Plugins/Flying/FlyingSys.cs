@@ -61,7 +61,7 @@ namespace GameBase.Flyings
                 RemoveEntity(e);
             }
 
-            if (!e.hitFlag && (e.dest - e.Obj.transform.position).magnitude <= e.releaseDistance)
+            if (!e.hitFlag && (e.target.Position - e.Obj.transform.position).magnitude <= e.releaseDistance)
             {
                 e.hitFlag = true;
                 e.OnHit?.Invoke();

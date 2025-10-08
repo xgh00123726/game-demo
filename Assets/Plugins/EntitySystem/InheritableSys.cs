@@ -19,7 +19,7 @@ namespace GameBase.EntitySystem
 
         protected InheritableSys()
         {
-            ShadowMono.CreateShadowMono(this);
+            SingletonEntitySysInstance.CreateShadowMono(this);
         }
 
         /// <summary>
