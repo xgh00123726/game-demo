@@ -1,6 +1,6 @@
 using GameBase.EntitySystem;
 
-namespace Constructor.Spells.Action.Modifyables.Modifier
+namespace Constructor.Spells.Action
 {
     public struct FlyingNumModifierData
     {

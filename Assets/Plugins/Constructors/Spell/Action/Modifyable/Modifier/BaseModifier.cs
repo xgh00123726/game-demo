@@ -1,6 +1,6 @@
 using GameBase.Spells;
 
-namespace Constructor.Spells.Action.Modifyables.Modifier
+namespace Constructor.Spells.Action
 {
     public abstract class BaseModifier
     {

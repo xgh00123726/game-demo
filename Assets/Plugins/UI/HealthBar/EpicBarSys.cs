@@ -1,6 +1,7 @@
 using GameBase.EntitySystem;
 using GameBase.Resources;
 using GameBase.Tools;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,33 +26,6 @@ namespace GameBase.UI
 
             e.losing = obj.transform.Find("Losing").gameObject;
             e.losingRectTransform = e.losing.GetComponent<RectTransform>();
-
-            var image = e.current.transform.GetComponent<Image>();
-            if (image == null)
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log("panel item must has icon object");
-            }
-
-            e.iconMaterial = new Material(image.material);
-            image.material = e.iconMaterial;
-
-            if (e.targetTexureID >= 0)
-            {
-                var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.targetTexureID));
-                e.iconMaterial.SetTexture("_Target", texture);
-            }
-            if (e.shapeTexureID >= 0)
-            {
-                var shape = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.shapeTexureID));
-                e.iconMaterial.SetTexture("_Shape", shape);
-            }
-            if (e.contourTexureID >= 0)
-            {
-                var contour = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.contourTexureID));
-                e.iconMaterial.SetTexture("_Contour", contour);
-            }
-
 
             return obj;
         }
@@ -99,7 +73,7 @@ namespace GameBase.UI
             if (e.maxHP < Mathf.Epsilon) return;
 
             e.currPercent = Mathf.Clamp01(e.currHP / e.maxHP);
-            e.textComponent.text = $"{e.currHP} / {e.maxHP}";
+            e.textComponent.text = $"{String.Format("{0:0.##}", e.currHP)} / {String.Format("{0:0.##}", e.maxHP)}";
             SetWidth(e.currentRectTransform, e.currPercent, e.width);
         }
     }

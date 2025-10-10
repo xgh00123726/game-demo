@@ -1,25 +1,25 @@
 using System.Collections.Generic;
 using GameBase.EntitySystem;
 
-namespace Constructor.Spells.Action.Modifyables.Modifier
+namespace Constructor.Spells.Action
 {
-    public enum Type
+    public enum ModifierType
     {
         FireDisfuseModifier,
         FlyingDistanceModifier,
         FlyingNumModifier,
         MultipleModifier
     }
-    public class SpellActionModifierFactory : ConstructorFactory<Type, BaseModifier, SpellActionModifierFactory>
+    public class SpellActionModifierFactory : ConstructorFactory<ModifierType, BaseModifier, SpellActionModifierFactory>
     {
-        protected override Dictionary<Type, System.Func<int, BaseModifier>> GetConstructorGetDict()
+        protected override Dictionary<ModifierType, System.Func<int, BaseModifier>> GetConstructorGetDict()
         {
             return new()
             {
-                {Type.FireDisfuseModifier, FireDisfuseModifierCon.Instance.Get },
-                {Type.FlyingDistanceModifier, FlyingDistanceModifierCon.Instance.Get },
-                {Type.FlyingNumModifier, (val) => new FlyingNumModifier(val) },
-                {Type.MultipleModifier, (val) => new MultipleModifier(val) },
+                {ModifierType.FireDisfuseModifier, FireDisfuseModifierCon.Instance.Get },
+                {ModifierType.FlyingDistanceModifier, FlyingDistanceModifierCon.Instance.Get },
+                {ModifierType.FlyingNumModifier, (val) => new FlyingNumModifier(val) },
+                {ModifierType.MultipleModifier, (val) => new MultipleModifier(val) },
             };
         }
     }

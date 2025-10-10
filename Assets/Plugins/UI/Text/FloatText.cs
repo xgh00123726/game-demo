@@ -16,7 +16,6 @@ namespace GameBase.UI
         public static float _horizontalSpeedMin = 0.3f;
         public static float _horizontalSpeedMax = 0.4f;
 
-        public string value;
         public Vector3 showPosition;
 
         internal float yFactorA = 0f;
@@ -33,5 +32,16 @@ namespace GameBase.UI
 
         public GameObject Obj { get; set; }
         public int ObjID { get; set; } = 5;
+        public Color Color
+        {
+            get => textObj.color;
+            set => textObj.color = value;
+        }
+
+        public string Value
+        {
+            get => textObj.text;
+            set => textObj.text = value;
+        }
     }
 }

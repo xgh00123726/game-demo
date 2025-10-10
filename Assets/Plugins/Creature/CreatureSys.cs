@@ -106,6 +106,7 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
     {
         if (e.modifyables["currHP"] <= 0)
         {
+            e.OnDead?.Invoke(e);
             RemoveEntity(e);
             return;
         }

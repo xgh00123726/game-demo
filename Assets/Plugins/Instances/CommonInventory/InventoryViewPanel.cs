@@ -1,4 +1,4 @@
-using Constructor.Spells.Action.Modifyables.Modifier;
+using Constructor.Spells.Action;
 using GameBase.Buffs;
 using GameBase.Config;
 using GameBase.Inventorys;

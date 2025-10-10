@@ -11,7 +11,7 @@ namespace Constructor.Triggers
     }
     public class AreaRectTrigger : EntityConstructor<AreaRectTriggerData, Trigger, TriggerSys, AreaRectTrigger>
     {
-        protected override string RelativePath => "Projectile/AreaRectTrigger.csv";
+        protected override string RelativePath => "Trigger/AreaRectTrigger.csv";
 
         protected override TriggerSys SysInstance => TriggerSys.Instance;
 

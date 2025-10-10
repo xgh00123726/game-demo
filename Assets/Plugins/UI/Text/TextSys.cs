@@ -1,6 +1,7 @@
 using GameBase.EntitySystem;
 using GameBase.Infos;
 using GameBase.Resources;
+using GameBase.Tools;
 using TMPro;
 using UnityEngine;
 namespace GameBase.UI
@@ -11,14 +12,14 @@ namespace GameBase.UI
         {
             var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
             obj.transform.SetParent(WorldCanvs.Instance.transform, false);
-            e.rectTransform = obj.GetComponent<RectTransform>();
-            e.textObj = obj.GetComponent<TextMeshProUGUI>();
-
             return obj;
         }
 
         protected override void AfterInstantiateEUObject(FloatText e)
         {
+            e.rectTransform = e.Obj.GetComponent<RectTransform>();
+            e.textObj = e.Obj.GetComponent<TextMeshProUGUI>();
+
             e.duration = FloatTextConfig.Float.existTime;
             e.instantiateTime = Time.time;
 
@@ -29,11 +30,13 @@ namespace GameBase.UI
             float rad = Random.Range(0f, Mathf.PI * 2);
             e.xFactor = Mathf.Sin(rad) * e.horizontalSpeed;
             e.zFactor = Mathf.Cos(rad) * e.horizontalSpeed;
+        }
 
-            e.textObj.text = e.value;
-
+        protected override void OnEntityStart(FloatText e)
+        {
             e.Obj.SetActive(true);
         }
+
 
         protected override void BeforeReleaseEUObject(FloatText e)
         {
@@ -46,6 +49,7 @@ namespace GameBase.UI
             if (t > e.duration)
             {
                 RemoveEntity(e);
+                return;
             }
 
             float y = e.yFactorA * t * t + e.yFactorB * t + e.yFactorC * t;

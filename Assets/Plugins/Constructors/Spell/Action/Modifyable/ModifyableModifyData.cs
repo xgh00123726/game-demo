@@ -1,4 +1,4 @@
-namespace Constructor.Spells.Action.Modifyables
+namespace Constructor.Spells.Action
 {
     public struct ModifyableModifyData
     {

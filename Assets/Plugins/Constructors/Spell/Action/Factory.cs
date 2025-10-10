@@ -8,10 +8,8 @@ namespace Constructor.Spells.Action
 {
     public enum Type
     {
-        TriggerOnHit,
-        NearestTarget,
-        AreaFixedDis,
-        BuffSelf,
+        MTriggerOnHit,
+        MBuffSelf,
 
         MAreaFixedDis,
         MNearestTarget,
@@ -22,10 +20,8 @@ namespace Constructor.Spells.Action
         {
             return new()
             {
-                {Type.TriggerOnHit, TriggerOnHitCon.Instance.Get },
-                {Type.NearestTarget, NearestTargetCon.Instance.Get },
-                {Type.AreaFixedDis, AreaFixedDisCon.Instance.Get },
-                {Type.BuffSelf, BuffSelfCon.Instance.Get },
+                {Type.MTriggerOnHit, MTriggerOnHitCon.Instance.Get },
+                {Type.MBuffSelf, BuffSelfCon.Instance.Get },
                 {Type.MAreaFixedDis, MAreaFixedDisCon.Instance.Get },
                 {Type.MNearestTarget, MNearestTargetCon.Instance.Get },
             };

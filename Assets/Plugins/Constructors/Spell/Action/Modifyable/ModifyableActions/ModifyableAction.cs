@@ -1,10 +1,9 @@
-using Constructor.Spells.Action.Modifyables.Modifier;
 using GameBase.Flyings;
 using GameBase.Triggers;
 using GameBase.Spells;
 using GameBase.Tools;
 
-namespace Constructor.Spells.Action.Modifyables
+namespace Constructor.Spells.Action
 {
     public abstract partial class ModifyableAction : ISpellAction
     {

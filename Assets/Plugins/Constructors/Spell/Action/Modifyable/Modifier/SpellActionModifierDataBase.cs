@@ -4,11 +4,11 @@ using System.IO;
 using UnityEngine;
 using GameBase.Tools;
 
-namespace Constructor.Spells.Action.Modifyables.Modifier
+namespace Constructor.Spells.Action
 {
     public struct SpellActionModifierInfo
     {
-        public Type type;
+        public ModifierType type;
         public int id;
         public int iconTextureID;
         public int rarity;

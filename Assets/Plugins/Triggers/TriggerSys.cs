@@ -15,7 +15,14 @@ namespace GameBase.Triggers
         {
             if (e.hasWhite)
             {
-                e.whites = new ();
+                e.whites = new();
+            }
+
+            e.instantiateTime = Time.time;
+            e.lastTrigTime = Time.time;
+            if (e.trigStyle == TrigStyle.PeriodImmediate)
+            {
+                e.isTrig = true;
             }
         }
 
@@ -52,8 +59,22 @@ namespace GameBase.Triggers
                 return;
             }
 
+            if (e.trigStyle == TrigStyle.PeriodImmediate || e.trigStyle == TrigStyle.PeriodNext)
+            {
+                if (Time.time > e.lastTrigTime + e.trigPeriod)
+                {
+                    e.isTrig = true;
+                }
+            }
+
+            if (e.trigStyle == TrigStyle.Always)
+            {
+                e.isTrig = true;
+            }
+
             if (e.isTrig)
             {
+                e.OnTrig?.Invoke();
                 HitTarget(e);
 
                 if (e.shape != null)
@@ -68,8 +89,20 @@ namespace GameBase.Triggers
                         EffectTarget(e, target);
                     }
                 }
-
+                e.lastTrigTime = Time.time;
                 e.isTrig = false;
+            }
+
+            if (e.actualEffectTimes >= e.maxeffectTimes)
+            {
+                RemoveEntity(e);
+                return;
+            }
+
+            if (Time.time > e.instantiateTime + e.existTime)
+            {
+                RemoveEntity(e);
+                return;
             }
         }
     }

@@ -22,6 +22,7 @@ namespace GameBase.EntitySystem
 
         protected internal LinkedList<T_Entity> _entityNeedRegister = new LinkedList<T_Entity>();
         protected internal LinkedList<T_Entity> _entitiesNeedRemove = new LinkedList<T_Entity>();
+        protected internal LinkedList<T_Entity> _entitiedNeedInit = new LinkedList<T_Entity>();
 
         protected CommonEntitySys()
         {
@@ -67,6 +68,8 @@ namespace GameBase.EntitySystem
         /// </list></summary>
         protected abstract void UpdateEntity(T_Entity e);
 
+        protected virtual void OnEntityStart(T_Entity e) { }
+
         /// <summary>
         /// new实体时调用
         /// </summary>
@@ -92,6 +95,7 @@ namespace GameBase.EntitySystem
         public void RegisterEntity(T_Entity e)
         {
             OnRegisterEntityToActives(e);
+            _entitiedNeedInit.AddLast(e);
             if (_inUpdating)
             {
                 AddToNeedRegister(e);
@@ -108,7 +112,7 @@ namespace GameBase.EntitySystem
         /// </summary>
         /// <typeparam name="T_EntityType"></typeparam>
         /// <returns></returns>
-        public T_Entity NewEntity(Action<T_Entity> Init = null)
+        public virtual T_Entity NewEntity(Action<T_Entity> Init = null)
         {
             var e = NewFromPool();
             Init?.Invoke(e);
@@ -136,6 +140,12 @@ namespace GameBase.EntitySystem
                 Constructor.ReleaseEntity(e);
             }
             _entitiesNeedRemove.Clear();
+
+            foreach (var e in _entitiedNeedInit)
+            {
+                OnEntityStart(e);
+            }
+            _entitiedNeedInit.Clear();
 
             _currentIterateIndex = 0;
             _inUpdating = true;

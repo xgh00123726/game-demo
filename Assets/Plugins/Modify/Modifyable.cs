@@ -14,6 +14,14 @@ namespace GameBase.Modify
         public float Value => value;
         public float ValueSet => valueSet;
 
+        public void AddValue(float value)
+        {
+            var modifier = ModifyerSys.Instance.NewEntity();
+            modifier.value = value;
+            modifier.type = ModifyType.Once | ModifyType.Forever;
+            modifyersNeedAdd.AddLast(modifier);
+        }
+
         public void AddModifier(Modifyer modifyer)
         {
             modifyersNeedAdd.AddLast(modifyer);

@@ -2,17 +2,24 @@ using GameBase.Modify;
 using GameBase.Triggers;
 using GameBase.Tools;
 using GameBase.UI;
+using UnityEngine;
 
 namespace Constructor.Triggers.Action
 {
     public struct DamageData
     {
-        public int value;
+        public float value;
     }
 
     public class Damage : ITriggerAction
     {
         public DamageData data;
+
+        public Damage(float value = 0)
+        {
+            data.value = value;
+        }
+
         void ITriggerAction.Effect(Trigger e, ITriggerTarget target)
         {
             if (target is IModifieder mTarget)
@@ -22,9 +29,10 @@ namespace Constructor.Triggers.Action
                 modifyer.value = -data.value;
                 modifyer.OnModify += () =>
                 {
-                    var text = TextSys.Instance.NewEntity();
+                    var text = TextSys.Instance.NewEntity((e) => { e.showPosition = target.Center; });
                     text.showPosition = target.Center;
-                    text.value = data.value.ToString();
+                    text.Value = data.value.ToString();
+                    text.Color = Color.white;
                 };
 
                 mTarget.Modifyables.ModifySet("currHP", modifyer);

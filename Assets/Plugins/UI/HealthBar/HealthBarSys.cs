@@ -16,12 +16,6 @@ namespace GameBase.UI
 
             obj.transform.SetParent(WorldCanvs.Instance.transform, false);
 
-            e.current = obj.transform.Find("Current").gameObject;
-            e.currentRectTransform = e.current.GetComponent<RectTransform>();
-
-            e.losing = obj.transform.Find("Losing").gameObject;
-            e.losingRectTransform = e.losing.GetComponent<RectTransform>();
-
             return obj;
         }
 
@@ -29,6 +23,12 @@ namespace GameBase.UI
 
         protected override void AfterInstantiateEUObject(HealthBar e)
         {
+            e.current = e.Obj.transform.Find("Current").gameObject;
+            e.currentRectTransform = e.current.GetComponent<RectTransform>();
+
+            e.losing = e.Obj.transform.Find("Losing").gameObject;
+            e.losingRectTransform = e.losing.GetComponent<RectTransform>();
+
             e.currPercent = 1f;
             e.losingPercent = 1f;
 

@@ -10,7 +10,7 @@ namespace GameBase.Flyings
         IPoolable,
         ITriggerAttach
     {
-        public float releaseDistance;
+        public float arriveDis;
         public int trailID;
         public float maxExistTime;
         public float minExistTime;
@@ -31,7 +31,7 @@ namespace GameBase.Flyings
 
         public virtual void AfterGet()
         {
-            releaseDistance = 0.1f;
+            arriveDis = 0.1f;
             maxExistTime = 10f;
             minExistTime = 0f;
             speed = 5f;

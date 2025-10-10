@@ -1,9 +1,18 @@
 using GameBase.EntitySystem;
 using GameBase.Math;
+using System;
 using System.Collections.Generic;
 
 namespace GameBase.Triggers
 { 
+    public enum TrigStyle
+    {
+        External,
+        PeriodImmediate,
+        PeriodNext,
+        Always,
+    }
+
     public class Trigger :
         IPoolable
     {
@@ -17,8 +26,14 @@ namespace GameBase.Triggers
         public ITriggerAction action;
 
         // optional
+        public float trigPeriod;
         public bool hasWhite;
+        public float existTime;
+        public TrigStyle trigStyle;
+        public Action OnTrig;
 
+        internal float lastTrigTime;
+        internal float instantiateTime;
         internal bool isTrig;
         internal int actualEffectTimes;
         internal HashSet<ITriggerTarget> whites;
@@ -28,8 +43,17 @@ namespace GameBase.Triggers
             isTrig = true;
         }
 
+        public void SetWhites()
+        {
+            hasWhite = true;
+            whites = new();
+        }
+
         void IPoolable.AfterGet()
         {
+            trigPeriod = 1;
+            trigStyle = TrigStyle.External;
+            existTime = 1;
             actualEffectTimes = 0;
             maxeffectTimes = 1;
             hasWhite = false;

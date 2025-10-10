@@ -51,10 +51,6 @@ namespace GameBase.Modify
         public Modifyable set;
         public Modifyable setPer;
         public Modifyable sumPer;
-
-        //public Modifyable Set { get => set; set => set = value; }
-        //public Modifyable SetPer { get => setPer; set => setPer = value; }
-        //public Modifyable SumPer { get => sumPer; set => sumPer = value; }
     }
 
     public class Modifyables : IEnumerable<ModifyableGroup>
@@ -160,6 +156,11 @@ namespace GameBase.Modify
             ModifySet(ModifyTable.GetID(key), modifyer);
         }
 
+        public void ModifySetValue(string key, float value)
+        {
+            _modifyableGroups[ModifyTable.GetID(key)].set.AddValue(value);
+        }
+
         public void ModifySetPer(int key, Modifyer modifyer)
         {
             if (!ContainsKey(key))
@@ -176,6 +177,11 @@ namespace GameBase.Modify
             ModifySetPer(ModifyTable.GetID(key), modifyer);
         }
 
+        public void ModifySetPerValue(string key, float value)
+        {
+            _modifyableGroups[ModifyTable.GetID(key)].setPer.AddValue(value);
+        }
+
         public void ModifySumPer(int key, Modifyer modifyer)
         {
             if (!ContainsKey(key))
@@ -190,6 +196,11 @@ namespace GameBase.Modify
         public void ModifySumPer(string key, Modifyer modifyer)
         {
             ModifySumPer(ModifyTable.GetID(key), modifyer);
+        }
+
+        public void ModifySumPerValue(string key, float value)
+        {
+            _modifyableGroups[ModifyTable.GetID(key)].sumPer.AddValue(value);
         }
     }
 }

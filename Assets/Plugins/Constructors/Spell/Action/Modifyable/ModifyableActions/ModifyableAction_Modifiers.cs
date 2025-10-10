@@ -1,9 +1,8 @@
-using Constructor.Spells.Action.Modifyables.Modifier;
 using GameBase.Inventorys;
 using GameBase.Spells;
 using GameBase.Tools;
 
-namespace Constructor.Spells.Action.Modifyables
+namespace Constructor.Spells.Action
 {
     public partial class ModifyableAction
     {
@@ -24,8 +23,8 @@ namespace Constructor.Spells.Action.Modifyables
 
         public void AddModifier(int inventoryID, int index)
         {
-            var info = Modifier.SpellActionModifierDataBase.Instance[inventoryID];
-            var obj = Modifier.SpellActionModifierFactory.Instance.Get(info.type, info.id);
+            var info = SpellActionModifierDataBase.Instance[inventoryID];
+            var obj = SpellActionModifierFactory.Instance.Get(info.type, info.id);
             _modifiers.Add(new ModifierStore()
             {
                 obj = obj,

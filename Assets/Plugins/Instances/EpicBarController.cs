@@ -10,17 +10,18 @@ namespace Instance
 
         public static EpicBar healthBar;
         public static EpicBar manaBar;
+        public static EpicBar expBar;
 
         public EpicBarController()
         {
             healthBar = EpicBarSys.Instance.NewEntity();
             healthBar.Obj.SetActive(false);
 
-            manaBar = EpicBarSys.Instance.NewEntity((EpicBar e) =>
-            {
-                e.ObjID = 8;
-            });
+            manaBar = EpicBarSys.Instance.NewEntity((e) => e.ObjID = 8);
             manaBar.Obj.SetActive(false);
+
+            expBar = EpicBarSys.Instance.NewEntity((e) => e.ObjID = 47);
+            expBar.Obj.SetActive(false);
         }
 
         public static void SetPlayerBarTarget(Creature target)
@@ -30,11 +31,13 @@ namespace Instance
             {
                 healthBar.Obj.SetActive(false);
                 manaBar.Obj.SetActive(false);
+                expBar.Obj.SetActive(false);
             }
             else
             {
                 healthBar.Obj.SetActive(true);
                 manaBar.Obj.SetActive(true);
+                expBar.Obj.SetActive(true);
             }
         }
 
@@ -51,6 +54,9 @@ namespace Instance
 
                 manaBar.CurrHP = _playerBarTarget.modifyables["currMana"];
                 manaBar.MaxHP = _playerBarTarget.modifyables["maxMana"];
+
+                expBar.CurrHP = _playerBarTarget.currentExp;
+                expBar.MaxHP = _playerBarTarget.levelUpExp;
             }
         }
     }

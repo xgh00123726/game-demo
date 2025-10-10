@@ -20,7 +20,7 @@ namespace GameBase.Creatures
         Player = 1 << 1,
     }
 
-    public class Creature : IUEntity<GameObject>,
+    public partial class Creature : IUEntity<GameObject>,
         IPoolable,
         ITriggerOwner,
         ITriggerTarget,
@@ -36,7 +36,7 @@ namespace GameBase.Creatures
         public float radius = 0.3f;
         public CreatureTag tag;
         public Vector3 healthBarOffset = new Vector3(0, 1.6f, 0);
-        public Action OnRelease;
+        public Action<Creature> OnDead;
        
         public DynInventory<Spell> spells = new();
         public Modifyables modifyables = new();
@@ -68,7 +68,7 @@ namespace GameBase.Creatures
 
         bool IHealthBarOwner.ALive => Alive;
 
-        Vector3 ITriggerOwner.HandPosition => Obj.transform.position + new Vector3(0, 1, 0);
+        public Vector3 HandPosition => Obj.transform.position + new Vector3(0, 1, 0);
 
         float ISpeller.CoolingAccelerate => modifyables["coolingAccelerate"];
 
@@ -102,13 +102,12 @@ namespace GameBase.Creatures
 
         void IPoolable.AfterGet()
         {
-            OnRelease = null;
+            OnDead = null;
             tag = CreatureTag.CommonCreature;
         }
 
         void IPoolable.BeforeRelease()
         {
-            OnRelease?.Invoke();
         }
 
         public bool HasPossibleAttr(string name)

@@ -10,7 +10,7 @@ namespace Constructor.Triggers
     }
     public class SingleTrigger : EntityConstructor<SingleTriggerData, Trigger, TriggerSys, SingleTrigger>
     {
-        protected override string RelativePath => "Projectile/SingleTrigger.csv";
+        protected override string RelativePath => "Trigger/SingleTrigger.csv";
 
         protected override TriggerSys SysInstance => TriggerSys.Instance;
 

@@ -15,10 +15,11 @@ namespace Constructor.Triggers
         public bool hasWhite;
         public float radius;
         public int damage;
+        public TargetSetType targetSetType;
     }
     public class AreaCircleTrigger : EntityConstructor<AreaCircleTriggerData, Trigger, TriggerSys, AreaCircleTrigger>
     {
-        protected override string RelativePath => "Projectile/AreaCircleTrigger.csv";
+        protected override string RelativePath => "Trigger/AreaCircleTrigger.csv";
 
         protected override TriggerSys SysInstance => TriggerSys.Instance;
 
@@ -27,7 +28,7 @@ namespace Constructor.Triggers
             e.maxeffectTimes = data.maxEffectTimes;
             e.hasWhite = data.hasWhite;
             e.shape = new GMath.Circle(Vector2.zero, data.radius);
-            e.targetsSet = TargetSetFactorary.Get(TargetSetType.Common);
+            e.targetsSet = TargetSetFactorary.Get(data.targetSetType);
             e.action = Constructor.Triggers.Action.Factory.Instance.Get(Triggers.Action.Type.Damage, data.damage);
         }
     }

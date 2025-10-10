@@ -84,8 +84,9 @@ namespace GameBase.Tools
                     var enumParse = Enum.TryParse(field.FieldType, csvReader[readerIndex], out var val);
                     if (!enumParse)
                     {
-                        XLogger.Instance.Level(XLogger.LogLevel.Warning)
+                        XLogger.Instance.Level(XLogger.LogLevel.Error)
                             .Log($"{csvReader[readerIndex]} is not a valid enum");
+                        return ret;
                     }
                     field.SetValue(ret, val);
                 }
@@ -127,8 +128,9 @@ namespace GameBase.Tools
                     var enumParse = Enum.TryParse(field.FieldType, csvReader[readerIndex], out var val);
                     if (!enumParse)
                     {
-                        XLogger.Instance.Level(XLogger.LogLevel.Warning)
+                        XLogger.Instance.Level(XLogger.LogLevel.Error)
                             .Log($"{csvReader[readerIndex]} is not a valid enum");
+                        return ret;
                     }
                     field.SetValueDirect(retRef, val);
                 }

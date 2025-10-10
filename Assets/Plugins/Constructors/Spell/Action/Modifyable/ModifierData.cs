@@ -1,8 +1,8 @@
-namespace Constructor.Spells.Action.Modifyables
+namespace Constructor.Spells.Action
 {
     public struct ModifierData
     {
-        public Modifier.Type type;
+        public ModifierType type;
         public int modifierID;
         public int inventoryID;
     }
