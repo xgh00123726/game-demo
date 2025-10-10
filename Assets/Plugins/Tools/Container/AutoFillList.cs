@@ -7,7 +7,6 @@ namespace GameBase.Tools
         public void CopyFrom(List<T> list)
         {
             int size = list.Count;
-            Capacity = size;
             for (int i = 0; i < size; i++)
             {
                 this[i] = list[i];
@@ -19,15 +18,10 @@ namespace GameBase.Tools
             int count = Count;
             if (size > count)
             {
-                Capacity = size;
                 for (int i = 0; i < size - count; i++)
                 {
                     Add(value);
                 }
-            }
-            else
-            {
-                Capacity = size;
             }
         }
 
@@ -39,7 +33,6 @@ namespace GameBase.Tools
             }
             else
             {
-                Capacity = index + 1;
                 int count = Count;
                 for (int i = 0; i < index - count + 1; i++)
                 {

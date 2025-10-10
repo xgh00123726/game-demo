@@ -15,6 +15,7 @@ namespace Constructor.Creatures
         public float damage;
         public float moveSpeed;
         public float maxHP;
+        public float attackRange;
         public float healthBarXOffset;
         public float healthBarYOffset;
         public float healthBarZOffset;
@@ -51,7 +52,7 @@ namespace Constructor.Creatures
             e.modifyables.Set("maxMana", 100f);
             e.modifyables.Set("coolingAccelerate", 0f);
             e.modifyables.Set("rotateSpeed", 720f);
-            e.modifyables.Set("attackRange", 20f);
+            e.modifyables.Set("attackRange", data.attackRange);
         }
 
         protected override void Set(Creature e, in CommonData data)

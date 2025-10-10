@@ -18,6 +18,7 @@ namespace GameBase.Creatures
         public static bool isDrawMove = true;
         public static bool isDrawForce = false;
         public static bool isDrawAI = false;
+        public static bool isDrawAttackRange = true;
 
         public static float forceLenTimes = 5;
 
@@ -123,6 +124,21 @@ namespace GameBase.Creatures
             }, drawY);
         }
 
+        private void DrawAttackRange(Creature e)
+        {
+            if (!isDrawAttackRange)
+            {
+                return;
+            }
+
+            Gizmos.color = Color.white;
+            GizmosAppend.DrawCircle(new GMath.Circle
+            {
+                c = new Vector2(e.mover.owner.Position.x, e.mover.owner.Position.z),
+                r = e.modifyables["attackRange"],
+            }, drawY);
+        }
+
         private void DrawFollowAttackAI(Creature e)
         {
             if (!isDrawAI)
@@ -181,6 +197,7 @@ namespace GameBase.Creatures
                 DrawCollide(e);
                 DrawMove(e);
                 DrawFollowAttackAI(e);
+                DrawAttackRange(e);
             }
         }
     }

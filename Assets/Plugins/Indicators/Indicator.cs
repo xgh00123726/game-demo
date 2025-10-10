@@ -16,6 +16,12 @@ namespace GameBase.Indicators
         internal Vector3 pivot;
         internal protected DecalProjector urpProjector;
 
+        public Color Color
+        {
+            get => decalMaterial.GetColor("_Color");
+            set => decalMaterial.SetColor("_Color", value);
+        }
+
         public Vector3 Size
         {
             set

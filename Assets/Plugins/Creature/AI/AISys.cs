@@ -2,6 +2,7 @@ using GameBase.EntitySystem;
 using GameBase.Tools;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace GameBase.AI
 {
@@ -67,7 +68,14 @@ namespace GameBase.AI
             _inUpdate = true;
             foreach (var ai in AIList)
             {
-                ai?.Update();
+                if (Time.time > ai.enableRecoverTime)
+                {
+                    ai.enable = true;
+                }
+                if (ai.enable)
+                {
+                    ai.Update();
+                }
                 if (ai.owner == null)
                 {
                     XLogger.Instance.Level(XLogger.LogLevel.Warning)

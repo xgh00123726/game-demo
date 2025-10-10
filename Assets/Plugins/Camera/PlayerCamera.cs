@@ -23,6 +23,7 @@ namespace GameBase.GCamera
         // Start is called before the first frame update
         void Start()
         {
+            CameraSys.Instance.SetActive(true);
             CameraSys.Main = GetComponent<Camera>();
             Command.Register("enableScrollChangeFOV", () =>
             {
@@ -36,12 +37,14 @@ namespace GameBase.GCamera
 
         private Vector3 DirUp()
         {
-            return new Vector3(-1.414f, 0, 1.414f);
+            return new Vector3(0, 0, 1f);
+            //return new Vector3(-1.414f, 0, 1.414f);
         }
 
         private Vector3 DirRight()
         {
-            return new Vector3(1.414f, 0, 1.414f);
+            return new Vector3(1f, 0, 0);
+            //return new Vector3(1.414f, 0, 1.414f);
         }
 
         private Vector3 MouseDirToWorldDir(Vector3 dir)

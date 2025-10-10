@@ -76,12 +76,18 @@ namespace Instance
             FillItem(size);
             for (int i = 0; i < size; ++i)
             {
-                this[i].maskImage.SetIcon((int)spells[i].iconTextureID);
+                this[i].obj.SetActive(true);
+                this[i].maskImage.SetIcon(spells[i].iconTextureID);
             }
-            for (int i = 0; i < spells.Size; ++i)
+            for (int i = 0; i < size; ++i)
             {
                 this[i].coolingTimeRemain = spells[i].spellCoolingdown.CoolingRemain;
                 this[i].coolingTimeSet = spells[i].spellCoolingdown.CoolingSet;
+            }
+
+            for (int i = size; i < Entities.Count; ++i)
+            {
+                this[i].obj.SetActive(false);
             }
         }
 

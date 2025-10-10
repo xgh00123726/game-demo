@@ -55,7 +55,7 @@ namespace Instance
             {
                 var spell = _target.spells[i];
 
-                var interactive = spell.interactive as MouseInput;
+                var interactive = spell.interactive as DotExternalSet;
 
                 if (interactive == null)
                 {
@@ -75,6 +75,7 @@ namespace Instance
 
                 if (isFastCast && Inputs.GetKeyDown(func, "spell"))
                 {
+                    interactive.position = CameraSys.MouseHitPosition;
                     spell.TryCast();
                     DeReadyAll();
                 }
@@ -87,6 +88,7 @@ namespace Instance
                     }
                     else if (isIndicatorReady && Inputs.GetKeyDown(KeyFunction.MouseConfirm, "spell"))
                     {
+                        interactive.position = CameraSys.MouseHitPosition;
                         spell.TryCast();
 
                         _isIndicatorReadys[i] = false;

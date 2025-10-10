@@ -26,9 +26,9 @@ namespace Constructor.Spells.Main
         protected override void ESet(Spell e, in CommonData data)
         {
             e.interactive = Interactive.Factory.Instance.Get(data.interactiveType, data.interactiveID);
-            if (e.interactive is MouseInput invokable)
+            if (e.interactive is DotExternalSet interactive)
             {
-                invokable.indicatorType = data.indicatorType;
+                interactive.indicatorType = data.indicatorType;
             }
 
             e.action = Action.Factory.Instance.Get(data.actionType, data.actionInterfaceID);

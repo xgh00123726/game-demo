@@ -19,6 +19,7 @@ namespace Instance
                 _target.mover.MoveTo(CameraSys.MouseHitPosition);
                 _target.rotater.LookAt(CameraSys.MouseHitPosition);
                 MoveIndicator.Show(CameraSys.MouseHitPosition);
+                _target.ai?.Disable();
 
                 OnMoveInput?.Invoke();
             }
@@ -27,6 +28,7 @@ namespace Instance
             {
                 _target.mover.Stop();
                 _target.Dir = _target.Dir;
+                _target.ai?.Disable();
             }
         }
 

@@ -29,12 +29,12 @@ namespace Constructor.Spells.Action.Modifyables
         protected override bool CastAction(Spell spell, in ModifyableModifyData modifyData)
         {
             if (spell.speller is Creature c &&
-                spell.interactive is IDotInput interactive)
+                spell.interactive is DotExternalSet interactive)
             {
 
                 var f = Flyings.Factory.Instance.Get(data.flyingType, data.flyingID);
                 f.Src = c.Position;
-                var dir = (interactive.Position - c.Position).normalized;
+                var dir = (interactive.position - c.Position).normalized;
                 f.target = new FixedFlyingTarget()
                 {
                     Position = f.Src + dir * data.distance,

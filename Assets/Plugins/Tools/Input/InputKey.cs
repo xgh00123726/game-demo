@@ -25,6 +25,8 @@ namespace GameBase.Tools
         OpenShop, CloseShop,
         DragScreen,
         ShopPurchase,
+        SelectTrig,
+        SelectF1, SelectF2, SelectF3, SelectF4, SelectF5, SelectF6, SelectF7,
     }
 
     internal struct InputKey

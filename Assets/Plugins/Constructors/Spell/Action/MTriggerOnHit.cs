@@ -30,13 +30,13 @@ namespace Constructor.Spells.Action.Modifyables
         public bool CastAction(Spell spell)
         {
             if (spell.speller is Creature c &&
-                spell.interactive is IDotInput interactive)
+                spell.interactive is DotExternalSet interactive)
             {
                 var f = Flyings.Factory.Instance.Get(data.flyingType, data.flyingID);
                 f.Src = c.HandPosition + new Vector3(data.xOffset, data.yOffset, data.zOffset);
                 f.target = new FixedFlyingTarget()
                 {
-                    Position = interactive.Position,
+                    Position = interactive.position,
                 };
                 f.OnHit += () =>
                 {

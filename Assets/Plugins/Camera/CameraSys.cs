@@ -1,3 +1,4 @@
+using GameBase.EntitySystem;
 using GameBase.Tools;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,7 +6,15 @@ using UnityEngine;
 
 namespace GameBase.GCamera
 {
-    public class CameraSys : MonoBehaviour
+    public static class CameraUtil
+    {
+        public static void LookAt(this Camera camera, Vector3 position)
+        {
+            XLogger.Instance.Log($"look at: {position}");
+        }
+    }
+
+    public class CameraSys : SingletonInstance<CameraSys>
     {
         protected static Camera _main;
         protected static LinkedList<Camera> _cameras = new LinkedList<Camera>();
@@ -19,12 +28,7 @@ namespace GameBase.GCamera
             set => _main = value;
         }
 
-        private void Awake()
-        {
-            DontDestroyOnLoad(this);
-        }
-
-        private void Update()
+        protected override void Update()
         {
             _mouseHitPosition = Inputs.MouseHitPostion(_main);
         }

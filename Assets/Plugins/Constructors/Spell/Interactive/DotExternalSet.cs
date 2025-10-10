@@ -24,7 +24,7 @@ namespace Constructor.Spells.Interactive
         public float randomMinZ;
         public float randomMaxZ;
     }
-    public class DotExternalSet : ISpellInteractive, IDotInput
+    public class DotExternalSet : ISpellInteractive
     {
         public DotExternalSetData data;
         public IndicatorType indicatorType;
@@ -34,8 +34,6 @@ namespace Constructor.Spells.Interactive
         public Func<Vector3> GetPosition;
 
         public Vector3 position;
-
-        public Vector3 Position => position;
 
         void ISpellInteractive.OnTrig()
         {
