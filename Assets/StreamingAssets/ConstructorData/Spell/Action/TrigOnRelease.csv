@@ -1,4 +1,0 @@
-3, flying1Type, flying1ID, flying2Type, flying2ID, projectileType   , projectileID, x, y , z
-0, Common     ,         1, Common     ,         2, AreaCircleTrigger,            0, 0,  0, 0
-1, Common     ,         1, Common     ,         2, AreaCircleTrigger,            0, 0, 10, 0
-2, Common     ,         3, Common     ,         2, AreaCircleTrigger,            0, 0,  0, 0

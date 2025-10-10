@@ -7,6 +7,7 @@ local EquipmentUIInteractive = CS.Instance.EquipmentUIInteractive
 local BuffUIInteractive = CS.Instance.BuffUIInteractive
 local SpellUIInteractive = CS.Instance.SpellUIInteractive
 local SpellActionModifierInteractive = CS.Instance.SpellActionModifierInteractive
+local TextSys = CS.GameBase.UI.TextSys.Instance
 
 local CommonDragViewController = CS.Instance.CommonDragViewController
 local CommonDetailViewController = CS.Instance.CommonDetailViewController
@@ -256,5 +257,7 @@ UI = {
 
         --- @arg1 target : Spell
         SetTarget = SpellActionModifierInteractive.SetTarget,
-    }
+    },
+
+    TextSys = TextSys,
 }

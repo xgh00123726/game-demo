@@ -3,6 +3,9 @@ local PlayerSpellCaster = CS.Instance.PlayerSpellCaster
 local EpicBarController = CS.Instance.EpicBarController
 local AutoSpellCaster = CS.Instance.AutoSpellCaster
 local DrawCreatureRadius = CS.Instance.DrawCreatureRadius
+local CreatureGizmosDraw = CS.GameBase.Creatures.CreatureGizmosDraw
+local TriggerGizmosDraw = CS.GameBase.Triggers.TriggerGizmos
+local CreatureSelector = CS.Instance.CreatureSelector
 
 local function ControllerInit()
     PlayerMoveController.Instance:SetActive(true)
@@ -14,10 +17,22 @@ local function ControllerInit()
 
     AutoSpellCaster.Instance:SetActive(true)
 
-    -- DrawCreatureRadius.Instance:SetActive(true)
+    DrawCreatureRadius.Instance:SetActive(true)
 
-    CS.GameBase.Projectiles.ProjectileGizmos.ToggleShow()
-    CS.GameBase.Creatures.CreatureGizmosDraw.ToggleShow()
+    local KeyFunction = CS.GameBase.Tools.KeyFunction
+    CreatureSelector.AddHotKeyCreature(KeyFunction.SelectF1, Creature.Player)
+    CreatureSelector.AddHotKeyCreature(KeyFunction.SelectF2, Creature.Player)
+    CreatureSelector.Instance:SetActive(true)
+    
+    
+    CreatureGizmosDraw.isDrawGizmos = true
+    CreatureGizmosDraw.isDrawCollider = false
+    CreatureGizmosDraw.isDrawMove = false
+    CreatureGizmosDraw.isDrawForce = false
+    CreatureGizmosDraw.isDrawAI = false
+    CreatureGizmosDraw.Init()
+
+    TriggerGizmosDraw.ToggleShow()
 end
 
 Controller = {
@@ -44,10 +59,13 @@ Controller = {
     },
 
     AutoCaster = {
-        --- @arg1 target : Creature
+        --- @arg1 spell : Spell
         Register = AutoSpellCaster.Register,
 
-        --- @arg2 target : Creature
+        --- @arg1 spell : Spell
         UnRegister = AutoSpellCaster.Register,
+
+        --- @arg1 spell : Spell
+        CastByStyle = AutoSpellCaster.CastByStyle,
     },
 }

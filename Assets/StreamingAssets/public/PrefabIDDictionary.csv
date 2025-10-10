@@ -1,4 +1,4 @@
-46, path
+49, path
  0, Prefabs/Entity/Player1
  1, Prefabs/Entity/Enemy1
  2, Prefabs/Projectile/Lighting
@@ -45,3 +45,6 @@
 43, Prefabs/UI/SpellActionModifierPanel.prefab
 44, Prefabs/UI/SpellItemShadowView.prefab
 45, Prefabs/Info/CreatureCircleIndicator.prefab
+46, Prefabs/Effect/Slash effects/Stone slash
+47, Prefabs/UI/EpicExpBar.prefab
+48, Prefabs/Info/SelectorDrawer.prefab

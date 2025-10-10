@@ -1,9 +1,5 @@
-3,ObjID,ExistTime
-0,25,1
-1,26,1
-2,36,2
-
-// common类型特效
-
-// ObjID：特效预制件ID
-// existTime：特效存在的最大时间，特效存在时间为min(existTIme, 特效本身存在时间)
+4, ObjID, ExistTime
+0,    25,         1
+1,    26,         1
+2,    36,         2
+3,    46,         1

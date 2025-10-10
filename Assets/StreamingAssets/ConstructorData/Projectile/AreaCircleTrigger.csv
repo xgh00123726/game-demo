@@ -1,7 +1,0 @@
-2,maxEffectTimes,hasWhite,radius,damage
-0,999,true,2,10
-1,999,true,0.8,10
-
-// 管理范围圆形触发器
-
-// 生成一个半径为radius，伤害为damage，射弹飞行物id为flyingid的射弹

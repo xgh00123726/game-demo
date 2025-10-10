@@ -1,0 +1,3 @@
+2, flyingType, flyingID, targetSet   , damage, ampFactor
+0, Common    ,        0, Common      ,     10,         1
+1, Common    ,        0, TargetPlayer,     10,         1

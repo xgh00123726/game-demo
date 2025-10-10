@@ -1,4 +1,5 @@
 require("CreatureData")
+require("Controller")
 
 local Factory = CS.Constructor.Creatures.Factory.Instance
 local Vector3 = CS.UnityEngine.Vector3
@@ -18,7 +19,15 @@ local function GenPlayer()
     player:AddSpell(Spell.Factory:Get(SpellData.Enum.SpellType.Common, 5))
     player:AddSpell(Spell.Factory:Get(SpellData.Enum.SpellType.Common, 4))
 
-    print(player:AddEquipment(3, 2))
+    player:SetDefaultGetExpText()
+
+    player.OnLevelUp = function ( c )
+        for i = 1, #playerData.LevelUpAttr do
+            local attr = playerData.LevelUpAttr[i].attr
+            local value = playerData.LevelUpAttr[i].value
+            player.modifyables:ModifySetValue(attr, value)
+        end
+    end
 
     Creature.Player = player
 end
@@ -42,6 +51,12 @@ local function CreateBase( creatureBaseData )
     local yMax = basePosition.y + generateRange.y.max
     local zMin = basePosition.z + generateRange.z.min
     local zMax = basePosition.z + generateRange.z.max
+    local deadExp = creatureBaseData.DeadExp
+
+    local OnDead = function ( c )
+        baseState.currentCreatureNum = baseState.currentCreatureNum - 1
+        Creature.Player:GetExp(c.deadExp)
+    end
 
     Timer.AddLoop(refreshPeriod, function ()
         if (baseState.currentCreatureNum < capacity) then
@@ -51,8 +66,14 @@ local function CreateBase( creatureBaseData )
                 local y = math.random(yMin, yMax)
                 local z = math.random(zMin, zMax)
                 c.Position = Vector3(x, y, z)
-                c.OnRelease = function ()
-                    baseState.currentCreatureNum = baseState.currentCreatureNum - 1
+                c.deadExp = deadExp
+                c.OnDead = OnDead
+                c:AddSpell(Spell.Factory:Get(SpellData.Enum.SpellType.Common, 6))
+                c:AddSpell(Spell.Factory:Get(SpellData.Enum.SpellType.Common, 8))
+                c.ai.arriveDis = 2
+                c.ai.OnFollowArrive = function ()
+                    -- c.spells[0]:TryCast()
+                    Controller.AutoCaster.CastByStyle(c.spells[1])
                 end
                 baseState.currentCreatureNum = baseState.currentCreatureNum + 1
             end

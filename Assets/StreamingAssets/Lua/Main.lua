@@ -6,8 +6,8 @@ require("Shop")
 require("Buff")
 require("Modify")
 require("Text")
-require("Controller")
 require("Spell")
+require("Controller")
 
 local M = {
     UpdateTick = 0,
@@ -48,7 +48,7 @@ function OnInitOK()
     Controller.PlayerMove.SetTarget(Creature.Player)
     Controller.SpellCast.SetTarget(Creature.Player)
     Controller.PlayerEpicBar.SetTarget(Creature.Player)
-    -- Controller.AutoCaster.Register(Creature.Player.Spells[1])
+    Controller.AutoCaster.Register(Creature.Player.spells[1])
 
     Text.Init()
 

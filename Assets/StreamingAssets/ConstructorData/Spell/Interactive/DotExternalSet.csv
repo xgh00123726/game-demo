@@ -1,0 +1,5 @@
+4, DotExternalSetStyle, CreatureTag   , randomMinX, randomMaxX, randomMinY, randomMaxY, randomMinZ, randomMaxZ
+0, None               , None          , 0         , 0         , 0         , 0         , 0         ,          0
+1, NearestTarget      , CommonCreature, 0         , 0         , 0         , 0         , 0         ,          0
+2, NearestTarget      , Player        , 0         , 0         , 0         , 0         , 0         ,          0
+3, Random             , None          , -2        , -2        , -7        , -7        , -2        ,          2
