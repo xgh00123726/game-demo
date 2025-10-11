@@ -8,9 +8,15 @@ namespace GameBase.GCamera
 {
     public static class CameraUtil
     {
-        public static void LookAt(this Camera camera, Vector3 position)
+        public static void LookAt(this Camera c, Vector3 position)
         {
-            XLogger.Instance.Log($"look at: {position}");
+            float deltaY = c.transform.position.y - position.y;
+            float angle = 90 - c.transform.rotation.eulerAngles.x;
+
+            float deltaX = 0;
+            float deltaZ = -Mathf.Tan(angle * Mathf.Deg2Rad) * deltaY;
+
+            c.transform.position = new Vector3(position.x + deltaX, c.transform.position.y, position.z + deltaZ);
         }
     }
 

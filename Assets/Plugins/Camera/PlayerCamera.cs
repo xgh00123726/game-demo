@@ -35,6 +35,17 @@ namespace GameBase.GCamera
             });
         }
 
+        private void OnDrawGizmosSelected()
+        {
+            Ray r = new Ray(CameraSys.Main.transform.position, CameraSys.Main.transform.forward);
+            Physics.Raycast(r, out RaycastHit rayHit);
+            for (int i = 0; i < 10; ++i)
+            {
+                Gizmos.color = Color.green;
+                Gizmos.DrawLine(CameraSys.Main.transform.position, rayHit.point);
+            }
+        }
+
         private Vector3 DirUp()
         {
             return new Vector3(0, 0, 1f);
