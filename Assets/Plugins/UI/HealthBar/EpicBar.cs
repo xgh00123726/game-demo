@@ -14,6 +14,7 @@ namespace GameBase.UI
         public int targetTexureID = 9;
         public int shapeTexureID = 4;
         public PossibleObj<Vector3> positionSet;
+        public float regen = 0;
 
         internal bool hpChange;
         internal float currHP;
@@ -27,6 +28,7 @@ namespace GameBase.UI
         internal GameObject losing;
         internal RectTransform losingRectTransform;
         internal Material iconMaterial;
+        internal TextMeshProUGUI regenText;
 
         public GameObject Obj { get; set; }
         public int ObjID { get; set; } = 7;

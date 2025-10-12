@@ -13,6 +13,8 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
     internal int instanceNum = 0;
     internal Dictionary<int, Creature> _creatrues = new();
 
+
+
     /// <summary>
     /// 返回指定位置最近的游戏实体
     /// <list type="bullet">
@@ -76,12 +78,16 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
 
         _creatrues.Add(e.instanceID, e);
 
+        e.HighLevelAttrInit();
+
         e.Obj.SetActive(true);
     }
 
     protected override void BeforeReleaseEUObject(Creature e)
     {
         e.Alive = false;
+
+        e.HighLevelAttrDispose();
 
         _creatrues.Remove(e.instanceID);
 
@@ -95,8 +101,16 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
         for(int i = 0; i < e.spells.Size; i++)
         {
             var spell = e.spells[i];
-            e.spells.Remove(i);
+            var ret = e.spells.Remove(i);
             SpellSys.Instance.RemoveEntity(spell);
+            //if (ret)
+            //{
+            //    XLogger.Instance.Log($"success remove spell:{i}");
+            //}
+            //else
+            //{
+            //    XLogger.Instance.Log($"fail to remove spell:{i}");
+            //}
         }
 
         e.Obj.SetActive(false);
@@ -104,12 +118,22 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
 
     protected override void UpdateEntity(Creature e)
     {
-        if (e.modifyables["currHP"] <= 0)
+        e.HighLevelAttrUpdate();
+
+        float currHP = e.modifyables["currHP"].Value;
+        if (currHP <= 0)
         {
             e.OnDead?.Invoke(e);
             RemoveEntity(e);
             return;
         }
+
+        float maxHP = e.modifyables["maxHP"].Value;
+        float healthRegen = e.modifyables["healthRegen"].Value * Time.deltaTime;
+
+        healthRegen = Mathf.Min(healthRegen, maxHP - currHP);
+
+        e.modifyables.ForceModify(8, healthRegen); // 8： currHP
     }
 
     public bool Exist(int  instanceID)

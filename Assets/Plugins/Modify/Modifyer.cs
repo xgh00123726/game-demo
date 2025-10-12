@@ -14,32 +14,27 @@ namespace GameBase.Modify
         Forever   = 1 << 14,    // 属性永久变更，常用于掉血掉蓝，吃永久增益等
     }
 
-    public class Modifyer :
-        IPoolable
+    public class Modifyer
     {
         public ModifyType type = ModifyType.Once | ModifyType.Forever;
         public bool trigOnGive;
 
-        public float duration;
         public float dt;
         public float value;
-        public bool externalClear;
         public Action OnModify;
+        public Modifyable target;
 
         internal float instantiateTime;
         internal float lastEnableTime;
-        internal bool enable;
-        internal bool modifyableRelease;
-        internal bool isRelease;
 
-        void IPoolable.AfterGet()
+        public void AddTo(Modifyable target)
         {
-            isRelease = false;
+            this.target = target;
         }
 
-        void IPoolable.BeforeRelease()
+        public void Release()
         {
-            OnModify = null;
+            this.target = null;
         }
     }
 }

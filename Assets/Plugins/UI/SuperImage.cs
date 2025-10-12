@@ -67,6 +67,12 @@ namespace GameBase.UI
             SetHideColor(other._colorHide);
         }
 
+        public Color Color
+        {
+            get => _image.color;
+            set => _image.color = value;
+        }
+
         public void SetColor(int rarity)
         {
             _image.color = ViewConfig.GetColor(rarity);

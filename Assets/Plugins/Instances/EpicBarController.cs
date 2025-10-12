@@ -49,11 +49,12 @@ namespace Instance
             }
             else
             {
-                healthBar.CurrHP = _playerBarTarget.modifyables["currHP"];
-                healthBar.MaxHP = _playerBarTarget.modifyables["maxHP"];
+                healthBar.CurrHP = _playerBarTarget.modifyables["currHP"].Value;
+                healthBar.MaxHP = _playerBarTarget.modifyables["maxHP"].Value;
+                healthBar.regen = _playerBarTarget.modifyables["healthRegen"].Value;
 
-                manaBar.CurrHP = _playerBarTarget.modifyables["currMana"];
-                manaBar.MaxHP = _playerBarTarget.modifyables["maxMana"];
+                manaBar.CurrHP = _playerBarTarget.modifyables["currMana"].Value;
+                manaBar.MaxHP = _playerBarTarget.modifyables["maxMana"].Value;
 
                 expBar.CurrHP = _playerBarTarget.currentExp;
                 expBar.MaxHP = _playerBarTarget.levelUpExp;

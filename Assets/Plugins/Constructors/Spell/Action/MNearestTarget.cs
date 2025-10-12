@@ -78,7 +78,7 @@ namespace Constructor.Spells.Action.Modifyables
         {
             if (spell.speller is Creature c)
             {
-                float attackRange = c.modifyables["attackRange"];
+                float attackRange = c.modifyables["attackRange"].Value;
 
                 var center = new Vector3(c.Position.x, 0, c.Position.z);
                 var target = TargetSetFactorary.Get(data.targetSetType).NearestTarget(center, attackRange);
@@ -88,7 +88,7 @@ namespace Constructor.Spells.Action.Modifyables
                     t.owner = c;
                     t.target = target;
 
-                    var damage = data.damage + c.modifyables["damage"] * data.ampFactor;
+                    var damage = data.damage + c.modifyables["damage"].Value * data.ampFactor;
                     t.action = new Damage(damage);
 
                     var f = Flyings.Factory.Instance.Get(data.flyingType, data.flyingID);

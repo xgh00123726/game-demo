@@ -3,10 +3,11 @@ using GameBase.Tools;
 using System;
 using GameBase.EntitySystem;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace GameBase.Buffs
 {
-    public class Buff : IPoolable
+    public class Buff
     {
         internal float durationRemain;
         internal float instantiateTime;
@@ -17,49 +18,40 @@ namespace GameBase.Buffs
 
         public int id;
         public float durationSet;
-        public BuffModifyers modifyers = new ();
+        public List<Modifyer> modifyers = new();
 
         public bool ALive => alive;
         public float DurationRemain => durationRemain;
 
-        void IPoolable.AfterGet()
-        {
-            isInfiDuration = false;
-            alive = true;
-            durationRemain = 0;
-            instantiateTime = Time.time;
-        }
 
-        void IPoolable.BeforeRelease()
+        public void AddTo(IBuffOwner owner, float duration = -1)
         {
-            alive = false;
-            owner = null;
-        }
-
-        public void AddTo(IBuffOwner owner, float duration = 10)
-        {
-            durationSet = duration;
-            durationRemain = duration;
             this.owner = owner;
-            owner.OnGetBuff(this);
 
-            foreach (var em in modifyers.FixedModifyers)
+            var info = BuffDataBase.Instance[id];
+            int modifiersID = info.buffModifiersID;
+            var modifierDict = BuffDataBase.datas[modifiersID];
+            foreach (var kvp in modifierDict)
             {
-                owner.Modifyables.ModifySet(em.Key, em.Value);
+                int modifyKey = kvp.Key;
+                float value = kvp.Value;
+                var m = ModifyerSys.Instance.NewEntity();
+                m.value = value;
+                m.AddTo(owner.Modifyables[modifyKey]);
             }
-            foreach (var em in modifyers.SetModifyers)
+
+            if (duration > 0)
             {
-                owner.Modifyables.ModifySetPer(em.Key, em.Value);
+                this.durationSet = duration;
+                this.durationRemain = duration;
             }
-            foreach (var em in modifyers.CurrModifyers)
-            {
-                owner.Modifyables.ModifySumPer(em.Key, em.Value);
-            }
+
+            owner.OnGetBuff(this);
         }
 
         public void Remove()
         {
-            BuffSys.Instance.RemoveBuff(this);
+            BuffSys.Instance.RemoveEntity(this);
         }
     }
 }

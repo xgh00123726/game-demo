@@ -15,6 +15,7 @@ namespace Constructor.Creatures
         public float damage;
         public float moveSpeed;
         public float maxHP;
+        public float healthRegen;
         public float attackRange;
         public float healthBarXOffset;
         public float healthBarYOffset;
@@ -46,6 +47,7 @@ namespace Constructor.Creatures
             e.modifyables.Set("intelligence", 0f);
             e.modifyables.Set("damage", data.damage);
 
+            e.modifyables.Set("healthRegen", data.healthRegen);
             e.modifyables.Set("currHP", data.maxHP);
             e.modifyables.Set("maxHP", data.maxHP);
             e.modifyables.Set("currMana", 100f);

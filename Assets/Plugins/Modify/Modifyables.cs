@@ -46,16 +46,9 @@ namespace GameBase.Modify
         public static int GetIconTextureID(int id) => _modifyableTextureIDs[id];
     }
 
-    public struct ModifyableGroup
+    public class Modifyables : IEnumerable<Modifyable>
     {
-        public Modifyable set;
-        public Modifyable setPer;
-        public Modifyable sumPer;
-    }
-
-    public class Modifyables : IEnumerable<ModifyableGroup>
-    {
-        private Dictionary<int, ModifyableGroup> _modifyableGroups = new();
+        private Dictionary<int, Modifyable> _modifyables = new();
 
         public void Set(string key, float value)
         {
@@ -65,142 +58,78 @@ namespace GameBase.Modify
 
         public void Set(int id, float value)
         {
-            if (_modifyableGroups.ContainsKey(id))
+            if (_modifyables.ContainsKey(id))
             {
-                _modifyableGroups[id].set.value = value;
-                _modifyableGroups[id].set.valueSet = value;
-                _modifyableGroups[id].setPer.value = 0;
-                _modifyableGroups[id].setPer.valueSet = 0;
-                _modifyableGroups[id].sumPer.value = 0;
-                _modifyableGroups[id].sumPer.valueSet = 0;
+                _modifyables[id].value = value;
+                _modifyables[id].valueSet = value;
             }
             else
             {
                 var set = ModifyableSys.Instance.NewEntity(value);
-                var setPer = ModifyableSys.Instance.NewEntity(0);
-                var sumPer = ModifyableSys.Instance.NewEntity(0);
-                _modifyableGroups[id] = new ModifyableGroup()
-                {
-                    set = set,
-                    setPer = setPer,
-                    sumPer = sumPer
-                };
+                _modifyables.Add(id, set);
             }
         }
 
-        public void Clear()
+        public void Modify(int id, float value)
         {
-            foreach (var val in _modifyableGroups.Values)
+            if (ContainsKey(id))
             {
-                ModifyableSys.Instance.InternalRemoveEntity(val.set);
-                ModifyableSys.Instance.InternalRemoveEntity(val.setPer);
-                ModifyableSys.Instance.InternalRemoveEntity(val.sumPer);
+                var m = ModifyerSys.Instance.NewEntity();
+                m.value = value;
+                m.AddTo(_modifyables[id]);
             }
-            _modifyableGroups.Clear();
         }
 
-        public int Count => _modifyableGroups.Count;
+        public void ModifyKey(string key, float value)
+        {
+            Modify(ModifyTable.GetID(key), value);
+        }
+
+        public void Modify(string key, float value)
+        {
+            Modify(ModifyTable.GetID(key), value);
+        }
+
+        public void ForceModify(int id, float value)
+        {
+            if (ContainsKey(id))
+            {
+                _modifyables[id].valueSet += value;
+            }
+        }
+
 
         public bool ContainsKey(string key)
         {
             int id = ModifyTable.GetID(key);
-            return _modifyableGroups.ContainsKey(id);
+            return _modifyables.ContainsKey(id);
         }
 
         public bool ContainsKey(int key)
         {
-            return _modifyableGroups.ContainsKey(key);
+            return _modifyables.ContainsKey(key);
         }
 
-        public float this[int i]
+        public Modifyable this[int i]
         {
-            get
-            {
-                var valueSet = _modifyableGroups[i].set.valueSet;
-                var value = _modifyableGroups[i].set.value;
-                var setPer = _modifyableGroups[i].setPer.value;
-                var sumPer = _modifyableGroups[i].sumPer.value;
-
-                return (value + valueSet * setPer) * (1 + sumPer);
-            }
+            get => _modifyables[i];
+            set => _modifyables[i] = value;
         }
 
-        public float this[string key]
+        public Modifyable this[string key]
         {
             get => this[ModifyTable.GetID(key)];
+            set => this[ModifyTable.GetID(key)] = value;
         }
 
-        public IEnumerator<ModifyableGroup> GetEnumerator()
+        public IEnumerator<Modifyable> GetEnumerator()
         {
-            return ((IEnumerable<ModifyableGroup>)_modifyableGroups.Values).GetEnumerator();
+            return ((IEnumerable<Modifyable>)_modifyables.Values).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable)_modifyableGroups.Values).GetEnumerator();
-        }
-
-        public void ModifySet(int key, Modifyer modifyer)
-        {
-            if (!ContainsKey(key))
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Warning)
-                    .Log($"trying modify a unexist modifyable value which key is {key}");
-            }
-
-            _modifyableGroups[key].set.AddModifier(modifyer);
-        }
-
-        public void ModifySet(string key, Modifyer modifyer)
-        {
-            ModifySet(ModifyTable.GetID(key), modifyer);
-        }
-
-        public void ModifySetValue(string key, float value)
-        {
-            _modifyableGroups[ModifyTable.GetID(key)].set.AddValue(value);
-        }
-
-        public void ModifySetPer(int key, Modifyer modifyer)
-        {
-            if (!ContainsKey(key))
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Warning)
-                    .Log($"trying modify a unexist modifyable value which key is {key}");
-            }
-
-            _modifyableGroups[key].setPer.AddModifier(modifyer);
-        }
-
-        public void ModifySetPer(string key, Modifyer modifyer)
-        {
-            ModifySetPer(ModifyTable.GetID(key), modifyer);
-        }
-
-        public void ModifySetPerValue(string key, float value)
-        {
-            _modifyableGroups[ModifyTable.GetID(key)].setPer.AddValue(value);
-        }
-
-        public void ModifySumPer(int key, Modifyer modifyer)
-        {
-            if (!ContainsKey(key))
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Warning)
-                    .Log($"trying modify a unexist modifyable value which key is {key}");
-            }
-
-            _modifyableGroups[key].sumPer.AddModifier(modifyer);
-        }
-
-        public void ModifySumPer(string key, Modifyer modifyer)
-        {
-            ModifySumPer(ModifyTable.GetID(key), modifyer);
-        }
-
-        public void ModifySumPerValue(string key, float value)
-        {
-            _modifyableGroups[ModifyTable.GetID(key)].sumPer.AddValue(value);
+            return ((IEnumerable)_modifyables.Values).GetEnumerator();
         }
     }
 }

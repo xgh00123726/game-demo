@@ -59,7 +59,7 @@ namespace Instance.UI
 
         private void Awake()
         {
-            transform.SetParent(RootCanvas.Instance.transform, false);
+            transform.SetParent(RootCanvas.Instance.Layer(3), false);
 
             _tipText = transform.Find("Text").gameObject;
             _tipTextTMP = _tipText.GetComponent<TextMeshProUGUI>();
@@ -84,7 +84,7 @@ namespace Instance.UI
             Command.Exec(_inputTextField.text);
             _lastCmd = _inputTextField.text;
             _inputTextField.text = "";
-            Inputs.ReleaseAll();
+            Inputs.UnlockAll();
         }
 
         private void Update()

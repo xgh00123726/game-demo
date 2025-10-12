@@ -57,7 +57,7 @@ namespace Instance
             {
                 if (modifyables.ContainsKey(e.attrKey))
                 {
-                    e.Value = modifyables[e.attrKey];
+                    e.Value = modifyables[e.attrKey].Value;
                 }
             }
         }

@@ -49,7 +49,7 @@ namespace Constructor.Spells.Action.Modifyables
                     };
                     t.targetsSet = TargetSetFactorary.Get(data.targetSetType);
                     t.owner = c;
-                    var damage = data.damage + c.modifyables["damage"] * data.ampFactor;
+                    var damage = data.damage + c.modifyables["damage"].Value * data.ampFactor;
                     t.action = new Damage(damage);
                     t.Trig();
                 };

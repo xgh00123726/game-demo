@@ -5,11 +5,15 @@ using UnityEngine;
 
 namespace GameBase.UI
 {
-    public class RootCanvas : MonoBehaviour
+    public class RootCanvas : Singleton<RootCanvas>
     {
-        internal static RootCanvas instance;
         internal AutoFillList<Transform> layers = new();
-        public static RootCanvas Instance => instance;
+        internal GameObject obj;
+
+        public RootCanvas()
+        {
+            obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(49));
+        }
 
         public Transform Layer(int level)
         {
@@ -19,7 +23,7 @@ namespace GameBase.UI
                 for (int i = count; i < level + 1; ++i)
                 {
                     var layer = new GameObject($"layer{i}").transform;
-                    layer.SetParent(transform, false);
+                    layer.SetParent(obj.transform, false);
                     layers.Add(layer, i);
                 }
                 return layers[level];
@@ -28,11 +32,6 @@ namespace GameBase.UI
             {
                 return layers[level];
             }
-        }
-
-        void Awake()
-        {
-            instance = this;
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Constructor.Triggers.Action
                     text.Color = Color.white;
                 };
 
-                mTarget.Modifyables.ModifySet("currHP", modifyer);
+                modifyer.AddTo(mTarget.Modifyables["currHP"]);
             }
         }
     }

@@ -72,15 +72,5 @@ namespace GameBase.UI
             
             return null;
         }
-
-        public static Transform GetRootCanvas()
-        {
-            return RootCanvas.Instance.transform;
-        }
-
-        public static Transform GetWorldCanvas()
-        {
-            return WorldCanvs.Instance.transform;
-        }
     }
 }

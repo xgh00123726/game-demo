@@ -161,14 +161,14 @@ namespace GameBase.Tools
                 _callersLock[c] = true;
             }
         }
-        public static void ReleaseCaller(string caller)
+        public static void UnlockCaller(string caller)
         {
             if (_callersLock.ContainsKey(caller))
             {
                 _callersLock[caller] = false;
             }
         }
-        public static void ReleaseAll()
+        public static void UnlockAll()
         {
             string[] keys = new string[_callersLock.Keys.Count];
             _callersLock.Keys.CopyTo(keys, 0);
@@ -178,7 +178,7 @@ namespace GameBase.Tools
             }
         }
 
-        public static void ReleaseOthers(string caller)
+        public static void UnlockOthers(string caller)
         {
             string[] keys = new string[_callersLock.Keys.Count];
             _callersLock.Keys.CopyTo(keys, 0);

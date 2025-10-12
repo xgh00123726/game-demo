@@ -1,15 +1,20 @@
 using GameBase.Resources;
+using GameBase.Tools;
 using UnityEngine;
 
 namespace GameBase.UI
 {
-    public class WorldCanvs : MonoBehaviour
+    public class WorldCanvs : Singleton<WorldCanvs>
     {
-        internal static WorldCanvs instance;
-        public static WorldCanvs Instance => instance;
-        void Awake()
+        internal GameObject obj;
+        public WorldCanvs()
         {
-            instance = this;
+            obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(50));
+        }
+
+        public Transform transform
+        {
+            get => obj.transform;
         }
     }
 }

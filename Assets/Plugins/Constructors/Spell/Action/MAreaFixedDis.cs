@@ -48,7 +48,7 @@ namespace Constructor.Spells.Action.Modifyables
                 t.attach = f;
                 t.trigStyle = TrigStyle.Always;
 
-                var damage = data.damage + c.modifyables["damage"] * data.ampFactor;
+                var damage = data.damage + c.modifyables["damage"].Value * data.ampFactor;
                 t.action = new Damage(damage);
 
                 t.SetWhites();

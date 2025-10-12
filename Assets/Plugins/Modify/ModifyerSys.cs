@@ -10,47 +10,66 @@ namespace GameBase.Modify
         {
             e.instantiateTime = Time.time;
             e.lastEnableTime = Time.time;
-            e.externalClear = false;
-
-            if (e.trigOnGive)
-            {
-                e.enable = true;
-            }
-
-            if ((e.type & ModifyType.Once) != 0)
-            {
-                e.enable = true;
-            }
+            e.target = null;
         }
 
         protected override void OnRemoveEntityFromActives(Modifyer e)
         {
-            e.enable = false;
-            e.externalClear = false;
-            e.modifyableRelease = false;
+            e.OnModify = null;
+        }
+
+        protected override void Update()
+        {
+            foreach (var m in ModifyableSys.Instance.Entities)
+            {
+                m.tempValue = m.valueSet;
+            }
+            base.Update();
+            foreach (var m in ModifyableSys.Instance.Entities)
+            {
+                m.value = m.tempValue;
+            }
         }
 
         protected override void UpdateEntity(Modifyer e)
         {
-            if ((e.type & ModifyType.Aways) != 0)
+            if (e.target == null)
             {
-                e.enable = true;
+                RemoveEntity(e);
+                return;
+            }
+
+            bool enable = false;
+
+            if ((e.type & ModifyType.Aways) != 0 || (e.type & ModifyType.Once) != 0)
+            {
+                enable = true;
             }
 
             if ((e.type & ModifyType.Periodoic) != 0)
             {
                 if (Time.time - e.lastEnableTime > e.dt)
                 {
-                    e.enable = true;
+                    enable = true;
                     e.lastEnableTime = Time.time;
                 }
             }
 
-            if (e.externalClear // 外部触发
-                || e.modifyableRelease // 被modifyable内部触发，ModifyType.Once内部处理
-                || Time.time - e.instantiateTime > e.duration) // 超时
+            if (enable)
             {
-                e.isRelease = true;
+                if ((e.type & ModifyType.Temporary) != 0)
+                {
+                    e.target.tempValue += e.value;
+                }
+                else if ((e.type & ModifyType.Forever) != 0)
+                {
+                    e.target.valueSet += e.value;
+                }
+                e.OnModify?.Invoke();
+            }
+
+            if ((e.type & ModifyType.Once) != 0)
+            {
                 RemoveEntity(e);
             }
         }

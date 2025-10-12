@@ -62,46 +62,44 @@ namespace Instance
                     return;
                 }
 
-                if (!spell.spellCoolingdown.IsCoolingOver)
-                {
-                    continue;
-                }
-
-                var func = _spellKeys[i];
-                var isFastCast = _isFastCasts[i];
-                var isIndicatorReady = _isIndicatorReadys[i];
-
+                var isIndicatorReady = _isIndicatorReadys[i]; 
                 var indicator = CastIndicatorFactory.Get(interactive.indicatorType);
 
-                if (isFastCast && Inputs.GetKeyDown(func, "spell"))
+                if (spell.spellCoolingdown.IsCoolingOver)
                 {
-                    interactive.position = CameraSys.MouseHitPosition;
-                    spell.TryCast();
-                    DeReadyAll();
-                }
-                else if (!isFastCast)
-                {
-                    if (!isIndicatorReady && Inputs.GetKeyDown(func, "spell"))
-                    {
-                        _isIndicatorReadys[i] = true;
-                        indicator.Show();
-                    }
-                    else if (isIndicatorReady && Inputs.GetKeyDown(KeyFunction.MouseConfirm, "spell"))
+                    var func = _spellKeys[i];
+                    var isFastCast = _isFastCasts[i];
+
+                    if (isFastCast && Inputs.GetKeyDown(func, "spell"))
                     {
                         interactive.position = CameraSys.MouseHitPosition;
                         spell.TryCast();
-
-                        _isIndicatorReadys[i] = false;
-                        indicator.Hide();
-                    }
-                    else if (Inputs.GetKeyDown(KeyFunction.Cancel, "spell"))
-                    {
                         DeReadyAll();
-                        indicator.Hide();
                     }
-                }
+                    else if (!isFastCast)
+                    {
+                        if (!isIndicatorReady && Inputs.GetKeyDown(func, "spell"))
+                        {
+                            _isIndicatorReadys[i] = true;
+                            indicator.Show();
+                        }
+                        else if (isIndicatorReady && Inputs.GetKeyDown(KeyFunction.MouseConfirm, "spell"))
+                        {
+                            interactive.position = CameraSys.MouseHitPosition;
+                            spell.TryCast();
 
-                isIndicatorReady = _isIndicatorReadys[i];
+                            _isIndicatorReadys[i] = false;
+                            indicator.Hide();
+                        }
+                        else if (Inputs.GetKeyDown(KeyFunction.Cancel, "spell"))
+                        {
+                            DeReadyAll();
+                            indicator.Hide();
+                        }
+                    }
+
+                    isIndicatorReady = _isIndicatorReadys[i];
+                }
 
                 if (isIndicatorReady)
                 {

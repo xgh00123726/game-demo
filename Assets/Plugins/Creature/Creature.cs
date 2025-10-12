@@ -10,6 +10,7 @@ using GameBase.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using GameBase.Tools;
 
 namespace GameBase.Creatures
 {
@@ -31,15 +32,12 @@ namespace GameBase.Creatures
         IMover,
         IRotater
     {
-        private Dictionary<string, float> _possibleAttr = new();
-
         public float radius = 0.3f;
         public CreatureTag tag;
         public Vector3 healthBarOffset = new Vector3(0, 1.6f, 0);
         public Action<Creature> OnDead;
        
         public DynInventory<Spell> spells = new();
-        public Modifyables modifyables = new();
         public CommonInventory<Buff> equipments = new() { Size = 6 };
         public List<Buff> buffs = new();
 
@@ -62,15 +60,15 @@ namespace GameBase.Creatures
 
         float ITriggerTarget.Radius => radius;
 
-        float IHealthBarOwner.CurrHP => modifyables["currHP"];
+        float IHealthBarOwner.CurrHP => modifyables["currHP"].Value;
 
-        float IHealthBarOwner.MaxHP => modifyables["maxHP"];
+        float IHealthBarOwner.MaxHP => modifyables["maxHP"].Value;
 
         bool IHealthBarOwner.ALive => Alive;
 
         public Vector3 HandPosition => Obj.transform.position + new Vector3(0, 1, 0);
 
-        float ISpeller.CoolingAccelerate => modifyables["coolingAccelerate"];
+        float ISpeller.CoolingAccelerate => modifyables["coolingAccelerate"].Value;
 
         public Vector3 Position
         {
@@ -78,7 +76,7 @@ namespace GameBase.Creatures
             set => Obj.transform.position = value;
         }
 
-        float IMover.Speed => modifyables["moveSpeed"];
+        float IMover.Speed => modifyables["moveSpeed"].Value;
 
         Vector3 IMover.Position
         {
@@ -86,7 +84,7 @@ namespace GameBase.Creatures
             set => Obj.transform.position = value;
         }
 
-        float IRotater.Speed => modifyables["rotateSpeed"];
+        float IRotater.Speed => modifyables["rotateSpeed"].Value;
 
         GameObject IRotater.Obj => Obj;
 
@@ -110,36 +108,9 @@ namespace GameBase.Creatures
         {
         }
 
-        public bool HasPossibleAttr(string name)
-        {
-            return _possibleAttr.ContainsKey(name);
-        }
 
-        public void AddPossibleAttr(string name)
-        {
-            _possibleAttr.Add(name, default);
-        }
 
-        public void SetPossibleAttr(string name, float value)
-        {
-            _possibleAttr[name] = value;
-        }
-
-        public float GetPossibleAttr(string name)
-        {
-            return _possibleAttr[name];
-        }
-
-        public void AddModifier(int modifierID)
-        {
-            var modifyInfo = ModifierDataBase.Instance[modifierID];
-            var modifier = ModifyerSys.Instance.NewEntity();
-            modifier.value = modifyInfo.value;
-            modifier.type = modifyInfo.type1 | modifyInfo.type2;
-            modifyables.ModifySet(modifyInfo.key, modifier);
-        }
-
-        public void AddBuff(int id, float duration = 10)
+        public void AddBuff(int id, float duration = -1)
         {
             BuffFactory.Get(id).AddTo(this, duration);
         }
@@ -185,7 +156,8 @@ namespace GameBase.Creatures
 
         public void AddSpell(Spell spell)
         {
-            spells.Add(spell);
+            var i = spells.Add(spell);
+            XLogger.Instance.IF(false).Log($"add spell: {i}");
             spell.speller = this;
         }
 

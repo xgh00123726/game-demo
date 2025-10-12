@@ -1,6 +1,7 @@
 using GameBase.EntitySystem;
 using GameBase.Tools;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace GameBase.Buffs
 {
@@ -8,23 +9,21 @@ namespace GameBase.Buffs
     {
         protected override void OnRegisterEntityToActives(Buff e)
         {
+            e.isInfiDuration = false;
+            e.alive = true;
+            e.durationRemain = 0;
+            e.instantiateTime = Time.time;
         }
 
         protected override void OnRemoveEntityFromActives(Buff e)
         {
-            foreach (var em in e.modifyers.FixedModifyers)
+            foreach (var m in e.modifyers)
             {
-                em.Value.externalClear = true;
-            }
-            foreach (var em in e.modifyers.SetModifyers)
-            {
-                em.Value.externalClear = true;
-            }
-            foreach (var em in e.modifyers.CurrModifyers)
-            {
-                em.Value.externalClear = true;
+                m.Release();
             }
             e.modifyers.Clear();
+            e.alive = false;
+            e.owner = null;
         }
 
         protected override void UpdateEntity(Buff e)
@@ -54,11 +53,6 @@ namespace GameBase.Buffs
                 RemoveEntity(e);
                 e.owner.OnRemoveBuff(e);
             }
-        }
-
-        internal void RemoveBuff(Buff e)
-        {
-            RemoveEntity(e);
         }
     }
 }

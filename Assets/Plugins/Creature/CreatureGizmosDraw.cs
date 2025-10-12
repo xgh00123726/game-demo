@@ -135,7 +135,7 @@ namespace GameBase.Creatures
             GizmosAppend.DrawCircle(new GMath.Circle
             {
                 c = new Vector2(e.mover.owner.Position.x, e.mover.owner.Position.z),
-                r = e.modifyables["attackRange"],
+                r = e.modifyables["attackRange"].Value,
             }, drawY);
         }
 

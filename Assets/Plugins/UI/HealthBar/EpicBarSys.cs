@@ -16,7 +16,7 @@ namespace GameBase.UI
         {
             var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
 
-            obj.transform.SetParent(RootCanvas.Instance.transform, false);
+            obj.transform.SetParent(RootCanvas.Instance.Layer(2), false);
 
             e.textObj = obj.transform.Find("Text").gameObject;
             e.textComponent = e.textObj.GetComponent<TextMeshProUGUI>();
@@ -26,6 +26,8 @@ namespace GameBase.UI
 
             e.losing = obj.transform.Find("Losing").gameObject;
             e.losingRectTransform = e.losing.GetComponent<RectTransform>();
+
+            e.regenText = obj.transform.Find("RegenText").gameObject.GetComponent<TextMeshProUGUI>();
 
             return obj;
         }
@@ -62,6 +64,14 @@ namespace GameBase.UI
                 SetWidth(e.losingRectTransform, e.losingPercent, e.width);
             }
 
+            if (e.regen > 0)
+            {
+                e.regenText.text = $"+{String.Format("{0:0.#}", e.regen)}/s";
+            }
+            else
+            {
+                e.regenText.text = "";
+            }
 
             if (!e.hpChange)
             {
@@ -73,7 +83,7 @@ namespace GameBase.UI
             if (e.maxHP < Mathf.Epsilon) return;
 
             e.currPercent = Mathf.Clamp01(e.currHP / e.maxHP);
-            e.textComponent.text = $"{String.Format("{0:0.##}", e.currHP)} / {String.Format("{0:0.##}", e.maxHP)}";
+            e.textComponent.text = $"{String.Format("{0:0}", e.currHP)} / {String.Format("{0:0}", e.maxHP)}";
             SetWidth(e.currentRectTransform, e.currPercent, e.width);
         }
     }
