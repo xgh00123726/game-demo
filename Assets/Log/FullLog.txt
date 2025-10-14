@@ -1,0 +1,190 @@
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:2]</color>new spell, is trig:False, hash:752306642
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:2]</color>new spell, is trig:False, hash:-304760482
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:2]</color>new spell, is trig:False, hash:353212444
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:2]</color>new spell, is trig:False, hash:70699154
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:197]</color>new spell, is trig:False, hash:-1543234606
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:197]</color>new spell, is trig:False, hash:-698838354
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:197]</color>new spell, is trig:False, hash:-981331824
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:197]</color>new spell, is trig:False, hash:707460680
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:197]</color>new spell, is trig:False, hash:-1968556530
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:197]</color>new spell, is trig:False, hash:1199501224
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:376]</color>new spell, is trig:False, hash:-136477742
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:376]</color>new spell, is trig:False, hash:-841189158
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:376]</color>new spell, is trig:False, hash:1552314762
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:376]</color>new spell, is trig:False, hash:425405220
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:376]</color>new spell, is trig:False, hash:-1729289292
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:376]</color>new spell, is trig:False, hash:-2081645000
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:548]</color>new spell, is trig:False, hash:834232010
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:548]</color>new spell, is trig:False, hash:481876302
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:548]</color>new spell, is trig:False, hash:1326272554
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:548]</color>new spell, is trig:False, hash:973916846
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:548]</color>new spell, is trig:False, hash:-927546530
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:548]</color>new spell, is trig:False, hash:-1279902238
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:603]</color>pos:(-5.70, -7.00, 3.56), cast num:0
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:603]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:603]</color>pos:(-5.70, -7.00, 3.56), cast num:1
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:603]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:603]</color>trig
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:603]</color>tar:(-5.70, -7.00, 3.56) trigNum:0
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:603]</color>trig
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:603]</color>tar:(-5.70, -7.00, 3.56) trigNum:1
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:636]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:636]</color>trig
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:657]</color>remove spell, hash:-1968556530
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:657]</color>remove spell, hash:1199501224
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:657]</color>remove spell, hash:1552314762
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:657]</color>remove spell, hash:425405220
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:685]</color>remove spell, hash:834232010
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:685]</color>remove spell, hash:481876302
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:688]</color>new spell, is trig:False, hash:-1968556530
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:688]</color>new spell, is trig:False, hash:1199501224
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:688]</color>new spell, is trig:False, hash:1552314762
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:688]</color>new spell, is trig:False, hash:425405220
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:688]</color>new spell, is trig:False, hash:834232010
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:688]</color>new spell, is trig:False, hash:481876302
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:697]</color>remove spell, hash:-1729289292
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:697]</color>remove spell, hash:-2081645000
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:697]</color>remove spell, hash:-927546530
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:697]</color>remove spell, hash:-1279902238
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:702]</color>remove spell, hash:-136477742
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:702]</color>remove spell, hash:-841189158
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:710]</color>pos:(-4.05, -7.00, 1.38), cast num:2
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:710]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:710]</color>pos:(-4.05, -7.00, 1.38), cast num:3
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:710]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:710]</color>trig
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:710]</color>tar:(-4.05, -7.00, 1.38) trigNum:2
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:710]</color>trig
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:710]</color>tar:(-4.05, -7.00, 1.38) trigNum:3
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:747]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:747]</color>trig
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:761]</color>remove spell, hash:834232010
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:761]</color>remove spell, hash:481876302
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:766]</color>pos:(-4.04, -7.00, -0.46), cast num:4
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:766]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:766]</color>trig
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:766]</color>tar:(-4.04, -7.00, -0.46) trigNum:4
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:826]</color>pos:(-4.29, -7.00, -1.77), cast num:5
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:826]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:826]</color>new spell, is trig:False, hash:-1729289292
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:826]</color>new spell, is trig:False, hash:-2081645000
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:826]</color>new spell, is trig:False, hash:-927546530
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:826]</color>new spell, is trig:False, hash:-1279902238
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:826]</color>new spell, is trig:False, hash:-136477742
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:826]</color>new spell, is trig:False, hash:-841189158
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:885]</color>pos:(-5.92, -7.00, -2.51), cast num:6
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:885]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:885]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:885]</color>trig
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:885]</color>trig
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:885]</color>tar:(-5.92, -7.00, -2.51) trigNum:5
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:906]</color>remove spell, hash:-927546530
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:906]</color>remove spell, hash:-1279902238
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:910]</color>remove spell, hash:-1729289292
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:910]</color>remove spell, hash:-2081645000
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:925]</color>remove spell, hash:-1968556530
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:925]</color>remove spell, hash:1199501224
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:933]</color>remove spell, hash:1326272554
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:933]</color>remove spell, hash:973916846
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:939]</color>remove spell, hash:1552314762
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:939]</color>remove spell, hash:425405220
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:977]</color>new spell, is trig:False, hash:834232010
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:977]</color>new spell, is trig:True, hash:481876302
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:977]</color>pool info, count:10
+<color=#F8C20D>[warning]</color> <color=#66ccff>[frame:977]</color>invalid spell: hash:481876302
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:977]</color>new spell, is trig:False, hash:-927546530
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:977]</color>new spell, is trig:False, hash:-1279902238
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:977]</color>new spell, is trig:False, hash:-1729289292
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:977]</color>new spell, is trig:False, hash:-2081645000
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:977]</color>trig
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:987]</color>pos:(-8.57, -7.00, -1.15), cast num:7
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:987]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:987]</color>trig
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1024]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1024]</color>trig
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1050]</color>remove spell, hash:-927546530
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1050]</color>remove spell, hash:-1279902238
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1050]</color>remove spell, hash:-1729289292
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1050]</color>remove spell, hash:-2081645000
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1056]</color>pos:(-9.71, -7.00, -0.01), cast num:8
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1056]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1069]</color>remove spell, hash:-981331824
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1069]</color>remove spell, hash:707460680
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1096]</color>pos:(-8.48, -7.00, 0.46), cast num:9
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1096]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1096]</color>pos:(-8.48, -7.00, 0.46), cast num:10
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1096]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1096]</color>trig
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1096]</color>tar:(-8.48, -7.00, 0.46) trigNum:6
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1130]</color>pos:(-7.52, -7.00, 0.66), cast num:11
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1130]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1130]</color>pos:(-7.52, -7.00, 0.66), cast num:12
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1130]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1130]</color>new spell, is trig:False, hash:-1968556530
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1130]</color>new spell, is trig:False, hash:1199501224
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1130]</color>new spell, is trig:False, hash:1326272554
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1130]</color>new spell, is trig:False, hash:973916846
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1130]</color>new spell, is trig:False, hash:1552314762
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1130]</color>new spell, is trig:False, hash:425405220
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1130]</color>trig
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1130]</color>tar:(-7.52, -7.00, 0.66) trigNum:7
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1220]</color>pos:(-5.37, -7.00, 1.65), cast num:13
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1220]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1220]</color>trig
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1220]</color>tar:(-5.37, -7.00, 1.65) trigNum:8
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1221]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1221]</color>trig
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1230]</color>pos:(-5.37, -7.00, 1.65), cast num:14
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1230]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1230]</color>trig
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1230]</color>tar:(-5.37, -7.00, 1.65) trigNum:9
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1251]</color>remove spell, hash:-1543234606
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1251]</color>remove spell, hash:-698838354
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1254]</color>pos:(-5.37, -7.00, 1.65), cast num:15
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1254]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1254]</color>pos:(-5.37, -7.00, 1.65), cast num:16
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1254]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1254]</color>trig
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1262]</color>remove spell, hash:834232010
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1262]</color>remove spell, hash:481876302
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1287]</color>new spell, is trig:False, hash:-927546530
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1287]</color>new spell, is trig:True, hash:-1279902238
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1287]</color>pool info, count:8
+<color=#F8C20D>[warning]</color> <color=#66ccff>[frame:1287]</color>invalid spell: hash:-1279902238
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1287]</color>new spell, is trig:False, hash:-1729289292
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1287]</color>new spell, is trig:True, hash:-2081645000
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1287]</color>pool info, count:6
+<color=#F8C20D>[warning]</color> <color=#66ccff>[frame:1287]</color>invalid spell: hash:-2081645000
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1287]</color>new spell, is trig:False, hash:-981331824
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1287]</color>new spell, is trig:True, hash:707460680
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1287]</color>pool info, count:4
+<color=#F8C20D>[warning]</color> <color=#66ccff>[frame:1287]</color>invalid spell: hash:707460680
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1287]</color>trig
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1287]</color>trig
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1287]</color>tar:(0.00, 0.00, 0.00) trigNum:10
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1287]</color>trig
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1287]</color>tar:(0.00, 0.00, 0.00) trigNum:11
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1337]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1337]</color>trig
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1341]</color>remove spell, hash:1326272554
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1341]</color>remove spell, hash:973916846
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1369]</color>remove spell, hash:-1968556530
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1369]</color>remove spell, hash:1199501224
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1369]</color>remove spell, hash:-1729289292
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1369]</color>remove spell, hash:-2081645000
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1385]</color>remove spell, hash:-981331824
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1385]</color>remove spell, hash:707460680
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1425]</color>pos:(-3.67, -7.00, -0.86), cast num:17
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1425]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1425]</color>pos:(-3.67, -7.00, -0.86), cast num:18
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1425]</color>try cast
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1425]</color>new spell, is trig:False, hash:-1543234606
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1425]</color>new spell, is trig:False, hash:-698838354
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1425]</color>new spell, is trig:False, hash:834232010
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1425]</color>new spell, is trig:False, hash:481876302
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1425]</color>new spell, is trig:False, hash:1326272554
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1425]</color>new spell, is trig:True, hash:973916846
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1425]</color>pool info, count:6
+<color=#F8C20D>[warning]</color> <color=#66ccff>[frame:1425]</color>invalid spell: hash:973916846
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1425]</color>trig
+<color=#00ff00>[info]</color> <color=#66ccff>[frame:1425]</color>trig
