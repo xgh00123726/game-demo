@@ -4,16 +4,16 @@ using UnityEngine;
 
 namespace GameBase.Modify
 {
-    public class ModifyerSys : CommonEntitySys<Modifyer, ModifyerSys>
+    public class ModifyerSys : SealedEntitySys<Modifyer, ModifyerSys>
     {
-        protected override void OnRegisterEntityToActives(Modifyer e)
+        protected override void OnGet(Modifyer e)
         {
             e.instantiateTime = Time.time;
             e.lastEnableTime = Time.time;
             e.target = null;
         }
 
-        protected override void OnRemoveEntityFromActives(Modifyer e)
+        protected override void OnRelease(Modifyer e)
         {
             e.OnModify = null;
         }

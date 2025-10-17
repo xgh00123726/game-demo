@@ -26,33 +26,24 @@ namespace GameBase.Indicators
         public static CircleIndicator GetCircle()
         {
             var e = new CircleIndicator();
-            e.indicator = IndicatorSys.Instance.NewEntity((Indicator e) =>
-            {
-                e.ObjID = 19;
-                e.textureID = 10;
-            });
+            e.indicator = IndicatorSys.Instance.NewEntity(19);
+            e.indicator.textureID = 10;
             e.Hide();
             return e;
         }
         public static LinearIndicator GetLinear()
         {
             var e = new LinearIndicator();
-            e.indicator = IndicatorSys.Instance.NewEntity((Indicator e) =>
-            {
-                e.ObjID = 21;
-                e.textureID = 11;
-            });
+            e.indicator = IndicatorSys.Instance.NewEntity(21);
+            e.indicator.textureID = 11;
             e.Hide();
             return e;
         }
         public static FixedLinearIndicator GetFixedLinear()
         {
             var e = new FixedLinearIndicator();
-            e.indicator = IndicatorSys.Instance.NewEntity((Indicator e) =>
-            {
-                e.ObjID = 21;
-                e.textureID = 11;
-            });
+            e.indicator = IndicatorSys.Instance.NewEntity(21);
+            e.indicator.textureID = 11;
             e.Hide();
             return e;
         }
@@ -60,11 +51,8 @@ namespace GameBase.Indicators
         private static RectIndicator GetRect()
         {
             var e = new RectIndicator();
-            e.indicator = IndicatorSys.Instance.NewEntity((Indicator e) =>
-            {
-                e.ObjID = 21;
-                e.textureID = 11;
-            });
+            e.indicator = IndicatorSys.Instance.NewEntity(21);
+            e.indicator.textureID = 11;
             e.Hide();
             return e;
         }

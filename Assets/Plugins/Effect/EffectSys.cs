@@ -5,32 +5,27 @@ using UnityEngine;
 
 namespace GameBase.Effects
 {
-    public class EffectSys : UObjEntitySys<Effect, ParticleSystem, EffectSys>
+    public class EffectSys : KeyEntitySys<int, Effect, EffectSys>
     {
-        protected override void AfterInstantiateEUObject(Effect e)
+        protected override void OnGet(Effect e)
         {
             e.instantiateTime = Time.time;
-            e.Obj.gameObject.SetActive(true);
+            e.particle.gameObject.SetActive(true);
 
-            e.Obj.Play();
+            e.particle.Play();
         }
 
-        protected override void BeforeReleaseEUObject(Effect e)
+        protected override void OnRelease(Effect e)
         {
-            e.Obj.gameObject.SetActive(false);
+            e.particle.gameObject.SetActive(false);
         }
 
-        protected override ParticleSystem InstantiateObj(Effect e)
+        protected override Effect CtorT(int k)
         {
-            var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
-
-            var particle = obj.GetComponent<ParticleSystem>();
-            if (particle == null)
-            {
-                XLogger.Instance.Log($"this prefab has no particle, id:{e.ObjID}");
-            }
-
-            return particle;
+            Effect e = new();
+            var particleObj = GameObject.Instantiate(ResourcesLoader.GetPrefab(k));
+            e.particle = particleObj.GetComponent<ParticleSystem>();
+            return e;
         }
 
         protected override void UpdateEntity(Effect e)

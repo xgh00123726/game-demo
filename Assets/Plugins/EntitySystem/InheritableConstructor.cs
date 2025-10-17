@@ -3,24 +3,23 @@ using UnityEngine;
 
 namespace GameBase.EntitySystem
 {
-    public abstract class BaseConstructor<T_Data, T_Entity, T_Constructor> : Singleton<T_Constructor>
+    public abstract class InheritableConstructor<T_Data, T_Entity, T_Constructor> : Singleton<T_Constructor>
         where T_Data : struct
         where T_Entity : class
-        where T_Constructor : BaseConstructor<T_Data, T_Entity, T_Constructor>, new()
+        where T_Constructor : InheritableConstructor<T_Data, T_Entity, T_Constructor>, new()
     {
         private T_Data[] _datas;
 
-        protected BaseConstructor()
+        protected InheritableConstructor()
         {
             Init();
             Command.Register($"{typeof(T_Constructor).FullName}-init", Init);
         }
         protected abstract string RelativePath { get; }
-        protected abstract void Set(T_Entity e, in T_Data data);
 
-        protected abstract T_Entity Get();
+        protected abstract T GetFromData<T>(in T_Data data) where T : T_Entity;
 
-        public T_Entity Get(int index)
+        public T Get<T>(int index) where T : T_Entity
         {
             if (index >= _datas.Length || index < 0)
             {
@@ -28,8 +27,7 @@ namespace GameBase.EntitySystem
                     .Log($"Entity:{typeof(T_Entity).Name} index out off array:{index}");
             }
 
-            var e = Get();
-            Set(e, in _datas[index]);
+            var e = GetFromData<T>(in _datas[index]);
             return e;
         }
 

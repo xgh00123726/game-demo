@@ -44,18 +44,15 @@ namespace Constructor.Spells.Interactive
         }
     }
 
-    public class DotExternalSetCon : BaseConstructor<DotExternalSetData, DotExternalSet, DotExternalSetCon>
+    public class DotExternalSetCon : SealedConstructor<DotExternalSetData, DotExternalSet, DotExternalSetCon>
     {
         protected override string RelativePath => "Spell/Interactive/DotExternalSet.csv";
 
-        protected override DotExternalSet Get()
+        protected override DotExternalSet GetFromData(in DotExternalSetData data)
         {
-            return new DotExternalSet();
-        }
-
-        protected override void Set(DotExternalSet e, in DotExternalSetData data)
-        {
+            var e = new DotExternalSet();
             e.data = data;
+            return e;
         }
     }
 }

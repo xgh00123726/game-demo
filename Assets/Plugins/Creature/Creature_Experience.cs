@@ -25,7 +25,7 @@ namespace GameBase.Creatures
 
         public void DefaultOnGetExp(Creature creature, int exp)
         {
-            var text = TextSys.Instance.NewEntity();
+            var text = TextSys.Instance.NewEntity(5);
             text.Color = Color.blue;
             text.showPosition = Position;
             text.Value = exp.ToString();

@@ -10,7 +10,7 @@ namespace GameBase.EntitySystem
             _pool.InstantiateFunc = static () => new T();
         }
 
-        private BaseObjectPool<T> _pool = new();
+        public BaseObjectPool<T> _pool = new();
 
         int IEConstructor<T>.Count => _pool.Count;
 

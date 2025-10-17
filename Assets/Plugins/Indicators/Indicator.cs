@@ -5,7 +5,7 @@ using UnityEngine.Rendering.Universal;
 
 namespace GameBase.Indicators
 {
-    public class Indicator : IUEntity<GameObject>
+    public class Indicator : IKeyEntity<int>
     {
         public int textureID;
 
@@ -39,8 +39,8 @@ namespace GameBase.Indicators
                 pivot = value;
             }
         }
-        public GameObject Obj { get; set; }
-        public int ObjID { get; set; }
+        public GameObject obj;
+        public int Key { get; set; }
     }
 }
 

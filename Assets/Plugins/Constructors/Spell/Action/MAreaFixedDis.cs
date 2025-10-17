@@ -32,7 +32,7 @@ namespace Constructor.Spells.Action.Modifyables
                 spell.interactive is DotExternalSet interactive)
             {
 
-                var f = Flyings.Factory.Instance.Get(data.flyingType, data.flyingID);
+                var f = Flyings.FlyingFactory.Instance.Get(data.flyingType, data.flyingID);
                 f.Src = c.Position;
                 var dir = (interactive.position - c.Position).normalized;
                 f.target = new FixedFlyingTarget()
@@ -61,18 +61,15 @@ namespace Constructor.Spells.Action.Modifyables
             }
         }
     }
-    public class MAreaFixedDisCon : BaseConstructor<MAreaFixedDisData, MAreaFixedDis, MAreaFixedDisCon>
+    public class MAreaFixedDisCon : SealedConstructor<MAreaFixedDisData, MAreaFixedDis, MAreaFixedDisCon>
     {
         protected override string RelativePath => "Spell/Action/MAreaFixedDis.csv";
 
-        protected override MAreaFixedDis Get()
+        protected override MAreaFixedDis GetFromData(in MAreaFixedDisData data)
         {
-            return new MAreaFixedDis();
-        }
-
-        protected override void Set(MAreaFixedDis e, in MAreaFixedDisData data)
-        {
+            var e = new MAreaFixedDis();
             e.data = data;
+            return e;
         }
     }
 }

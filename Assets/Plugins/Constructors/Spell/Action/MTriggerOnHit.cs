@@ -6,6 +6,7 @@ using GameBase.EntitySystem;
 using GameBase.Flyings;
 using GameBase.Math;
 using GameBase.Spells;
+using GameBase.Tools;
 using GameBase.Triggers;
 using UnityEngine;
 
@@ -32,7 +33,7 @@ namespace Constructor.Spells.Action.Modifyables
             if (spell.speller is Creature c &&
                 spell.interactive is DotExternalSet interactive)
             {
-                var f = Flyings.Factory.Instance.Get(data.flyingType, data.flyingID);
+                var f = Flyings.FlyingFactory.Instance.Get(data.flyingType, data.flyingID);
                 f.Src = c.HandPosition + new Vector3(data.xOffset, data.yOffset, data.zOffset);
                 f.target = new FixedFlyingTarget()
                 {
@@ -49,6 +50,7 @@ namespace Constructor.Spells.Action.Modifyables
                     };
                     t.targetsSet = TargetSetFactorary.Get(data.targetSetType);
                     t.owner = c;
+                    t.maxeffectTimes = 999;
                     var damage = data.damage + c.modifyables["damage"].Value * data.ampFactor;
                     t.action = new Damage(damage);
                     t.Trig();
@@ -60,18 +62,15 @@ namespace Constructor.Spells.Action.Modifyables
             return false;
         }
     }
-    public class MTriggerOnHitCon : BaseConstructor<MTriggerOnHitData, MTriggerOnHit, MTriggerOnHitCon>
+    public class MTriggerOnHitCon : SealedConstructor<MTriggerOnHitData, MTriggerOnHit, MTriggerOnHitCon>
     {
         protected override string RelativePath => "Spell/Action/MTriggerOnHit.csv";
 
-        protected override MTriggerOnHit Get()
+        protected override MTriggerOnHit GetFromData(in MTriggerOnHitData data)
         {
-            return new MTriggerOnHit();
-        }
-
-        protected override void Set(MTriggerOnHit e, in MTriggerOnHitData data)
-        {
+            var e = new MTriggerOnHit();
             e.data = data;
+            return e;
         }
     }
 }

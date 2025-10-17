@@ -19,9 +19,10 @@ namespace GameBase.Creatures
         None = 0,
         CommonCreature = 1 << 0,
         Player = 1 << 1,
+        ALL = 0x7FFFFFFF,
     }
 
-    public partial class Creature : IUEntity<GameObject>,
+    public partial class Creature : IKeyEntity<int>,
         IPoolable,
         ITriggerOwner,
         ITriggerTarget,
@@ -47,16 +48,15 @@ namespace GameBase.Creatures
         public Rotater rotater;
         public HealthBar healthBar;
         public Animator animator;
-        public GameBase.Move.Collider collider;
+        public GameBase.Move.CircleCollider collider;
 
         public bool Alive { get; internal protected set; }
-        public int InstanceID => instanceID;
-        public GameObject Obj { get; set; }
-        public int ObjID { get; set; }
+        public GameObject obj;
+        public int Key { get; set; }
 
-        Vector3 IHealthBarOwner.HealthBarPosition => Obj.transform.position + healthBarOffset;
+        Vector3 IHealthBarOwner.HealthBarPosition => obj.transform.position + healthBarOffset;
 
-        Vector3 ITriggerTarget.Center => Obj.transform.position;
+        Vector3 ITriggerTarget.Center => obj.transform.position;
 
         float ITriggerTarget.Radius => radius;
 
@@ -66,27 +66,27 @@ namespace GameBase.Creatures
 
         bool IHealthBarOwner.ALive => Alive;
 
-        public Vector3 HandPosition => Obj.transform.position + new Vector3(0, 1, 0);
+        public Vector3 HandPosition => obj.transform.position + new Vector3(0, 1, 0);
 
         float ISpeller.CoolingAccelerate => modifyables["coolingAccelerate"].Value;
 
         public Vector3 Position
         {
-            get => Obj.transform.position;
-            set => Obj.transform.position = value;
+            get => obj.transform.position;
+            set => obj.transform.position = value;
         }
 
         float IMover.Speed => modifyables["moveSpeed"].Value;
 
         Vector3 IMover.Position
         {
-            get => Obj.transform.position;
-            set => Obj.transform.position = value;
+            get => obj.transform.position;
+            set => obj.transform.position = value;
         }
 
         float IRotater.Speed => modifyables["rotateSpeed"].Value;
 
-        GameObject IRotater.Obj => Obj;
+        GameObject IRotater.Obj => obj;
 
         bool IRotater.IsRotating { get; set; }
 
@@ -94,7 +94,7 @@ namespace GameBase.Creatures
 
         float IMover.Radius => radius;
 
-        Move.Collider IMover.Collider => collider;
+        Move.CircleCollider IMover.Collider => collider;
 
         Modifyables IModifieder.Modifyables => modifyables;
 
@@ -173,8 +173,8 @@ namespace GameBase.Creatures
 
         public void AddCollider()
         {
-            collider = CollideSys.Instance.NewEntity();
-            collider.owner = Obj.transform;
+            collider = CollideSys.Instance.NewEntity<CircleCollider>();
+            collider.owner = obj.transform;
             collider.r = radius;
         }
     }

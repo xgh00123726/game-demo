@@ -8,18 +8,75 @@ namespace GameBase.EntitySystem
         where T_Entity : class
         where T_Sys : InheritableSys<T_Entity, T_Sys>, new()
     {
-        private int _currentIterateIndex = 0;
-        private bool _inUpdating = false;
-        private Dictionary<Type, BaseObjectPool<T_Entity>> _pools = new();
-        private IEContainer<T_Entity> _entities = new LinkListContainer<T_Entity>();
+        private bool _useObjectPool = true;
+        private bool _useDefaultContainer = true;
         protected bool _fixedUpdate = false;
 
-        protected internal LinkedList<T_Entity> _entityNeedRegister = new LinkedList<T_Entity>();
-        protected internal LinkedList<T_Entity> _entitiesNeedRemove = new LinkedList<T_Entity>();
+        protected EntitySys<T_Entity> _sys;
+        protected Dictionary<Type, BaseObjectPool<T_Entity>> _pools;
 
         protected InheritableSys()
         {
             SingletonEntitySysInstance.CreateShadowMono(this);
+
+            if (_useObjectPool)
+            {
+                _pools = new();
+            }
+            if (_useDefaultContainer)
+            {
+                _sys = new EntitySys<T_Entity>(new LinkListContainer<T_Entity>())
+                {
+                    _UpdateAction = UpdateEntity,
+                    _StartAction = EntityStart,
+                };
+            }
+        }
+
+        protected virtual T CtorT<T>() where T : T_Entity, new() { return new T(); }
+        protected virtual void OnGet(T_Entity e) { }
+        protected virtual void OnRelease(T_Entity e) { }
+
+        private T GetEntityFromPool<T>() where T : class, T_Entity, new()
+        {
+            if (!_pools.ContainsKey(typeof(T)))
+            {
+                var pool = new BaseObjectPool<T_Entity>();
+                _pools[typeof(T)] = pool;
+                pool.InstantiateFunc = CtorT<T>;
+                pool.InstantiateAction = OnGet;
+                pool.ReleaseAction = OnRelease;
+            }
+
+            return _pools[typeof(T)].Get() as T;
+        }
+        protected virtual T GetEntity<T>() where T : class, T_Entity { return default; }
+
+        private void ReleaseEntityToPool<T>(T e) where T : class, T_Entity
+        {
+            if (_pools.ContainsKey(typeof(T)))
+            {
+                var pool = _pools[typeof(T)];
+                pool.Release(e);
+            }
+        }
+
+        protected virtual void ReleaseEntity<T>(T e) where T : class, T_Entity { }
+
+        public T NewEntity<T>() where T : class, T_Entity, new()
+        {
+            T ret;
+            if (_useObjectPool)
+            {
+                ret = GetEntityFromPool<T>();
+            }
+            else
+            {
+                ret = GetEntity<T>();
+            }
+
+            _sys.AddEntity(ret);
+            return ret;
         }
 
         /// <summary>
@@ -29,20 +86,16 @@ namespace GameBase.EntitySystem
         {
             if (e == null) return;
 
-            if (_entitiesNeedRemove.Contains(e))
+            if (_useObjectPool)
             {
-                return;
-            }
-
-            if (!_inUpdating)
-            {
-                Entities.Remove(e);
-                _pools[e.GetType()].Release(e);
+                ReleaseEntityToPool(e);
             }
             else
             {
-                _entitiesNeedRemove.AddLast(e);
+                ReleaseEntity(e);
             }
+
+            _sys.RemoveEntity(e);
         }
 
 
@@ -51,71 +104,14 @@ namespace GameBase.EntitySystem
         /// <list type="bullet">
         /// <item><param name="e"><paramref name="e"/>:实体引用</param></item>
         /// </list></summary>
-        protected abstract void UpdateEntity(T_Entity e);
+        protected virtual void UpdateEntity(T_Entity e) { }
+        protected virtual void EntityStart(T_Entity e) { }
 
-        protected int CurrentIterateIndex => _currentIterateIndex;
+        protected int CurrentIterateIndex => _sys.CurrentIterIndex;
 
-        public virtual IEContainer<T_Entity> Entities => _entities;
+        public virtual IEContainer<T_Entity> Entities => _sys.Entities;
 
-
-        public void RegisterEntity(T_Entity e)
-        {
-            if (_inUpdating)
-            {
-                _entityNeedRegister.AddLast(e);
-            }
-            else
-            {
-                Entities.Add(e);
-            }
-        }
-
-
-        /// <summary>
-        /// 立刻创建一个对象，可以在对象被遍历时使用，会在立刻将对象的unity对象创建出来
-        /// </summary>
-        /// <typeparam name="T_EntityType"></typeparam>
-        /// <returns></returns>
-        public T NewEntity<T>() where T : class, T_Entity, new()
-        {
-            var type = typeof(T);
-            if (!_pools.ContainsKey(type))
-            {
-                _pools[type] = new BaseObjectPool<T_Entity>();
-                _pools[type].InstantiateFunc = static () => new T();
-            }
-            var e = _pools[type].Get();
-            RegisterEntity(e);
-            return e as T;
-        }
-
-        /// <summary>
-        /// 不推荐重写Update
-        /// </summary>
-        internal protected virtual void Update()
-        {
-            foreach (T_Entity e in _entityNeedRegister)
-            {
-                Entities.Add(e);
-            }
-            _entityNeedRegister.Clear();
-
-            _currentIterateIndex = 0;
-            _inUpdating = true;
-            foreach (var e in Entities)
-            {
-                UpdateEntity(e);
-                _currentIterateIndex++;
-            }
-            _inUpdating = false;
-
-            foreach (var e in _entitiesNeedRemove)
-            {
-                Entities.Remove(e);
-                _pools[e.GetType()].Release(e);
-            }
-            _entitiesNeedRemove.Clear();
-        }
+        protected virtual void Update() => _sys.Iterate();
 
         void IBaseSys.Update()
         {

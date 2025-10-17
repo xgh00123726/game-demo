@@ -122,6 +122,11 @@ namespace GameBase.Modify
             set => this[ModifyTable.GetID(key)] = value;
         }
 
+        public float GetKeyValue(string key)
+        {
+            return this[key].value;
+        }
+
         public IEnumerator<Modifyable> GetEnumerator()
         {
             return ((IEnumerable<Modifyable>)_modifyables.Values).GetEnumerator();

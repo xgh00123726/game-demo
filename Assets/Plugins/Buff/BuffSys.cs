@@ -5,9 +5,9 @@ using UnityEngine.UIElements;
 
 namespace GameBase.Buffs
 {
-    public class BuffSys : CommonEntitySys<Buff, BuffSys>
+    public class BuffSys : SealedEntitySys<Buff, BuffSys>
     {
-        protected override void OnRegisterEntityToActives(Buff e)
+        protected override void OnGet(Buff e)
         {
             e.isInfiDuration = false;
             e.alive = true;
@@ -15,7 +15,7 @@ namespace GameBase.Buffs
             e.instantiateTime = Time.time;
         }
 
-        protected override void OnRemoveEntityFromActives(Buff e)
+        protected override void OnRelease(Buff e)
         {
             foreach (var m in e.modifyers)
             {
@@ -30,10 +30,10 @@ namespace GameBase.Buffs
         {
             if (e.owner == null)
             {
-                XLogger.Instance.Level(XLogger.LogLevel.Warning)
+                XLogger.Instance.Level(XLogger.LogLevel.Error)
                     .Log("buff has no owner");
-                RemoveEntity(e);
                 e.owner.OnRemoveBuff(e);
+                RemoveEntity(e);
                 return;
             }
 
@@ -50,8 +50,8 @@ namespace GameBase.Buffs
 
             if (e.durationRemain <= 0)
             {
-                RemoveEntity(e);
                 e.owner.OnRemoveBuff(e);
+                RemoveEntity(e);
             }
         }
     }

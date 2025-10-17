@@ -2,7 +2,7 @@ using GameBase.EntitySystem;
 using GameBase.Tools;
 namespace GameBase.Modify
 {
-    public class ModifyableSys : CommonEntitySys<Modifyable, ModifyableSys>
+    public class ModifyableSys : SealedEntitySys<Modifyable, ModifyableSys>
     {
         public Modifyable NewEntity(float initValue)
         {

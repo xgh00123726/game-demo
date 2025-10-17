@@ -29,7 +29,7 @@ namespace Constructor.Triggers.Action
                 modifyer.value = -data.value;
                 modifyer.OnModify += () =>
                 {
-                    var text = TextSys.Instance.NewEntity((e) => { e.showPosition = target.Center; });
+                    var text = TextSys.Instance.NewEntity(5);
                     text.showPosition = target.Center;
                     text.Value = data.value.ToString();
                     text.Color = Color.white;

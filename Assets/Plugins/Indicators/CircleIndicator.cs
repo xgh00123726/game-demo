@@ -6,17 +6,17 @@ namespace GameBase.Indicators
 
         public override void Show()
         {
-            indicator.Obj.SetActive(true);
+            indicator.obj.SetActive(true);
         }
 
         public override void Hide()
         {
-            indicator.Obj.SetActive(false);
+            indicator.obj.SetActive(false);
         }
 
         public override void Set(IndicatorConfig config)
         {
-            indicator.Obj.transform.position = config.targetPosition;
+            indicator.obj.transform.position = config.targetPosition;
         }
     }
 }

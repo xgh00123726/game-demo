@@ -90,8 +90,8 @@ namespace GameBase.AI
                 return;
             }
 
-            mover.MoveTo(target.Obj.transform.position);
-            rotater.LookAt(target.Obj.transform.position);
+            mover.MoveTo(target.obj.transform.position);
+            rotater.LookAt(target.obj.transform.position);
         }
     }
 }

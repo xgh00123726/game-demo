@@ -1,9 +1,11 @@
+using System.IO;
 using UnityEngine;
 
 namespace GameBase.Tools
 {
     public class XLogger
     {
+        public static string logFilePath = @"D:\project\game-demo\Assets\Log\FullLog.html";
         private static XLogger _instance = new XLogger();
         public static XLogger Instance => _instance;
         public enum LogLevel
@@ -19,6 +21,8 @@ namespace GameBase.Tools
         private bool _ifLog = true;
         private Color _color = UnityEngine.Color.gray;
         private bool _colorSet = false;
+        private bool _withFrameCount = true;
+        private bool _toFile = false;
 
         private void Reset()
         {
@@ -27,6 +31,8 @@ namespace GameBase.Tools
             _ifLog = true;
             _colorSet = false;
             _color = UnityEngine.Color.gray;
+            _withFrameCount = true;
+            _toFile = false;
         }
 
         /// <summary>
@@ -38,6 +44,12 @@ namespace GameBase.Tools
         public XLogger IF(bool ifLog)
         {
             _ifLog = ifLog;
+            return _instance;
+        }
+
+        public XLogger WithOutFrame()
+        {
+            _withFrameCount = false;
             return _instance;
         }
 
@@ -78,6 +90,12 @@ namespace GameBase.Tools
             return _instance;
         }
 
+        public XLogger ToFile()
+        {
+            _toFile = true;
+            return _instance;
+        }
+
         /// <summary>
         /// 设置是否仅编辑模式打印
         /// <list type="bullet">
@@ -88,6 +106,11 @@ namespace GameBase.Tools
         {
             _editorOnly = editorOnly;
             return _instance;
+        }
+
+        private void WriteToFile(string content)
+        {
+            File.AppendAllText(logFilePath, content + "  <br>\n");
         }
 
         private void LogMessage(object info, LogLevel level)
@@ -104,21 +127,34 @@ namespace GameBase.Tools
                 colorTagEnd = "</color>";
             }
 
+            if (_withFrameCount)
+            {
+                info = $"<color=#66ccff>[frame:{Time.frameCount}]</color>{info}";
+            }
+
             if (level == LogLevel.Info)
             {
-                Debug.Log($"<color=#00ff00>[info]</color>{colorTagBegin} {info}{colorTagEnd}");
+                string cInfo = $"<color=#00ff00>[info]</color>{colorTagBegin} {info}{colorTagEnd}";
+                if (_toFile)
+                {
+                    WriteToFile(cInfo);
+                }
+                Debug.Log(cInfo);
             }
             else if (level == LogLevel.Warning)
             {
-                Debug.LogWarning($"[warning]{colorTagBegin} {info}{colorTagEnd}");
+                string cWarning = $"<color=#F8C20D>[warning]</color>{colorTagBegin} {info}{colorTagEnd}";
+                if (_toFile)
+                {
+                    WriteToFile(cWarning);
+                }
+                Debug.LogWarning(cWarning);
             }
             else if (level == LogLevel.Error)
             {
-                Debug.LogError($"<color=#ff0000>[error]</color>{colorTagBegin} {info}{colorTagEnd}");
-            }
-            else if (level == LogLevel.Fatal)
-            {
-                Debug.LogError($"<color=#ff0000>[fatal]</color>{colorTagBegin} {info}{colorTagEnd}");
+                string cError = $"<color=#ff0000>[error]</color>{colorTagBegin} {info}{colorTagEnd}";
+                WriteToFile(cError);
+                Debug.LogError(cError);
             }
         }
 

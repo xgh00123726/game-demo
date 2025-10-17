@@ -1,21 +1,26 @@
-using GameBase.Resources;
 using GameBase.EntitySystem;
-using UnityEngine;
+using GameBase.Resources;
 using GameBase.Tools;
+using System.Security.Cryptography;
+using UnityEngine;
+using UnityEngine.UIElements;
+using static GameBase.Flyings.CurveFactory;
+using static UnityEngine.UI.CanvasScaler;
 namespace GameBase.Flyings
 {
-    public class FlyingSys : UObjEntitySys<Flying, GameObject, FlyingSys>
+    public class FlyingSys : KeyEntitySys<int, Flying, FlyingSys>
     {
         public static readonly float ProjectileHitDis = 0.1f;
 
-        protected override GameObject InstantiateObj(Flying e)
+        protected override Flying CtorT(int k)
         {
-            var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
-
-            return obj;
+            Flying e = new Flying();
+            var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(k));
+            e.obj = obj;
+            return e;
         }
 
-        protected override void AfterInstantiateEUObject(Flying e)
+        protected override void OnGet(Flying e)
         {
             if (e.curveType != CurveFactory.CurveType.None)
             {
@@ -23,16 +28,30 @@ namespace GameBase.Flyings
                 e.curve.speed = e.speed;
             }
 
+            e.arriveDis = 0.1f;
+            e.maxExistTime = 10f;
+            e.minExistTime = 0f;
+            e.speed = 5f;
+            e.alive = true;
+            e.hitFlag = false;
+
             e.instantiateTime = Time.time;
 
-            e.Obj.SetActive(true);
+            e.obj.SetActive(true);
         }
 
-        protected override void BeforeReleaseEUObject(Flying e)
+        protected override void OnRelease(Flying e)
         {
-            e.Obj.SetActive(false);
+            e.obj.SetActive(false);
             e.OnReleased?.Invoke();
-            e.Obj.transform.localScale = Vector3.one;
+            e.obj.transform.localScale = Vector3.one;
+
+            e.speed = 0;
+            e.curveType = CurveFactory.CurveType.None;
+            e.curve = null;
+            e.alive = false;
+            e.OnReleased = null;
+            e.OnHit = null;
         }
 
         /// <summary>
@@ -46,6 +65,7 @@ namespace GameBase.Flyings
             if (Time.time > e.maxExistTime + e.instantiateTime)
             {
                 RemoveEntity(e);
+                return;
             }
 
             // ¾ßÓÐ¹ì¼£µÄÉäµ¯Âß¼­
@@ -59,9 +79,10 @@ namespace GameBase.Flyings
             if (e.hitFlag && Time.time > e.minExistTime + e.instantiateTime)
             {
                 RemoveEntity(e);
+                return;
             }
 
-            if (!e.hitFlag && (e.target.Position - e.Obj.transform.position).magnitude <= e.arriveDis)
+            if (!e.hitFlag && (e.target.Position - e.obj.transform.position).magnitude <= e.arriveDis)
             {
                 e.hitFlag = true;
                 e.OnHit?.Invoke();

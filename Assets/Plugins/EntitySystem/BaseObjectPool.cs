@@ -26,7 +26,7 @@ namespace GameBase.EntitySystem
                 if (InstantiateFunc == null)
                 {
                     XLogger.Instance.Level(XLogger.LogLevel.Error)
-                        .Log("trying to get object from a empty pool");
+                        .Log($"trying to get object:{typeof(T).Name} from a empty pool");
                     return default;
                 }
                 else

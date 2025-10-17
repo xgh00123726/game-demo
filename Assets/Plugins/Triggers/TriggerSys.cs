@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace GameBase.Triggers
 {
-    public class TriggerSys : CommonEntitySys<Trigger, TriggerSys>
+    public class TriggerSys : SealedEntitySys<Trigger, TriggerSys>
     {
         public TriggerSys()
         {
             _fixedUpdate = true;
         }
 
-        protected override void OnRegisterEntityToActives(Trigger e)
+        protected override void OnGet(Trigger e)
         {
             if (e.hasWhite)
             {

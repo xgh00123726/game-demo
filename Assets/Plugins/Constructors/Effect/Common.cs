@@ -9,16 +9,14 @@ namespace Constructor.Effects
         public int ObjID;
         public float existTime;
     }
-    public class Common : EntityConstructor<CommonData, Effect, EffectSys, Common>
+    public class Common : KeyConstructor<CommonData, Effect, Common>
     {
         protected override string RelativePath => "Effect/Common.csv";
-
-        protected override EffectSys SysInstance => EffectSys.Instance;
-
-        protected override void ESet(Effect e, in CommonData data)
+        protected override Effect GetFromData(in CommonData data)
         {
-            e.ObjID = data.ObjID;
+            var e = EffectSys.Instance.NewEntity(data.ObjID);
             e.existTime = data.existTime;
+            return e;
         }
     }
 }

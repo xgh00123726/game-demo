@@ -40,6 +40,7 @@ namespace GameBase.AI
 
         public void RemoveEntity(BaseAI ai)
         {
+            ai.enable = false;
             if (_inUpdate)
             {
                 AINeedRemove.AddLast(ai);
@@ -80,12 +81,8 @@ namespace GameBase.AI
                 {
                     XLogger.Instance.Level(XLogger.LogLevel.Warning)
                         .Log("ai has null owner");
-                    pools[ai.GetType()].Release(ai);
+                    RemoveEntity(ai);
                     continue;
-                }
-                if (!ai.owner.Alive)
-                {
-                    pools[ai.GetType()].Release(ai);
                 }
             }
             _inUpdate = false;

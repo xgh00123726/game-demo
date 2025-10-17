@@ -17,18 +17,16 @@ namespace Constructor.Flyings
         public Effects.Type hitEffectType;
         public int hitEffectID;
     }
-    public class Common : EntityConstructor<CommonData, Flying, FlyingSys, Common>
+    public class Common : KeyConstructor<CommonData, Flying, Common>
     {
         protected override string RelativePath => "Flyings/Common.csv";
 
-        protected override FlyingSys SysInstance => FlyingSys.Instance;
-
-        protected override void ESet(Flying e, in CommonData data)
+        protected override Flying GetFromData(in CommonData data)
         {
-            e.ObjID = data.objID;
-
+            var e = FlyingSys.Instance.NewEntity(data.objID);
             if (data.curveType != CurveFactory.CurveType.None)
             {
+                e.curveType = data.curveType;
                 e.curve = CurveFactory.CreateInstance(data.curveType, e);
                 e.curve.speed = data.speed;
             }
@@ -41,7 +39,7 @@ namespace Constructor.Flyings
                 e.OnReleased += () =>
                 {
                     var er = Constructor.Effects.Common.Instance.Get(releaseEffectID);
-                    er.Obj.transform.position = e.Obj.transform.position;
+                    er.particle.transform.position = e.obj.transform.position;
                 };
             }
             var hitEffectID = data.hitEffectID;
@@ -50,9 +48,11 @@ namespace Constructor.Flyings
                 e.OnHit += () =>
                 {
                     var er = Effects.Common.Instance.Get(hitEffectID);
-                    er.Obj.transform.position = e.Obj.transform.position;
+                    er.particle.transform.position = e.obj.transform.position;
                 };
             }
+
+            return e;
         }
     }
 }

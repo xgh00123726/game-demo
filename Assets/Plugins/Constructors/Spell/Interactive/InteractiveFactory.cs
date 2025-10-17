@@ -9,7 +9,7 @@ namespace Constructor.Spells.Interactive
     {
         DotExternalSet
     }
-    public class Factory : ConstructorFactory<Type, ISpellInteractive, Factory>
+    public class InteractiveFactory : ConstructorFactory<Type, ISpellInteractive, InteractiveFactory>
     {
         protected override Dictionary<Type, Func<int, ISpellInteractive>> GetConstructorGetDict()
         {

@@ -13,14 +13,13 @@ namespace Constructor.Triggers
         public TargetSetType targetSetType;
     }
 
-    public class PeriodTrigger : EntityConstructor<PeriodTriggerData, Trigger, TriggerSys, PeriodTrigger>
+    public class PeriodTrigger : SealedConstructor<PeriodTriggerData, Trigger, PeriodTrigger>
     {
         protected override string RelativePath => "Trigger/PeriodTrigger.csv";
 
-        protected override TriggerSys SysInstance => TriggerSys.Instance;
-
-        protected override void ESet(Trigger e, in PeriodTriggerData data)
+        protected override Trigger GetFromData(in PeriodTriggerData data)
         {
+            var e = TriggerSys.Instance.NewEntity();
             e.targetsSet = TargetSetFactorary.Get(data.targetSetType);
             e.trigPeriod = data.period;
             e.trigStyle = data.trigStyle;
@@ -28,8 +27,9 @@ namespace Constructor.Triggers
             var effectID = data.effectID;
             e.OnTrig = () =>
             {
-                Effects.Factory.Instance.Get(effectType, effectID);
+                Effects.EffectFactory.Instance.Get(effectType, effectID);
             };
+            return e;
         }
     }
 }

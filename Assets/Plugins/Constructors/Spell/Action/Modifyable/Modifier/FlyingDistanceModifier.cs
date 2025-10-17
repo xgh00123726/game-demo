@@ -19,18 +19,15 @@ namespace Constructor.Spells.Action
             modifyData.flyingDistance += data.distanceModify;
         }
     }
-    public class FlyingDistanceModifierCon : BaseConstructor<FlyingDistanceModifierData, FlyingDistanceModifier, FlyingDistanceModifierCon>
+    public class FlyingDistanceModifierCon : SealedConstructor<FlyingDistanceModifierData, FlyingDistanceModifier, FlyingDistanceModifierCon>
     {
         protected override string RelativePath => "Spell/Action/Modifyable/Modifier/FlyingDistanceModifier.csv";
 
-        protected override FlyingDistanceModifier Get()
+        protected override FlyingDistanceModifier GetFromData(in FlyingDistanceModifierData data)
         {
-            return new FlyingDistanceModifier(0);
-        }
-
-        protected override void Set(FlyingDistanceModifier e, in FlyingDistanceModifierData data)
-        {
+            var e = new FlyingDistanceModifier(0);
             e.data = data;
+            return e;
         }
     }
 }

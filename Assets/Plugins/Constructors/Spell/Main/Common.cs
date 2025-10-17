@@ -2,7 +2,6 @@ using Constructor.Spells.Interactive;
 using GameBase.Indicators;
 using GameBase.Spells;
 using GameBase.EntitySystem;
-using GameBase.Tools;
 
 namespace Constructor.Spells.Main
 {
@@ -17,23 +16,23 @@ namespace Constructor.Spells.Main
         public int iconTextureID;
     }
 
-    public class Common : EntityConstructor<CommonData, Spell, SpellSys, Common>
+    public class Common : SealedConstructor<CommonData, Spell, Common>
     {
         protected override string RelativePath => "Spell/Main/Common.csv";
 
-        protected override SpellSys SysInstance => SpellSys.Instance;
-
-        protected override void ESet(Spell e, in CommonData data)
+        protected override Spell GetFromData(in CommonData data)
         {
-            e.interactive = Interactive.Factory.Instance.Get(data.interactiveType, data.interactiveID);
+            var e = SpellSys.Instance.NewEntity();
+            e.interactive = Interactive.InteractiveFactory.Instance.Get(data.interactiveType, data.interactiveID);
             if (e.interactive is DotExternalSet interactive)
             {
                 interactive.indicatorType = data.indicatorType;
             }
 
-            e.action = Action.Factory.Instance.Get(data.actionType, data.actionInterfaceID);
+            e.action = Action.SpellActionFactory.Instance.Get(data.actionType, data.actionInterfaceID);
             e.spellCoolingdown.CoolingSet = data.coolingTime;
             e.iconTextureID = data.iconTextureID;
+            return e;
         }
     }
 }

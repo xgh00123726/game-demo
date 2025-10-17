@@ -13,7 +13,7 @@ namespace Instance
         {
             set
             {
-                valueTMP.text = String.Format("{0:0.##}", value);
+                valueTMP.text = String.Format("{0:0}", value);
             }
         }
     }

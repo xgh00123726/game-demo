@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GameBase.Move
 {
-    public class MoveSys : CommonEntitySys<Mover, MoveSys>
+    public class MoveSys : SealedEntitySys<Mover, MoveSys>
     {
         protected override void UpdateEntity(Mover e)
         {

@@ -17,19 +17,19 @@ namespace Constructor.Triggers
         public int damage;
         public TargetSetType targetSetType;
     }
-    public class AreaCircleTrigger : EntityConstructor<AreaCircleTriggerData, Trigger, TriggerSys, AreaCircleTrigger>
+    public class AreaCircleTrigger : SealedConstructor<AreaCircleTriggerData, Trigger, AreaCircleTrigger>
     {
         protected override string RelativePath => "Trigger/AreaCircleTrigger.csv";
 
-        protected override TriggerSys SysInstance => TriggerSys.Instance;
-
-        protected override void ESet(Trigger e, in AreaCircleTriggerData data)
+        protected override Trigger GetFromData(in AreaCircleTriggerData data)
         {
+            var e = TriggerSys.Instance.NewEntity();
             e.maxeffectTimes = data.maxEffectTimes;
             e.hasWhite = data.hasWhite;
             e.shape = new GMath.Circle(Vector2.zero, data.radius);
             e.targetsSet = TargetSetFactorary.Get(data.targetSetType);
-            e.action = Constructor.Triggers.Action.Factory.Instance.Get(Triggers.Action.Type.Damage, data.damage);
+            e.action = Constructor.Triggers.Action.TriggerActionFactory.Instance.Get(Triggers.Action.Type.Damage, data.damage);
+            return e;
         }
     }
 }

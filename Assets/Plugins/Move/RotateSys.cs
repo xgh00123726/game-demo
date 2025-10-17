@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameBase.Move
 {
-    public class RotateSys : CommonEntitySys<Rotater, RotateSys>
+    public class RotateSys : SealedEntitySys<Rotater, RotateSys>
     {
         public static float turnStopAngle = 1f;
 

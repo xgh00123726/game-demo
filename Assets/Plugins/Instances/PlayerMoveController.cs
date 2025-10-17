@@ -3,12 +3,13 @@ using GameBase.EntitySystem;
 using GameBase.GCamera;
 using GameBase.Tools;
 using System;
+using System.Collections.Generic;
 
 namespace Instance
 {
     public class PlayerMoveController : SingletonInstance<PlayerMoveController>
     {
-        private static Creature _target;
+        private static LinkedList<Creature> _targets = new();
 
         public static Action OnMoveInput;
 
@@ -16,25 +17,43 @@ namespace Instance
         {
             if (Inputs.GetKeyDown(KeyFunction.MoveTo, "mover"))
             {
-                _target.mover.MoveTo(CameraSys.MouseHitPosition);
-                _target.rotater.LookAt(CameraSys.MouseHitPosition);
+                foreach (var c in _targets)
+                {
+                    c.mover.MoveTo(CameraSys.MouseHitPosition);
+                    c.rotater.LookAt(CameraSys.MouseHitPosition);
+                    c.ai?.Disable();
+                }
+
                 MoveIndicator.Show(CameraSys.MouseHitPosition);
-                _target.ai?.Disable();
 
                 OnMoveInput?.Invoke();
             }
 
             if (Inputs.GetKeyDown(KeyFunction.Stop, "mover"))
             {
-                _target.mover.Stop();
-                _target.Dir = _target.Dir;
-                _target.ai?.Disable();
+                foreach (var c in _targets)
+                {
+                    c.mover.Stop();
+                    c.Dir = c.Dir;
+                    c.ai?.Disable();
+                }
             }
         }
 
         public static void SetTarget(Creature target)
         {
-            _target = target;
+            _targets.Clear();
+            _targets.AddFirst(target);
+        }
+
+        public static void ClearTarget()
+        {
+            _targets.Clear();
+        }
+
+        public static void AddTarget(Creature target)
+        {
+            _targets.AddLast(target);
         }
     }
 }

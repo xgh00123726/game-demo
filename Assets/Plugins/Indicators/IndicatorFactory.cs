@@ -6,12 +6,9 @@ namespace GameBase.Indicators
         {
             if (type == IndicatorType.Circle)
             {
-                var e = IndicatorSys.Instance.NewEntity((Indicator e) =>
-                {
-                    e.ObjID = 45;
-                    e.textureID = 10;
-                });
-                e.Obj.SetActive(false);
+                var e = IndicatorSys.Instance.NewEntity(45);
+                e.textureID = 10;
+                e.obj.SetActive(false);
                 return e;
             }
 

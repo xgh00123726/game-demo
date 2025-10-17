@@ -1,3 +1,4 @@
+using GameBase.AI;
 using GameBase.Creatures;
 using GameBase.EntitySystem;
 using GameBase.Move;
@@ -8,88 +9,44 @@ using GameBase.UI;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
+public class CreatureSys : KeyEntitySys<int, Creature, CreatureSys>
 {
-    internal int instanceNum = 0;
-    internal Dictionary<int, Creature> _creatrues = new();
-
-
-
-    /// <summary>
-    /// 返回指定位置最近的游戏实体
-    /// <list type="bullet">
-    /// <item><param name="position"><paramref name="position"/>:指定的位置</param></item>
-    /// <item><param name="rangeLimit"><paramref name="rangeLimit"/>:只会寻找到rangeLimit距离内的实体</param></item>
-    /// </list></summary>
-    /// <returns>符合条件最近的实体，没有实体满足条件则返回null</returns>
-    public Creature NearestEntity(Vector3 position, CreatureTag tag, float rangeLimit = 10)
+    protected override Creature CtorT(int k)
     {
-        Creature c = null;
-        float minDistance = float.PositiveInfinity;
-
-        foreach (var e in Entities)
-        {
-            if ((e.tag & tag) == 0)
-            {
-                continue;
-            }
-            
-
-            float dis = (e.Obj.transform.position - position).magnitude;
-
-            if (dis > rangeLimit) continue;
-
-            if (dis < minDistance)
-            {
-                minDistance = dis;
-                c = e;
-            }
-        }
-
-        return c;
+        var e = new Creature();
+        var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(k));
+        e.obj = obj;
+        return e;
     }
 
-    protected override GameObject InstantiateObj(Creature e)
+    protected override void OnGet(Creature e)
     {
-        var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
-
-        return obj;
-    }
-
-    protected override void AfterInstantiateEUObject(Creature e)
-    {
-        e.Alive = true;
-
-        e.instanceID = instanceNum++;
-
-        e.healthBar = HealthBarSys.Instance.NewEntity((HealthBar eh) =>
-        {
-            eh.ObjID = 6;
-        });
-        e.healthBar.owner = e;
-
         e.mover = MoveSys.Instance.NewEntity();
         e.mover.owner = e;
 
         e.rotater = RotateSys.Instance.NewEntity();
         e.rotater.owner = e;
 
-        e.animator = e.Obj.GetComponent<Animator>();
+        e.animator = e.obj.GetComponent<Animator>();
+    }
 
-        _creatrues.Add(e.instanceID, e);
+    protected override void EntityStart(Creature e)
+    {
+        e.Alive = true;
+
+        e.healthBar = HealthBarSys.Instance.NewEntity(6);
+        e.healthBar.owner = e;
 
         e.HighLevelAttrInit();
 
-        e.Obj.SetActive(true);
+        e.obj.SetActive(true);
     }
 
-    protected override void BeforeReleaseEUObject(Creature e)
+    protected override void OnRelease(Creature e)
     {
         e.Alive = false;
 
         e.HighLevelAttrDispose();
-
-        _creatrues.Remove(e.instanceID);
 
         MoveSys.Instance.RemoveEntity(e.mover);
         RotateSys.Instance.RemoveEntity(e.rotater);
@@ -101,19 +58,13 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
         for(int i = 0; i < e.spells.Size; i++)
         {
             var spell = e.spells[i];
-            var ret = e.spells.Remove(i);
+            e.spells.Remove(i);
             SpellSys.Instance.RemoveEntity(spell);
-            //if (ret)
-            //{
-            //    XLogger.Instance.Log($"success remove spell:{i}");
-            //}
-            //else
-            //{
-            //    XLogger.Instance.Log($"fail to remove spell:{i}");
-            //}
         }
 
-        e.Obj.SetActive(false);
+        AISys.Instance.RemoveEntity(e.ai);
+
+        e.obj.SetActive(false);
     }
 
     protected override void UpdateEntity(Creature e)
@@ -136,20 +87,6 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
         e.modifyables.ForceModify(8, healthRegen); // 8： currHP
     }
 
-    public bool Exist(int  instanceID)
-    {
-        return _creatrues.ContainsKey(instanceID);
-    }
-
-    public Creature GetCreature(int instanceID)
-    {
-        if (_creatrues.ContainsKey(instanceID))
-        {
-            return _creatrues[instanceID];
-        }
-
-        return null;
-    }
 
     public void RemoveAll(CreatureTag tag)
     {
@@ -167,5 +104,39 @@ public class CreatureSys : UObjEntitySys<Creature, GameObject, CreatureSys>
         {
             RemoveEntity(e);
         }
+    }
+
+    /// <summary>
+    /// 返回指定位置最近的游戏实体
+    /// <list type="bullet">
+    /// <item><param name="position"><paramref name="position"/>:指定的位置</param></item>
+    /// <item><param name="rangeLimit"><paramref name="rangeLimit"/>:只会寻找到rangeLimit距离内的实体</param></item>
+    /// </list></summary>
+    /// <returns>符合条件最近的实体，没有实体满足条件则返回null</returns>
+    public Creature NearestEntity(Vector3 position, CreatureTag tag, float rangeLimit = 10)
+    {
+        Creature c = null;
+        float minDistance = float.PositiveInfinity;
+
+        foreach (var e in Entities)
+        {
+            if ((e.tag & tag) == 0)
+            {
+                continue;
+            }
+
+
+            float dis = (e.obj.transform.position - position).magnitude;
+
+            if (dis > rangeLimit) continue;
+
+            if (dis < minDistance)
+            {
+                minDistance = dis;
+                c = e;
+            }
+        }
+
+        return c;
     }
 }

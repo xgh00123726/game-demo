@@ -1,16 +1,16 @@
-using GameBase.Effects;
+using GameBase.Creatures;
 using GameBase.EntitySystem;
 using System.Collections.Generic;
 
-namespace Constructor.Effects
+namespace Constructor.Creatures
 {
     public enum Type
     {
         Common,
     }
-    public class Factory : ConstructorFactory<Type, Effect, Factory>
+    public class CreatureFactory : ConstructorFactory<Type, Creature, CreatureFactory>
     {
-        protected override Dictionary<Type, System.Func<int, Effect>> GetConstructorGetDict()
+        protected override Dictionary<Type, System.Func<int, Creature>> GetConstructorGetDict()
         {
             return new()
             {

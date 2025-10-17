@@ -55,6 +55,10 @@ namespace GameBase.Creatures
             {
                 isDrawMove = !isDrawMove;
             });
+            Command.Register("toggle-draw-attackRange", () =>
+            {
+                isDrawAttackRange = !isDrawAttackRange;
+            });
         }
 
         private void OnDestroy()

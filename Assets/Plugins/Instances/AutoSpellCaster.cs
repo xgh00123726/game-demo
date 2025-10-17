@@ -2,6 +2,7 @@ using Constructor.Spells.Interactive;
 using GameBase.Creatures;
 using GameBase.EntitySystem;
 using GameBase.Spells;
+using GameBase.Tools;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +21,6 @@ namespace Instance
         {
             _spells.Remove(spell);
         }
-
         public static void CastByStyle(Spell spell)
         {
             if (spell.interactive is DotExternalSet dot)

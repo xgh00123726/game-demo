@@ -2,7 +2,6 @@ using GameBase.AI;
 using GameBase.Animations;
 using GameBase.Creatures;
 using GameBase.EntitySystem;
-using GameBase.Tools;
 
 namespace Constructor.Creatures
 {
@@ -22,15 +21,13 @@ namespace Constructor.Creatures
         public float healthBarZOffset;
         public bool collideEnable;
     }
-    public class Common : EntityConstructor<CommonData, Creature, CreatureSys, Common>
+    public class Common : KeyConstructor<CommonData, Creature, Common>
     {
         protected override string RelativePath => "Creatures/Common.csv";
 
-        protected override CreatureSys SysInstance => CreatureSys.Instance;
-
-        protected override void ESet(Creature e, in CommonData data)
+        protected override Creature GetFromData(in CommonData data)
         {
-            e.ObjID = data.ObjID;
+            var e = CreatureSys.Instance.NewEntity(data.ObjID);
             e.tag = data.tag;
             e.healthBarOffset = new UnityEngine.Vector3(
                 data.healthBarXOffset,
@@ -55,17 +52,14 @@ namespace Constructor.Creatures
             e.modifyables.Set("coolingAccelerate", 0f);
             e.modifyables.Set("rotateSpeed", 720f);
             e.modifyables.Set("attackRange", data.attackRange);
-        }
-
-        protected override void Set(Creature e, in CommonData data)
-        {
-            base.Set(e, data);
             AnimControllerFactory.Get(data.animType)?.AddTo(e);
             if (data.collideEnable)
             {
                 e.AddCollider();
             }
             AIFactory.Get(data.aiType)?.AddTo(e);
+
+            return e;
         }
     }
 }

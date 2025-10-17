@@ -6,38 +6,42 @@ using UnityEngine;
 
 namespace GameBase.UI
 {
-    public class HealthBarSys : UObjEntitySys<HealthBar, GameObject, HealthBarSys>
+    public class HealthBarSys : KeyEntitySys<int, HealthBar, HealthBarSys>
     {
         public static float losingSpeed = 0.2f;
 
-        protected override GameObject InstantiateObj(HealthBar e)
+        protected override HealthBar CtorT(int k)
         {
-            var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
+            var e = new HealthBar();
+
+            var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(k));
 
             obj.transform.SetParent(WorldCanvs.Instance.transform, false);
 
-            return obj;
+            e.obj = obj;
+
+            return e;
         }
 
 
 
-        protected override void AfterInstantiateEUObject(HealthBar e)
+        protected override void OnGet(HealthBar e)
         {
-            e.current = e.Obj.transform.Find("Current").gameObject;
+            e.current = e.obj.transform.Find("Current").gameObject;
             e.currentRectTransform = e.current.GetComponent<RectTransform>();
 
-            e.losing = e.Obj.transform.Find("Losing").gameObject;
+            e.losing = e.obj.transform.Find("Losing").gameObject;
             e.losingRectTransform = e.losing.GetComponent<RectTransform>();
 
             e.currPercent = 1f;
             e.losingPercent = 1f;
 
-            e.Obj.SetActive(true);
+            e.obj.SetActive(true);
         }
 
-        protected override void BeforeReleaseEUObject(HealthBar e)
+        protected override void OnRelease(HealthBar e)
         {
-            e.Obj.SetActive(false);
+            e.obj.SetActive(false);
         }
 
         private void SetWidth(RectTransform bar, float percent, float widthMax)
@@ -59,7 +63,7 @@ namespace GameBase.UI
 
             if (e.healthBarFollow)
             {
-                e.Obj.transform.position = e.owner.HealthBarPosition;
+                e.obj.transform.position = e.owner.HealthBarPosition;
             }
 
             if (e.losingPercent > e.currPercent)

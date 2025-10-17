@@ -44,13 +44,14 @@ namespace GameBase.Tools
             {new List<KeyCode>{KeyCode.Return}, new List<KeyFunction>{KeyFunction.CmdConfirm } },
             {new List<KeyCode> {KeyCode.Backspace}, new List<KeyFunction>{KeyFunction.CmdDelete} },
             {new List<KeyCode>{KeyCode.Escape}, new List<KeyFunction>{ KeyFunction.Cancel} },
-            {new List<KeyCode>{KeyCode.Mouse0}, new List<KeyFunction>{KeyFunction.MouseConfirm, KeyFunction.TestPosKey, KeyFunction.SelectTrig} },
+            {new List<KeyCode>{KeyCode.Mouse0}, new List<KeyFunction>{KeyFunction.MouseConfirm, KeyFunction.TestPosKey, KeyFunction.SelectTrig, KeyFunction.PointerSelect} },
             {new List<KeyCode>{KeyCode.Tab}, new List<KeyFunction> { KeyFunction.ToggleAttrPanel, KeyFunction.ChooseText} }, // 切换属性显示栏显示
             {new List<KeyCode>{KeyCode.LeftControl, KeyCode.LeftShift, KeyCode.A }, new List<KeyFunction>{ KeyFunction.SummonEnemy} },
             {new List<KeyCode>{ KeyCode.LeftControl, KeyCode.LeftShift, KeyCode.C },new List<KeyFunction>{ KeyFunction.SummonAllies }  },
             {new List<KeyCode>{KeyCode.E}, new List<KeyFunction>{KeyFunction.OpenShop, KeyFunction.CloseShop } },
             {new List<KeyCode>{KeyCode.Mouse2}, new List<KeyFunction>{KeyFunction.DragScreen} },
             {new List<KeyCode> {KeyCode.UpArrow}, new List<KeyFunction>{KeyFunction.CmdUseLast} },
+            { new List<KeyCode>{ KeyCode.LeftAlt}, new List<KeyFunction>{ KeyFunction.ExtraInfo} }
         };
         // 按键功能和按键码对应表，由构造函数计算获取
         private static Dictionary<KeyFunction, List<KeyCode>> _codeOfFunc = new Dictionary<KeyFunction, List<KeyCode>> { };

@@ -1,11 +1,15 @@
 using GameBase.EntitySystem;
 using GameBase.Tools;
-using UnityEngine;
 
 namespace GameBase.Spells
 {
-    public class SpellSys : CommonEntitySys<Spell, SpellSys>
-    {        
+    public class SpellSys : SealedEntitySys<Spell, SpellSys>
+    {
+        protected override void OnRelease(Spell e)
+        {
+            e.isTrig = false;
+        }
+
         protected override void UpdateEntity(Spell e)
         {
             if (e.speller == null || e.interactive == null)
@@ -20,10 +24,7 @@ namespace GameBase.Spells
                 if (e.spellCoolingdown.IsCoolingOver)
                 {
                     e.interactive.OnTrig();
-                    if (e.action?.CastAction(e) != true)
-                    {
-                    }
-                    else
+                    if (e.action?.CastAction(e) == true)
                     {
                         e.spellCoolingdown.Recooling();
                     }

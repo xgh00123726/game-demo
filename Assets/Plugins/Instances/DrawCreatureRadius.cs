@@ -38,7 +38,7 @@ namespace Instance
             {
                 var indicator = _indicators[i++];
                 indicator.Size = new UnityEngine.Vector3(c.radius, c.radius, c.radius);
-                indicator.Obj.transform.position = c.Position;
+                indicator.obj.transform.position = c.Position;
 
                 if (colorSet.ContainsKey(c))
                 {
@@ -49,11 +49,11 @@ namespace Instance
                     indicator.Color = defaultColor;
                 }
 
-                indicator.Obj.SetActive(true);
+                indicator.obj.SetActive(true);
             }
             for (; i < _indicators.Count; i++)
             {
-                _indicators[i].Obj.SetActive(false);
+                _indicators[i].obj.SetActive(false);
             }
         }
     }

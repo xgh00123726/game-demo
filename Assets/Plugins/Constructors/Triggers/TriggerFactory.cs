@@ -10,7 +10,7 @@ namespace Constructor.Triggers
         AreaRectTrigger,
         SingleTrigger
     }
-    public class Factory : ConstructorFactory<Type, Trigger, Factory>
+    public class TriggerFactory : ConstructorFactory<Type, Trigger, TriggerFactory>
     {
         protected override Dictionary<Type, System.Func<int, Trigger>> GetConstructorGetDict()
         {

@@ -8,7 +8,7 @@ namespace GameBase.Creatures
         public Modifyables modifyables = new();
         private Dictionary<string, float> _possibleAttr = new();
 
-        public static float _agiToMoveSpeedPercentFactor = 0.2f;
+        public static float _agiToMoveSpeedFactor = 0.01f;
         public static float _agiToAttackSpeedFactor = 5f;
 
         public static float _strgToMaxHPFactor = 10f;
@@ -96,7 +96,7 @@ namespace GameBase.Creatures
             float uni = modifyables["universal"].Value;
 
 
-            _agiToMoveSpeedPercent.value = agi * _agiToMoveSpeedPercentFactor;
+            _agiToMoveSpeedPercent.value = agi * _agiToMoveSpeedFactor;
             _agiToAttackSpeed.value = agi * _agiToAttackSpeedFactor;
 
             _strgToMaxHP.value = strg * _strgToMaxHPFactor;

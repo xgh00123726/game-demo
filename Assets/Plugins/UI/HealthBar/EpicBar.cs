@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace GameBase.UI
 {
-    public class EpicBar : IUEntity<GameObject>
+    public class EpicBar : IKeyEntity<int>
     {
         public float width = 960f;
         public bool healthBarFollow = true; 
@@ -27,11 +27,10 @@ namespace GameBase.UI
         internal RectTransform currentRectTransform;
         internal GameObject losing;
         internal RectTransform losingRectTransform;
-        internal Material iconMaterial;
         internal TextMeshProUGUI regenText;
 
-        public GameObject Obj { get; set; }
-        public int ObjID { get; set; } = 7;
+        public GameObject obj;
+        public int Key { get; set; } = 7;
         public float CurrHP
         {
             set

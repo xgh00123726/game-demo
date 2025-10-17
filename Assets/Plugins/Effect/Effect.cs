@@ -2,14 +2,14 @@ using GameBase.EntitySystem;
 using UnityEngine;
 namespace GameBase.Effects
 {
-    public class Effect : IUEntity<ParticleSystem>
+    public class Effect : IKeyEntity<int>
     {
         public float existTime;
 
         internal float instantiateTime;
         internal bool hasParticle;
 
-        public ParticleSystem Obj { get; set; }
-        public int ObjID {  get; set; }
+        public ParticleSystem particle;
+        public int Key {  get; set; }
     }
 }

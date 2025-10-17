@@ -1,10 +1,8 @@
-using System;
-
 namespace GameBase.Spells
 {
     public class Spell
     {
-        internal bool isTrig;
+        internal bool isTrig = false;
 
         public float point;            // Ç°Ò¡
         public float backswing;        // ºóÒ¡
@@ -16,6 +14,8 @@ namespace GameBase.Spells
         public ISpellAction action;
         public ISpellCoolingdown spellCoolingdown = new CommonSpellCoolingdown();
         public ISpellInteractive interactive;
+
+        public bool IsTrig => isTrig;
 
         public void TryCast()
         {

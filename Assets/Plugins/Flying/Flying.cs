@@ -6,8 +6,7 @@ using UnityEngine;
 namespace GameBase.Flyings
 {
     public class Flying : ICurveable,
-        IUEntity<GameObject>,
-        IPoolable,
+        IKeyEntity<int>,
         ITriggerAttach
     {
         public float arriveDis;
@@ -29,37 +28,16 @@ namespace GameBase.Flyings
         internal GameObject trail;
         internal float instantiateTime;
 
-        public virtual void AfterGet()
-        {
-            arriveDis = 0.1f;
-            maxExistTime = 10f;
-            minExistTime = 0f;
-            speed = 5f;
-            alive = true;
-            hitFlag = false;
-        }
-
-        public virtual void BeforeRelease()
-        {
-            speed = 0;
-            curveType = CurveFactory.CurveType.None;
-            curve = null;
-            alive = false;
-            OnReleased = null;
-            OnHit = null;
-            ObjID = -1;
-        }
-
         public bool Alive => alive;
         Vector3 ICurveable.Position
         {
-            get => Obj.transform.position;
-            set => Obj.transform.position = value;
+            get => obj.transform.position;
+            set => obj.transform.position = value;
         }
         Vector3 ICurveable.Dir
         {
-            get => Obj.transform.forward;
-            set => Obj.transform.forward = value;
+            get => obj.transform.forward;
+            set => obj.transform.forward = value;
         }
         Vector3 ICurveable.Dest => target.Position;
 
@@ -69,15 +47,15 @@ namespace GameBase.Flyings
             set
             {
                 src = value;
-                Obj.transform.position = src;
+                obj.transform.position = src;
             }
         }
 
         float ICurveable.LifeTime => Time.time - instantiateTime;
 
-        public GameObject Obj { get; set; }
-        public int ObjID { get; set; }
+        public GameObject obj;
+        public int Key { get; set; }
 
-        Vector3 ITriggerAttach.Position => Obj.transform.position;
+        Vector3 ITriggerAttach.Position => obj.transform.position;
     }
 }

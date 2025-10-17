@@ -20,17 +20,15 @@ namespace Constructor.Spells.Action
         }
     }
 
-    public class FireDisfuseModifierCon : BaseConstructor<FireDisfuseModifierData, FireDisfuseModifier, FireDisfuseModifierCon>
+    public class FireDisfuseModifierCon : SealedConstructor<FireDisfuseModifierData, FireDisfuseModifier, FireDisfuseModifierCon>
     {
         protected override string RelativePath => "Spell/Action/Modifyable/Modifier/FireDisfuseModifier.csv";
 
-        protected override FireDisfuseModifier Get()
+        protected override FireDisfuseModifier GetFromData(in FireDisfuseModifierData data)
         {
-            return new FireDisfuseModifier(0);
-        }
-        protected override void Set(FireDisfuseModifier e, in FireDisfuseModifierData data)
-        {
+            var e = new FireDisfuseModifier(0);
             e.data = data;
+            return e;
         }
     }
 }

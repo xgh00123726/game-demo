@@ -19,19 +19,4 @@ namespace Constructor.Spells.Action
             modifyData.flyingNums = data.flyingNumsModify;
         }
     }
-
-    public class FlyingNumModifierCon : BaseConstructor<FlyingNumModifierData, FlyingNumModifier, FlyingNumModifierCon>
-    {
-        protected override string RelativePath => "Spell/Action/Modifyable/Modifier/FlyingNumModifier.csv";
-
-        protected override FlyingNumModifier Get()
-        {
-            return new FlyingNumModifier(0);
-        }
-
-        protected override void Set(FlyingNumModifier e, in FlyingNumModifierData data)
-        {
-            e.data = data;
-        }
-    }
 }

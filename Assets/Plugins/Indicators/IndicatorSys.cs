@@ -1,41 +1,47 @@
 using GameBase.EntitySystem;
 using GameBase.Resources;
+using GameBase.Tools;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 namespace GameBase.Indicators
 {
-    public class IndicatorSys : UObjEntitySys<Indicator, GameObject, IndicatorSys>
+    public class IndicatorSys : KeyEntitySys<int, Indicator, IndicatorSys>
     {
-        protected override void AfterInstantiateEUObject(Indicator e)
+        protected override void OnGet(Indicator e)
         {
-            e.Obj.SetActive(true);
+            e.obj.SetActive(true);
         }
 
-        protected override void BeforeReleaseEUObject(Indicator e)
+        protected override void OnRelease(Indicator e)
         {
-            e.Obj.SetActive(false);
+            e.obj.SetActive(false);
         }
 
-        protected override GameObject InstantiateObj(Indicator e)
+        protected override Indicator CtorT(int k)
         {
-            var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
-            
+            var e = new Indicator();
+            var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(k));
             e.urpProjector = obj.GetComponent<DecalProjector>();
 
             e.decalMaterial = new Material(e.urpProjector.material);
             e.urpProjector.material = e.decalMaterial;
 
+            e.obj = obj;
+
+            return e;
+        }
+
+        protected override void EntityStart(Indicator e)
+        {
             var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.textureID));
 
             e.decalMaterial.SetTexture("_Texture2D", texture);
-
-            return obj;
         }
 
         protected override void UpdateEntity(Indicator e)
         {
-            if (!e.Obj.activeSelf)
+            if (!e.obj.activeSelf)
             {
                 return;
             }

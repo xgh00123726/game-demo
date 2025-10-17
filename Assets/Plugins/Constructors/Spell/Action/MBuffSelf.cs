@@ -29,17 +29,15 @@ namespace Constructor.Spells.Action
         }
     }
 
-    public class BuffSelfCon : BaseConstructor<MBuffSelfData, MBuffSelf, BuffSelfCon>
+    public class BuffSelfCon : SealedConstructor<MBuffSelfData, MBuffSelf, BuffSelfCon>
     {
         protected override string RelativePath => "Spell/Action/MBuffSelf.csv";
 
-        protected override MBuffSelf Get()
+        protected override MBuffSelf GetFromData(in MBuffSelfData data)
         {
-            return new MBuffSelf();
-        }
-        protected override void Set(MBuffSelf e, in MBuffSelfData data)
-        {
+            var e = new MBuffSelf();
             e.data = data;
+            return e;
         }
     }
 }

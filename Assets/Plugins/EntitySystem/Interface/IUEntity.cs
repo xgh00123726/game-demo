@@ -2,7 +2,7 @@ namespace GameBase.EntitySystem
 {
     public interface IUEntity<T>
     {
-        public T Obj { get; set; }
+        public T obj { get; set; }
         public int ObjID { get; set; }
     }
 }

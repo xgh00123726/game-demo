@@ -8,13 +8,14 @@ using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public class EpicBarSys : UObjEntitySys<EpicBar, GameObject, EpicBarSys>
+    public class EpicBarSys : KeyEntitySys<int, EpicBar, EpicBarSys>
     {
         public static float losingSpeed = 1f;
 
-        protected override GameObject InstantiateObj(EpicBar e)
+        protected override EpicBar CtorT(int k)
         {
-            var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
+            var e = new EpicBar();
+            var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(k));
 
             obj.transform.SetParent(RootCanvas.Instance.Layer(2), false);
 
@@ -29,23 +30,24 @@ namespace GameBase.UI
 
             e.regenText = obj.transform.Find("RegenText").gameObject.GetComponent<TextMeshProUGUI>();
 
-            return obj;
+            e.obj = obj;
+            return e;
         }
 
 
 
-        protected override void AfterInstantiateEUObject(EpicBar e)
+        protected override void OnGet(EpicBar e)
         {
             e.currPercent = 1f;
             e.losingPercent = 1f;
             e.hpChange = true;
 
-            e.Obj.SetActive(true);
+            e.obj.SetActive(true);
         }
 
-        protected override void BeforeReleaseEUObject(EpicBar e)
+        protected override void OnRelease(EpicBar e)
         {
-            e.Obj.SetActive(false);
+            e.obj.SetActive(false);
         }
 
         private void SetWidth(RectTransform bar, float percent, float widthMax)

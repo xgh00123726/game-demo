@@ -8,7 +8,7 @@ namespace Constructor.Spells.Main
     {
         Common,
     }
-    public class Factory : ConstructorFactory<Type, Spell, Factory>
+    public class SpellFactory : ConstructorFactory<Type, Spell, SpellFactory>
     {
         protected override Dictionary<Type, System.Func<int, Spell>> GetConstructorGetDict()
         {

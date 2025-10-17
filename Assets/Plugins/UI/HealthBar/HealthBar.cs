@@ -1,12 +1,9 @@
 using GameBase.EntitySystem;
-using GameBase.Tools;
-using System;
-using TMPro;
 using UnityEngine;
 
 namespace GameBase.UI
 {
-    public class HealthBar : IUEntity<GameObject>
+    public class HealthBar : IKeyEntity<int>
     {
         public IHealthBarOwner owner;
         public float width = 0.9f;
@@ -21,7 +18,7 @@ namespace GameBase.UI
         internal GameObject losing;
         internal RectTransform losingRectTransform;
 
-        public GameObject Obj { get; set; }
-        public int ObjID { get; set; }
+        public GameObject obj;
+        public int Key { get; set; }
     }
 }

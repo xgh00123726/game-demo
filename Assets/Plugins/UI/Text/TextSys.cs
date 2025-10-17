@@ -6,19 +6,23 @@ using TMPro;
 using UnityEngine;
 namespace GameBase.UI
 {
-    public class TextSys : UObjEntitySys<FloatText, GameObject, TextSys>
+    public class TextSys : KeyEntitySys<int, FloatText, TextSys>
     {
-        protected override GameObject InstantiateObj(FloatText e)
+
+        protected override FloatText CtorT(int k)
         {
-            var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(e.ObjID));
+            var e = new FloatText();
+            var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(k));
             obj.transform.SetParent(WorldCanvs.Instance.transform, false);
-            return obj;
+            e.obj = obj;
+            return e;
         }
 
-        protected override void AfterInstantiateEUObject(FloatText e)
+
+        protected override void OnGet(FloatText e)
         {
-            e.rectTransform = e.Obj.GetComponent<RectTransform>();
-            e.textObj = e.Obj.GetComponent<TextMeshProUGUI>();
+            e.rectTransform = e.obj.GetComponent<RectTransform>();
+            e.textObj = e.obj.GetComponent<TextMeshProUGUI>();
 
             e.duration = FloatTextConfig.Float.existTime;
             e.instantiateTime = Time.time;
@@ -32,15 +36,15 @@ namespace GameBase.UI
             e.zFactor = Mathf.Cos(rad) * e.horizontalSpeed;
         }
 
-        protected override void OnEntityStart(FloatText e)
+        protected override void EntityStart(FloatText e)
         {
-            e.Obj.SetActive(true);
+            e.obj.SetActive(true);
         }
 
 
-        protected override void BeforeReleaseEUObject(FloatText e)
+        protected override void OnRelease(FloatText e)
         {
-            e.Obj.SetActive(false);
+            e.obj.SetActive(false);
         }
 
         protected override void UpdateEntity(FloatText e)

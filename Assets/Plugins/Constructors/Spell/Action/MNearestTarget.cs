@@ -61,7 +61,7 @@ namespace Constructor.Spells.Action.Modifyables
 
         //protected override Flying GenFlying(Spell spell, float angleOffset, float flyingDistanceModify)
         //{
-        //    var f = Flyings.Factory.Instance.Get(data.flyingType, data.flyingID);
+        //    var f = Flyings.CreatureFactory.Instance.Get(data.flyingType, data.flyingID);
         //    f.Src = _pOwner.HandPosition + new Vector3(0, 1, 0);
         //    Vector3 dir = (_target.Center - f.Src).normalized;
         //    Quaternion rotate = Quaternion.Euler(0, angleOffset, 0);
@@ -91,7 +91,7 @@ namespace Constructor.Spells.Action.Modifyables
                     var damage = data.damage + c.modifyables["damage"].Value * data.ampFactor;
                     t.action = new Damage(damage);
 
-                    var f = Flyings.Factory.Instance.Get(data.flyingType, data.flyingID);
+                    var f = Flyings.FlyingFactory.Instance.Get(data.flyingType, data.flyingID);
                     f.Src = c.HandPosition;
                     f.target = new FixedFlyingTarget()
                     {
@@ -115,18 +115,15 @@ namespace Constructor.Spells.Action.Modifyables
         }
     }
 
-    public class MNearestTargetCon : BaseConstructor<MNearestTargetData, MNearestTarget, MNearestTargetCon>
+    public class MNearestTargetCon : SealedConstructor<MNearestTargetData, MNearestTarget, MNearestTargetCon>
     {
         protected override string RelativePath => "Spell/Action/MNearestTarget.csv";
 
-        protected override MNearestTarget Get()
+        protected override MNearestTarget GetFromData(in MNearestTargetData data)
         {
-            return new MNearestTarget();
-        }
-
-        protected override void Set(MNearestTarget e, in MNearestTargetData data)
-        {
+            var e = new MNearestTarget();
             e.data = data;
+            return e;
         }
     }
 }

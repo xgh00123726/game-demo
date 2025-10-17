@@ -19,20 +19,6 @@ namespace Constructor.Spells.Action
             modifyData.castTimes += data.castTimeModify;
         }
     }
-    public class MultipleModifierCon : BaseConstructor<MultipleModifierData, MultipleModifier, MultipleModifierCon>
-    {
-        protected override string RelativePath => throw new System.NotImplementedException();
-
-        protected override MultipleModifier Get()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        protected override void Set(MultipleModifier e, in MultipleModifierData data)
-        {
-            throw new System.NotImplementedException();
-        }
-    }
 }
 
 

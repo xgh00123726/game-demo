@@ -8,7 +8,7 @@ namespace Constructor.Triggers.Action
     {
         Damage,
     }
-    public class Factory : ConstructorFactory<Type, ITriggerAction, Factory>
+    public class TriggerActionFactory : ConstructorFactory<Type, ITriggerAction, TriggerActionFactory>
     {
         protected override Dictionary<Type, System.Func<int, ITriggerAction>> GetConstructorGetDict()
         {
