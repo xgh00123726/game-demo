@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6802093380935458174}
   - component: {fileID: 6241251403071812750}
   m_Layer: 0
-  m_Name: CircleIndicator
+  m_Name: CreatureCircleIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,5 +54,5 @@ MonoBehaviour:
   m_DecalLayerMask: 1
   m_ScaleMode: 1
   m_Offset: {x: 0, y: 0, z: 0}
-  m_Size: {x: 1, y: 1, z: 10}
+  m_Size: {x: 1, y: 1, z: 0.1}
   m_FadeFactor: 1
