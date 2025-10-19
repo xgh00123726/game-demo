@@ -1,5 +1,5 @@
 using GameBase.EntitySystem;
-using GameBase.Math;
+using GameBase.Tools;
 using UnityEngine;
 
 namespace GameBase.Move
@@ -8,14 +8,16 @@ namespace GameBase.Move
     {
         protected ListContainer<Collider> colliders = new();
 
-        public override IEContainer<Collider> Entities => colliders;
-
-        private void PositionUpdate()
+        public Grid grid;
+        public CollideSys()
         {
-            foreach (var c in Entities)
+            _sys.Entities = colliders;
+            grid = new Grid(new Rect()
             {
-                c.position = new UnityEngine.Vector2(c.owner.position.x, c.owner.position.z);
-            }
+                width = 100,
+                height = 100,
+                center = new Vector2(-6, 4)
+            }, new Vector2(0.5f, 0.5f));
         }
 
         private void StateReset()
@@ -40,14 +42,37 @@ namespace GameBase.Move
 
         protected override void Update()
         {
-            PositionUpdate();
+            base.Update();
             StateReset();
             CollideJug();
         }
 
+        protected override void OnGet(Collider e)
+        {
+            e.hasOwner = false;
+        }
+
+        protected override void EntityStart(Collider e)
+        {
+            if (e is RectCollider rc)
+            {
+                rc.Update();
+                grid.UpdateMap(Rect.MinMaxRect(rc.XMin, rc.YMin, rc.XMax, rc.YMax), 255f);
+            }
+        }
+
+        protected override void ReleaseEntity<T>(T e)
+        {
+            if (e is RectCollider rc)
+            {
+                rc.Update();
+                grid.UpdateMap(Rect.MinMaxRect(rc.XMin, rc.YMin, rc.XMax, rc.YMax), 1f);
+            }
+        }
+
         protected override void UpdateEntity(Collider e)
         {
-            
+            e.Update();
         }
     }
 }

@@ -19,11 +19,7 @@ namespace GameBase.AI
         public void Disable(float time = 3)
         {
             enable = false;
-            if (time <= 0)
-            {
-                
-            }
-            else
+            if (time > 0)
             {
                 enableRecoverTime = Time.time + time;
             }

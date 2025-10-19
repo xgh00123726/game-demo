@@ -109,7 +109,7 @@ namespace GameBase.EntitySystem
 
         protected int CurrentIterateIndex => _sys.CurrentIterIndex;
 
-        public virtual IEContainer<T_Entity> Entities => _sys.Entities;
+        public IEContainer<T_Entity> Entities => _sys.Entities;
 
         protected virtual void Update() => _sys.Iterate();
 

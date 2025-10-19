@@ -47,5 +47,12 @@ namespace GameBase.Math
                 return dx * dx + dy * dy < r * r;
             }
         }
+    
+        public static bool CircleContains(float cx, float cy, float r, float x, float y)
+        {
+            float dx = cx - x;
+            float dy = cy - y;
+            return dx * dx + dy * dy <= r * r;
+        }
     }
 }

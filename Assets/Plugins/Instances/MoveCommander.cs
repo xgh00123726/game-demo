@@ -1,13 +1,16 @@
 using GameBase.Creatures;
 using GameBase.EntitySystem;
 using GameBase.GCamera;
+using GameBase.Move;
 using GameBase.Tools;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Instance
 {
-    public class PlayerMoveController : SingletonInstance<PlayerMoveController>
+    public class MoveCommander : SingletonInstance<MoveCommander>
     {
         private static LinkedList<Creature> _targets = new();
 
@@ -17,10 +20,17 @@ namespace Instance
         {
             if (Inputs.GetKeyDown(KeyFunction.MoveTo, "mover"))
             {
+                bool isImmediately = !Inputs.GetKey(KeyFunction.ShiftMoveMode, "mover");
                 foreach (var c in _targets)
                 {
-                    c.mover.MoveTo(CameraSys.MouseHitPosition);
-                    c.rotater.LookAt(CameraSys.MouseHitPosition);
+                    if (isImmediately)
+                    {
+                        c.mover.MoveTo(CameraSys.MouseHitPosition);
+                    }
+                    else
+                    {
+                        c.mover.ThenMoveTo(CameraSys.MouseHitPosition);
+                    }
                     c.ai?.Disable();
                 }
 

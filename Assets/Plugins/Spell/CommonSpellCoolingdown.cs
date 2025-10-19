@@ -8,15 +8,15 @@ namespace GameBase.Spells
         private float _coolingSet = 10;
         private float _coolingRemain = 0;
 
-        bool ISpellCoolingdown.IsCoolingOver => _isCoolingOver;
+        public bool IsCoolingOver => _isCoolingOver;
 
-        float ISpellCoolingdown.CoolingSet
+        public float CoolingSet
         {
             get => _coolingSet;
             set => _coolingSet = value;
         }
 
-        float ISpellCoolingdown.CoolingRemain => _coolingRemain;
+        public float CoolingRemain => _coolingRemain;
 
         void ISpellCoolingdown.Recooling()
         {

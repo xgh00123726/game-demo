@@ -9,7 +9,7 @@ using GameBase.Spells;
 
 namespace Instance
 {
-    public class PlayerSpellCaster : SingletonInstance<PlayerSpellCaster>
+    public class SpellCaster : SingletonInstance<SpellCaster>
     {
         private static Creature _target;
 

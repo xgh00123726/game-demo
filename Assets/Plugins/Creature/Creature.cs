@@ -23,15 +23,13 @@ namespace GameBase.Creatures
     }
 
     public partial class Creature : IKeyEntity<int>,
-        IPoolable,
         ITriggerOwner,
         ITriggerTarget,
         IHealthBarOwner,
         IModifieder,
         ISpeller,
         IBuffOwner,
-        IMover,
-        IRotater
+        IMover
     {
         public float radius = 0.3f;
         public CreatureTag tag;
@@ -45,7 +43,6 @@ namespace GameBase.Creatures
         public int instanceID;
         public BaseAI ai;
         public Mover mover;
-        public Rotater rotater;
         public HealthBar healthBar;
         public Animator animator;
         public GameBase.Move.CircleCollider collider;
@@ -76,7 +73,7 @@ namespace GameBase.Creatures
             set => obj.transform.position = value;
         }
 
-        float IMover.Speed => modifyables["moveSpeed"].Value;
+        float IMover.MoveSpeed => modifyables["moveSpeed"].Value;
 
         Vector3 IMover.Position
         {
@@ -84,11 +81,9 @@ namespace GameBase.Creatures
             set => obj.transform.position = value;
         }
 
-        float IRotater.Speed => modifyables["rotateSpeed"].Value;
+        float IMover.RotateSpeed => modifyables["rotateSpeed"].Value;
 
-        GameObject IRotater.Obj => obj;
-
-        bool IRotater.IsRotating { get; set; }
+        GameObject IMover.Obj => obj;
 
         public Vector3 Dir { get; set; }
 
@@ -97,17 +92,6 @@ namespace GameBase.Creatures
         Move.CircleCollider IMover.Collider => collider;
 
         Modifyables IModifieder.Modifyables => modifyables;
-
-        void IPoolable.AfterGet()
-        {
-            OnDead = null;
-            tag = CreatureTag.CommonCreature;
-        }
-
-        void IPoolable.BeforeRelease()
-        {
-        }
-
 
 
         public void AddBuff(int id, float duration = -1)
@@ -174,7 +158,7 @@ namespace GameBase.Creatures
         public void AddCollider()
         {
             collider = CollideSys.Instance.NewEntity<CircleCollider>();
-            collider.owner = obj.transform;
+            collider.Owner = obj.transform;
             collider.r = radius;
         }
     }

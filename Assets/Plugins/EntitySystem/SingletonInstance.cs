@@ -35,6 +35,17 @@ namespace GameBase.EntitySystem
             }
             SingletonInstanceUpdateBehavior.SetActive(_updateActionIndex, active);
         }
+        public bool ActiveSelf
+        {
+            get
+            {
+                if (_updateActionIndex < 0)
+                {
+                    return false;
+                }
+                return SingletonInstanceUpdateBehavior.ActiveSelf(_updateActionIndex);
+            }
+        }
 
         public void SetFixedActive(bool active)
         {
@@ -43,6 +54,17 @@ namespace GameBase.EntitySystem
                 return;
             }
             SingletonInstanceFixedUpdateBehavior.SetActive(_fixedUpdateActionIndex, active);
+        }
+        public bool FixedActiveSelf
+        {
+            get
+            {
+                if (_fixedUpdateActionIndex < 0)
+                {
+                    return false;
+                }
+                return SingletonInstanceFixedUpdateBehavior.ActiveSelf(_updateActionIndex);
+            }
         }
     }
 }

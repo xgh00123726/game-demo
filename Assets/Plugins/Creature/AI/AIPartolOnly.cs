@@ -11,7 +11,6 @@ namespace GameBase.AI
         private int _partolDest = 1; // 1£ºÑ²ÂßÈ¥p1£¬2£ºÑ²ÂßÈ¥p2
 
         public Mover mover;
-        public Rotater rotater;
         public float randomDisMin = 1f;
         public float randomDisMax = 5f;
         public Vector3 partolP1;
@@ -63,7 +62,6 @@ namespace GameBase.AI
         protected override void OnAddTo(Creature c)
         {
             mover = c.mover;
-            rotater = c.rotater;
             partolP1 = c.Position;
             var delta = GMath.RollRandomDir(Random.Range(randomDisMin, randomDisMax));
             delta.y = 0;

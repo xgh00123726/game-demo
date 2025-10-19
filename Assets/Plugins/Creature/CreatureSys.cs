@@ -21,11 +21,10 @@ public class CreatureSys : KeyEntitySys<int, Creature, CreatureSys>
 
     protected override void OnGet(Creature e)
     {
+        e.OnDead = null;
+
         e.mover = MoveSys.Instance.NewEntity();
         e.mover.owner = e;
-
-        e.rotater = RotateSys.Instance.NewEntity();
-        e.rotater.owner = e;
 
         e.animator = e.obj.GetComponent<Animator>();
     }
@@ -49,7 +48,6 @@ public class CreatureSys : KeyEntitySys<int, Creature, CreatureSys>
         e.HighLevelAttrDispose();
 
         MoveSys.Instance.RemoveEntity(e.mover);
-        RotateSys.Instance.RemoveEntity(e.rotater);
         if (e.collider != null)
         {
             CollideSys.Instance.RemoveEntity(e.collider);

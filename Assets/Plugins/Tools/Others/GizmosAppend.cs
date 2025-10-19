@@ -59,5 +59,13 @@ namespace GameBase.Tools
             Gizmos.DrawLine(p3, p4);
             Gizmos.DrawLine(p4, p1);
         }
+
+        public static void DrawLine(Vector3 from, Vector3 to, int times)
+        {
+            for (int i = 0; i < times; i++)
+            {
+                Gizmos.DrawLine(from, to);
+            }
+        }
     }
 }

@@ -27,7 +27,11 @@ namespace GameBase.EntitySystem
         protected internal bool _inUpdating = false;
         protected internal int _currIterIndex = 0;
 
-        public IEContainer<T> Entities => _container;
+        public IEContainer<T> Entities
+        {
+            get => _container;
+            set => _container = value;
+        }
         public bool InUpdating => _inUpdating;
         public int CurrentIterIndex => _currIterIndex;
 

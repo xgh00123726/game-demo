@@ -11,7 +11,6 @@ namespace GameBase.AI
     {
         public Creature target;
         public Mover mover;
-        public Rotater rotater;
 
         public Action OnFollowArrive;
 
@@ -83,7 +82,6 @@ namespace GameBase.AI
         protected override void OnAddTo(Creature c)
         {
             mover = c.mover;
-            rotater = c.rotater;
             if (!c.HasPossibleAttr("FollowRange"))
             {
                 c.AddPossibleAttr("FollowRange");
@@ -215,7 +213,6 @@ namespace GameBase.AI
             }
 
             mover.MoveTo(target.Position);
-            rotater.LookAt(target.Position);
         }
     }
 }

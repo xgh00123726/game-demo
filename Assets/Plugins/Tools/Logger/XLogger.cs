@@ -5,7 +5,7 @@ namespace GameBase.Tools
 {
     public class XLogger
     {
-        public static string logFilePath = @"D:\project\game-demo\Assets\Log\FullLog.html";
+        public static string relativeFolderPath = @"D:\project\game-demo\Assets\Log";
         private static XLogger _instance = new XLogger();
         public static XLogger Instance => _instance;
         public enum LogLevel
@@ -23,6 +23,8 @@ namespace GameBase.Tools
         private bool _colorSet = false;
         private bool _withFrameCount = true;
         private bool _toFile = false;
+        private string _filePath = "FullLog.html";
+        private bool _toConsole = true;
 
         private void Reset()
         {
@@ -33,6 +35,8 @@ namespace GameBase.Tools
             _color = UnityEngine.Color.gray;
             _withFrameCount = true;
             _toFile = false;
+            _filePath = "FullLog.html";
+            _toConsole = true;
         }
 
         /// <summary>
@@ -44,6 +48,12 @@ namespace GameBase.Tools
         public XLogger IF(bool ifLog)
         {
             _ifLog = ifLog;
+            return _instance;
+        }
+
+        public XLogger DontToConsole()
+        {
+            _toConsole = false;
             return _instance;
         }
 
@@ -74,6 +84,10 @@ namespace GameBase.Tools
         public XLogger Level(LogLevel level)
         {
             _logLevel = level;
+            if (level == LogLevel.Error)
+            {
+                _toFile = true;
+            }
             return _instance;
         }
 
@@ -90,9 +104,13 @@ namespace GameBase.Tools
             return _instance;
         }
 
-        public XLogger ToFile()
+        public XLogger ToFile(string path = null)
         {
             _toFile = true;
+            if (path != null)
+            {
+                _filePath = path;
+            }
             return _instance;
         }
 
@@ -110,7 +128,7 @@ namespace GameBase.Tools
 
         private void WriteToFile(string content)
         {
-            File.AppendAllText(logFilePath, content + "  <br>\n");
+            File.AppendAllText($"{relativeFolderPath}\\{_filePath}", content + "  <br>\n");
         }
 
         private void LogMessage(object info, LogLevel level)
@@ -139,7 +157,10 @@ namespace GameBase.Tools
                 {
                     WriteToFile(cInfo);
                 }
-                Debug.Log(cInfo);
+                if (_toConsole)
+                {
+                    Debug.Log(cInfo);
+                }
             }
             else if (level == LogLevel.Warning)
             {
@@ -148,13 +169,22 @@ namespace GameBase.Tools
                 {
                     WriteToFile(cWarning);
                 }
-                Debug.LogWarning(cWarning);
+                if (_toConsole)
+                {
+                    Debug.LogWarning(cWarning);
+                }
             }
             else if (level == LogLevel.Error)
             {
                 string cError = $"<color=#ff0000>[error]</color>{colorTagBegin} {info}{colorTagEnd}";
-                WriteToFile(cError);
-                Debug.LogError(cError);
+                if (_toFile)
+                {
+                    WriteToFile(cError);
+                }
+                if (_toConsole)
+                {
+                    Debug.LogError(cError);
+                }
             }
         }
 

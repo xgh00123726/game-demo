@@ -25,6 +25,10 @@ namespace GameBase.EntitySystem
         {
             instance.actions[index].enable = active;
         }
+        internal static bool ActiveSelf(int index)
+        {
+            return instance.actions[index].enable;
+        }
         private void Awake()
         {
             instance = this;

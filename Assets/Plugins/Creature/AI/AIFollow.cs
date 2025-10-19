@@ -11,7 +11,6 @@ namespace GameBase.AI
 
         public Creature target;
         public Mover mover;
-        public Rotater rotater;
 
         public float arriveDis = 0.2f;
 
@@ -41,7 +40,6 @@ namespace GameBase.AI
         protected override void OnAddTo(Creature c)
         {
             mover = c.mover;
-            rotater = c.rotater;
         }
 
         private bool IsFollowArrive()
@@ -91,7 +89,6 @@ namespace GameBase.AI
             }
 
             mover.MoveTo(target.obj.transform.position);
-            rotater.LookAt(target.obj.transform.position);
         }
     }
 }
