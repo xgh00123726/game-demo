@@ -1,7 +1,7 @@
 require("CreatureData")
 require("Controller")
 
-local Factory = CS.Constructor.Creatures.Factory.Instance
+local Factory = CS.Constructor.Creatures.CreatureFactory.Instance
 local Vector3 = CS.UnityEngine.Vector3
 local Timer = CS.GameBase.Tools.Timer
 local AIFactory = CS.GameBase.AI.AIFactory
@@ -18,6 +18,7 @@ local function GenPlayer()
     player:AddSpell(Spell.Factory:Get(SpellData.Enum.SpellType.Common, 1))
     player:AddSpell(Spell.Factory:Get(SpellData.Enum.SpellType.Common, 5))
     player:AddSpell(Spell.Factory:Get(SpellData.Enum.SpellType.Common, 4))
+    player:AddSpell(Spell.GenBlinkSpell())
 
     player:SetDefaultGetExpText()
 
@@ -25,8 +26,12 @@ local function GenPlayer()
         for i = 1, #playerData.LevelUpAttr do
             local attr = playerData.LevelUpAttr[i].attr
             local value = playerData.LevelUpAttr[i].value
-            player.modifyables:ModifySetValue(attr, value)
+            player.modifyables:ModifyKey(attr, value)
         end
+
+        Shop.AttrSelectInventory:Refresh()
+        UI.AttrSelect.Panel:UpdatePanel(Shop.AttrSelectInventory)
+        -- UI.AttrSelect.Panel:Show()
     end
 
     Creature.Player = player
@@ -70,11 +75,15 @@ local function CreateBase( creatureBaseData )
                 c.OnDead = OnDead
                 c:AddSpell(Spell.Factory:Get(SpellData.Enum.SpellType.Common, 6))
                 c:AddSpell(Spell.Factory:Get(SpellData.Enum.SpellType.Common, 8))
-                c.ai.arriveDis = 2
-                c.ai.OnFollowArrive = function ()
-                    -- c.spells[0]:TryCast()
-                    Controller.AutoCaster.CastByStyle(c.spells[1])
+
+                if (c.ai ~= nil) then
+                    c.ai.arriveDis = 2
+                    c.ai.OnFollowArrive = function ()
+                        -- c.spells[0]:TryCast()
+                        Controller.AutoCaster.CastByStyle(c.spells[1])
+                    end
                 end
+
                 baseState.currentCreatureNum = baseState.currentCreatureNum + 1
             end
         end
@@ -83,9 +92,17 @@ local function CreateBase( creatureBaseData )
 end
 
 
-local function GenInitEnemy()
-    local c = Factory:Get(CreatureData.CreatureType.Common, 1)
-    c.Position = Vector3(-6, -7, 0)
+local function DrawCreatureBase( baseData )
+    local posX = baseData.Position.x
+    local posY = baseData.Position.y
+    local posZ = baseData.Position.z
+    local xMin = baseData.GenerateRange.x.min + posX
+    local xMax = baseData.GenerateRange.x.max + posX
+    local zMin = baseData.GenerateRange.z.min + posZ
+    local zMax = baseData.GenerateRange.z.max + posZ
+
+    local rect = CS.UnityEngine.Rect.MinMaxRect(xMin, zMin, xMax, zMax)
+    Controller.AreaDrawer.SetDrawArea(rect, posY)
 end
 
 local function CreaturesInit()
@@ -101,4 +118,7 @@ Creature = {
 
     --- @arg1 creatureBaseData : table
     CreateBase = CreateBase,
+
+    --- @arg1 creatureBaseData : table
+    DrawCreatureBase = DrawCreatureBase,
 }

@@ -7,6 +7,7 @@ ShopData = {
     
     InteracitiveDistance = 100,
     Shop1 = {
+        Name = "shop1",
         DataFile = "CommonShop_1.csv",
         PrefabID = 20,
         GoodsNum = 5,
@@ -16,5 +17,11 @@ ShopData = {
             z = 7,
         },
         DetectRange = 2,
-    }
+    },
+    AttrSelect = {
+        S1 = {
+            DataFile = "AttrSelect_1.csv",
+            GoodsNum = 3,
+        },
+    },
 }

@@ -12,32 +12,39 @@ local function Init()
     ShopInteracitve.OnTargetFarFromShop = Shop.OnTargetFarFromShop
 end
 
-local function GenShop( shopTable )
-    local inventory = CS.GameBase.Inventorys.ShopInventory(shopTable.DataFile)
-    inventory.Size = shopTable.GoodsNum
+local function GenShop( dataTable )
+    local inventory = CS.GameBase.Inventorys.ShopInventory(dataTable.DataFile)
+    inventory.Size = dataTable.GoodsNum
     inventory:Refresh()
     
-    local obj = CS.GameBase.Resources.ResourcesLoader.InstantiateGameObject(shopTable.PrefabID)
-    local pos = CS.UnityEngine.Vector3(shopTable.Position.x, shopTable.Position.y, shopTable.Position.z)
+    local obj = CS.GameBase.Resources.ResourcesLoader.InstantiateGameObject(dataTable.PrefabID)
+    local pos = CS.UnityEngine.Vector3(dataTable.Position.x, dataTable.Position.y, dataTable.Position.z)
     obj.transform.position = pos
-    obj.name = "shop1"
+    obj.name = dataTable.Name
     
     local shop = CS.Instance.Shop()
     shop.inventory = inventory
     shop.obj = obj
-    shop.detectRange = shopTable.DetectRange
+    shop.detectRange = dataTable.DetectRange
 
     ShopInteracitve.RegisterShop(shop)
 
     return shop
 end
 
+local function GenShopInventory( dataTable )
+    local inventory = CS.GameBase.Inventorys.ShopInventory(dataTable.DataFile)
+    inventory.Size = dataTable.GoodsNum
+    inventory:Refresh()
+
+    return inventory
+end
 
 Shop = {
     --- @noarg
     Init = Init,
 
-    --- @arg1 shopTable : table
+    --- @arg1 dataTable : table
     GenShop = GenShop,
 
     --- data
@@ -48,4 +55,7 @@ Shop = {
 
     --- @ret currentShop : Shop
     GetCurrentShop = ShopInteracitve.GetCurrentShop,
+
+    --- @arg1 dataTable : table
+    GenShopInventory = GenShopInventory,
 }

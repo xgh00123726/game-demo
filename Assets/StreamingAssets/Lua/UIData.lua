@@ -9,7 +9,7 @@ UIData = {
         PrefabID = 4,
     },
     Attr = {
-        ShowAttr = {0, 1, 3, 2, 5, 7, 4, 12, 14, 6, 8, 9},
+        ShowAttr = {0, 1, 3, 2, 5, 7, 4, 12, 14, 6, 15, 9},
         Layout = {
             xInterval = 150,
             yInterval = 35,
@@ -74,6 +74,15 @@ UIData = {
             xInterval = 180,
             yInterval = 100,
             width = 1200,
+            height = 600,
+            align = AlignType.Left | AlignType.Bottom
+        }
+    },
+    AttrSelect = {
+        Layout = {
+            xInterval = 600,
+            yInterval = 100,
+            width = 1810,
             height = 600,
             align = AlignType.Left | AlignType.Bottom
         }

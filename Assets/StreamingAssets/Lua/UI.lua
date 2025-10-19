@@ -1,5 +1,6 @@
 require("UIData")
 
+local UIUtil = CS.GameBase.UI.UIUtil
 local AttrUIChanger = CS.Instance.AttrUIChanger
 local InventoryUIInteractive = CS.Instance.InventoryUIInteractive
 local ShopUIInteractive = CS.Instance.ShopUIInteractive
@@ -7,6 +8,7 @@ local EquipmentUIInteractive = CS.Instance.EquipmentUIInteractive
 local BuffUIInteractive = CS.Instance.BuffUIInteractive
 local SpellUIInteractive = CS.Instance.SpellUIInteractive
 local SpellActionModifierInteractive = CS.Instance.SpellActionModifierInteractive
+local Inputs = CS.GameBase.Tools.Inputs
 local TextSys = CS.GameBase.UI.TextSys.Instance
 
 local CommonDragViewController = CS.Instance.CommonDragViewController
@@ -194,6 +196,16 @@ local function SpellActionModifierUIInit()
     UI.SpellActionModifier.Panel = panel
 end
 
+local function AttrSelectUIInit()
+    local panel = CS.Instance.AttrSelectPanel(51, 52)
+
+    SetLayout(panel, UIData.AttrSelect.Layout)
+
+    panel.OnPointerDown = UI.AttrSelect.OnPointerDown
+
+    UI.AttrSelect.Panel = panel
+end
+
 
 UI = {
     CommonDragView = LCommonDragViewController,
@@ -259,5 +271,12 @@ UI = {
         SetTarget = SpellActionModifierInteractive.SetTarget,
     },
 
+    AttrSelect = {
+        --- @noarg
+        Init = AttrSelectUIInit,
+    },
+
     TextSys = TextSys,
+
+    Inputs = Inputs,
 }

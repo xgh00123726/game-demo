@@ -23,11 +23,11 @@ CreatureData = {
 
     CreatureBase = {
         Base1 = {
-            Capacity = 1,
+            Capacity = 3,
             RefreshPeriod = 1,
-            RefreshPerNum = 1,
+            RefreshPerNum = 3,
             CreatureType = CreatureType.Common,
-            CreatureID = 2,
+            CreatureID = 3,
             DeadExp = 3,
             Position = {
                 x = -6,

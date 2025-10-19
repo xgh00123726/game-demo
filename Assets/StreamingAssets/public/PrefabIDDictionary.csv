@@ -1,4 +1,4 @@
-49, path
+53, path
  0, Prefabs/Entity/Player1
  1, Prefabs/Entity/Enemy1
  2, Prefabs/Projectile/Lighting
@@ -48,3 +48,7 @@
 46, Prefabs/Effect/Slash effects/Stone slash
 47, Prefabs/UI/EpicExpBar.prefab
 48, Prefabs/Info/SelectorDrawer.prefab
+49, Prefabs/UI/RootCanvs.prefab
+50, Prefabs/UI/WorldCanvas.prefab
+51, Prefabs/UI/AttrSelectPanel.prefab
+52, Prefabs/UI/AttrSelectItem.prefab

@@ -1,24 +1,24 @@
-23, buffType , iconTextureID, rarity
- 0, Common   ,            22,      0
- 1, Common   ,            24,      0
- 2, Common   ,            23,      2
- 3, Common   ,            25,      5
- 4, Common   ,            26,      0
- 5, Common   ,            27,      3
- 6, Common   ,            28,      1
- 7, Common   ,            29,      2
- 8, Common   ,            30,      2
- 9, Common   ,            31,      2
-10, Common   ,            32,      2
-11, Equipment,            22,      0
-12, Equipment,            24,      0
-13, Equipment,            23,      2
-14, Equipment,            25,      5
-15, Equipment,            26,      0
-16, Equipment,            27,      3
-17, Equipment,            28,      1
-18, Equipment,            29,      2
-19, Equipment,            30,      2
-20, Equipment,            31,      2
-21, Equipment,            32,      2
-22, Equipment,            32,      5
+23, buffType , buffModifiersID, duration, iconTextureID, rarity
+ 0, Common   ,               0, 1       ,            22,      0
+ 1, Common   ,               1, 1       ,            24,      0
+ 2, Common   ,               2, 1       ,            23,      2
+ 3, Common   ,               3, 1       ,            25,      5
+ 4, Common   ,               4, 1       ,            26,      0
+ 5, Common   ,               5, 1       ,            27,      3
+ 6, Common   ,               6, 1       ,            28,      1
+ 7, Common   ,               7, 1       ,            29,      2
+ 8, Common   ,               8, 1       ,            30,      2
+ 9, Common   ,               9, 1       ,            31,      2
+10, Common   ,              10, 1       ,            32,      2
+11, Equipment,               0, -1      ,            22,      0
+12, Equipment,               1, -1      ,            24,      0
+13, Equipment,               2, -1      ,            23,      2
+14, Equipment,               3, -1      ,            25,      5
+15, Equipment,               4, -1      ,            26,      0
+16, Equipment,               5, -1      ,            27,      3
+17, Equipment,               6, -1      ,            28,      1
+18, Equipment,               7, -1      ,            29,      2
+19, Equipment,               8, -1      ,            30,      2
+20, Equipment,               9, -1      ,            31,      2
+21, Equipment,              10, -1      ,            32,      2
+22, Equipment,              11, -1      ,            32,      5

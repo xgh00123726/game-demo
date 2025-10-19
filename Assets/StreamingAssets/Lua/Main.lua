@@ -1,7 +1,6 @@
 require("Creature")
 require("UI")
 require("Inventory")
-require("Player")
 require("Shop")
 require("Buff")
 require("Modify")
@@ -24,6 +23,7 @@ function OnInitOK()
     Shop.Init()
     Shop.GenShop(ShopData.Shop1)
     Shop.SetInteractiveTarget(Creature.Player)
+    Shop.AttrSelectInventory = Shop.GenShopInventory(ShopData.AttrSelect.S1)
 
     UI.Inventory.Init()
     UI.Inventory.Panel:UpdatePanel(Inventory.Instance)
@@ -44,11 +44,20 @@ function OnInitOK()
 
     UI.SpellActionModifier.Init()
 
+    UI.AttrSelect.Init()
+
     Controller.Init()
     Controller.PlayerMove.SetTarget(Creature.Player)
     Controller.SpellCast.SetTarget(Creature.Player)
     Controller.PlayerEpicBar.SetTarget(Creature.Player)
-    Controller.AutoCaster.Register(Creature.Player.spells[1])
+    -- Controller.AutoCaster.Register(Creature.Player.spells[1])
+    Controller.Inputs.RegisterKeyDownEvent(Controller.Enum.KeyFunction.ExtraInfo, function ()
+        Creature.DrawCreatureBase(CreatureData.CreatureBase.Base1)
+    end)
+    Controller.Inputs.RegisterKeyDownEvent(Controller.Enum.KeyFunction.ToggleDrawColliderEnable, function ()
+        local enable = not Controller.ColliderCreator.ActiveSelf
+        Controller.ColliderCreator:SetActive(enable)
+    end)
 
     Text.Init()
 
@@ -97,10 +106,12 @@ end
 
 Inventory.OnActive = function ()
     UI.Inventory.Panel:Show()
+    UI.Inputs.LockCaller("rectDrawer")
 end
 
 Inventory.OnInActive = function ()
     UI.Inventory.Panel:Hide()
+    UI.Inputs.UnlockCaller("rectDrawer")
 end
 
 Shop.OnShopActive = function ( shop )
@@ -153,14 +164,14 @@ UI.Shop.OnPointerDown = function ( index )
     local inventory = shop.inventory
     local dataBase = Shop.DataBase
     local info = dataBase[inventory[index]]
-    local player = Creature.Player or {}
+    local player = Creature.Player
     local panel = UI.Shop.Panel
 
     if (info.type == ShopData.Enum.ItemType.Buff) then
         local duration = 5
         player:AddBuff(info.typeID, duration)
     elseif (info.type == ShopData.Enum.ItemType.Modifier) then
-        player:AddModifier(info.typeID)
+        -- player:AddModifier(info.typeID)
     elseif (info.type == ShopData.Enum.ItemType.InventoryItem) then
         local itemData = Inventory.DataBase[info.typeID]
         local pos = Inventory.Instance:Add(itemData)
@@ -254,3 +265,17 @@ UI.Inventory.OnExitDetail = function ( index )
 end
 
 UI.Inventory.OnDetail = nil
+
+UI.AttrSelect.OnPointerDown = function ( index )
+    local inventory = Shop.AttrSelectInventory
+    local dataBase = Shop.DataBase
+    local info = dataBase[inventory[index]]
+    local player = Creature.Player
+    local panel = UI.AttrSelect.Panel
+
+    if (info.type == ShopData.Enum.ItemType.Modifier) then
+        -- player:AddModifier(info.typeID)
+    end
+
+    panel:Hide()
+end

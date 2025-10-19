@@ -1,4 +1,4 @@
-15,id, name             , iconTextureID
+16,id, name             , iconTextureID
  0, 0, universal        ,            19
  1, 1, moveSpeed        ,            20
  2, 2, strength         ,            18
@@ -7,10 +7,11 @@
  5, 5, defense          ,            13
  6, 6, intelligence     ,            15
  7, 7, damage           ,            12
- 8, 8, currHP           ,            59
+ 8, 8, currHP           ,             0
  9, 9, maxHP            ,            60
 10,10, currMana         ,             0
 11,11, maxMana          ,             0
 12,12, coolingAccelerate,            58
 13,13, rotateSpeed      ,             0
 14,14, attackRange      ,            57
+15,15, healthRegen      ,            59
