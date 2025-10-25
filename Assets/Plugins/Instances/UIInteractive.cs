@@ -9,11 +9,11 @@ namespace Instance
         where T_Panel : BaseViewPanel<T_PanelItem>
         where T_PanelItem : BaseViewItem, new()
     {
-        public static float enterDragTime = 0.1f;
-        public static float enterDetailTime = 0.2f;
+        public float enterDragTime = 0.1f;
+        public float enterDetailTime = 0.2f;
 
-        public static Func<int, bool> IsUIItemDrag;
-        public static Func<int, bool> IsUIItemDetail;
+        public Func<int, bool> IsUIItemDrag;
+        public Func<int, bool> IsUIItemDetail;
 
         public UIInteractive()
         {
@@ -23,7 +23,7 @@ namespace Instance
 
         protected abstract T_Panel GetPanel();
 
-        private static bool DefaultIsUIItemDrag(int i)
+        private bool DefaultIsUIItemDrag(int i)
         {
             var panel = Instance.GetPanel();
             if (panel == null)
@@ -38,7 +38,7 @@ namespace Instance
             return panel[i].uiScript.PointerDownTime > enterDragTime;
         }
 
-        private static bool DefaultIsUIItemDetail(int i)
+        private bool DefaultIsUIItemDetail(int i)
         {
             var panel = Instance.GetPanel();
             if (panel == null)

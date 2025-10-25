@@ -53,38 +53,38 @@ namespace GameBase.Creatures
             _uniToIntlPercent      = ModifyerSys.Instance.NewEntity();
 
             _agiToMoveSpeedPercent.value = 0;
-            _agiToMoveSpeedPercent.type  = ModifyType.Aways | ModifyType.Temporary;
+            _agiToMoveSpeedPercent.type  = ModifyType.Always | ModifyType.Temporary;
             _agiToMoveSpeedPercent.AddTo(modifyables["moveSpeed"]);
 
             _agiToAttackSpeed.value      = 0;
-            _agiToAttackSpeed.type       = ModifyType.Aways | ModifyType.Temporary;
+            _agiToAttackSpeed.type       = ModifyType.Always | ModifyType.Temporary;
             _agiToAttackSpeed.AddTo(modifyables["attackSpeed"]);
 
             _strgToMaxHP.value           = 0;
-            _strgToMaxHP.type            = ModifyType.Aways | ModifyType.Temporary;
+            _strgToMaxHP.type            = ModifyType.Always | ModifyType.Temporary;
             _strgToMaxHP.AddTo(modifyables["maxHP"]);
             _strgToHealthRegen.value     = 0;
-            _strgToHealthRegen.type      = ModifyType.Aways | ModifyType.Temporary;
+            _strgToHealthRegen.type      = ModifyType.Always | ModifyType.Temporary;
             _strgToHealthRegen.AddTo(modifyables["healthRegen"]);
 
             _intlToMaxMana.value         = 0;
-            _intlToMaxMana.type          = ModifyType.Aways | ModifyType.Temporary;
+            _intlToMaxMana.type          = ModifyType.Always | ModifyType.Temporary;
             _intlToMaxMana.AddTo(modifyables["maxMana"]);
             _intlToCooldown.value        = 0;
-            _intlToCooldown.type         = ModifyType.Aways | ModifyType.Temporary;
+            _intlToCooldown.type         = ModifyType.Always | ModifyType.Temporary;
             _intlToCooldown.AddTo(modifyables["coolingAccelerate"]);
 
             _uniToDamage.value           = 0;
-            _uniToDamage.type            = ModifyType.Aways | ModifyType.Temporary;
+            _uniToDamage.type            = ModifyType.Always | ModifyType.Temporary;
             _uniToDamage.AddTo(modifyables["damage"]);
             _uniToAgiPercent.value       = 0;
-            _uniToAgiPercent.type        = ModifyType.Aways | ModifyType.Temporary;
+            _uniToAgiPercent.type        = ModifyType.Always | ModifyType.Temporary;
             _uniToAgiPercent.AddTo(modifyables["agility"]);
             _uniToStrgPercent.value      = 0;
-            _uniToStrgPercent.type       = ModifyType.Aways | ModifyType.Temporary;
+            _uniToStrgPercent.type       = ModifyType.Always | ModifyType.Temporary;
             _uniToStrgPercent.AddTo(modifyables["strength"]);
             _uniToIntlPercent.value      = 0;
-            _uniToIntlPercent.type       = ModifyType.Aways | ModifyType.Temporary;
+            _uniToIntlPercent.type       = ModifyType.Always | ModifyType.Temporary;
             _uniToIntlPercent.AddTo(modifyables["intelligence"]);
         }
 

@@ -27,7 +27,6 @@ namespace GameBase.Creatures
         ITriggerTarget,
         IHealthBarOwner,
         IModifieder,
-        ISpeller,
         IBuffOwner,
         IMover
     {
@@ -36,8 +35,6 @@ namespace GameBase.Creatures
         public Vector3 healthBarOffset = new Vector3(0, 1.6f, 0);
         public Action<Creature> OnDead;
        
-        public DynInventory<Spell> spells = new();
-        public CommonInventory<Buff> equipments = new() { Size = 6 };
         public List<Buff> buffs = new();
 
         public int instanceID;
@@ -64,8 +61,6 @@ namespace GameBase.Creatures
         bool IHealthBarOwner.ALive => Alive;
 
         public Vector3 HandPosition => obj.transform.position + new Vector3(0, 1, 0);
-
-        float ISpeller.CoolingAccelerate => modifyables["coolingAccelerate"].Value;
 
         public Vector3 Position
         {
@@ -104,46 +99,6 @@ namespace GameBase.Creatures
             AIFactory.Get(type).AddTo(this);
         }
 
-        public bool AddEquipment(int id, int index)
-        {
-            var info = BuffDataBase.Instance[id];
-            if (info.type == BuffType.Equipment)
-            {
-                var buff = BuffFactory.Get(id);
-                buff.AddTo(this);
-                equipments[index] = buff;
-                return true;
-            }
-
-            return false;
-        }
-
-        public bool HasEquipment(int index)
-        {
-            return equipments.HasItem(index);
-        }
-
-        public void RemoveEquipment(int index)
-        {
-            if (!HasEquipment(index))
-            {
-                return;
-            }
-            GetEquipment(index).Remove();
-            equipments.Remove(index);
-        }
-
-        public Buff GetEquipment(int index)
-        {
-            return equipments[index];
-        }
-
-        public void AddSpell(Spell spell)
-        {
-            var i = spells.Add(spell);
-            XLogger.Instance.IF(false).Log($"add spell: {i}");
-            spell.speller = this;
-        }
 
        void IBuffOwner.OnGetBuff(Buff buff)
         {

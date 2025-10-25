@@ -16,6 +16,11 @@ namespace GameBase.Move
             this.y = y;
         }
 
+        public static Coord operator+(Coord c1, Coord c2)
+        {
+            return new Coord(c1.x + c2.x, c1.y + c2.y);
+        }
+
         public static int ManhattanDistance(Coord c1, Coord c2)
         {
             var dx = c1.x - c2.x;
@@ -132,7 +137,7 @@ namespace GameBase.Move
             while (!Coord.ValueEqual(curr, end))
             {
                 _cost++;
-                if (_cost >  maxCost)
+                if (_cost > maxCost)
                 {
                     break;
                 }
@@ -146,9 +151,10 @@ namespace GameBase.Move
                 Enqueue(currNode, new Coord(x - 1, y    ));
                 Enqueue(currNode, new Coord(x    , y + 1));
                 Enqueue(currNode, new Coord(x    , y - 1));
+
+                // 这是优先队列！！！
                 currNode = _todo.Dequeue();
                 curr = currNode.coord;
-                //Enqueue(currNode, new Coord(x    , y    ));
             }
 
             _way.Clear();

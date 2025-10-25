@@ -10,12 +10,7 @@ namespace GameBase.Modify
             ret.valueSet = initValue;
             ret.value = initValue;
 
-            return ret;
-        }
-
-        protected override void UpdateEntity(Modifyable e)
-        {
-            
+            return ret; 
         }
     }
 }

@@ -37,7 +37,9 @@ namespace GameBase.Buffs
                 float value = kvp.Value;
                 var m = ModifyerSys.Instance.NewEntity();
                 m.value = value;
+                m.type = ModifyType.Temporary | ModifyType.Always;
                 m.AddTo(owner.Modifyables[modifyKey]);
+                modifyers.Add(m);
             }
 
             if (duration > 0)

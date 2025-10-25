@@ -6,24 +6,19 @@ namespace Instance
 {
     public class SpellActionModifierInteractive : UIInteractive<SpellActionModifierInteractive, SpellActionModifierViewPanel, SpellActionModifierViewItem>
     {
-        private static Spell _target;
+        public Spell Target { get; set; }
         protected override SpellActionModifierViewPanel GetPanel()
         {
             return SpellActionModifierViewPanel.Instance;
         }
 
-        public static void SetTarget(Spell target)
-        {
-            _target = target;
-        }
-
         protected override void Update()
         {
             base.Update();
-            if (_target != null)
+            if (Target != null)
             {
                 var panel = GetPanel();
-                panel.UpdatePanel(_target);
+                panel.UpdatePanel(Target);
             }
         }
     }

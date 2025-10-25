@@ -106,13 +106,13 @@ namespace Instance
 
                 if (info.type == InventoryItemType.Equipment)
                 {
-                    var eInfo = BuffDataBase.Instance[info.typeID];
+                    var eInfo = BuffDataBase.Instance[info.reflectedID];
                     iconTextureID = eInfo.iconTextureID;
                     rarity = eInfo.rarity;
                 }
                 else if (info.type == InventoryItemType.SpellActionModifier)
                 {
-                    var samInfo = SpellActionModifierDataBase.Instance[info.typeID];
+                    var samInfo = SpellActionModifierDataBase.Instance[info.reflectedID];
                     iconTextureID = samInfo.iconTextureID;
                     rarity = samInfo.rarity;
                 }

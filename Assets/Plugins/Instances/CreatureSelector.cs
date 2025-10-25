@@ -12,19 +12,20 @@ namespace Instance
 {
     public class CreatureSelector : SingletonInstance<CreatureSelector>
     {
-        private static Dictionary<KeyFunction, float> _lastTrigTime = new();
-        private static Dictionary<KeyFunction, Creature> _hotKeyTargets = new();
+        private Dictionary<KeyFunction, float> _lastTrigTime = new();
+        private Dictionary<KeyFunction, Creature> _hotKeyTargets = new();
 
-        private static float _lastPointerSelectTime;
+        private float _lastPointerSelectTime;
 
-        public static float doubleTrigInterval = 0.3f;
-        public static float doublePointerSelectInterval = 0.3f;
-        public static float pointerSelectRange = 0.5f;
+        public float doubleTrigInterval = 0.3f;
+        public float doublePointerSelectInterval = 0.3f;
+        public float pointerSelectRange = 0.5f;
 
-        public static bool interactiveToCreatureRadiusDrawer = true;
+        public bool interactiveToCreatureRadiusDrawer = true;
 
-        public static Action<Creature> OnSelected;
-        public static Action OnFirstSelected;
+        public Action<Creature> OnSelected;
+        public Action OnFirstSelected;
+        public Creature currentSelect;
 
         public CreatureSelector()
         {
@@ -33,13 +34,13 @@ namespace Instance
             RectDrawer.OnDraw += OnDrawRect;
         }
 
-        public static void AddHotKeyCreature(KeyFunction keyFunction, Creature c)
+        public void AddHotKeyCreature(KeyFunction keyFunction, Creature c)
         {
             _hotKeyTargets[keyFunction] = c;
             _lastTrigTime[keyFunction] = 0;
         }
 
-        private static void OnDrawRect(Rect rect)
+        private void OnDrawRect(Rect rect)
         {
             var minX = rect.xMin;
             var maxX = rect.xMax;
@@ -70,14 +71,15 @@ namespace Instance
         {
             SpellCaster.SetTarget(c);
             MoveCommander.AddTarget(c);
-            SpellUIInteractive.SetTarget(c);
-            BuffUIInteractive.SetTarget(c);
+            SpellUIInteractive.Instance.Target = c;
+            BuffUIInteractive.Instance.Target = c;
             AttrUIChanger.SetTarget(c);
             EpicBarController.SetPlayerBarTarget(c);
-            EquipmentUIInteractive.SetTarget(c);
+            EquipmentUIInteractive.Instance.Target = c;
+            Instance.currentSelect = c;
         }
 
-        private static void OnFirstSelectCreature()
+        private void OnFirstSelectCreature()
         {
             OnFirstSelected?.Invoke();
             var keys = DrawCreatureRadius.colorSet.Keys.ToList();
@@ -87,7 +89,7 @@ namespace Instance
             }
         }
 
-        private static void OnSelectCreature(Creature c)
+        private void OnSelectCreature(Creature c)
         {
             OnSelected?.Invoke(c);
             if (interactiveToCreatureRadiusDrawer)
@@ -102,10 +104,10 @@ namespace Instance
             {
                 if (Time.time < _lastPointerSelectTime + doublePointerSelectInterval)
                 {
-                    OnFirstSelectCreature();
                     var c = CreatureSys.Instance.NearestEntity(CameraSys.MouseHitPosition, CreatureTag.ALL, pointerSelectRange);
                     if (c != null)
                     {
+                        OnFirstSelectCreature();
                         OnSelectCreature(c);
                     }
                     return;

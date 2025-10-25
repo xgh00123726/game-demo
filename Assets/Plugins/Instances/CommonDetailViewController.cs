@@ -5,15 +5,15 @@ namespace Instance
 {
     public class CommonDetailViewController : SingletonInstance<CommonDetailViewController>
     {
-        private static bool _isAttachToMouse = false;
-        public static CommonDetailView detailView;
+        private bool _isAttachToMouse = false;
+        public CommonDetailView detailView;
 
-        public static void AttachToMouse()
+        public void AttachToMouse()
         {
             _isAttachToMouse = true;
         }
 
-        public static void Stop()
+        public void Stop()
         {
             _isAttachToMouse = false;
         }

@@ -17,6 +17,7 @@ namespace Constructor.Spells.Action.Modifyables
         public Flyings.Type flyingType;
         public int flyingID;
         public TargetSetType targetSetType;
+        public int slotNum;
         public float radius;
         public float damage;
         public float ampFactor;
@@ -24,11 +25,11 @@ namespace Constructor.Spells.Action.Modifyables
         public float yOffset;
         public float zOffset;
     }
-    public class MTriggerOnHit : ISpellAction
+    public class MTriggerOnHit : ModifyableAction
     {
         public MTriggerOnHitData data;
 
-        public bool CastAction(Spell spell)
+        protected override bool CastAction(Spell spell, in SpellActionModifierData modifyData)
         {
             if (spell.speller is Creature c &&
                 spell.interactive is DotExternalSet interactive)
@@ -60,6 +61,7 @@ namespace Constructor.Spells.Action.Modifyables
             }
 
             return false;
+
         }
     }
     public class MTriggerOnHitCon : SealedConstructor<MTriggerOnHitData, MTriggerOnHit, MTriggerOnHitCon>
@@ -68,7 +70,10 @@ namespace Constructor.Spells.Action.Modifyables
 
         protected override MTriggerOnHit GetFromData(in MTriggerOnHitData data)
         {
-            var e = new MTriggerOnHit();
+            var e = new MTriggerOnHit()
+            {
+                Size = data.slotNum
+            };
             e.data = data;
             return e;
         }

@@ -46,6 +46,7 @@ namespace GameBase.Move
                     lastWayPointIndex = i;
                 }
             }
+
             return _way;
         }
 

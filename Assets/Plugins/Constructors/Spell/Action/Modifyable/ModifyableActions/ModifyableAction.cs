@@ -11,19 +11,6 @@ namespace Constructor.Spells.Action
         private float _angleInit = 0f;
         private float _angleDelta = 0f;
 
-        public ModifyableAction()
-        {
-            _data.flyingDistance = 0;
-            _data.flyingNums = 0;
-            _data.fireDisfuse = 0;
-            _data.castTimes = 0;
-        }
-
-        protected virtual bool IsCast(Spell spell)
-        {
-            return true;
-        }
-
         protected virtual Flying GenFlying(Spell spell, float angleOffset, float flyingDistanceModify)
         {
             return null;
@@ -34,13 +21,8 @@ namespace Constructor.Spells.Action
             return null;
         }
 
-        protected virtual bool CastAction(Spell spell, in ModifyableModifyData modifyData)
+        protected virtual bool CastAction(Spell spell, in SpellActionModifierData modifyData)
         {
-            if (!IsCast(spell))
-            {
-                return false;
-            }
-
             var ret = false;
 
             for (int i = 0; i < 1 + _modifiedData.flyingNums; i++)

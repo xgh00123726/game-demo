@@ -20,6 +20,7 @@ namespace Constructor.Spells.Action.Modifyables
         public Flyings.Type flyingType;
         public int flyingID;
         public TargetSetType targetSetType;
+        public int slotNum;
         public float damage;
         public float ampFactor;
     }
@@ -74,7 +75,7 @@ namespace Constructor.Spells.Action.Modifyables
         //    return f;
         //}
 
-        protected override bool CastAction(Spell spell, in ModifyableModifyData modifyData)
+        protected override bool CastAction(Spell spell, in SpellActionModifierData modifyData)
         {
             if (spell.speller is Creature c)
             {
@@ -121,7 +122,10 @@ namespace Constructor.Spells.Action.Modifyables
 
         protected override MNearestTarget GetFromData(in MNearestTargetData data)
         {
-            var e = new MNearestTarget();
+            var e = new MNearestTarget()
+            {
+                Size = data.slotNum
+            };
             e.data = data;
             return e;
         }

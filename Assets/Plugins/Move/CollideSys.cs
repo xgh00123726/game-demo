@@ -1,5 +1,6 @@
 using GameBase.EntitySystem;
 using GameBase.Tools;
+using System;
 using UnityEngine;
 
 namespace GameBase.Move
@@ -7,7 +8,7 @@ namespace GameBase.Move
     public class CollideSys : InheritableSys<Collider, CollideSys>
     {
         protected ListContainer<Collider> colliders = new();
-
+        public Action<Grid> OnGridDirty;
         public Grid grid;
         public CollideSys()
         {
@@ -58,6 +59,7 @@ namespace GameBase.Move
             {
                 rc.Update();
                 grid.UpdateMap(Rect.MinMaxRect(rc.XMin, rc.YMin, rc.XMax, rc.YMax), 255f);
+                OnGridDirty?.Invoke(grid);
             }
         }
 
@@ -67,6 +69,7 @@ namespace GameBase.Move
             {
                 rc.Update();
                 grid.UpdateMap(Rect.MinMaxRect(rc.XMin, rc.YMin, rc.XMax, rc.YMax), 1f);
+                OnGridDirty?.Invoke(grid);
             }
         }
 

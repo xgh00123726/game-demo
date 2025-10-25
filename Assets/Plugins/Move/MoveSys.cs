@@ -15,19 +15,41 @@ namespace GameBase.Move
             {
                 defaultMapWeight = CollideSys.Instance.grid.weightFactor
             });
+            CollideSys.Instance.OnGridDirty = OnGridDirty;
+        }
+
+        private void OnGridDirty(Grid grid)
+        {
+            foreach (var e in Entities)
+            {
+                if (e.isMoving)
+                {
+                    e.MoveTo(e.finalDest);
+                }
+            }
+        }
+
+        protected override void EntityStart(Mover e)
+        {
+            e.dest = e.owner.Position;
         }
 
         private void MoveUpdate(Mover e)
         {
-            if (!e.isMoving)
+            if (e.destQueue.Count > 0)
             {
-                return;
+                e.dest = e.destQueue.Peek();
             }
 
-            Vector3 dir = e.dest - e.owner.Position;
-            Vector3 delta = dir.normalized * e.owner.MoveSpeed * Time.deltaTime;
-            Vector3 dest = e.owner.Position + delta;
-            e.LookAt(dest);
+            Vector3 delta = Vector3.zero;
+            Vector3 dest = e.owner.Position;
+            if (e.isMoving)
+            {
+                Vector3 dir = e.dest - e.owner.Position;
+                delta = e.owner.MoveSpeed * Time.deltaTime * dir.normalized;
+                dest = e.owner.Position + delta;
+                e.LookAt(dest);
+            }
 
             var collider = e.owner.Collider;
 
@@ -36,6 +58,11 @@ namespace GameBase.Move
                 if (collider.isCollide)
                 {
                     dest += new Vector3(collider.force.x, 0, collider.force.y);
+                    
+                    if (!e.isMoving)
+                    {
+                        e.dest = dest;
+                    }
                 }
             }
 
@@ -43,22 +70,27 @@ namespace GameBase.Move
             {
                 if (e.destQueue.Count > 0)
                 {
-                    e.dest = e.destQueue.Dequeue();
+                    e.destQueue.Dequeue();
+                }
+                if (e.destQueue.Count > 0)
+                {
                     e.isMoving = true;
                     e.isArrive = false;
-                    e.owner.Position = dest;
                 }
                 else
                 {
                     e.isMoving = false;
                     e.isArrive = true;
-                    e.owner.Position = e.dest;
                 }
             }
             else
             {
                 e.isArrive = false;
                 e.isMoving = true;
+            }
+
+            if (e.isMoving || collider.isCollide)
+            {
                 e.owner.Position = dest;
             }
         }
@@ -66,7 +98,7 @@ namespace GameBase.Move
         private void RotateUpdate(Mover e)
         {
             var currDir = e.owner.Obj.transform.forward;
-            Vector3 dirSetTemp = new Vector3(e.owner.Dir.x, 0, e.owner.Dir.z);
+            Vector3 dirSetTemp = new Vector3(e.dir.x, 0, e.dir.z);
             float angle = Vector3.Angle(currDir, dirSetTemp);
             float crossY = Vector3.Cross(currDir, dirSetTemp).y;
 

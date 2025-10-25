@@ -4,24 +4,19 @@ namespace Instance
 {
     public class SpellUIInteractive : UIInteractive<SpellUIInteractive, SpellViewPanel, SpellViewItem>
     {
-        private static Creature _target;
+        public Creature Target {  get; set; }
         protected override SpellViewPanel GetPanel()
         {
             return SpellViewPanel.Instance;
         }
 
-        public static void SetTarget(Creature target)
-        {
-            _target = target;
-        }
-
         protected override void Update()
         {
             base.Update();
-            if (_target != null)
+            if (Target != null)
             {
                 var panel = GetPanel();
-                panel.UpdatePanel(_target);
+                panel.UpdatePanel(Target);
             }
         }
     }

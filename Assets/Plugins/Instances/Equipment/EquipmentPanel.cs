@@ -23,16 +23,18 @@ namespace Instance
         {
             for (int i = 0; i < Entities.Count; ++i)
             {
-                if (c.HasEquipment(i))
+                var equipment = c.GetEquipment(i);
+                if (equipment != null)
                 {
-                    Buff equipment = c.GetEquipment(i);
                     var info = BuffDataBase.Instance[equipment.id];
                     this[i].triggerImage.SetIcon(info.iconTextureID);
+                    this[i].triggerImage.Show();
                     this[i].triggerImage.SetColor(info.rarity);
                 }
                 else
                 {
                     this[i].triggerImage.Hide();
+                    this[i].triggerImage.HideColor();
                 }
             }
         }

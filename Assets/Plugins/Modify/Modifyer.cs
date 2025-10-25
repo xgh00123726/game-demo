@@ -6,7 +6,7 @@ namespace GameBase.Modify
 {
     public enum ModifyType
     {
-        Aways     = 1 << 0 ,    // 常驻生效，每个modify周期都会触发一次modify
+        Always    = 1 << 0 ,    // 常驻生效，每个modify周期都会触发一次modify
         Periodoic = 1 << 1 ,    // 周期生效，当达到dt时，触发modify
         Once      = 1 << 2 ,    // 生效一次
 
@@ -34,7 +34,8 @@ namespace GameBase.Modify
 
         public void Release()
         {
-            this.target = null;
+            target = null;
+            ModifyerSys.Instance.RemoveEntity(this);
         }
     }
 }

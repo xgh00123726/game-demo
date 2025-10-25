@@ -37,12 +37,13 @@ namespace Instance
 
                 for (int i = 0; i < mAct.Size; i++)
                 {
-                    if (mAct.HasItem(i))
+                    int id = mAct.GetID(i);
+                    if (id >= 0)
                     {
-                        var inventoryID = mAct.GetData(i).inventoryID;
-                        var inventoryInfo = InventoryDataBase.Instance[inventoryID];
-                        //this[i].triggerImage.SetIcon(inventoryInfo.iconTextureID);
-                        //this[i].triggerImage.SetColor(inventoryInfo.rarity);
+                        var data = SpellActionModifierDataBase.Instance[id];
+
+                        this[i].triggerImage.SetIcon(data.iconTextureID);
+                        this[i].triggerImage.SetColor(data.rarity);
                         this[i].triggerImage.Show();
                     }
                     else
@@ -51,11 +52,6 @@ namespace Instance
                         this[i].triggerImage.Hide();
                     }
                 }
-                Show();
-            }
-            else
-            {
-                Hide();
             }
         }
     }

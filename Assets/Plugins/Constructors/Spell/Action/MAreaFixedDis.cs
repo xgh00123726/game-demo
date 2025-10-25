@@ -17,6 +17,7 @@ namespace Constructor.Spells.Action.Modifyables
         public Flyings.Type flyingType;
         public int flyingID;
         public TargetSetType targetSetType;
+        public int slotNum;
         public float distance;
         public float radius;
         public float damage;
@@ -26,7 +27,7 @@ namespace Constructor.Spells.Action.Modifyables
     {
         public MAreaFixedDisData data;
 
-        protected override bool CastAction(Spell spell, in ModifyableModifyData modifyData)
+        protected override bool CastAction(Spell spell, in SpellActionModifierData modifyData)
         {
             if (spell.speller is Creature c &&
                 spell.interactive is DotExternalSet interactive)
@@ -67,7 +68,10 @@ namespace Constructor.Spells.Action.Modifyables
 
         protected override MAreaFixedDis GetFromData(in MAreaFixedDisData data)
         {
-            var e = new MAreaFixedDis();
+            var e = new MAreaFixedDis()
+            {
+                Size = data.slotNum
+            };
             e.data = data;
             return e;
         }

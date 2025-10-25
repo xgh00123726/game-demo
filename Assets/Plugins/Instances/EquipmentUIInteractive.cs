@@ -5,25 +5,20 @@ namespace Instance
 {
     public class EquipmentUIInteractive : UIInteractive<EquipmentUIInteractive, EquipmentPanel, EquipmentItem>
     {
-        private static Creature _target;
+        public Creature Target {  get; set; }
 
         protected override EquipmentPanel GetPanel()
         {
             return EquipmentPanel.Instance;
         }
 
-        public static void SetTarget(Creature target)
-        {
-            _target = target;
-        }
-
         protected override void Update()
         {
             base.Update();
-            if (_target != null)
+            if (Target != null)
             {
                 var panel = GetPanel();
-                panel.UpdatePanel(_target);
+                panel.UpdatePanel(Target);
             }
         }
     }

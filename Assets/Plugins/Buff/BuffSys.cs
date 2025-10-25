@@ -17,6 +17,7 @@ namespace GameBase.Buffs
 
         protected override void OnRelease(Buff e)
         {
+            e.owner.OnRemoveBuff(e);
             foreach (var m in e.modifyers)
             {
                 m.Release();
@@ -32,7 +33,6 @@ namespace GameBase.Buffs
             {
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
                     .Log("buff has no owner");
-                e.owner.OnRemoveBuff(e);
                 RemoveEntity(e);
                 return;
             }
@@ -50,7 +50,6 @@ namespace GameBase.Buffs
 
             if (e.durationRemain <= 0)
             {
-                e.owner.OnRemoveBuff(e);
                 RemoveEntity(e);
             }
         }

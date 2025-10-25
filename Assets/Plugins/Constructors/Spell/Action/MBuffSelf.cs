@@ -10,12 +10,13 @@ namespace Constructor.Spells.Action
     {
         public int buffID;
         public float duration;
+        public int slotNum;
     }
 
     public class MBuffSelf : ModifyableAction
     {
         public MBuffSelfData data;
-        protected override bool CastAction(Spell spell, in ModifyableModifyData modifyData)
+        protected override bool CastAction(Spell spell, in SpellActionModifierData modifyData)
         {
             if (spell.speller is Creature c)
             {
@@ -35,7 +36,10 @@ namespace Constructor.Spells.Action
 
         protected override MBuffSelf GetFromData(in MBuffSelfData data)
         {
-            var e = new MBuffSelf();
+            var e = new MBuffSelf()
+            {
+                Size = data.slotNum
+            };
             e.data = data;
             return e;
         }

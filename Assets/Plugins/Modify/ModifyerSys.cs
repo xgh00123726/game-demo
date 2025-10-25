@@ -41,7 +41,7 @@ namespace GameBase.Modify
 
             bool enable = false;
 
-            if ((e.type & ModifyType.Aways) != 0 || (e.type & ModifyType.Once) != 0)
+            if ((e.type & ModifyType.Always) != 0 || (e.type & ModifyType.Once) != 0)
             {
                 enable = true;
             }
@@ -60,10 +60,12 @@ namespace GameBase.Modify
                 if ((e.type & ModifyType.Temporary) != 0)
                 {
                     e.target.tempValue += e.value;
+                    //XLogger.Instance.Log("add temp");
                 }
                 else if ((e.type & ModifyType.Forever) != 0)
                 {
                     e.target.valueSet += e.value;
+                    XLogger.Instance.Log("add forever");
                 }
                 e.OnModify?.Invoke();
             }

@@ -6,14 +6,8 @@ namespace Constructor.Spells.Action
 {
     public partial class ModifyableAction
     {
-        public struct ModifierStore
-        {
-            public BaseModifier obj;
-            public ModifierData data;
-        }
-        private ModifyableModifyData _data;
-        private ModifyableModifyData _modifiedData;
-        private DynInventory<ModifierStore> _modifiers = new();
+        private SpellActionModifierData _modifiedData;
+        private DynInventory<int> _modifiers = new();
 
         public int Size
         {
@@ -21,20 +15,35 @@ namespace Constructor.Spells.Action
             set => _modifiers.Size = value;
         }
 
-        public void AddModifier(int inventoryID, int index)
+        public int GetID(int index)
         {
-            var info = SpellActionModifierDataBase.Instance[inventoryID];
-            var obj = SpellActionModifierFactory.Instance.Get(info.type, info.id);
-            _modifiers.Add(new ModifierStore()
+            if (_modifiers.HasItem(index))
             {
-                obj = obj,
-                data = new ModifierData()
-                {
-                    inventoryID = info.id,
-                    type = info.type,
-                    modifierID = info.id,
-                }
-            });
+                return _modifiers[index];
+            }
+
+            return -1;
+        }
+
+        public void Swap(int p1, int p2)
+        {
+            _modifiers.Swap(p1, p2);
+        }
+
+        public void AddModifier(int id, int index)
+        {
+            _modifiers.Add(id, index);
+            ResolveModifiedData();
+        }
+
+        public void RemoveModifier(int index)
+        {
+            if (index < 0 || index >= _modifiers.Size)
+            {
+                XLogger.Instance.Log($"invalid index:{index}, max:{_modifiers.Size}");
+                return;
+            }
+            _modifiers.Remove(index);
             ResolveModifiedData();
         }
 
@@ -43,50 +52,17 @@ namespace Constructor.Spells.Action
             return _modifiers.HasItem(index);
         }
 
-        public ModifierData GetData(int index)
-        {
-            return _modifiers[index].data;
-        }
-
-        public void AddModifier(BaseModifier modifier, int index)
-        {
-            _modifiers.Add(new ModifierStore()
-            {
-                obj = modifier,
-            }, index);
-            ResolveModifiedData();
-        }
-
-        public void RemoveModifyer(int index)
-        {
-            if (index < 0 || index >= _modifiers.Size)
-            {
-                XLogger.Instance.Log($"invalid index:{index}, max:{_modifiers.Size}");
-                return;
-            }
-            _modifiers[index] = default;
-            ResolveModifiedData();
-        }
-
-        public static void TryRemoveModifyer(Spell spell, int index)
-        {
-            if (spell.action is ModifyableAction mAct)
-            {
-                mAct.RemoveModifyer(index);
-            }
-        }
-
         protected void ResolveModifiedData()
         {
-            _modifiedData = _data;
+            _modifiedData = default;
             for (int i = 0; i < _modifiers.Size; i++)
             {
-                if (_modifiers[i].obj == null)
+                int id = GetID(i);
+                if (id == -1)
                 {
                     continue;
                 }
-
-                _modifiers[i].obj.Modify(ref _modifiedData);
+                _modifiedData += SpellActionModifierDataBase.Instance[id];
             }
 
             if (_modifiedData.flyingNums < 0)

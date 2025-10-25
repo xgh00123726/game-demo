@@ -5,15 +5,15 @@ namespace Instance
 {
     public class CommonDragViewController : SingletonInstance<CommonDragViewController>
     {
-        private static bool _isAttachToMouse = false;
-        public static CommonDragView dragView;
+        private bool _isAttachToMouse = false;
+        public CommonDragView dragView;
 
-        public static void AttachToMouse()
+        public void AttachToMouse()
         {
             _isAttachToMouse = true;
         }
 
-        public static void Stop()
+        public void Stop()
         {
             _isAttachToMouse = false;
         }

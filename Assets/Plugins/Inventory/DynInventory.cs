@@ -37,7 +37,8 @@ namespace GameBase.Inventorys
             {
                 if (_items[index].exist)
                 {
-                    XLogger.Instance.Log($"index:{index} of inventory:{this} has aready exist");
+                    XLogger.Instance.Level(XLogger.LogLevel.Warning)
+                        .Log($"index:{index} of inventory:{this} has aready exist");
                 }
                 else
                 {
