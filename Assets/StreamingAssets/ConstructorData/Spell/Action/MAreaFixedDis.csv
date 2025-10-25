@@ -1,2 +1,2 @@
-1, flyingType, flyingID, targetSetType, distance, radius, damage, ampFactor
-0, Common    ,        4, Common       ,       10,      1,     10,       0.5
+1, flyingType, flyingID, targetSetType, slotNum, distance, radius, damage, ampFactor
+0, Common    ,        4, Common       ,       4,       10,      1,     10,       0.5

@@ -2,32 +2,40 @@ require("UIData")
 
 local UIUtil = CS.GameBase.UI.UIUtil
 local AttrUIChanger = CS.Instance.AttrUIChanger
-local InventoryUIInteractive = CS.Instance.InventoryUIInteractive
-local ShopUIInteractive = CS.Instance.ShopUIInteractive
-local EquipmentUIInteractive = CS.Instance.EquipmentUIInteractive
-local BuffUIInteractive = CS.Instance.BuffUIInteractive
-local SpellUIInteractive = CS.Instance.SpellUIInteractive
-local SpellActionModifierInteractive = CS.Instance.SpellActionModifierInteractive
+local InventoryUIInteractive = CS.Instance.InventoryUIInteractive.Instance
+local ShopUIInteractive = CS.Instance.ShopUIInteractive.Instance
+local EquipmentUIInteractive = CS.Instance.EquipmentUIInteractive.Instance
+local BuffUIInteractive = CS.Instance.BuffUIInteractive.Instance
+local SpellUIInteractive = CS.Instance.SpellUIInteractive.Instance
+local SpellActionModifierInteractive = CS.Instance.SpellActionModifierInteractive.Instance
 local Inputs = CS.GameBase.Tools.Inputs
 local TextSys = CS.GameBase.UI.TextSys.Instance
 
-local CommonDragViewController = CS.Instance.CommonDragViewController
-local CommonDetailViewController = CS.Instance.CommonDetailViewController
+local CommonDragViewController = CS.Instance.CommonDragViewController.Instance
+local CommonDetailViewController = CS.Instance.CommonDetailViewController.Instance
 
 local LCommonDragViewController = {
     --- @noarg
-    AttachToMouse = CommonDragViewController.AttachToMouse,
+    AttachToMouse = function ()
+        CommonDragViewController:AttachToMouse()
+    end ,
 
     --- @noarg
-    Stop = CommonDragViewController.Stop,
+    Stop = function ()
+        CommonDragViewController:Stop()
+    end
 }
 
 local LCommonDetailViewController = {
         --- @noarg
-    AttachToMouse = CommonDetailViewController.AttachToMouse,
+    AttachToMouse = function ()
+        CommonDetailViewController:AttachToMouse()
+    end ,
 
     --- @noarg
-    Stop = CommonDetailViewController.Stop,
+    Stop = function ()
+        CommonDetailViewController:Stop()
+    end,
 }
 
 local function CommonDragViewInit()
@@ -36,7 +44,7 @@ local function CommonDragViewInit()
     end
 
     local dragView = CS.Instance.CommonDragView(UIData.CommonDragView.PrefabID)
-    CommonDragViewController.Instance:SetActive(true)
+    CommonDragViewController:SetActive(true)
     CommonDragViewController.dragView = dragView
     LCommonDragViewController.DragView = dragView
 end
@@ -47,7 +55,7 @@ local function CommonDetailViewInit()
     end
 
     local detailView = CS.Instance.CommonDetailView(UIData.CommonDetailView.PrefabID)
-    CommonDetailViewController.Instance:SetActive(true)
+    CommonDetailViewController:SetActive(true)
     CommonDetailViewController.detailView = detailView
     LCommonDetailViewController.DetailView = detailView
 end
@@ -84,7 +92,7 @@ local function InventoryUIInit()
 
     SetLayout(panel, UIData.Inventory.Layout)
 
-    InventoryUIInteractive.Instance:SetActive(true)
+    InventoryUIInteractive:SetActive(true)
     InventoryUIInteractive.enterDragTime = UIData.Inventory.EnterDragTime
     InventoryUIInteractive.enterDetailTime = UIData.Inventory.EnterDetailTime
     
@@ -114,7 +122,7 @@ local function ShopUIInit()
 
     nearView:Hide()
 
-    ShopUIInteractive.Instance:SetActive(true)
+    ShopUIInteractive:SetActive(true)
     ShopUIInteractive.enterDetailTime = UIData.Shop.EnterDetailTime
 
     panel.OnEnterDetail = UI.Shop.OnEnterDetail
@@ -138,7 +146,7 @@ local function EquipmentUIInit()
 
     panel:FillItem(UIData.Equipment.ItemNum)
 
-    EquipmentUIInteractive.Instance:SetActive(true)
+    EquipmentUIInteractive:SetActive(true)
     EquipmentUIInteractive.enterDetailTime = UIData.Equipment.EnterDetailTime
     EquipmentUIInteractive.enterDragTime = UIData.Equipment.EnterDragTime
 
@@ -167,7 +175,7 @@ local function BuffUIInit()
 
     SetLayout(panel, UIData.Buff.Layout)
 
-    BuffUIInteractive.Instance:SetActive(true)
+    BuffUIInteractive:SetActive(true)
 
     panel:Show()
 
@@ -179,7 +187,9 @@ local function SpellUIInit()
 
     SetLayout(panel, UIData.Spell.Layout)
 
-    SpellUIInteractive.Instance:SetActive(true)
+    panel.OnPointerDown = UI.Spell.OnPointerDown
+
+    SpellUIInteractive:SetActive(true)
 
     panel:Show()
 
@@ -191,7 +201,10 @@ local function SpellActionModifierUIInit()
 
     SetLayout(panel, UIData.SpellActionModifier.Layout)
 
-    SpellActionModifierInteractive.Instance:SetActive(true)
+    panel.OnEnterDrag = UI.SpellActionModifier.OnEnterDrag
+    panel.OnExitDrag = UI.SpellActionModifier.OnExitDrag
+
+    SpellActionModifierInteractive:SetActive(true)
 
     UI.SpellActionModifier.Panel = panel
 end
@@ -244,7 +257,20 @@ UI = {
         Init = EquipmentUIInit,
 
         --- @arg1 target : Creature
-        SetTarget = EquipmentUIInteractive.SetTarget,
+        SetTarget = function ( c )
+            EquipmentUIInteractive.Target = c
+        end,
+
+        --- @ret target : Creature
+        GetTarget = function ()
+            return EquipmentUIInteractive.Target
+        end,
+
+        --- table
+        DragViewController = LCommonDragViewController,
+
+        --- table
+        DetailViewController = LCommonDetailViewController
     },
 
     Buff = {
@@ -252,7 +278,9 @@ UI = {
         Init = BuffUIInit,
 
         --- @arg1 target : Creature
-        SetTarget = BuffUIInteractive.SetTarget,
+        SetTarget = function ( c )
+            BuffUIInteractive.Target = c
+        end,
     },
 
     Spell = {
@@ -260,7 +288,9 @@ UI = {
         Init = SpellUIInit,
 
         --- @arg1 target : Creature
-        SetTarget = SpellUIInteractive.SetTarget,
+        SetTarget = function ( c )
+            SpellUIInteractive.Target = c
+        end,
     },
 
     SpellActionModifier = {
@@ -268,7 +298,15 @@ UI = {
         Init = SpellActionModifierUIInit,
 
         --- @arg1 target : Spell
-        SetTarget = SpellActionModifierInteractive.SetTarget,
+        SetTarget = function ( target )
+            SpellActionModifierInteractive.Target = target
+        end,
+
+        --- table
+        DragViewController = LCommonDragViewController,
+
+        --- table
+        DetailViewController = LCommonDetailViewController
     },
 
     AttrSelect = {

@@ -1,12 +1,12 @@
 require("InventoryData")
 
-local InventoryUtil = CS.LuaUtil.InventoryUtil
+local Utils = CS.LuaUtil.Utils
 local InventoryInteractive = CS.Instance.InventoryInteractive
 local InventoryDataBase = CS.Instance.InventoryDataBase.Instance
 
 local function Init()
     -- 初始化背包
-    local instance = InventoryUtil.NewInventory()
+    local instance = Utils.NewInstance()
     -- 背包设置容量
     instance.Size = InventoryData.Size
 
@@ -35,4 +35,10 @@ Inventory = {
 
     --- data
     DataBase = InventoryDataBase,
+
+    --- @arg1 data : InventoryData
+    --- @ret index : int 
+    GetIndex = function ( data )
+        return InventoryDataBase:GetIndex(data)
+    end
 }

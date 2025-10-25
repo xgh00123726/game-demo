@@ -5,6 +5,7 @@ local Factory = CS.Constructor.Creatures.CreatureFactory.Instance
 local Vector3 = CS.UnityEngine.Vector3
 local Timer = CS.GameBase.Tools.Timer
 local AIFactory = CS.GameBase.AI.AIFactory
+local CreatureSelector = CS.Instance.CreatureSelector.Instance
 
 local function GenPlayer()
     local playerData = CreatureData.Player
@@ -121,4 +122,9 @@ Creature = {
 
     --- @arg1 creatureBaseData : table
     DrawCreatureBase = DrawCreatureBase,
+
+    --- @arg1 current : Creature
+    GetCurrentSelect = function ()
+        return CreatureSelector.currentSelect
+    end
 }

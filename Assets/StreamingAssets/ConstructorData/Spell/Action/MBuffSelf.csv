@@ -1,2 +1,2 @@
-1, buffID, duration
-0,      2,        5
+1, buffID, duration, slotNum
+0,      2,        5,       4

@@ -30,8 +30,8 @@ local function ControllerInit()
     ColliderCreator.Instance:SetActive(false)
 
     local KeyFunction = CS.GameBase.Tools.KeyFunction
-    CreatureSelector.AddHotKeyCreature(KeyFunction.SelectF1, Creature.Player)
-    CreatureSelector.AddHotKeyCreature(KeyFunction.SelectF2, Creature.Player)
+    CreatureSelector.Instance:AddHotKeyCreature(KeyFunction.SelectF1, Creature.Player)
+    CreatureSelector.Instance:AddHotKeyCreature(KeyFunction.SelectF2, Creature.Player)
     CreatureSelector.Instance:SetActive(true)
     
     GizmosCfg.isDrawGizmos = true
@@ -96,4 +96,6 @@ Controller = {
     },
 
     ColliderCreator = ColliderCreator.Instance,
+
+    CreatureSelector = CreatureSelector.Instance,
 }

@@ -7,7 +7,9 @@ local function CreatureBlink( spell )
     local c = spell.speller
     local inter = spell.interactive
 
+    c.mover:LookAt(inter.position)
     c.Position = inter.position
+    c.mover:Stop()
 end
 
 local function GenBlinkSpell()
@@ -20,7 +22,7 @@ local function GenBlinkSpell()
     e.iconTextureID = 22
 
     return e
-end 
+end
 
 Spell = {
     ---@instance spell factory

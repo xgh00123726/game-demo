@@ -23,7 +23,7 @@ CreatureData = {
 
     CreatureBase = {
         Base1 = {
-            Capacity = 3,
+            Capacity = 0,
             RefreshPeriod = 1,
             RefreshPerNum = 3,
             CreatureType = CreatureType.Common,
