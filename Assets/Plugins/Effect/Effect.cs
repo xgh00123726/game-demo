@@ -8,8 +8,10 @@ namespace GameBase.Effects
 
         internal float instantiateTime;
         internal bool hasParticle;
+        internal bool isExist;
 
         public ParticleSystem particle;
+        public bool IsExist => isExist;
         public int Key {  get; set; }
     }
 }

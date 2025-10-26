@@ -71,7 +71,9 @@ namespace GameBase.Move
                 if (e.destQueue.Count > 0)
                 {
                     e.destQueue.Dequeue();
+                    dest = e.dest;
                 }
+
                 if (e.destQueue.Count > 0)
                 {
                     e.isMoving = true;
@@ -83,11 +85,6 @@ namespace GameBase.Move
                     e.isArrive = true;
                 }
             }
-            else
-            {
-                e.isArrive = false;
-                e.isMoving = true;
-            }
 
             if (e.isMoving || collider.isCollide)
             {
@@ -97,8 +94,8 @@ namespace GameBase.Move
 
         private void RotateUpdate(Mover e)
         {
-            var currDir = e.owner.Obj.transform.forward;
-            Vector3 dirSetTemp = new Vector3(e.dir.x, 0, e.dir.z);
+            var currDir = e.owner.Dir;
+            Vector3 dirSetTemp = new Vector3(e.targetDir.x, 0, e.targetDir.z);
             float angle = Vector3.Angle(currDir, dirSetTemp);
             float crossY = Vector3.Cross(currDir, dirSetTemp).y;
 

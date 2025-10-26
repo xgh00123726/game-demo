@@ -13,6 +13,9 @@ namespace Constructor.Spells.Action
         public int slotNum;
     }
 
+    /// <summary>
+    /// 为自己施加buff
+    /// </summary>
     public class MBuffSelf : ModifyableAction
     {
         public MBuffSelfData data;

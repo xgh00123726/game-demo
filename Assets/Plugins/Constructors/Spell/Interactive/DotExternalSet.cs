@@ -42,6 +42,8 @@ namespace Constructor.Spells.Interactive
                 position = GetPosition();
             }
         }
+
+        Vector3 ISpellInteractive.TrigPosition => position;
     }
 
     public class DotExternalSetCon : SealedConstructor<DotExternalSetData, DotExternalSet, DotExternalSetCon>

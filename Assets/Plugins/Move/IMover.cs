@@ -10,5 +10,6 @@ namespace GameBase.Move
         float Radius { get; }
         GameObject Obj { get; }
         CircleCollider Collider { get; }
+        Vector3 Dir { get; }
     }
 }

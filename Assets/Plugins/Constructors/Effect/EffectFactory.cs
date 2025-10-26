@@ -4,17 +4,19 @@ using System.Collections.Generic;
 
 namespace Constructor.Effects
 {
-    public enum Type
+    public enum EffectType
     {
+        None,
         Common,
     }
-    public class EffectFactory : ConstructorFactory<Type, Effect, EffectFactory>
+    public class EffectFactory : ConstructorFactory<EffectType, Effect, EffectFactory>
     {
-        protected override Dictionary<Type, System.Func<int, Effect>> GetConstructorGetDict()
+        protected override Dictionary<EffectType, System.Func<int, Effect>> GetConstructorGetDict()
         {
             return new()
             {
-                {Type.Common, Common.Instance.Get }
+                { EffectType.None, static (int index) => null},
+                { EffectType.Common, Common.Instance.Get }
             };
         }
     }

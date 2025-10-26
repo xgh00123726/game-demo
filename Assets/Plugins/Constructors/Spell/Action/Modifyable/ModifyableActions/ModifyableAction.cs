@@ -11,15 +11,12 @@ namespace Constructor.Spells.Action
         private float _angleInit = 0f;
         private float _angleDelta = 0f;
 
-        protected virtual Flying GenFlying(Spell spell, float angleOffset, float flyingDistanceModify)
+        protected virtual Flying GenFlying(Spell spell, in SpellActionModifierData modifyData)
         {
             return null;
         }
 
-        protected virtual Trigger GenProjectile(Flying flying)
-        {
-            return null;
-        }
+        protected virtual void RecorrectFlying(Flying flying) { }
 
         protected virtual bool CastAction(Spell spell, in SpellActionModifierData modifyData)
         {
@@ -27,16 +24,12 @@ namespace Constructor.Spells.Action
 
             for (int i = 0; i < 1 + _modifiedData.flyingNums; i++)
             {
-                var flying = GenFlying(spell, GetAngleOffset(i), modifyData.flyingDistance);
+                var flying = GenFlying(spell, modifyData);
 
-                if (flying != null && spell.speller is ITriggerOwner pOwner) 
+                if (flying != null) 
                 {
-                    var projectile = GenProjectile(flying);
-                    if (projectile != null)
-                    {
-                        projectile.owner = pOwner;
-                    }
-
+                    flying.startAngleOffset = GetAngleOffset(i);
+                    RecorrectFlying(flying);
                     ret = true;
                 }
             }

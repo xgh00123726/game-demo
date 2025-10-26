@@ -1,3 +1,4 @@
+using Constructor.Effects;
 using GameBase.EntitySystem;
 using GameBase.Spells;
 using GameBase.Triggers;
@@ -8,7 +9,7 @@ namespace Constructor.Triggers
     {
         public float period;
         public TrigStyle trigStyle;
-        public Effects.Type effectType;
+        public EffectType effectType;
         public int effectID;
         public TargetSetType targetSetType;
     }

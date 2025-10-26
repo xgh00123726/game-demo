@@ -1,20 +1,21 @@
-using NReco.Csv;
-using GameBase.Flyings;
+using Constructor.Effects;
 using GameBase.EntitySystem;
-using System;
+using GameBase.Flyings;
 using GameBase.Tools;
+using NReco.Csv;
+using System;
 
 namespace Constructor.Flyings
 {
     public struct CommonData
     {
         public int objID;
-        public Effects.Type releaseEffectType;
+        public EffectType releaseEffectType;
         public int releaseEffectID;
         public float speed;
         public float minExistTime;
         public CurveFactory.CurveType curveType;
-        public Effects.Type hitEffectType;
+        public EffectType hitEffectType;
         public int hitEffectID;
     }
     public class Common : KeyConstructor<CommonData, Flying, Common>

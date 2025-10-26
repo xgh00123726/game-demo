@@ -1,6 +1,7 @@
 using GameBase.Inventorys;
 using GameBase.Spells;
 using GameBase.Tools;
+using UnityEngine;
 
 namespace GameBase.Creatures
 {
@@ -26,6 +27,12 @@ namespace GameBase.Creatures
             }
 
             return null;
+        }
+
+        void ISpeller.LookAt(Vector3 pos)
+        {
+            Interrupt();
+            mover.LookAt(pos);
         }
     }
 }

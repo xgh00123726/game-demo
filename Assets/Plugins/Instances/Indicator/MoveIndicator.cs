@@ -1,3 +1,4 @@
+using Constructor.Effects;
 using UnityEngine;
 
 namespace Instance
@@ -6,7 +7,7 @@ namespace Instance
     {
         public static void Show(Vector3 position)
         {
-            var effect = Constructor.Effects.EffectFactory.Instance.Get(Constructor.Effects.Type.Common, 2);
+            var effect = Constructor.Effects.EffectFactory.Instance.Get(EffectType.Common, 2);
             effect.particle.transform.position = position;
         }
     }

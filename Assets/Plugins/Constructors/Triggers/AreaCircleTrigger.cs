@@ -6,6 +6,7 @@ using NReco.Csv;
 using System;
 using UnityEngine;
 using GameBase.EntitySystem;
+using Constructor.Effects;
 
 namespace Constructor.Triggers
 {
@@ -16,6 +17,8 @@ namespace Constructor.Triggers
         public float radius;
         public int damage;
         public TargetSetType targetSetType;
+        public EffectType effectType;
+        public int effectID;
     }
     public class AreaCircleTrigger : SealedConstructor<AreaCircleTriggerData, Trigger, AreaCircleTrigger>
     {

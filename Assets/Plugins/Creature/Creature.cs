@@ -28,7 +28,8 @@ namespace GameBase.Creatures
         IHealthBarOwner,
         IModifieder,
         IBuffOwner,
-        IMover
+        IMover, 
+        ITriggerAttach
     {
         public float radius = 0.3f;
         public CreatureTag tag;
@@ -47,6 +48,7 @@ namespace GameBase.Creatures
         public bool Alive { get; internal protected set; }
         public GameObject obj;
         public int Key { get; set; }
+        public Vector3 Dir => obj.transform.forward;
 
         Vector3 IHealthBarOwner.HealthBarPosition => obj.transform.position + healthBarOffset;
 
@@ -79,8 +81,6 @@ namespace GameBase.Creatures
         float IMover.RotateSpeed => modifyables["rotateSpeed"].Value;
 
         GameObject IMover.Obj => obj;
-
-        public Vector3 Dir { get; set; }
 
         float IMover.Radius => radius;
 
@@ -115,6 +115,18 @@ namespace GameBase.Creatures
             collider = CollideSys.Instance.NewEntity<CircleCollider>();
             collider.Owner = obj.transform;
             collider.r = radius;
+        }
+
+        public void Interrupt()
+        {
+            mover.Interrupt();
+            for (int i = 0; i < spells.Size; i++)
+            {
+                if (spells.HasItem(i))
+                {
+                    spells[i].Interrupt();
+                }
+            }
         }
     }
 }

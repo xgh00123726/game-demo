@@ -8,9 +8,9 @@ namespace GameBase.Triggers
     public enum TrigStyle
     {
         External,
-        PeriodImmediate,
-        PeriodNext,
+        Period,
         Always,
+        Once,
     }
 
     public class Trigger :
@@ -26,6 +26,7 @@ namespace GameBase.Triggers
         public ITriggerAction action;
 
         // optional
+        public float delay;
         public float trigPeriod;
         public bool hasWhite;
         public float existTime;
@@ -41,12 +42,6 @@ namespace GameBase.Triggers
         public void Trig()
         {
             isTrig = true;
-        }
-
-        public void SetWhites()
-        {
-            hasWhite = true;
-            whites = new();
         }
 
         void IPoolable.AfterGet()

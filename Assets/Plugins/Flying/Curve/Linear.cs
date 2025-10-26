@@ -12,7 +12,7 @@ namespace GameBase.Flyings
 
         protected override Vector3 GetDirDelta()
         {
-            return _projectile.Dest - _projectile.Src;
+            return _projectile.Dir;
         }
     }
 }

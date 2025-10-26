@@ -8,5 +8,7 @@ namespace GameBase.Spells
         // 需具备技能急速属性，单位1%
         float CoolingAccelerate { get; }
         Vector3 Position { get; }
+        Vector3 Dir { get; }
+        void LookAt(Vector3 pos);
     }
 }

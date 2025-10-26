@@ -13,10 +13,12 @@ namespace GameBase.Effects
             e.particle.gameObject.SetActive(true);
 
             e.particle.Play();
+            e.isExist = true;
         }
 
         protected override void OnRelease(Effect e)
         {
+            e.isExist = false;
             e.particle.gameObject.SetActive(false);
         }
 

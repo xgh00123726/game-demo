@@ -54,6 +54,14 @@ namespace GameBase.Flyings
             e.OnHit = null;
         }
 
+        protected override void EntityStart(Flying e)
+        {
+            e.Dir = e.target.Position - e.src;
+            Quaternion rotate = Quaternion.Euler(0, e.startAngleOffset, 0);
+            e.Dir = rotate * e.Dir;
+            e.curve.Start();
+        }
+
         /// <summary>
         /// 当射弹活跃时调用
         /// <list type="bullet">

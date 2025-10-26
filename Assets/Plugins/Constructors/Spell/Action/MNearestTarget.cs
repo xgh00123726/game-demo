@@ -1,19 +1,13 @@
-using Constructor.Spells.Interactive;
 using Constructor.Triggers;
 using Constructor.Triggers.Action;
 using GameBase.Creatures;
 using GameBase.EntitySystem;
 using GameBase.Flyings;
-using GameBase.GCamera;
-using GameBase.Modify;
 using GameBase.Spells;
-using GameBase.Tools;
 using GameBase.Triggers;
-using NReco.Csv;
-using System;
 using UnityEngine;
 
-namespace Constructor.Spells.Action.Modifyables
+namespace Constructor.Spells.Action
 {
     public struct MNearestTargetData
     {
@@ -25,57 +19,14 @@ namespace Constructor.Spells.Action.Modifyables
         public float ampFactor;
     }
 
+    /// <summary>
+    /// 召唤单体射弹，射弹自动追踪最近的敌人
+    /// </summary>
     public class MNearestTarget : ModifyableAction
     {
         public MNearestTargetData data;
 
-        //protected override bool IsCast(Spell spell)
-        //{
-        //    _mOwner = spell.speller as IModifieder;
-
-        //    if (_mOwner == null)
-        //    {
-        //        return false;
-        //    }
-
-        //    _pOwner = spell.speller as ITriggerOwner;
-        //    if (_pOwner == null)
-        //    {
-        //        return false;
-        //    }
-
-        //    if (!_mOwner.Modifyables.ContainsKey("attackRange"))
-        //    {
-        //        return false;
-        //    }
-        //    _attackRange = _mOwner.Modifyables["attackRange"];
-
-        //    Vector3 center = new Vector3(spell.speller.Position.x, 0, spell.speller.Position.z);
-        //    _target = TargetSetFactorary.Get(data.targetSetType).NearestTarget(center, _attackRange);
-        //    if (_target == null)
-        //    {
-        //        return false;
-        //    }
-
-        //    return true;
-        //}
-
-        //protected override Flying GenFlying(Spell spell, float angleOffset, float flyingDistanceModify)
-        //{
-        //    var f = Flyings.CreatureFactory.Instance.Get(data.flyingType, data.flyingID);
-        //    f.Src = _pOwner.HandPosition + new Vector3(0, 1, 0);
-        //    Vector3 dir = (_target.Center - f.Src).normalized;
-        //    Quaternion rotate = Quaternion.Euler(0, angleOffset, 0);
-        //    f.curve.DirInit(rotate * dir);
-        //    f.target = new FixedFlyingTarget()
-        //    {
-        //        Position = _target.Center,
-        //    };
-
-        //    return f;
-        //}
-
-        protected override bool CastAction(Spell spell, in SpellActionModifierData modifyData)
+        protected override Flying GenFlying(Spell spell, in SpellActionModifierData modifyData)
         {
             if (spell.speller is Creature c)
             {
@@ -99,20 +50,13 @@ namespace Constructor.Spells.Action.Modifyables
                         Position = target.Center,
                     };
                     f.OnHit = t.Trig;
-                    f.curve.DirInit();
                     f.arriveDis += t.target.Radius;
 
-                    return true;
-                }
-                else
-                {
-                    return false;
+                    return f;
                 }
             }
-            else
-            {
-                return false;
-            }
+
+            return null;
         }
     }
 

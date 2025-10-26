@@ -6,11 +6,10 @@ using GameBase.EntitySystem;
 using GameBase.Flyings;
 using GameBase.Math;
 using GameBase.Spells;
-using GameBase.Tools;
 using GameBase.Triggers;
 using UnityEngine;
 
-namespace Constructor.Spells.Action.Modifyables
+namespace Constructor.Spells.Action
 {
     public struct MTriggerOnHitData
     {
@@ -25,11 +24,15 @@ namespace Constructor.Spells.Action.Modifyables
         public float yOffset;
         public float zOffset;
     }
+
+    /// <summary>
+    /// ÕÙ»½Éäµ¯£¬Éäµ¯»÷ÖÐ²úÉú´¥·¢Æ÷
+    /// </summary>
     public class MTriggerOnHit : ModifyableAction
     {
         public MTriggerOnHitData data;
 
-        protected override bool CastAction(Spell spell, in SpellActionModifierData modifyData)
+        protected override Flying GenFlying(Spell spell, in SpellActionModifierData modifyData)
         {
             if (spell.speller is Creature c &&
                 spell.interactive is DotExternalSet interactive)
@@ -40,6 +43,7 @@ namespace Constructor.Spells.Action.Modifyables
                 {
                     Position = interactive.position,
                 };
+
                 f.OnHit += () =>
                 {
                     var t = TriggerSys.Instance.NewEntity();
@@ -57,11 +61,18 @@ namespace Constructor.Spells.Action.Modifyables
                     t.Trig();
                 };
 
-                return true;
+                return f;
             }
 
-            return false;
+            return null;
+        }
 
+        protected override void RecorrectFlying(Flying flying)
+        {
+            if (flying.target is FixedFlyingTarget fixedTar)
+            {
+                fixedTar.Position = fixedTar.Position + GMath.RollRandomDir(Mathf.Sin(flying.startAngleOffset) * data.yOffset);
+            }
         }
     }
     public class MTriggerOnHitCon : SealedConstructor<MTriggerOnHitData, MTriggerOnHit, MTriggerOnHitCon>

@@ -201,7 +201,7 @@ namespace GameBase.AI
 
         public void Stop()
         {
-            mover.Stop();
+            mover.Interrupt();
         }
 
 

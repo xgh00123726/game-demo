@@ -13,17 +13,8 @@ namespace GameBase.Triggers
 
         protected override void OnGet(Trigger e)
         {
-            if (e.hasWhite)
-            {
-                e.whites = new();
-            }
-
             e.instantiateTime = Time.time;
             e.lastTrigTime = Time.time;
-            if (e.trigStyle == TrigStyle.PeriodImmediate)
-            {
-                e.isTrig = true;
-            }
         }
 
         internal void HitTarget(Trigger e)
@@ -49,6 +40,18 @@ namespace GameBase.Triggers
             }
         }
 
+        protected override void EntityStart(Trigger e)
+        {
+            if (e.hasWhite)
+            {
+                e.whites = new();
+            }
+            if (e.trigStyle == TrigStyle.Period || e.trigStyle == TrigStyle.Once)
+            {
+                e.isTrig = true;
+            }
+        }
+
         protected override void UpdateEntity(Trigger e)
         {
             if (e.owner == null)
@@ -59,9 +62,14 @@ namespace GameBase.Triggers
                 return;
             }
 
-            if (e.trigStyle == TrigStyle.PeriodImmediate || e.trigStyle == TrigStyle.PeriodNext)
+            if (Time.time < e.instantiateTime + e.delay)
             {
-                if (Time.time > e.lastTrigTime + e.trigPeriod)
+                return;
+            }
+
+            if (e.trigStyle == TrigStyle.Period)
+            {
+                if (Time.time >= e.lastTrigTime + e.trigPeriod)
                 {
                     e.isTrig = true;
                 }
@@ -76,7 +84,6 @@ namespace GameBase.Triggers
             {
                 e.OnTrig?.Invoke();
                 HitTarget(e);
-
                 if (e.shape != null)
                 {
                     e.shape.Center = new Vector2(e.attach.Position.x, e.attach.Position.z);
@@ -99,7 +106,8 @@ namespace GameBase.Triggers
                 return;
             }
 
-            if (Time.time > e.instantiateTime + e.existTime)
+            if (Time.time >= e.instantiateTime + e.existTime
+                || e.trigStyle == TrigStyle.Once)
             {
                 RemoveEntity(e);
                 return;

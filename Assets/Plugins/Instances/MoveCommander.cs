@@ -115,8 +115,7 @@ namespace Instance
             {
                 foreach (var c in _targets)
                 {
-                    c.mover.Stop();
-                    c.Dir = c.Dir;
+                    c.Interrupt();
                     c.ai?.Disable();
                 }
             }

@@ -32,6 +32,12 @@ namespace GameBase.Math
                 get => Vector2.zero;
                 set { }
             }
+            public Circle(float r)
+            {
+                _size = 1f;
+                this.c = Vector2.zero;
+                this.r = r;
+            }
 
             public Circle(Vector2 c, float r)
             {

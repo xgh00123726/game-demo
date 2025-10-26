@@ -1,4 +1,3 @@
-using Constructor.Spells.Action.Modifyables;
 using GameBase.Spells;
 using System;
 using System.Collections.Generic;
@@ -13,6 +12,7 @@ namespace Constructor.Spells.Action
 
         MAreaFixedDis,
         MNearestTarget,
+        MTriggerOnly,
     }
     public class SpellActionFactory : ConstructorFactory<Type, ISpellAction, SpellActionFactory>
     {
@@ -24,6 +24,7 @@ namespace Constructor.Spells.Action
                 {Type.MBuffSelf, BuffSelfCon.Instance.Get },
                 {Type.MAreaFixedDis, MAreaFixedDisCon.Instance.Get },
                 {Type.MNearestTarget, MNearestTargetCon.Instance.Get },
+                {Type.MTriggerOnly, MTriggerOnlyCon.Instance.Get },
             };
         }
     }

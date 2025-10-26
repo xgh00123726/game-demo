@@ -5,7 +5,7 @@ namespace GameBase.Flyings
         public enum CurveType
         {
             None = 0,
-            Liner,
+            Linear,
             Tracer,
             Slower,
             Fall,
@@ -17,7 +17,7 @@ namespace GameBase.Flyings
             {
                 return null;
             }
-            if (type == CurveType.Liner)
+            if (type == CurveType.Linear)
             {
                 return new Linear(e);
             }

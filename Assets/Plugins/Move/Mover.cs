@@ -14,7 +14,7 @@ namespace GameBase.Move
         internal Vector3 finalDest;
 
         public IMover owner;
-        public Vector3 dir;
+        public Vector3 targetDir;
 
         public Queue<Vector3> DestQueue => destQueue;
 
@@ -45,10 +45,10 @@ namespace GameBase.Move
 
         public void LookAt(Vector3 position)
         {
-            dir = position - owner.Obj.transform.position;
+            targetDir = position - owner.Obj.transform.position;
         }
 
-        public void Stop()
+        public void Interrupt()
         {
             isMoving = false;
             dest = owner.Position;

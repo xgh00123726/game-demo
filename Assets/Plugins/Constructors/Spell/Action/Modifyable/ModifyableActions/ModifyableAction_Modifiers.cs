@@ -77,6 +77,11 @@ namespace Constructor.Spells.Action
                 _angleDelta = _processedDisfuse / _modifiedData.flyingNums;
             }
         }
+
+        public static bool IsModifyable(Spell spell)
+        {
+            return spell.action is ModifyableAction;
+        }
     }
 
 }
