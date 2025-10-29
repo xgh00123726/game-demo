@@ -1,22 +1,16 @@
-using Constructor.Effects;
 using GameBase.EntitySystem;
 using GameBase.Flyings;
-using GameBase.Tools;
-using NReco.Csv;
-using System;
 
 namespace Constructor.Flyings
 {
     public struct CommonData
     {
         public int objID;
-        public EffectType releaseEffectType;
-        public int releaseEffectID;
         public float speed;
         public float minExistTime;
         public CurveFactory.CurveType curveType;
-        public EffectType hitEffectType;
-        public int hitEffectID;
+        public string releaseEffectName;
+        public string hitEffectName;
     }
     public class Common : KeyConstructor<CommonData, Flying, Common>
     {
@@ -34,24 +28,9 @@ namespace Constructor.Flyings
 
             e.speed = data.speed;
             e.minExistTime = data.minExistTime;
-            var releaseEffectID = data.releaseEffectID;
-            if (releaseEffectID >= 0)
-            {
-                e.OnReleased += () =>
-                {
-                    var er = Constructor.Effects.Common.Instance.Get(releaseEffectID);
-                    er.particle.transform.position = e.obj.transform.position;
-                };
-            }
-            var hitEffectID = data.hitEffectID;
-            if (hitEffectID >= 0)
-            {
-                e.OnHit += () =>
-                {
-                    var er = Effects.Common.Instance.Get(hitEffectID);
-                    er.particle.transform.position = e.obj.transform.position;
-                };
-            }
+
+            e.releaseEffect = data.releaseEffectName;
+            e.hitEffect = data.hitEffectName;
 
             return e;
         }

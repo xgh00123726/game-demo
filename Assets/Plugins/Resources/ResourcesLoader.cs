@@ -86,6 +86,11 @@ namespace GameBase.Resources
             reader.Close();
         }
 
+        public static T LoadAddressable<T>(string filePath)
+        {
+            return Addressables.LoadAssetAsync<T>(filePath).WaitForCompletion();
+        }
+
         public static void LoadAllAsset()
         {
             LoadCsvAsset($"{Application.streamingAssetsPath}/public/PrefabIDDictionary.csv", out _prefabs);

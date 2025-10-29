@@ -21,6 +21,12 @@ namespace GameBase.Flyings
         public IFlyingTarget target;
         public float startAngleOffset;
 
+        public string hitEffect;
+        public string hitAudio;
+
+        public string releaseEffect;
+        public string releaseAudio;
+
         public Action OnHit;
         public Action OnReleased;
 

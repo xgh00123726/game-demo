@@ -30,13 +30,11 @@ namespace GameBase.Animations
                 if (!lastAnim && isAnim)
                 {
                     animator.SetTrigger($"Trigger_{clipName}");
-                    XLogger.Instance.IF(false).Log($"clip:{clipName} set trigger, frame:{Time.frameCount}");
                 }
 
                 if (isAnim != lastAnim)
                 {
                     animator.SetBool($"Loop_{clipName}", isAnim);
-                    XLogger.Instance.IF(false).Log($"clip:{clipName} set loop:{isAnim}, frame:{Time.frameCount}");
                 }
             }
 

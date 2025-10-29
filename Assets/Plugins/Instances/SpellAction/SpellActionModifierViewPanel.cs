@@ -36,6 +36,7 @@ namespace Instance
 
                 for (int i = 0; i < mAct.Size; i++)
                 {
+                    this[i].obj.SetActive(true);
                     int id = mAct.GetID(i);
                     if (id >= 0)
                     {
@@ -50,6 +51,10 @@ namespace Instance
                         this[i].triggerImage.HideColor();
                         this[i].triggerImage.Hide();
                     }
+                }
+                for (int i = mAct.Size; i < Entities.Count; i++)
+                {
+                    this[i].obj.SetActive(false);
                 }
             }
         }

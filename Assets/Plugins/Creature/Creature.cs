@@ -31,6 +31,8 @@ namespace GameBase.Creatures
         IMover, 
         ITriggerAttach
     {
+        internal int id;
+
         public float radius = 0.3f;
         public CreatureTag tag;
         public Vector3 healthBarOffset = new Vector3(0, 1.6f, 0);
@@ -48,6 +50,7 @@ namespace GameBase.Creatures
         public bool Alive { get; internal protected set; }
         public GameObject obj;
         public int Key { get; set; }
+        public int ID => id;
         public Vector3 Dir => obj.transform.forward;
 
         Vector3 IHealthBarOwner.HealthBarPosition => obj.transform.position + healthBarOffset;

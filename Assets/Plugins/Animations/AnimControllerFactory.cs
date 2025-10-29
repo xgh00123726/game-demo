@@ -4,6 +4,7 @@ namespace GameBase.Animations
     {
         None,
         Human,
+        Zombie,
     }
     public class AnimControllerFactory
     {
@@ -12,6 +13,10 @@ namespace GameBase.Animations
             if (type == AnimType.Human)
             {
                 return AnimControllerSys.Instance.NewEntity<HumanAnimController>();
+            }
+            if (type == AnimType.Zombie)
+            {
+                return AnimControllerSys.Instance.NewEntity<ZombieAnimController>();
             }
 
             return null;

@@ -11,6 +11,8 @@ using UnityEngine;
 
 public class CreatureSys : KeyEntitySys<int, Creature, CreatureSys>
 {
+    private int _creatureInstantiatedNum = 0;
+    private Dictionary<int, Creature> _creatureDict = new();
     protected override Creature CtorT(int k)
     {
         var e = new Creature();
@@ -27,6 +29,8 @@ public class CreatureSys : KeyEntitySys<int, Creature, CreatureSys>
         e.mover.owner = e;
 
         e.animator = e.obj.GetComponent<Animator>();
+        e.id = _creatureInstantiatedNum++;
+        _creatureDict.Add(e.id, e);
     }
 
     protected override void EntityStart(Creature e)
@@ -61,6 +65,8 @@ public class CreatureSys : KeyEntitySys<int, Creature, CreatureSys>
         }
 
         AISys.Instance.RemoveEntity(e.ai);
+
+        _creatureDict.Remove(e.id);
 
         e.obj.SetActive(false);
     }
@@ -102,6 +108,15 @@ public class CreatureSys : KeyEntitySys<int, Creature, CreatureSys>
         {
             RemoveEntity(e);
         }
+    }
+
+    public Creature GetCreatureFromID(int id)
+    {
+        if (_creatureDict.ContainsKey(id))
+        {
+            return _creatureDict[id];   
+        }
+        return null;
     }
 
     /// <summary>

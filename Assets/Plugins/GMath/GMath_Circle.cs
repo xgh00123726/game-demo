@@ -8,20 +8,9 @@ namespace GameBase.Math
     {
         public struct Circle : IShape2D
         {
-            private float _size;
             public Vector2 c;
             public float r;
-
-            float IShape2D.Size
-            {
-                get => _size;
-                set
-                {
-                    float factor = value / _size;
-                    r *= factor;
-                    _size = value;
-                }
-            }
+            public Vector2 dir;
             Vector2 IShape2D.Center
             {
                 get => c;
@@ -29,21 +18,27 @@ namespace GameBase.Math
             }
             Vector2 IShape2D.Dir
             {
-                get => Vector2.zero;
-                set { }
+                get => dir;
+                set => dir = value;
             }
+            float IShape2D.Size
+            {
+                get => r;
+                set => r = value;
+            }
+
             public Circle(float r)
             {
-                _size = 1f;
                 this.c = Vector2.zero;
                 this.r = r;
+                dir = Vector2.zero;
             }
 
             public Circle(Vector2 c, float r)
             {
-                _size = 1f;
                 this.c = c;
                 this.r = r;
+                dir = Vector2.zero;
             }
 
             public bool Contains(float x, float y)

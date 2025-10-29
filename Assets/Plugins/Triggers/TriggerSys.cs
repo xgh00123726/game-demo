@@ -1,4 +1,5 @@
 using GameBase.EntitySystem;
+using GameBase.Resources;
 using GameBase.Tools;
 using UnityEngine;
 
@@ -13,8 +14,60 @@ namespace GameBase.Triggers
 
         protected override void OnGet(Trigger e)
         {
+            e.trigPeriod = 1;
+            e.trigStyle = TrigStyle.External;
+            e.existTime = 1;
+            e.actualEffectTimes = 0;
+            e.maxeffectTimes = 1;
+            e.hasWhite = false;
+            e.isTrig = false;
+            e.whites = null;
+            e.targetsSet = null;
+            e.target = null;
+            e.owner = null;
+            e.action = null;
             e.instantiateTime = Time.time;
             e.lastTrigTime = Time.time;
+            e.shape = null;
+            e.hitEffect = null;
+            e.createEffect = null;
+            e.hitAudio = null;
+            e.createAudio = null;
+            e.OnTrig = null;
+            e.OnTrigEnd = null;
+        }
+
+        private void PlayCreateEffect(Trigger e)
+        {
+            EffectSys.Instance.PlayAtP(e.createEffect, e.attach.Position);
+        }
+
+        private void PlayHitEffect(Trigger e, Vector3 position)
+        {
+            float size = e.shape.Size;
+            EffectSys.Instance.PlayAtPS(e.hitEffect, position, new Vector3(size, size, size));
+        }
+
+        private void PlayTrigEffect(Trigger e)
+        {
+            float size = e.shape.Size;
+            Vector3 dir = e.attach.Position - e.owner.HandPosition;
+            EffectSys.Instance.PlayAtPSD(e.trigEffect, e.attach.Position, new Vector3(size, size, size), dir);
+        }
+
+        private void PlayCreateAudio(Trigger e)
+        {
+            AudioMgr.PlayAt(e.createAudio, e.attach.Position);
+        }
+
+        private void PlayHitAudio(Trigger e, Vector3 position)
+        {
+            AudioMgr.PlayAt(e.hitAudio, position);
+        }
+
+        private void PlayTrigAudio(Trigger e)
+        {
+            AudioMgr.PlayAt(e.trigAudio, e.attach.Position);
         }
 
         internal void HitTarget(Trigger e)
@@ -22,6 +75,8 @@ namespace GameBase.Triggers
             if (e.target != null && e.actualEffectTimes < e.maxeffectTimes)
             {
                 EffectTarget(e, e.target);
+                PlayHitAudio(e, e.target.Center);
+                PlayHitEffect(e, e.target.Center);
             }
         }
 
@@ -33,6 +88,8 @@ namespace GameBase.Triggers
             }
 
             e.action?.Effect(e, target);
+            PlayHitAudio(e, target.Center);
+            PlayHitEffect(e, target.Center);
             e.actualEffectTimes++;
             if (e.hasWhite)
             {
@@ -50,6 +107,8 @@ namespace GameBase.Triggers
             {
                 e.isTrig = true;
             }
+            PlayCreateAudio(e);
+            PlayCreateEffect(e);
         }
 
         protected override void UpdateEntity(Trigger e)
@@ -83,6 +142,8 @@ namespace GameBase.Triggers
             if (e.isTrig)
             {
                 e.OnTrig?.Invoke();
+                PlayTrigAudio(e);
+                PlayTrigEffect(e);
                 HitTarget(e);
                 if (e.shape != null)
                 {
@@ -98,6 +159,7 @@ namespace GameBase.Triggers
                 }
                 e.lastTrigTime = Time.time;
                 e.isTrig = false;
+                e.OnTrigEnd?.Invoke();
             }
 
             if (e.actualEffectTimes >= e.maxeffectTimes)

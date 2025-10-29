@@ -12,6 +12,12 @@ namespace GameBase.Flyings
     {
         public static readonly float ProjectileHitDis = 0.1f;
 
+        private void OnHit(Flying e)
+        {
+            AudioMgr.PlayAt(e.hitAudio, e.obj.transform.position);
+            EffectSys.Instance.PlayAtPS(e.hitEffect, e.obj.transform.position, e.obj.transform.localScale);
+        }
+
         protected override Flying CtorT(int k)
         {
             Flying e = new Flying();
@@ -43,6 +49,8 @@ namespace GameBase.Flyings
         protected override void OnRelease(Flying e)
         {
             e.obj.SetActive(false);
+            AudioMgr.PlayAt(e.releaseAudio, e.obj.transform.position);
+            EffectSys.Instance.PlayAtPS(e.releaseEffect, e.obj.transform.position, e.obj.transform.localScale);
             e.OnReleased?.Invoke();
             e.obj.transform.localScale = Vector3.one;
 
@@ -93,6 +101,7 @@ namespace GameBase.Flyings
             if (!e.hitFlag && (e.target.Position - e.obj.transform.position).magnitude <= e.arriveDis)
             {
                 e.hitFlag = true;
+                OnHit(e);
                 e.OnHit?.Invoke();
             }
         }

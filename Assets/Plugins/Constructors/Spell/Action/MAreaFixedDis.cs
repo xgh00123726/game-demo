@@ -45,9 +45,10 @@ namespace Constructor.Spells.Action
                 };
 
                 var t = TriggerSys.Instance.NewEntity();
+                t.hasWhite = true;
                 t.maxeffectTimes = 99;
                 t.targetsSet = TargetSetFactorary.Get(data.targetSetType);
-                t.shape = new GMath.Circle() { r = 1 };
+                t.shape = new GMath.Circle(data.radius);
                 t.owner = c;
                 t.attach = f;
                 t.trigStyle = TrigStyle.Always;

@@ -13,8 +13,7 @@ namespace GameBase.Triggers
         Once,
     }
 
-    public class Trigger :
-        IPoolable
+    public class Trigger
     {
         // require
         public int maxeffectTimes;
@@ -31,7 +30,17 @@ namespace GameBase.Triggers
         public bool hasWhite;
         public float existTime;
         public TrigStyle trigStyle;
+
+        public string createEffect;
+        public string trigEffect;
+        public string hitEffect;
+
+        public string createAudio;
+        public string trigAudio;
+        public string hitAudio;
+
         public Action OnTrig;
+        public Action OnTrigEnd;
 
         internal float lastTrigTime;
         internal float instantiateTime;
@@ -42,27 +51,6 @@ namespace GameBase.Triggers
         public void Trig()
         {
             isTrig = true;
-        }
-
-        void IPoolable.AfterGet()
-        {
-            trigPeriod = 1;
-            trigStyle = TrigStyle.External;
-            existTime = 1;
-            actualEffectTimes = 0;
-            maxeffectTimes = 1;
-            hasWhite = false;
-            isTrig = false;
-        }
-
-        void IPoolable.BeforeRelease()
-        {
-            whites = null;
-            shape = null;
-            targetsSet = null;
-            target = null;
-            owner = null;
-            action = null;
         }
     }
 }

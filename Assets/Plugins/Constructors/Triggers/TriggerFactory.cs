@@ -8,7 +8,7 @@ namespace Constructor.Triggers
     {
         AreaCircleTrigger,
         AreaRectTrigger,
-        SingleTrigger
+        AreaLineTrigger,
     }
     public class TriggerFactory : ConstructorFactory<TriggerType, Trigger, TriggerFactory>
     {
@@ -18,7 +18,7 @@ namespace Constructor.Triggers
             {
                 {TriggerType.AreaCircleTrigger, AreaCircleTrigger.Instance.Get},
                 {TriggerType.AreaRectTrigger, AreaRectTrigger.Instance.Get},
-                {TriggerType.SingleTrigger, SingleTrigger.Instance.Get},
+                {TriggerType.AreaLineTrigger, AreaLineTrigger.Instance.Get},
             };
         }
     }

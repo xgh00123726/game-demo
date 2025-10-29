@@ -1,23 +1,22 @@
 using GameBase.Creatures;
-using System;
 using UnityEngine;
 
 namespace GameBase.Animations
 {
-    public class HumanAnimController : AnimController
+    public class ZombieAnimController : AnimController
     {
         private Animator _animator;
 
         private SimpleAnimClipController idleController;
         private SimpleAnimClipController moveController;
-        private SimpleAnimClipController boringController;
+        private SimpleAnimClipController attackController;
 
         public bool boringEnable = false;
 
         public override void Update()
         {
             moveController.Update();
-            boringController.Update();
+            attackController.Update();
             idleController.Update();
         }
 
@@ -31,18 +30,18 @@ namespace GameBase.Animations
             return !owner.mover.IsMoving;
         }
 
+        private bool IsAttack()
+        {
+            return false;
+        }
+
         public override void OnAddTo(Creature creature)
         {
             _animator = creature.animator;
 
             idleController = new SimpleAnimClipController(_animator, IsIdle, "Idle");
             moveController = new SimpleAnimClipController(_animator, IsMoving, "Run");
-            boringController = new SimpleAnimClipController(_animator, () =>
-            {
-                return boringEnable && IsIdle() && (idleController.stateDuration % 20) > 10;
-            }, "Boring");
+            attackController = new SimpleAnimClipController(_animator, IsAttack, "Attack");
         }
     }
 }
-
-

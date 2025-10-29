@@ -13,9 +13,13 @@ namespace GameBase.Tools
             {
                 DrawCircle(circle, y);
             }
-            if (shape is GMath.Rect2D rect)
+            else if (shape is GMath.Rect2D rect)
             {
                 DrawRect(rect, y);
+            }
+            else if (shape is GMath.Line line)
+            {
+                DrawLine(line, y);
             }
         }
 
@@ -58,6 +62,24 @@ namespace GameBase.Tools
             Gizmos.DrawLine(p2, p3);
             Gizmos.DrawLine(p3, p4);
             Gizmos.DrawLine(p4, p1);
+        }
+
+        public static void DrawLine(GMath.Line line, float y = 0)
+        {
+            var leftTop2D = line.LeftTop;
+            var rightTop2D = line.RightTop;
+            var leftBottom2D = line.LeftBottom;
+            var rightBottom2D = line.RightBottom;
+
+            var leftTop = new Vector3(leftTop2D.x, y, leftTop2D.y);
+            var rightTop = new Vector3(rightTop2D.x, y, rightTop2D.y);
+            var leftBottom = new Vector3(leftBottom2D.x, y, leftBottom2D.y);
+            var rightBottom = new Vector3(rightBottom2D.x, y, rightBottom2D.y);
+
+            Gizmos.DrawLine(leftTop, rightTop);
+            Gizmos.DrawLine(rightTop, rightBottom);
+            Gizmos.DrawLine(rightBottom, leftBottom);
+            Gizmos.DrawLine(leftBottom, leftTop);
         }
 
         public static void DrawLine(Vector3 from, Vector3 to, int times)

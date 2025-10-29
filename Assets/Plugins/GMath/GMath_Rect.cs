@@ -6,39 +6,26 @@ namespace GameBase.Math
     {
         public struct Rect2D : IShape2D
         {
-            private float _size;
+            public Vector2 dir;
             public Rect rect;
             public Rect2D(Rect rect)
             {
-                _size = 1f;
                 this.rect = rect;
+                dir = Vector2.zero;
             }
 
             public Rect2D(float width, float height)
             {
-                _size = 1f;
                 rect = Rect.MinMaxRect(0, 0, width, height);
+                dir = Vector2.zero;
             }
 
             public Rect2D(float xmin, float ymin, float xmax, float ymax)
             {
-                _size = 1f;
                 rect = Rect.MinMaxRect(xmin, ymin, xmax, ymax);
+                dir = Vector2.zero;
             }
 
-            float IShape2D.Size
-            {
-                get => _size;
-                set
-                {
-                    float factor = value / _size;
-                    Vector2 center = rect.center;
-                    rect.width = rect.width * factor;
-                    rect.height = rect.height * factor;
-                    rect.center = center;
-                    _size = value;
-                }
-            }
             Vector2 IShape2D.Center
             {
                 get => rect.center;
@@ -46,11 +33,17 @@ namespace GameBase.Math
             }
             Vector2 IShape2D.Dir
             {
-                get => Vector2.zero;
+                get => dir;
+                set => dir = value;
+            }
+
+            float IShape2D.Size
+            {
+                get => rect.width;
                 set
                 {
-                    Vector2 dir1 = value.normalized * rect.height / 2;
-                    Vector2 dir2 = GMath.VerticalVector2(dir1).normalized * rect.width / 2;
+                    rect.height = value / rect.width * rect.height;
+                    rect.width = value;
                 }
             }
 

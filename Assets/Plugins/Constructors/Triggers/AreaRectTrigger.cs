@@ -1,13 +1,15 @@
+using GameBase.EntitySystem;
 using GameBase.Math;
 using GameBase.Triggers;
-using GameBase.EntitySystem;
+using UnityEngine;
 
 namespace Constructor.Triggers
 {
     public struct AreaRectTriggerData
     {
         public int width;
-        public int damage;
+        public string effectName;
+        public string audioName;
     }
     public class AreaRectTrigger : SealedConstructor<AreaRectTriggerData, Trigger, AreaRectTrigger>
     {
@@ -16,12 +18,10 @@ namespace Constructor.Triggers
         protected override Trigger GetFromData(in AreaRectTriggerData data)
         {
             var e = TriggerSys.Instance.NewEntity();
-            e.maxeffectTimes = 100;
-            e.hasWhite = true;
             e.shape = new GMath.Rect2D(data.width, 1f);
-            e.targetsSet = TargetSetFactorary.Get(TargetSetType.Common);
-            var damage = data.damage;
-            e.action = Constructor.Triggers.Action.TriggerActionFactory.Instance.Get(Triggers.Action.Type.Damage, data.damage);
+
+            e.trigEffect = data.effectName;
+            e.trigAudio = data.audioName;
 
             return e;
         }

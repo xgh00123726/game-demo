@@ -1,4 +1,4 @@
-using Constructor.Effects;
+using GameBase.Resources;
 using UnityEngine;
 
 namespace Instance
@@ -7,8 +7,7 @@ namespace Instance
     {
         public static void Show(Vector3 position)
         {
-            var effect = Constructor.Effects.EffectFactory.Instance.Get(EffectType.Common, 2);
-            effect.particle.transform.position = position;
+            EffectSys.Instance.PlayAtP("Prefabs/Effect/Move/RightClickEffect", position);
         }
     }
 }
