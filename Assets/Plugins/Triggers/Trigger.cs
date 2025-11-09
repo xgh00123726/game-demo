@@ -16,7 +16,7 @@ namespace GameBase.Triggers
     public class Trigger
     {
         // require
-        public int maxeffectTimes;
+        public int maxEffectTimes;
         public ITriggerAttach attach;
         public ITriggerTarget target;
         public IShape2D shape;
@@ -48,6 +48,8 @@ namespace GameBase.Triggers
         internal bool isTrig;
         internal int actualEffectTimes;
         internal HashSet<ITriggerTarget> whites;
+
+        public int ActualEffectTimes => actualEffectTimes;
 
         public void Trig()
         {

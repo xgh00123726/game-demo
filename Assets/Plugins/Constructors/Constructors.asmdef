@@ -18,7 +18,8 @@
         "Inventory",
         "Triggers",
         "ResourcesMgr",
-        "YamlDotNet"
+        "YamlDotNet",
+        "Projectile"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

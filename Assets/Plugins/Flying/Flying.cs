@@ -13,13 +13,14 @@ namespace GameBase.Flyings
         public int trailID;
         public float maxExistTime;
         public float minExistTime;
-        public int length;
+        public float maxTravel;
 
         public CurveBase curve;
         public float speed;
         public CurveFactory.CurveType curveType;
         public IFlyingTarget target;
         public float startAngleOffset;
+        public Vector3 dest;
 
         public string hitEffect;
         public string hitAudio;
@@ -47,7 +48,7 @@ namespace GameBase.Flyings
             get => obj.transform.forward;
             set => obj.transform.forward = value;
         }
-        public Vector3 Dest => target.Position;
+        public Vector3 Dest => dest;
 
         public Vector3 Src
         {
@@ -59,7 +60,7 @@ namespace GameBase.Flyings
             }
         }
 
-        float ICurveable.Length => length;
+        float ICurveable.MaxTravel => maxTravel;
 
         float ICurveable.LifeTime => Time.time - instantiateTime;
 

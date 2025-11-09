@@ -1,3 +1,4 @@
+using Constructor.Projectiles;
 using Constructor.Triggers;
 using Constructor.Triggers.Action;
 using GameBase.Creatures;
@@ -19,23 +20,19 @@ namespace Constructor.Spells.Action
             {
                 var t = TriggerSys.Instance.NewEntity();
                 t.trigStyle = TrigStyle.Once;
-                t.delay = data.delay;
-                t.trigPeriod = 0;
-                t.hasWhite = true;
+                t.hasWhite = data.projectile.hasWhite;
                 t.attach = c;
-                t.targetsSet = CommonTargetSet.Instance;
-                t.maxeffectTimes = data.maxEffectTimes;
                 t.owner = c;
                 var damage = data.damage + c.modifyables["damage"].Value * data.ampFactor;
                 t.action = new Damage(damage);
-                t.hitAudio = data.hitAudio;
+                t.shape = ProjectileFactory.Instance.GetShape(data.projectile.shape);
 
                 Vector3 position = c.Position;
                 float size = t.shape.Size;
                 Vector3 scale = new Vector3(size, 1, size);
                 Vector3 dir = spell.castPosition - c.Position;
 
-                EffectSys.Instance.PlayAtPSD(data.effectName, c.Position, scale, dir);
+                EffectSys.Instance.PlayAtPSD(data.projectile.trigEffectName, c.Position, scale, dir);
 
                 t.OnTrig += () =>
                 {

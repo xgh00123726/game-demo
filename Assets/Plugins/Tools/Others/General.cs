@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -21,6 +22,34 @@ namespace GameBase.Tools
                 names.Add(f.Name);
             }
             return names;
+        }
+
+        public static void SetInstanceNotNull<T>(T obj)
+        {
+            SetInstanceNotNull(typeof(T), obj);
+        }
+
+        public static void SetInstanceNotNull(Type type, object obj)
+        {
+            var fields = type.GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+            foreach (var field in fields)
+            {
+                var value = CreateInstance(field.FieldType);
+                SetInstanceNotNull(field.FieldType, value);
+                field.SetValue(obj, value);
+            }
+        }
+
+        public static object CreateInstance(Type type)
+        {
+            if (type == typeof(string))
+            {
+                return null;
+            }
+            else
+            {
+                return Activator.CreateInstance(type);
+            }
         }
     }
 }

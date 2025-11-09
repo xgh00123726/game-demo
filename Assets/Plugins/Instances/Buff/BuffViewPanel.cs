@@ -27,7 +27,7 @@ namespace Instance
                     .Log("error");
             }
             _instance = this;
-            _pool.InstantiateFunc = () => GameObject.Instantiate(ResourcesLoader.GetPrefab(itemPrefabName));
+            _pool.InstantiateFunc = () => GameObject.Instantiate(ResourcesLoader.Prefab.Get(itemPrefabName));
             _pool.InstantiateAction = static (e) => e.SetActive(true);
             _pool.ReleaseAction = static (e) => e.SetActive(false);
         }
@@ -54,7 +54,7 @@ namespace Instance
             e.iconMaterial.SetFloat("_Dir1", -1f);
             e.iconMaterial.SetFloat("_Dir2", -1f);
 
-            var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.iconTextureName));
+            var texture = GameObject.Instantiate(ResourcesLoader.Texture2D.Get(e.iconTextureName));
 
             e.iconMaterial.SetTexture("_Target", texture);
 
@@ -70,7 +70,7 @@ namespace Instance
 
             item.obj.SetActive(true);
             item.buff = buff;
-            item.iconMaterial.SetTexture("_Target", GameObject.Instantiate(ResourcesLoader.GetTexture2D(info.textureName)));
+            item.iconMaterial.SetTexture("_Target", GameObject.Instantiate(ResourcesLoader.Texture2D.Get(info.textureName)));
         }
 
         public void UpdatePanel(Creature c)

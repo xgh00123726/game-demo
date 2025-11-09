@@ -23,5 +23,37 @@ namespace GameBase.Tools
         {
             return (e1 & e2) == 0;
         }
+
+        public static bool TryParse<T>(string s, out T e) where T : struct
+        {
+            if (s == null)
+            {
+                e = default;
+                return true;
+            }
+            s.Replace(" ", "");
+            string[] ss = s.Split('|');
+            T ret = default;
+            foreach (var st in ss)
+            {
+                T te = default;
+                bool parseOK = Enum.TryParse(st, out te);
+                if (!parseOK)
+                {
+                    e = ret;
+                    return false;
+                }
+                else
+                {
+                    uint ite = Convert.ToUInt32(te);
+                    uint iret = Convert.ToUInt32(ret);
+                    iret += ite;
+                    ret = (T)Enum.ToObject(typeof(T), iret);
+                }
+            }
+
+            e = ret;
+            return true;
+        }
     }
 }

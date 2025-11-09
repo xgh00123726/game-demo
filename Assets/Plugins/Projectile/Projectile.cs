@@ -1,18 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using GameBase.Creatures;
+using GameBase.Flyings;
+using GameBase.Triggers;
 
-public class Projectile : MonoBehaviour
+namespace GameBase.Projectiles
 {
-    // Start is called before the first frame update
-    void Start()
+    public enum SearchTargetStyle
     {
-        
+        TraceTarget,
+        BaseFlying,
+    };
+
+    public enum Tag : uint
+    {
+        None = 0,
+        DestroyOnEffectMaxTimes = 1 << 0,       // 到达最大次数后销毁
+        TrigOnlyWhenHitMainTarget = 1 << 1,     // 射弹只有击中主目标后才触发
     }
 
-    // Update is called once per frame
-    void Update()
+    public class Projectile
     {
-        
+        public Flying flying;
+        public Trigger trigger;
+        public Creature target;
+
+        public SearchTargetStyle searchTargetStyle;
+        public Tag tag;
+        public float arriveDis;
     }
 }

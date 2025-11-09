@@ -14,7 +14,7 @@ namespace GameBase.UI
         {
             var e = new HealthBar();
 
-            var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(k));
+            var obj = GameObject.Instantiate(ResourcesLoader.Prefab.Get(k));
 
             obj.transform.SetParent(WorldCanvs.Instance.transform, false);
 

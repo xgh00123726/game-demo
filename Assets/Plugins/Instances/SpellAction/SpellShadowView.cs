@@ -15,7 +15,7 @@ namespace Instance
         public SuperImage image;
         public SpellShadowView(Transform parent)
         {
-            shadowObj = GameObject.Instantiate(ResourcesLoader.GetPrefab("Prefabs/UI/SpellItemShadowView.prefab"));
+            shadowObj = GameObject.Instantiate(ResourcesLoader.Prefab.Get("Prefabs/UI/SpellItemShadowView.prefab"));
 
             shadowObj.transform.SetParent(parent, false);
 

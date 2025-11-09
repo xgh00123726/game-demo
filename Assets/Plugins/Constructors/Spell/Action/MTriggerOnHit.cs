@@ -1,4 +1,5 @@
 using Constructor.Flyings;
+using Constructor.Projectiles;
 using Constructor.Triggers;
 using Constructor.Triggers.Action;
 using GameBase.Creatures;
@@ -18,31 +19,19 @@ namespace Constructor.Spells.Action
         {
             if (spell.speller is Creature c)
             {
-                var f = Flyings.FlyingFactory.Instance.GetFromData(data.flying);
+                var p = ProjectileFactory.Instance.GetFromData(data.projectile);
+                var f = p.flying;
                 f.Src = c.HandPosition + data.flyingSrcOffset;
                 f.target = new FixedFlyingTarget()
                 {
                     Position = spell.castPosition,
                 };
-
-                f.OnHit += () =>
-                {
-                    var t = TriggerSys.Instance.NewEntity();
-                    t.attach = f;
-                    t.shape = new GMath.Circle()
-                    {
-                        c = new Vector2(f.target.Position.x, f.target.Position.z),
-                        r = data.radius
-                    };
-                    t.targetsSet = CommonTargetSet.Instance;
-                    t.owner = c;
-                    t.maxeffectTimes = data.maxEffectTimes;
-                    t.camp = (GameBase.Triggers.CampType)spell.camp;
-                    var damage = data.damage + c.modifyables["damage"].Value * data.ampFactor;
-                    t.action = new Damage(damage);
-                    t.hitAudio = data.hitAudio;
-                    t.Trig();
-                };
+                p.searchTargetStyle = GameBase.Projectiles.SearchTargetStyle.BaseFlying;
+                var t = p.trigger;
+                t.owner = c;
+                t.camp = (GameBase.Triggers.CampType)spell.camp;
+                var damage = data.damage + c.modifyables["damage"].Value * data.ampFactor;
+                t.action = new Damage(damage);
 
                 return f;
             }

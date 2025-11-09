@@ -8,7 +8,7 @@ namespace GameBase.Flyings
         public Vector3 Dir {  get; set; }
         public Vector3 Dest { get; }
         public Vector3 Src { get; }
-        public float Length { get; }
+        public float MaxTravel { get; }
         public float LifeTime { get; }
     }
 }

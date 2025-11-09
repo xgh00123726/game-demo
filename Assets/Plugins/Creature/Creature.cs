@@ -1,6 +1,7 @@
 using GameBase.AI;
 using GameBase.Buffs;
 using GameBase.EntitySystem;
+using GameBase.Flyings;
 using GameBase.Modify;
 using GameBase.Move;
 using GameBase.Triggers;
@@ -18,7 +19,8 @@ namespace GameBase.Creatures
         IModifieder,
         IBuffOwner,
         IMover, 
-        ITriggerAttach
+        ITriggerAttach,
+        IFlyingTarget
     {
         internal int id;
 
@@ -62,12 +64,6 @@ namespace GameBase.Creatures
         }
 
         float IMover.MoveSpeed => modifyables["moveSpeed"].Value;
-
-        Vector3 IMover.Position
-        {
-            get => obj.transform.position;
-            set => obj.transform.position = value;
-        }
 
         float IMover.RotateSpeed => modifyables["rotateSpeed"].Value;
 

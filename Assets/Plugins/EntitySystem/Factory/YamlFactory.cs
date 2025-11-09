@@ -2,22 +2,36 @@ using GameBase.Tools;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
 namespace GameBase.EntitySystem
 {
+    public class GenTemplateAttribute : Attribute
+    {
+        public GenTemplateAttribute(string path, string comment)
+        {
+            Path = path;
+            Comment = comment;
+        }
+        public string Path { get; set; }
+        public string Comment { get; set; }
+    }
     public abstract class YamlFactory<T_YamlData, T_Entity, T_Factory> : Singleton<T_Factory>
         where T_Factory : YamlFactory<T_YamlData, T_Entity, T_Factory>, new()
     {
         private Dictionary<string, T_YamlData> _dataDict;
 
         protected abstract string YamlFolder { get; }
+        protected virtual string TemplatePath { get; }
 
         public YamlFactory()
         {
             _dataDict = GetData();
         }
+
+        protected virtual void OnInitYamlData(T_YamlData data) { }
 
         private void ReadYamlData(DirectoryInfo dir, IDeserializer deserializer, Dictionary<string, T_YamlData> dict)
         {
@@ -38,7 +52,9 @@ namespace GameBase.EntitySystem
                         var name = secs[0];
                         try
                         {
-                            dict[name] = deserializer.Deserialize<T_YamlData>(reader);
+                            var yamlData = deserializer.Deserialize<T_YamlData>(reader);
+                            dict[name] = yamlData;
+                            OnInitYamlData(yamlData);
                         }
                         catch (Exception e)
                         {
@@ -103,6 +119,43 @@ namespace GameBase.EntitySystem
             }
 
             return GetEntity(data);
+        }
+
+        protected virtual T_YamlData GetTemplateData() => default;
+
+        public void GenerateTemplate()
+        {
+            Type type = GetType();
+            GenTemplateAttribute attribute = type.GetCustomAttribute<GenTemplateAttribute>();
+            string path = null;
+            string comment = null;
+            if (attribute != null)
+            {
+                path = attribute.Path;
+                comment = attribute.Comment;
+            }
+            if (path == null)
+            {
+                if (YamlFolder == null)
+                {
+                    return;
+                }
+                path = $"{YamlFolder}/Template.yaml";
+            }
+            var data = GetTemplateData();
+            if (data == null)
+            {
+                data = Activator.CreateInstance<T_YamlData>();
+                General.SetInstanceNotNull(data);
+            }
+            var serializer = new SerializerBuilder().Build();
+            var yaml = serializer.Serialize(data);
+            if (comment != null)
+            {
+                yaml = $"# {comment}\n{yaml}";
+            }
+            File.WriteAllText(path, yaml);
+            XLogger.Instance.Log($"success to write template file to: {path}");
         }
     }
 }

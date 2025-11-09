@@ -12,7 +12,7 @@ namespace Instance
 
         public CommonDragView(string prefabName = "Prefabs/UI/InventoryShadowItem")
         {
-            obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(prefabName));
+            obj = GameObject.Instantiate(ResourcesLoader.Prefab.Get(prefabName));
 
             obj.transform.SetParent(RootCanvas.Instance.Layer(1), false);
 

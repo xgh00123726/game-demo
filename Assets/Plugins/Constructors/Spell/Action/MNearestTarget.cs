@@ -1,4 +1,5 @@
 using Constructor.Flyings;
+using Constructor.Projectiles;
 using Constructor.Triggers;
 using Constructor.Triggers.Action;
 using GameBase.Creatures;
@@ -25,24 +26,15 @@ namespace Constructor.Spells.Action
                 var target = CommonTargetSet.Instance.NearestTarget(center, attackRange, spell.camp);
                 if (target != null)
                 {
-                    var t = TriggerSys.Instance.NewEntity();
+                    var p = ProjectileFactory.Instance.GetFromData(data.projectile);
+                    p.target = target;
+                    var t = p.trigger;
                     t.owner = c;
-                    t.target = target;
-                    t.hitAudio = data.hitAudio;
-                    t.maxeffectTimes = data.maxEffectTimes;
-                    t.targetsSet = CommonTargetSet.Instance;
-
                     var damage = data.damage + c.modifyables["damage"].Value * data.ampFactor;
                     t.action = new Damage(damage);
 
-                    var f = Flyings.FlyingFactory.Instance.GetFromData(data.flying);
+                    var f = p.flying;
                     f.Src = c.HandPosition;
-                    f.target = new FixedFlyingTarget()
-                    {
-                        Position = target.Position,
-                    };
-                    f.OnHit = t.Trig;
-                    f.arriveDis += t.target.Radius;
 
                     return f;
                 }

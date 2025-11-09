@@ -9,7 +9,7 @@ namespace GameBase.UI
         internal GameObject obj;
         public WorldCanvs()
         {
-            obj = GameObject.Instantiate(ResourcesLoader.GetPrefab("Prefabs/UI/WorldCanvas.prefab"));
+            obj = GameObject.Instantiate(ResourcesLoader.Prefab.Get("Prefabs/UI/WorldCanvas.prefab"));
         }
 
         public Transform transform

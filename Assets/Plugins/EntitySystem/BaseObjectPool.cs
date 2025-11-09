@@ -57,6 +57,11 @@ namespace GameBase.EntitySystem
         /// </list></summary>
         public virtual void Release(T obj)
         {
+            if (_objects.Contains(obj))
+            {
+                return;
+            }
+
             if (obj is IPoolable iobj)
             {
                 iobj.BeforeRelease();

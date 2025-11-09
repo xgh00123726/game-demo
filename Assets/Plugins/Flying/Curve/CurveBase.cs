@@ -14,8 +14,6 @@ namespace GameBase.Flyings
             _projectile = projectile;
         }
 
-        internal virtual void Start() { }
-
         protected abstract Vector3 GetDirDelta();
 
         public virtual void DirUpdate()
@@ -60,5 +58,7 @@ namespace GameBase.Flyings
                 _projectile.Position = _projectile.Position + delta;
             }
         }
+
+        public virtual bool CurveEnd() => false;
     }
 }

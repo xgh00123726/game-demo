@@ -9,6 +9,7 @@ namespace GameBase.Flyings
             Tracer,
             Slower,
             Fall,
+            Vector,
         }
 
         public static CurveBase CreateInstance(CurveType type, ICurveable e)
@@ -32,6 +33,10 @@ namespace GameBase.Flyings
             if (type == CurveType.Fall)
             {
                 return new Fall(e);
+            }
+            if (type == CurveType.Vector)
+            {
+                return new Vector(e);
             }
 
             return null;

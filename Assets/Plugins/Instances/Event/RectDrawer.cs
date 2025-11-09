@@ -26,7 +26,7 @@ namespace Instance
 
         public RectDrawer()
         {
-            _lineRendererObj = GameObject.Instantiate(ResourcesLoader.GetPrefab(lineRendererPrefabName));
+            _lineRendererObj = GameObject.Instantiate(ResourcesLoader.Prefab.Get(lineRendererPrefabName));
             _lineRenderer = _lineRendererObj.transform.Find("Line").GetComponent<LineRenderer>();
         }
 

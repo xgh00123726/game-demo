@@ -1,4 +1,5 @@
 using Constructor.Flyings;
+using Constructor.Projectiles;
 using Constructor.Triggers;
 using Constructor.Triggers.Action;
 using GameBase.Creatures;
@@ -22,24 +23,15 @@ namespace Constructor.Spells.Action
         {
             if (spell.speller is Creature c)
             {
-                var f = Flyings.FlyingFactory.Instance.GetFromData(data.flying);
+                var p = ProjectileFactory.Instance.GetFromData(data.projectile);
+                var f = p.flying;
                 f.Src = c.Position;
-                var dir = (spell.castPosition - c.Position).normalized;
-                f.target = new FixedFlyingTarget()
-                {
-                    Position = f.Src + dir * data.distance,
-                };
+                f.Dir = (spell.castPosition - c.Position).normalized;
+                f.curveType = CurveFactory.CurveType.Vector;
 
-                var t = TriggerSys.Instance.NewEntity();
-                t.hasWhite = true;
-                t.maxeffectTimes = data.maxEffectTimes;
-                t.shape = new GMath.Circle(data.radius);
+                var t = p.trigger;
                 t.owner = c;
-                t.attach = f;
-                t.trigStyle = TrigStyle.Always;
                 t.camp = (GameBase.Triggers.CampType)spell.camp;
-                t.hitAudio = data.hitAudio;
-                t.targetsSet = CommonTargetSet.Instance;
 
                 var damage = data.damage + c.modifyables["damage"].Value * data.ampFactor;
                 t.action = new Damage(damage);

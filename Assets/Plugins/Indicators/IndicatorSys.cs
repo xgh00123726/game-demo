@@ -21,7 +21,7 @@ namespace GameBase.Indicators
         protected override Indicator CtorT(string k)
         {
             var e = new Indicator();
-            var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(k));
+            var obj = GameObject.Instantiate(ResourcesLoader.Prefab.Get(k));
             e.urpProjector = obj.GetComponent<DecalProjector>();
 
             e.decalMaterial = new Material(e.urpProjector.material);
@@ -34,7 +34,7 @@ namespace GameBase.Indicators
 
         protected override void EntityStart(Indicator e)
         {
-            var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.textureName));
+            var texture = GameObject.Instantiate(ResourcesLoader.Texture2D.Get(e.textureName));
 
             e.decalMaterial.SetTexture("_Texture2D", texture);
         }

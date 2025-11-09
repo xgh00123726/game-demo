@@ -1,5 +1,6 @@
 using GameBase.EntitySystem;
 using GameBase.Resources;
+using GameBase.Tools;
 using UnityEngine;
 namespace GameBase.Flyings
 {
@@ -16,7 +17,7 @@ namespace GameBase.Flyings
         protected override Flying CtorT(string k)
         {
             Flying e = new Flying();
-            var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(k));
+            var obj = GameObject.Instantiate(ResourcesLoader.Prefab.Get(k));
             e.obj = obj;
             return e;
         }
@@ -48,7 +49,6 @@ namespace GameBase.Flyings
             EffectSys.Instance.PlayAtPS(e.releaseEffect, e.obj.transform.position, e.obj.transform.localScale);
             e.OnReleased?.Invoke();
             e.obj.transform.localScale = Vector3.one;
-
             e.speed = 0;
             e.curveType = CurveFactory.CurveType.None;
             e.curve = null;
@@ -59,10 +59,12 @@ namespace GameBase.Flyings
 
         protected override void EntityStart(Flying e)
         {
-            e.Dir = e.target.Position - e.src;
+            if (e.target != null)
+            {
+                e.Dir = e.target.Position - e.src;
+            }
             Quaternion rotate = Quaternion.Euler(0, e.startAngleOffset, 0);
             e.Dir = rotate * e.Dir;
-            e.curve.Start();
         }
 
         /// <summary>
@@ -79,12 +81,25 @@ namespace GameBase.Flyings
                 return;
             }
 
+            // 如果飞行物有目标则飞向目标，否则飞向固定的位置
+            if (e.target != null)
+            {
+                e.dest = e.target.Position;
+            }
+
             // 具有轨迹的射弹逻辑
             if (e.curve != null)
             {
+
                 e.curve.speed = e.speed;
                 e.curve.DirUpdate();
                 e.curve.PosUpdate();
+
+                if (e.curve.CurveEnd())
+                {
+                    RemoveEntity(e);
+                    return;
+                }
             }
 
             if (e.hitFlag && Time.time > e.minExistTime + e.instantiateTime)
@@ -93,7 +108,7 @@ namespace GameBase.Flyings
                 return;
             }
 
-            if (!e.hitFlag && (e.target.Position - e.obj.transform.position).magnitude <= e.arriveDis)
+            if (!e.hitFlag && (e.dest - e.obj.transform.position).magnitude <= e.arriveDis)
             {
                 e.hitFlag = true;
                 OnHit(e);
