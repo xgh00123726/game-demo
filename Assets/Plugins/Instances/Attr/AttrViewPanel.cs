@@ -11,9 +11,8 @@ namespace Instance
         private static AttrViewPanel _instance;
         public static AttrViewPanel Instance => _instance;
 
-        public AttrViewPanel(int prefabID = 15, int defaultObjID = 16) : base(
-            prefabID,
-            defaultObjID)
+        public AttrViewPanel(string prefabName = "Prefabs/UI/AttrPanel",
+            string itemPrefabName = "Prefabs/UI/AttrItem") : base(prefabName, itemPrefabName)
         {
             if (_instance != null)
             {
@@ -35,7 +34,7 @@ namespace Instance
         {
             FillItem(index + 1);
             this[index].attrKey = key;
-            this[index].triggerImage.SetIcon(ModifyTable.GetIconTextureID(key));
+            this[index].triggerImage.SetIcon(ModifyTable.GetTextureName(key));
         }
 
         public void SetAttrValue(Creature c)

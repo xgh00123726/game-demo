@@ -11,10 +11,10 @@ namespace Instance
         private static LineRenderer _lineRenderer;
         private static Rect _drawArea;
 
-        public static int lineRendererObjID = 48;
+        public static string lineRendererPrefabName = "Prefabs/Info/SelectorDrawer.prefab";
         public AreaDrawer()
         {
-            _lineRendererObj = GameObject.Instantiate(ResourcesLoader.GetPrefab(lineRendererObjID));
+            _lineRendererObj = GameObject.Instantiate(ResourcesLoader.GetPrefab(lineRendererPrefabName));
             _lineRenderer = _lineRendererObj.transform.Find("Line").GetComponent<LineRenderer>();
         }
 

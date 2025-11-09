@@ -9,7 +9,8 @@ namespace Instance
     {
         private static EquipmentPanel _instance;
         public static EquipmentPanel Instance => _instance;
-        public EquipmentPanel(int prefabID = 17, int defaultObjID = 18) : base(prefabID, defaultObjID)
+        public EquipmentPanel(string prefabName = "Prefabs/UI/EquipmentPanel",
+            string itemPrefabName = "Prefabs/UI/EquipmentItem") : base(prefabName, itemPrefabName)
         {
             if (_instance != null)
             {
@@ -27,7 +28,7 @@ namespace Instance
                 if (equipment != null)
                 {
                     var info = BuffDataBase.Instance[equipment.id];
-                    this[i].triggerImage.SetIcon(info.iconTextureID);
+                    this[i].triggerImage.SetIcon(info.textureName);
                     this[i].triggerImage.Show();
                     this[i].triggerImage.SetColor(info.rarity);
                 }

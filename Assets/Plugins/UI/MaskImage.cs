@@ -7,15 +7,15 @@ namespace GameBase.UI
     public class MaskImage
     {
         private Image _image;
-        private int _textureID;
+        private string _textureName;
         private Material _material;
-        private Texture2D _texture;
-        public int TextureID => _textureID;
+        public string TextureName => _textureName;
         public Material Material => _material;
 
         public MaskImage(Image image)
         {
             _image = image;
+            _material = image.material;
         }
 
         public void SetDir(float dir1, float dir2)
@@ -24,16 +24,16 @@ namespace GameBase.UI
             _material.SetFloat("_Dir2", dir2);
         }
 
-        public void SetIcon(int textureID)
+        public void SetIcon(string textureName)
         {
-            if (_textureID == textureID)
+            if (_textureName == textureName)
             {
                 return;
             }
 
-            _textureID = textureID;
+            _textureName = textureName;
 
-            if (textureID < 0)
+            if (textureName == null)
             {
                 return;
             }
@@ -43,7 +43,7 @@ namespace GameBase.UI
             _material.SetFloat("_Dir1", -1f);
             _material.SetFloat("_Dir2", -1f);
 
-            var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(textureID));
+            var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(textureName));
 
             _material.SetTexture("_Target", texture);
 

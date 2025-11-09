@@ -4,7 +4,6 @@ using GameBase.GCamera;
 using GameBase.Indicators;
 using GameBase.Tools;
 using System.Collections.Generic;
-using Constructor.Spells.Interactive;
 using GameBase.Spells;
 
 namespace Instance
@@ -55,24 +54,20 @@ namespace Instance
             {
                 var spell = _target.spells[i];
 
-                var interactive = spell.interactive as DotExternalSet;
-
-                if (interactive == null)
-                {
-                    return;
-                }
-
                 var isIndicatorReady = _isIndicatorReadys[i]; 
-                var indicator = CastIndicatorFactory.Get(interactive.indicatorType);
+                var indicator = CastIndicatorFactory.Get((IndicatorType)spell.indicatorType);
 
-                if (spell.spellCoolingdown.IsCoolingOver)
+                if (spell.IsCoolOver)
                 {
                     var func = _spellKeys[i];
                     var isFastCast = _isFastCasts[i];
 
                     if (isFastCast && Inputs.GetKeyDown(func, "spell"))
                     {
-                        interactive.position = CameraSys.MouseHitPosition;
+                        if ((spell.tag & GameBase.Spells.Tag.CastOnMousePosition) != 0)
+                        {
+                            spell.castPosition = CameraSys.MouseHitPosition;
+                        }
                         spell.TryCast();
                         DeReadyAll();
                     }
@@ -85,7 +80,10 @@ namespace Instance
                         }
                         else if (isIndicatorReady && Inputs.GetKeyDown(KeyFunction.MouseConfirm, "spell"))
                         {
-                            interactive.position = CameraSys.MouseHitPosition;
+                            if ((spell.tag & GameBase.Spells.Tag.CastOnMousePosition) != 0)
+                            {
+                                spell.castPosition = CameraSys.MouseHitPosition;
+                            }
                             spell.TryCast();
 
                             _isIndicatorReadys[i] = false;
@@ -105,7 +103,7 @@ namespace Instance
                 {
                     indicator.Set(new IndicatorConfig()
                     {
-                        length = interactive.length,
+                        length = spell.length,
                         position = _target.Position,
                         targetPosition = CameraSys.MouseHitPosition
                     });

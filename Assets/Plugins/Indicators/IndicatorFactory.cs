@@ -6,8 +6,8 @@ namespace GameBase.Indicators
         {
             if (type == IndicatorType.Circle)
             {
-                var e = IndicatorSys.Instance.NewEntity(45);
-                e.textureID = 10;
+                var e = IndicatorSys.Instance.NewEntity("Prefabs/Info/CreatureCircleIndicator.prefab");
+                e.textureName = "Textures/Circle";
                 e.obj.SetActive(false);
                 return e;
             }

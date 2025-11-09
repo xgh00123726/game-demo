@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 namespace GameBase.UI
 {
-    public class FloatText : IKeyEntity<int>
+    public class FloatText : IKeyEntity<string>
     {
         // 被抛出的text的y坐标随时间以二次函数曲线变化y = a*t*t+b*t+c
         public static float _yFactorAMin = -4f;
@@ -31,7 +31,7 @@ namespace GameBase.UI
         internal TextMeshProUGUI textObj;
 
         public GameObject obj;
-        public int Key { get; set; } = 5;
+        public string Key { get; set; } = "Prefabs/UI/FloatText";
         public Color Color
         {
             get => textObj.color;

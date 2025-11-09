@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameBase.UI
 {
-    public class HealthBar : IKeyEntity<int>
+    public class HealthBar : IKeyEntity<string>
     {
         public IHealthBarOwner owner;
         public float width = 0.9f;
@@ -19,6 +19,6 @@ namespace GameBase.UI
         internal RectTransform losingRectTransform;
 
         public GameObject obj;
-        public int Key { get; set; }
+        public string Key { get; set; }
     }
 }

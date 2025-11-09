@@ -12,7 +12,7 @@ namespace GameBase.Modify
     public class ModifyTable
     {
         private static List<string> _modifyableNames = new();
-        private static List<int> _modifyableTextureIDs = new();
+        private static List<string> _modifyableTextureNames = new();
         private static Dictionary<string, int> _modifyableIDs = new();
 
         static ModifyTable()
@@ -27,7 +27,7 @@ namespace GameBase.Modify
                 var data = ModifyableDataBase.Instance[i];
                 _modifyableNames.Add(data.name);
                 _modifyableIDs.Add(data.name, i);
-                _modifyableTextureIDs.Add(data.iconTextureID);
+                _modifyableTextureNames.Add(data.textureName);
             }
         }
 
@@ -43,7 +43,7 @@ namespace GameBase.Modify
             return _modifyableIDs[name];
         }
 
-        public static int GetIconTextureID(int id) => _modifyableTextureIDs[id];
+        public static string GetTextureName(int id) => _modifyableTextureNames[id];
     }
 
     public class Modifyables : IEnumerable<Modifyable>

@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 
 namespace GameBase.Indicators
 {
-    public class IndicatorSys : KeyEntitySys<int, Indicator, IndicatorSys>
+    public class IndicatorSys : KeyEntitySys<string, Indicator, IndicatorSys>
     {
         protected override void OnGet(Indicator e)
         {
@@ -18,7 +18,7 @@ namespace GameBase.Indicators
             e.obj.SetActive(false);
         }
 
-        protected override Indicator CtorT(int k)
+        protected override Indicator CtorT(string k)
         {
             var e = new Indicator();
             var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(k));
@@ -34,7 +34,7 @@ namespace GameBase.Indicators
 
         protected override void EntityStart(Indicator e)
         {
-            var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.textureID));
+            var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.textureName));
 
             e.decalMaterial.SetTexture("_Texture2D", texture);
         }

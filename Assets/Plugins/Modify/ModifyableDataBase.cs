@@ -7,7 +7,7 @@ namespace GameBase.Modify
     {
         public int id;
         public string name;
-        public int iconTextureID;
+        public string textureName;
     }
     public class ModifyableDataBase : CsvDataBase<ModifyableData, ModifyableDataBase>
     {

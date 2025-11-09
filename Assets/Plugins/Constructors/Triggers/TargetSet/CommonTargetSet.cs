@@ -3,54 +3,56 @@ using GameBase.Math;
 using System.Collections.Generic;
 using GameBase.Triggers;
 using UnityEngine;
+using GameBase.Tools;
 
 
 namespace Constructor.Triggers
 {
-    public class CommonTargetSet : ITriggerTargetsSet
+    public class CommonTargetSet : Singleton<CommonTargetSet>, ITriggerTargetsSet
     {
-        private static CommonTargetSet _instance = new();
-        public static CommonTargetSet Instance => _instance;
-
-        IEnumerable<ITriggerTarget> ITriggerTargetsSet.TargetsInShape(IShape2D shape)
+        List<ITriggerTarget> ITriggerTargetsSet.TargetsInShape(IShape2D shape, GameBase.Triggers.CampType camp)
         {
-            LinkedList<ITriggerTarget> ret = new();
+            List<ITriggerTarget> ret = new();
             foreach(var c in CreatureSys.Instance.Entities)
             {
-                if (c.tag != CreatureTag.CommonCreature) continue;
+                if (SuperEnum.NoOverlap((uint)c.camp, (uint)camp)) continue;
 
-                if (c is ITriggerTarget tar)
+                if (shape.Contains(c.Position.x, c.Position.z))
                 {
-                    if (shape.Contains(tar.Center.x, tar.Center.z))
-                    {
-                        ret.AddLast(tar);
-                    }
+                    ret.Add(c);
                 }
             }
 
             return ret;
         }
 
-        ITriggerTarget ITriggerTargetsSet.NearestTarget(Vector3 center, float radius)
+        public Creature NearestTarget(Vector3 center, float radius, GameBase.Creatures.CampType camp)
         {
             float minDis = radius;
-            ITriggerTarget ret = null;
+            Creature ret = null;
             foreach (var c in CreatureSys.Instance.Entities)
             {
-                if (c.tag != CreatureTag.CommonCreature) continue;
+                if (SuperEnum.NoOverlap((uint)c.camp, (uint)camp)) continue;
 
-                if (c is ITriggerTarget tar)
+                float dis = GMath.GameDistance(center, c.Position);
+                if (dis <= minDis)
                 {
-                    float dis = GMath.GameDistance(center, tar.Center);
-                    if (dis <= minDis)
-                    {
-                        minDis = dis;
-                        ret = tar;
-                    }
+                    minDis = dis;
+                    ret = c;
                 }
             }
 
             return ret;
+        }
+
+        public Creature NearestTarget(Vector3 center, float radius, GameBase.Triggers.CampType camp)
+        {
+            return NearestTarget(center, radius, (GameBase.Creatures.CampType)camp);
+        }
+
+        public Creature NearestTarget(Vector3 center, float radius, GameBase.Spells.CampType camp)
+        {
+            return NearestTarget(center, radius, (GameBase.Creatures.CampType)camp);
         }
     }
 }

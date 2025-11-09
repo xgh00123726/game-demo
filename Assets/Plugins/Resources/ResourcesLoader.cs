@@ -3,84 +3,88 @@ using System.IO;
 using UnityEngine.AddressableAssets;
 using NReco.Csv;
 using GameBase.Tools;
+using System.Collections.Generic;
 
 namespace GameBase.Resources
 {
 
     public partial class ResourcesLoader
     {
-        public static GameObject[] _prefabs;
-        public static Sprite[] _sprites;
-        public static Texture2D[] _textures;
+        public static Dictionary<string, GameObject> _prefabs;
+        public static Dictionary<string, Sprite> _sprites;
+        public static Dictionary<string, Texture2D> _textures;
 
-        public static GameObject GetPrefab(int id)
+        public static GameObject GetPrefab(string name)
         {
-            if (id >= _prefabs.Length || id < 0)
+            if (_prefabs.ContainsKey(name))
+            {
+                return _prefabs[name];
+            }
+            else
             {
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log($"resource id out of the bound, id:{id}, max:{_prefabs.Length}");
+                    .Log($"invalid name: {name}");
             }
-            return _prefabs[id];
+
+            return null;
         }
 
-        public static GameObject InstantiateGameObject(int id)
+        public static GameObject InstantiateGameObject(string name)
         {
-            return GameObject.Instantiate(GetPrefab(id));
+            return GameObject.Instantiate(GetPrefab(name));
         }
 
-        public static Sprite GetSpriteFromTextureID(int id)
+        public static Texture2D GetTexture2D(string name)
         {
-            if (id >= _sprites.Length || id < 0)
+            if (_textures.ContainsKey(name))
+            {
+                return _textures[name];
+            }
+            else
             {
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log($"resource id out of the bound, id:{id}, max:{_textures.Length}");
+                    .Log($"invalid name: {name}");
             }
 
-            var sprite = _sprites[id];
-
-            if (sprite == null)
-            {
-                var texture = ResourcesLoader.GetTexture2D(id);
-                sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-                _sprites[id] = sprite;
-            }
-            return sprite;
+            return null;
         }
 
-        public static Texture2D GetTexture2D(int id)
+        public static Sprite GetSprite(string name)
         {
-            if (id >= _textures.Length || id < 0)
+            if (_sprites.ContainsKey(name))
+            {
+                return _sprites[name];
+            }
+            else
             {
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log($"resource id out of the bound, id:{id}, max:{_textures.Length}");
+                    .Log($"invalid name: {name}");
             }
-            return _textures[id];
+
+            return null;
         }
 
         private static void CopyTexturesToSprite()
         {
-            for (int i = 0; i < _textures.Length; i++)
+            _sprites = new();
+            foreach (var kvp in _textures)
             {
-                var texture = ResourcesLoader.GetTexture2D(i);
+                var texture = kvp.Value;
                 var sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-                _sprites[i] = sprite;
+                _sprites.Add(kvp.Key, sprite);
             }
         }
 
-        private static void LoadCsvAsset<T>(string csvPath, out T[] container)
+        private static void LoadCsvAsset<T>(string csvPath, out Dictionary<string, T> container)
         {
             StreamReader reader = File.OpenText(csvPath);
             CsvReader csvReader = new CsvReader(reader);
-            int id;
             string path;
-            csvReader.Read();
-            container = new T[int.Parse(csvReader[0])];
-            for (int i = 0; i < container.Length; i++)
+            container = new ();
+            while (csvReader.Read())
             {
-                csvReader.Read();
-                id = int.Parse(csvReader[0]);
-                path = csvReader[1];
-                container[id] = Addressables.LoadAssetAsync<T>(path).WaitForCompletion();
+                path = csvReader[0];
+                container[path] = Addressables.LoadAssetAsync<T>(path).WaitForCompletion();
             }
 
             reader.Close();
@@ -96,7 +100,6 @@ namespace GameBase.Resources
             LoadCsvAsset($"{Application.streamingAssetsPath}/public/PrefabIDDictionary.csv", out _prefabs);
             LoadCsvAsset($"{Application.streamingAssetsPath}/public/Texture2DIDDictionary.csv", out _textures);
 
-            _sprites = new Sprite[_textures.Length];
             CopyTexturesToSprite();
         }
 

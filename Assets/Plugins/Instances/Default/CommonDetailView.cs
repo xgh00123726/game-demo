@@ -19,9 +19,9 @@ namespace Instance
         private float _width;
         private float _height;
 
-        public CommonDetailView(int prefabID = 4)
+        public CommonDetailView(string prefabName = "Prefabs/UI/DetailUI")
         {
-            _shadowObj = GameObject.Instantiate(ResourcesLoader.GetPrefab(prefabID));
+            _shadowObj = GameObject.Instantiate(ResourcesLoader.GetPrefab(prefabName));
 
             _shadowObj.transform.SetParent(RootCanvas.Instance.Layer(1), false);
 

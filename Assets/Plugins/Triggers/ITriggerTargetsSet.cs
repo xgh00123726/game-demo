@@ -6,7 +6,6 @@ namespace GameBase.Triggers
 {
     public interface ITriggerTargetsSet
     {
-        IEnumerable<ITriggerTarget> TargetsInShape(IShape2D shape);
-        ITriggerTarget NearestTarget(Vector3 center, float radius);
+        List<ITriggerTarget> TargetsInShape(IShape2D shape, CampType camp);
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace GameBase.Flyings
 {
     public class Flying : ICurveable,
-        IKeyEntity<int>,
+        IKeyEntity<string>,
         ITriggerAttach
     {
         public float arriveDis;
@@ -64,7 +64,7 @@ namespace GameBase.Flyings
         float ICurveable.LifeTime => Time.time - instantiateTime;
 
         public GameObject obj;
-        public int Key { get; set; }
+        public string Key { get; set; }
 
         Vector3 ITriggerAttach.Position => obj.transform.position;
     }

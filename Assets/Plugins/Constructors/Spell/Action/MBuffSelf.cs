@@ -6,19 +6,11 @@ using GameBase.Creatures;
 
 namespace Constructor.Spells.Action
 {
-    public struct MBuffSelfData
-    {
-        public int buffID;
-        public float duration;
-        public int slotNum;
-    }
-
     /// <summary>
     /// 为自己施加buff
     /// </summary>
     public class MBuffSelf : ModifyableAction
     {
-        public MBuffSelfData data;
         protected override bool CastAction(Spell spell, in SpellActionModifierData modifyData)
         {
             if (spell.speller is Creature c)
@@ -30,21 +22,6 @@ namespace Constructor.Spells.Action
             {
                 return false;
             }
-        }
-    }
-
-    public class BuffSelfCon : SealedConstructor<MBuffSelfData, MBuffSelf, BuffSelfCon>
-    {
-        protected override string RelativePath => "Spell/Action/MBuffSelf.csv";
-
-        protected override MBuffSelf GetFromData(in MBuffSelfData data)
-        {
-            var e = new MBuffSelf()
-            {
-                Size = data.slotNum
-            };
-            e.data = data;
-            return e;
         }
     }
 }

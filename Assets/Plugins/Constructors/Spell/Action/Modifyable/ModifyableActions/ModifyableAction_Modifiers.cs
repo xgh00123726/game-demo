@@ -2,7 +2,7 @@ using GameBase.Inventorys;
 using GameBase.Spells;
 using GameBase.Tools;
 
-namespace Constructor.Spells.Action
+namespace Constructor.Spells
 {
     public partial class ModifyableAction
     {

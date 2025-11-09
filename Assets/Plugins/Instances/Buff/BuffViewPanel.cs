@@ -16,10 +16,10 @@ namespace Instance
 
         private BaseObjectPool<GameObject> _pool = new();
 
-        public BuffViewPanel(int prefabID = 10,
-            int defaultObjID = 9) : base(
-            prefabID,
-            defaultObjID)
+        public BuffViewPanel(string prefabName = "Prefabs/UI/BuffPanel",
+            string itemPrefabName = "Prefabs/UI/BuffItem") : base(
+            prefabName,
+            itemPrefabName)
         {
             if (_instance != null)
             {
@@ -27,12 +27,12 @@ namespace Instance
                     .Log("error");
             }
             _instance = this;
-            _pool.InstantiateFunc = () => GameObject.Instantiate(ResourcesLoader.GetPrefab(defaultObjID));
+            _pool.InstantiateFunc = () => GameObject.Instantiate(ResourcesLoader.GetPrefab(itemPrefabName));
             _pool.InstantiateAction = static (e) => e.SetActive(true);
             _pool.ReleaseAction = static (e) => e.SetActive(false);
         }
 
-        protected override GameObject GetGameObject(int id)
+        protected override GameObject GetGameObject(string name)
         {
             return _pool.Get();
         }
@@ -54,7 +54,7 @@ namespace Instance
             e.iconMaterial.SetFloat("_Dir1", -1f);
             e.iconMaterial.SetFloat("_Dir2", -1f);
 
-            var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.iconTextureID));
+            var texture = GameObject.Instantiate(ResourcesLoader.GetTexture2D(e.iconTextureName));
 
             e.iconMaterial.SetTexture("_Target", texture);
 
@@ -70,7 +70,7 @@ namespace Instance
 
             item.obj.SetActive(true);
             item.buff = buff;
-            item.iconMaterial.SetTexture("_Target", GameObject.Instantiate(ResourcesLoader.GetTexture2D(info.iconTextureID)));
+            item.iconMaterial.SetTexture("_Target", GameObject.Instantiate(ResourcesLoader.GetTexture2D(info.textureName)));
         }
 
         public void UpdatePanel(Creature c)

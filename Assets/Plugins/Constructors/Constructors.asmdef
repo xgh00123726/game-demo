@@ -17,7 +17,8 @@
         "Creature",
         "Inventory",
         "Triggers",
-        "ResourcesMgr"
+        "ResourcesMgr",
+        "YamlDotNet"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

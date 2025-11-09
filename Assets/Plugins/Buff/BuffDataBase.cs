@@ -18,7 +18,7 @@ namespace GameBase.Buffs
         public BuffType type;
         public int buffModifiersID;
         public float duration;
-        public int iconTextureID;
+        public string textureName;
         public int rarity;
     }
     public class BuffDataBase : CsvDataBase<BuffInfo, BuffDataBase>

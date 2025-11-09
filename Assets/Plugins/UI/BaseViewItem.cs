@@ -17,9 +17,9 @@ namespace GameBase.UI
         protected internal bool inDetailState;
 
         public bool interactiveEnable = true;
-        public int objID;
+        public string prefabName;
         public GameObject obj;
-        public int iconTextureID;
+        public string iconTextureName;
         public SuperImage triggerImage;
         public BaseUI uiScript;
 

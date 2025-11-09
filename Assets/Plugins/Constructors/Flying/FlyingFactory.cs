@@ -1,21 +1,30 @@
 using GameBase.Flyings;
 using GameBase.EntitySystem;
-using System.Collections.Generic;
 
 namespace Constructor.Flyings
 {
-    public enum Type
+    public class FlyingFactory : YamlFactory<FlyingData, Flying, FlyingFactory>
     {
-        Common,
-    }
-    public class FlyingFactory : ConstructorFactory<Type, Flying, FlyingFactory>
-    {
-        protected override Dictionary<Type, System.Func<int, Flying>> GetConstructorGetDict()
+        protected override string YamlFolder => null;
+
+        protected override Flying GetEntity(FlyingData data)
         {
-            return new()
+            var e = FlyingSys.Instance.NewEntity(data.prefabName);
+
+            if (data.curveType != CurveFactory.CurveType.None)
             {
-                { Type.Common, Common.Instance.Get},
-            };
+                e.curveType = data.curveType;
+                e.curve = CurveFactory.CreateInstance(data.curveType, e);
+                e.curve.speed = data.speed;
+            }
+
+            e.speed = data.speed;
+            e.minExistTime = data.minExistTime;
+
+            e.releaseEffect = data.releaseEffectName;
+            e.hitEffect = data.hitEffectName;
+
+            return e;
         }
     }
 }

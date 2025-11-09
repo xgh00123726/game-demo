@@ -12,7 +12,7 @@ namespace Instance
     {
         private static AttrSelectPanel _instance;
         public static AttrSelectPanel Instance => _instance;
-        public AttrSelectPanel(int prefabID = 51, int defaultObjID = 52) : base(prefabID, defaultObjID)
+        public AttrSelectPanel(string prefabName = "Prefabs/UI/AttrSelectPanel.prefab", string itemPrefabName = "Prefabs/UI/AttrSelectItem.prefab") : base(prefabName, itemPrefabName)
         {
             if (_instance != null)
             {
@@ -46,25 +46,22 @@ namespace Instance
                 var info = ShopDataBase.Instance[goodID];
 
                 // 如果表中没有配置材质贴图，并且商品是背包物品，那就使用其物品的材质号
-                if (info.iconTextureID < 0 && info.type == ShopItemType.InventoryItem)
+                if (info.textureName == null && info.type == ShopItemType.InventoryItem)
                 {
                     var eInfo = BuffDataBase.Instance[info.typeID];
-                    viewItem.iconImage.SetIcon(eInfo.iconTextureID);
+                    viewItem.iconImage.SetIcon(eInfo.textureName);
                     viewItem.text.text = $"装备";
-                    //viewItem.identifyImage.SetIcon(62);
                 }
                 // 如果是增益效果，那就使用在表格中配置的材质贴图
                 else if (info.type == ShopItemType.Buff)
                 {
-                    //viewItem.identifyImage.SetIcon(61);
                     viewItem.text.text = $"Buff";
-                    viewItem.iconImage.SetIcon(info.iconTextureID);
+                    viewItem.iconImage.SetIcon(info.textureName);
                 }
                 else if (info.type == ShopItemType.Modifier)
                 {
-                    //viewItem.identifyImage.SetIcon(61);
                     viewItem.text.text = $"属性";
-                    viewItem.iconImage.SetIcon(info.iconTextureID);
+                    viewItem.iconImage.SetIcon(info.textureName);
                 }
 
                 viewItem.obj.SetActive(true);

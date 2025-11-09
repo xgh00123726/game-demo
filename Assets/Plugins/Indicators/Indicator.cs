@@ -5,9 +5,9 @@ using UnityEngine.Rendering.Universal;
 
 namespace GameBase.Indicators
 {
-    public class Indicator : IKeyEntity<int>
+    public class Indicator : IKeyEntity<string>
     {
-        public int textureID;
+        public string textureName;
 
         internal Material decalMaterial;
         internal bool setSize;
@@ -40,7 +40,7 @@ namespace GameBase.Indicators
             }
         }
         public GameObject obj;
-        public int Key { get; set; }
+        public string Key { get; set; }
     }
 }
 

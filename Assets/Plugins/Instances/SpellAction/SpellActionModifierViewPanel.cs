@@ -1,4 +1,4 @@
-using Constructor.Spells.Action;
+using Constructor.Spells;
 using GameBase.Spells;
 using GameBase.Tools;
 using GameBase.UI;
@@ -11,10 +11,10 @@ namespace Instance
 
         private SpellShadowView _spellShadowView;
 
-        public SpellActionModifierViewPanel(int prefabID = 43,
-            int defaultObjID = 42) : base(
-            prefabID,
-            defaultObjID)
+        public SpellActionModifierViewPanel(string prefabName = "Prefabs/UI/SpellActionModifierPanel.prefab",
+            string itemPrefabName = "Prefabs/UI/SpellActionModifierItem.prefab") : base(
+            prefabName,
+            itemPrefabName)
         {
             if (_instance != null)
             {
@@ -29,7 +29,7 @@ namespace Instance
         {
             if (spell.action is ModifyableAction mAct)
             {
-                _spellShadowView.image.SetIcon(spell.iconTextureID);
+                _spellShadowView.image.SetIcon(spell.textureName);
                 _spellShadowView.image.SetColor(UnityEngine.Color.green);
                 _spellShadowView.image.Show();
                 FillItem(mAct.Size);
@@ -42,7 +42,7 @@ namespace Instance
                     {
                         var data = SpellActionModifierDataBase.Instance[id];
 
-                        this[i].triggerImage.SetIcon(data.iconTextureID);
+                        this[i].triggerImage.SetIcon(data.textureName);
                         this[i].triggerImage.SetColor(data.rarity);
                         this[i].triggerImage.Show();
                     }

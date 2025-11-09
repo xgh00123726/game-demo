@@ -1,10 +1,10 @@
 using GameBase.Tools;
 
-namespace Constructor.Spells.Action
+namespace Constructor.Spells
 {
     public struct SpellActionModifierData
     {
-        public int iconTextureID;
+        public string textureName;
         public int rarity;
 
         public int castTimes;
@@ -18,7 +18,7 @@ namespace Constructor.Spells.Action
             return new SpellActionModifierData()
             {
                 rarity = -1,
-                iconTextureID = -1,
+                textureName = null,
                 castTimes = a.castTimes + b.castTimes,
                 flyingNums = a.flyingNums + b.flyingNums,
                 fireDisfuse = a.fireDisfuse + b.fireDisfuse,

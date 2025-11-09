@@ -18,7 +18,7 @@ namespace Instance
 
         public static float drawY = -7;
         public static float trigTime = 0.1f;
-        public static int lineRendererObjID = 48;
+        public static string lineRendererPrefabName = "Prefabs/Info/SelectorDrawer.prefab";
 
         public static Action OnDrawBegin;
         public static Action OnDrawEnd;
@@ -26,7 +26,7 @@ namespace Instance
 
         public RectDrawer()
         {
-            _lineRendererObj = GameObject.Instantiate(ResourcesLoader.GetPrefab(lineRendererObjID));
+            _lineRendererObj = GameObject.Instantiate(ResourcesLoader.GetPrefab(lineRendererPrefabName));
             _lineRenderer = _lineRendererObj.transform.Find("Line").GetComponent<LineRenderer>();
         }
 

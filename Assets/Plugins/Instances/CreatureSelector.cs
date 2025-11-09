@@ -104,7 +104,7 @@ namespace Instance
             {
                 if (Time.time < _lastPointerSelectTime + doublePointerSelectInterval)
                 {
-                    var c = CreatureSys.Instance.NearestEntity(CameraSys.MouseHitPosition, CreatureTag.ALL, pointerSelectRange);
+                    var c = CreatureSys.Instance.NearestEntity(CameraSys.MouseHitPosition, CampType.ALL, pointerSelectRange);
                     if (c != null)
                     {
                         OnFirstSelectCreature();

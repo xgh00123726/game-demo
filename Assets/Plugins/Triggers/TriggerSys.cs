@@ -51,7 +51,8 @@ namespace GameBase.Triggers
         private void PlayTrigEffect(Trigger e)
         {
             float size = e.shape.Size;
-            Vector3 dir = e.attach.Position - e.owner.HandPosition;
+            Vector2 shapeDir = e.shape.Dir;
+            Vector3 dir = new Vector3(shapeDir.x, 0, shapeDir.y);
             EffectSys.Instance.PlayAtPSD(e.trigEffect, e.attach.Position, new Vector3(size, size, size), dir);
         }
 
@@ -75,8 +76,8 @@ namespace GameBase.Triggers
             if (e.target != null && e.actualEffectTimes < e.maxeffectTimes)
             {
                 EffectTarget(e, e.target);
-                PlayHitAudio(e, e.target.Center);
-                PlayHitEffect(e, e.target.Center);
+                PlayHitAudio(e, e.target.Position);
+                PlayHitEffect(e, e.target.Position);
             }
         }
 
@@ -88,8 +89,8 @@ namespace GameBase.Triggers
             }
 
             e.action?.Effect(e, target);
-            PlayHitAudio(e, target.Center);
-            PlayHitEffect(e, target.Center);
+            PlayHitAudio(e, target.Position);
+            PlayHitEffect(e, target.Position);
             e.actualEffectTimes++;
             if (e.hasWhite)
             {
@@ -148,13 +149,22 @@ namespace GameBase.Triggers
                 if (e.shape != null)
                 {
                     e.shape.Center = new Vector2(e.attach.Position.x, e.attach.Position.z);
-                    foreach (var target in e.targetsSet.TargetsInShape(e.shape))
+                    if (e.targetsSet == null)
                     {
-                        if (e.actualEffectTimes >= e.maxeffectTimes)
+                        XLogger.Instance.Level(XLogger.LogLevel.Warning)
+                            .Log("trigger has no targetset, will hit none target");
+                    }
+                    else
+                    {
+                        foreach (var target in e.targetsSet.TargetsInShape(e.shape, e.camp))
                         {
-                            break;
+                            if (e.actualEffectTimes >= e.maxeffectTimes)
+                            {
+                                break;
+                            }
+                            XLogger.Instance.Log("hit");
+                            EffectTarget(e, target);
                         }
-                        EffectTarget(e, target);
                     }
                 }
                 e.lastTrigTime = Time.time;

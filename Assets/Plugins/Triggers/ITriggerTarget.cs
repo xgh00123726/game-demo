@@ -4,7 +4,7 @@ namespace GameBase.Triggers
 {
     public interface ITriggerTarget
     {
-        Vector3 Center { get; }
+        Vector3 Position { get; }
         float Radius { get; }
     }
 }

@@ -1,11 +1,10 @@
 using GameBase.Spells;
-using System;
-using System.Collections.Generic;
 using GameBase.EntitySystem;
+using Constructor.Spells.Action;
 
-namespace Constructor.Spells.Action
+namespace Constructor.Spells
 {
-    public enum Type
+    public enum SpellActionType
     {
         MTriggerOnHit,
         MBuffSelf,
@@ -14,18 +13,56 @@ namespace Constructor.Spells.Action
         MNearestTarget,
         MTriggerOnly,
     }
-    public class SpellActionFactory : ConstructorFactory<Type, ISpellAction, SpellActionFactory>
+    public class SpellActionFactory : YamlFactory<SpellActionData, ISpellAction, SpellActionFactory>
     {
-        protected override Dictionary<Type, Func<int, ISpellAction>> GetConstructorGetDict()
+        protected override string YamlFolder => null;
+
+        protected override ISpellAction GetEntity(SpellActionData data)
         {
-            return new()
+            if (data == null) return null;
+
+            if (data.type == SpellActionType.MTriggerOnHit)
             {
-                {Type.MTriggerOnHit, MTriggerOnHitCon.Instance.Get },
-                {Type.MBuffSelf, BuffSelfCon.Instance.Get },
-                {Type.MAreaFixedDis, MAreaFixedDisCon.Instance.Get },
-                {Type.MNearestTarget, MNearestTargetCon.Instance.Get },
-                {Type.MTriggerOnly, MTriggerOnlyCon.Instance.Get },
-            };
+                return new MTriggerOnHit()
+                {
+                    data = data,
+                    Size = data.slotNum,
+                };
+            }
+            else if (data.type == SpellActionType.MBuffSelf)
+            {
+                return new MBuffSelf()
+                {
+                    data = data,
+                    Size = data.slotNum,
+                };
+            }
+            else if (data.type == SpellActionType.MAreaFixedDis)
+            {
+                return new MAreaFixedDis()
+                {
+                    data = data,
+                    Size = data.slotNum,
+                };
+            }
+            else if (data.type == SpellActionType.MNearestTarget)
+            {
+                return new MNearestTarget()
+                {
+                    data = data,
+                    Size = data.slotNum,
+                };
+            }
+            else if (data.type == SpellActionType.MTriggerOnly)
+            {
+                return new MTriggerOnly()
+                {
+                    data = data,
+                    Size = data.slotNum,
+                };
+            }
+
+            return null;
         }
     }
 }

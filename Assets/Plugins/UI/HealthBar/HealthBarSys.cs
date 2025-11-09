@@ -6,11 +6,11 @@ using UnityEngine;
 
 namespace GameBase.UI
 {
-    public class HealthBarSys : KeyEntitySys<int, HealthBar, HealthBarSys>
+    public class HealthBarSys : KeyEntitySys<string, HealthBar, HealthBarSys>
     {
         public static float losingSpeed = 0.2f;
 
-        protected override HealthBar CtorT(int k)
+        protected override HealthBar CtorT(string k)
         {
             var e = new HealthBar();
 

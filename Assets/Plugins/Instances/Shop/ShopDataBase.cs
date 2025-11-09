@@ -12,7 +12,7 @@ namespace Instance
     {
         public ShopItemType type;
         public int typeID;
-        public int iconTextureID;
+        public string textureName;
         public int rarity;
         public int price;
     }

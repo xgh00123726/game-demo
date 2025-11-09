@@ -26,7 +26,8 @@ namespace Instance
             }
         }
 
-        public ShopViewPanel(int prefabID = 41, int defaultObjID = 40) : base(prefabID, defaultObjID)
+        public ShopViewPanel(string prefabName = "Prefabs/UI/ShopPanel.prefab",
+            string itemPrefabName = "Prefabs/UI/ShopItem.prefab") : base(prefabName, itemPrefabName)
         {
             if (_instance != null)
             {
@@ -64,25 +65,25 @@ namespace Instance
                 viewItem.triggerImage.SetColor(info.rarity);
 
                 // 如果表中没有配置材质贴图，并且商品是背包物品，那就使用其物品的材质号
-                if (info.iconTextureID < 0 && info.type == ShopItemType.InventoryItem)
+                if (info.textureName == null && info.type == ShopItemType.InventoryItem)
                 {
                     var eInfo = BuffDataBase.Instance[info.typeID];
-                    viewItem.triggerImage.SetIcon(eInfo.iconTextureID);
+                    viewItem.triggerImage.SetIcon(eInfo.textureName);
                     viewItem.identifyText.text = $"装备";
-                    viewItem.identifyImage.SetIcon(62);
+                    viewItem.identifyImage.SetIcon("Textures/Equipment/base.png");
                 }
                 // 如果是增益效果，那就使用在表格中配置的材质贴图
                 else if (info.type == ShopItemType.Buff)
                 {
-                    viewItem.identifyImage.SetIcon(61);
+                    viewItem.identifyImage.SetIcon("Textures/Increasing/base.png");
                     viewItem.identifyText.text = $"Buff";
-                    viewItem.triggerImage.SetIcon(info.iconTextureID);
+                    viewItem.triggerImage.SetIcon(info.textureName);
                 }
                 else if (info.type == ShopItemType.Modifier)
                 {
-                    viewItem.identifyImage.SetIcon(61);
+                    viewItem.identifyImage.SetIcon("Textures/Increasing/base.png");
                     viewItem.identifyText.text = $"属性";
-                    viewItem.triggerImage.SetIcon(info.iconTextureID);
+                    viewItem.triggerImage.SetIcon(info.textureName);
                 }
 
                 viewItem.Value = info.price; 

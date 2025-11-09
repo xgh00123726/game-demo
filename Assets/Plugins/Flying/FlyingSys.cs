@@ -1,14 +1,9 @@
 using GameBase.EntitySystem;
 using GameBase.Resources;
-using GameBase.Tools;
-using System.Security.Cryptography;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static GameBase.Flyings.CurveFactory;
-using static UnityEngine.UI.CanvasScaler;
 namespace GameBase.Flyings
 {
-    public class FlyingSys : KeyEntitySys<int, Flying, FlyingSys>
+    public class FlyingSys : KeyEntitySys<string, Flying, FlyingSys>
     {
         public static readonly float ProjectileHitDis = 0.1f;
 
@@ -18,7 +13,7 @@ namespace GameBase.Flyings
             EffectSys.Instance.PlayAtPS(e.hitEffect, e.obj.transform.position, e.obj.transform.localScale);
         }
 
-        protected override Flying CtorT(int k)
+        protected override Flying CtorT(string k)
         {
             Flying e = new Flying();
             var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(k));

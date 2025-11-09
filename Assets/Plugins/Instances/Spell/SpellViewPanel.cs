@@ -14,10 +14,10 @@ namespace Instance
         public Action<int> OnClickedItem;
         private static SpellViewPanel _instance;
         public static SpellViewPanel Instance => _instance;
-        public SpellViewPanel(int prefabID = 12,
-            int defaultObjID = 11) : base(
-            prefabID,
-            defaultObjID)
+        public SpellViewPanel(string prefabName = "Prefabs/UI/SpellPanel",
+            string itemPrefabName = "Prefabs/UI/SpellItem") : base(
+            prefabName,
+            itemPrefabName)
         {
             if (_instance != null)
             {
@@ -77,12 +77,12 @@ namespace Instance
             for (int i = 0; i < size; ++i)
             {
                 this[i].obj.SetActive(true);
-                this[i].maskImage.SetIcon(spells[i].iconTextureID);
+                this[i].maskImage.SetIcon(spells[i].textureName);
             }
             for (int i = 0; i < size; ++i)
             {
-                this[i].coolingTimeRemain = spells[i].spellCoolingdown.CoolingRemain;
-                this[i].coolingTimeSet = spells[i].spellCoolingdown.CoolingSet;
+                this[i].coolingTimeRemain = spells[i].CooldownRemain;
+                this[i].coolingTimeSet = spells[i].cooldown;
             }
 
             for (int i = size; i < Entities.Count; ++i)

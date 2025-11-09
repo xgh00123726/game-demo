@@ -1,3 +1,4 @@
+using Constructor.Spells;
 using Constructor.Spells.Action;
 using GameBase.Buffs;
 using GameBase.Config;
@@ -27,10 +28,9 @@ namespace Instance
 
         public override bool IsShow => _showFlag;
 
-        public InventoryViewPanel(int prefabID = 35,
-            int defaultObjID = 34) : base(
-            prefabID,
-            defaultObjID)
+        public InventoryViewPanel(string prefabName = "Prefabs/UI/InventoryPanel",
+            string itemPrefabName = "Prefabs/UI/InventoryItem") : base(prefabName,
+            itemPrefabName)
         {
             if (_instance != null)
             {
@@ -101,30 +101,30 @@ namespace Instance
             {
                 var info = model[index];
 
-                int iconTextureID = -1;
+                string textureName = null;
                 int rarity = -1;
 
                 if (info.type == InventoryItemType.Equipment)
                 {
                     var eInfo = BuffDataBase.Instance[info.reflectedID];
-                    iconTextureID = eInfo.iconTextureID;
+                    textureName = eInfo.textureName;
                     rarity = eInfo.rarity;
                 }
                 else if (info.type == InventoryItemType.SpellActionModifier)
                 {
                     var samInfo = SpellActionModifierDataBase.Instance[info.reflectedID];
-                    iconTextureID = samInfo.iconTextureID;
+                    textureName = samInfo.textureName;
                     rarity = samInfo.rarity;
                 }
 
-                viewItem.triggerImage.SetIcon(iconTextureID);
+                viewItem.triggerImage.SetIcon(textureName);
                 viewItem.triggerImage.SetColor(rarity);
                 viewItem.triggerImage.Show();
                 viewItem.interactiveEnable = true;
             }
             else
             {
-                viewItem.triggerImage.SetIcon(-1);
+                viewItem.triggerImage.SetIcon(null);
                 viewItem.triggerImage.Hide();
                 viewItem.triggerImage.HideColor();
                 viewItem.interactiveEnable = false;

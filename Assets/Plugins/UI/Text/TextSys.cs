@@ -6,10 +6,9 @@ using TMPro;
 using UnityEngine;
 namespace GameBase.UI
 {
-    public class TextSys : KeyEntitySys<int, FloatText, TextSys>
+    public class TextSys : KeyEntitySys<string, FloatText, TextSys>
     {
-
-        protected override FloatText CtorT(int k)
+        protected override FloatText CtorT(string k)
         {
             var e = new FloatText();
             var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(k));

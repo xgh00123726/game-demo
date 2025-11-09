@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace GameBase.UI
 {
-    public class EpicBar : IKeyEntity<int>
+    public class EpicBar : IKeyEntity<string>
     {
         public float width = 960f;
         public bool healthBarFollow = true; 
@@ -30,7 +30,7 @@ namespace GameBase.UI
         internal TextMeshProUGUI regenText;
 
         public GameObject obj;
-        public int Key { get; set; } = 7;
+        public string Key { get; set; } = "Prefabs/UI/EpicHealthBar";
         public float CurrHP
         {
             set

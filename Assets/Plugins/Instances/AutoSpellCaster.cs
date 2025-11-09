@@ -1,4 +1,3 @@
-using Constructor.Spells.Interactive;
 using GameBase.Creatures;
 using GameBase.EntitySystem;
 using GameBase.Spells;
@@ -23,23 +22,10 @@ namespace Instance
         }
         public static void CastByStyle(Spell spell)
         {
-            if (spell.interactive is DotExternalSet dot)
+            var c = CreatureSys.Instance.NearestEntity(spell.speller.Position, (GameBase.Creatures.CampType)spell.camp);
+            if (c != null)
             {
-                if (dot.data.style == DotExternalSetStyle.NearestTarget)
-                {
-                    var c = CreatureSys.Instance.NearestEntity(spell.speller.Position, dot.data.targetTag);
-                    if (c != null)
-                    {
-                        dot.position = c.Position;
-                    }
-                }
-                else if (dot.data.style == DotExternalSetStyle.Random)
-                {
-                    float x = Random.Range(dot.data.randomMinX, dot.data.randomMaxX);
-                    float y = Random.Range(dot.data.randomMinY, dot.data.randomMaxY);
-                    float z = Random.Range(dot.data.randomMinZ, dot.data.randomMaxZ);
-                    dot.position = new Vector3(x, y, z);
-                }
+                spell.castPosition = c.Position;
             }
             spell.TryCast();
         }

@@ -8,11 +8,11 @@ using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public class EpicBarSys : KeyEntitySys<int, EpicBar, EpicBarSys>
+    public class EpicBarSys : KeyEntitySys<string, EpicBar, EpicBarSys>
     {
         public static float losingSpeed = 1f;
 
-        protected override EpicBar CtorT(int k)
+        protected override EpicBar CtorT(string k)
         {
             var e = new EpicBar();
             var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(k));

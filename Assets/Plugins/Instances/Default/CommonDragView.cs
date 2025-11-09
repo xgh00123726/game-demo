@@ -10,9 +10,9 @@ namespace Instance
         public GameObject obj;
         public SuperImage triggerImage;
 
-        public CommonDragView(int prefabID = 37)
+        public CommonDragView(string prefabName = "Prefabs/UI/InventoryShadowItem")
         {
-            obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(prefabID));
+            obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(prefabName));
 
             obj.transform.SetParent(RootCanvas.Instance.Layer(1), false);
 

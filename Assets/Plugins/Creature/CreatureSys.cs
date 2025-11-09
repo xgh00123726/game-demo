@@ -9,11 +9,11 @@ using GameBase.UI;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreatureSys : KeyEntitySys<int, Creature, CreatureSys>
+public class CreatureSys : KeyEntitySys<string, Creature, CreatureSys>
 {
     private int _creatureInstantiatedNum = 0;
     private Dictionary<int, Creature> _creatureDict = new();
-    protected override Creature CtorT(int k)
+    protected override Creature CtorT(string k)
     {
         var e = new Creature();
         var obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(k));
@@ -37,7 +37,7 @@ public class CreatureSys : KeyEntitySys<int, Creature, CreatureSys>
     {
         e.Alive = true;
 
-        e.healthBar = HealthBarSys.Instance.NewEntity(6);
+        e.healthBar = HealthBarSys.Instance.NewEntity("Prefabs/UI/HealthBar");
         e.healthBar.owner = e;
 
         e.HighLevelAttrInit();
@@ -92,22 +92,8 @@ public class CreatureSys : KeyEntitySys<int, Creature, CreatureSys>
     }
 
 
-    public void RemoveAll(CreatureTag tag)
+    public void RemoveAll()
     {
-        List<Creature> needRemove = new();
-
-        foreach (var e in Entities)
-        {
-            if (e.tag == tag)
-            {
-                needRemove.Add(e);
-            }
-        }
-
-        foreach(var e in needRemove)
-        {
-            RemoveEntity(e);
-        }
     }
 
     public Creature GetCreatureFromID(int id)
@@ -126,14 +112,14 @@ public class CreatureSys : KeyEntitySys<int, Creature, CreatureSys>
     /// <item><param name="rangeLimit"><paramref name="rangeLimit"/>:只会寻找到rangeLimit距离内的实体</param></item>
     /// </list></summary>
     /// <returns>符合条件最近的实体，没有实体满足条件则返回null</returns>
-    public Creature NearestEntity(Vector3 position, CreatureTag tag, float rangeLimit = 10)
+    public Creature NearestEntity(Vector3 position, GameBase.Creatures.CampType camp, float rangeLimit = 10)
     {
         Creature c = null;
         float minDistance = float.PositiveInfinity;
 
         foreach (var e in Entities)
         {
-            if ((e.tag & tag) == 0)
+            if ((e.camp & camp) == 0)
             {
                 continue;
             }

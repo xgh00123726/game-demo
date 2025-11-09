@@ -180,7 +180,7 @@ namespace GameBase.AI
             }
             if (target == null)
             {
-                target = CreatureSys.Instance.NearestEntity(mover.owner.Position, CreatureTag.Player, missDis);
+                target = CreatureSys.Instance.NearestEntity(mover.owner.Position, CampType.Player, missDis);
             }
         }
 

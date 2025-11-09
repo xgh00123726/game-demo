@@ -1,12 +1,17 @@
+using Constructor.Triggers;
+using Constructor.Triggers.Action;
 using GameBase.Flyings;
-using GameBase.Triggers;
 using GameBase.Spells;
 using GameBase.Tools;
+using GameBase.Triggers;
+using UnityEditor.Experimental.GraphView;
 
-namespace Constructor.Spells.Action
+namespace Constructor.Spells
 {
     public abstract partial class ModifyableAction : ISpellAction
     {
+        public SpellActionData data;
+
         private float _processedDisfuse = 0f;
         private float _angleInit = 0f;
         private float _angleDelta = 0f;

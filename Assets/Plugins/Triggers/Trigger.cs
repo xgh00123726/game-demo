@@ -30,6 +30,7 @@ namespace GameBase.Triggers
         public bool hasWhite;
         public float existTime;
         public TrigStyle trigStyle;
+        public CampType camp;
 
         public string createEffect;
         public string trigEffect;

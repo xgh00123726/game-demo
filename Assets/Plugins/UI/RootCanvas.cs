@@ -12,7 +12,7 @@ namespace GameBase.UI
 
         public RootCanvas()
         {
-            obj = GameObject.Instantiate(ResourcesLoader.GetPrefab(49));
+            obj = GameObject.Instantiate(ResourcesLoader.GetPrefab("Prefabs/UI/RootCanvs.prefab"));
         }
 
         public Transform Layer(int level)

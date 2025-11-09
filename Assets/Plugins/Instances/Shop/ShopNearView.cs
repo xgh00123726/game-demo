@@ -8,9 +8,9 @@ namespace Instance
     {
         internal GameObject nearViewObj;
 
-        public ShopNearView(int nearViewID = 39)
+        public ShopNearView(string prefabName = "Prefabs/UI/ShopNearView.prefab")
         {
-            nearViewObj = GameObject.Instantiate(ResourcesLoader.GetPrefab(nearViewID));
+            nearViewObj = GameObject.Instantiate(ResourcesLoader.GetPrefab(prefabName));
             nearViewObj.transform.SetParent(WorldCanvs.Instance.transform, false);
         }
 

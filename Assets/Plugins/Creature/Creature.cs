@@ -1,28 +1,17 @@
 using GameBase.AI;
 using GameBase.Buffs;
 using GameBase.EntitySystem;
-using GameBase.Inventorys;
 using GameBase.Modify;
 using GameBase.Move;
 using GameBase.Triggers;
-using GameBase.Spells;
 using GameBase.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using GameBase.Tools;
 
 namespace GameBase.Creatures
 {
-    public enum CreatureTag
-    {
-        None = 0,
-        CommonCreature = 1 << 0,
-        Player = 1 << 1,
-        ALL = 0x7FFFFFFF,
-    }
-
-    public partial class Creature : IKeyEntity<int>,
+    public partial class Creature : IKeyEntity<string>,
         ITriggerOwner,
         ITriggerTarget,
         IHealthBarOwner,
@@ -34,7 +23,6 @@ namespace GameBase.Creatures
         internal int id;
 
         public float radius = 0.3f;
-        public CreatureTag tag;
         public Vector3 healthBarOffset = new Vector3(0, 1.6f, 0);
         public Action<Creature> OnDead;
        
@@ -49,13 +37,13 @@ namespace GameBase.Creatures
 
         public bool Alive { get; internal protected set; }
         public GameObject obj;
-        public int Key { get; set; }
+        public string Key { get; set; }
         public int ID => id;
         public Vector3 Dir => obj.transform.forward;
 
         Vector3 IHealthBarOwner.HealthBarPosition => obj.transform.position + healthBarOffset;
 
-        Vector3 ITriggerTarget.Center => obj.transform.position;
+        Vector3 ITriggerTarget.Position => obj.transform.position;
 
         float ITriggerTarget.Radius => radius;
 

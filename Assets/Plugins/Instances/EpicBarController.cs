@@ -14,13 +14,13 @@ namespace Instance
 
         public EpicBarController()
         {
-            healthBar = EpicBarSys.Instance.NewEntity(7);
+            healthBar = EpicBarSys.Instance.NewEntity("Prefabs/UI/EpicHealthBar");
             healthBar.obj.SetActive(false);
 
-            manaBar = EpicBarSys.Instance.NewEntity(8);
+            manaBar = EpicBarSys.Instance.NewEntity("Prefabs/UI/EpicManaBar");
             manaBar.obj.SetActive(false);
 
-            expBar = EpicBarSys.Instance.NewEntity(47);
+            expBar = EpicBarSys.Instance.NewEntity("Prefabs/UI/EpicExpBar.prefab");
             expBar.obj.SetActive(false);
         }
 

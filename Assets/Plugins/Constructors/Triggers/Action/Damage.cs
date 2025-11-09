@@ -1,6 +1,5 @@
 using GameBase.Modify;
 using GameBase.Triggers;
-using GameBase.Tools;
 using GameBase.UI;
 using UnityEngine;
 
@@ -29,8 +28,8 @@ namespace Constructor.Triggers.Action
                 modifyer.value = -data.value;
                 modifyer.OnModify += () =>
                 {
-                    var text = TextSys.Instance.NewEntity(5);
-                    text.showPosition = target.Center;
+                    var text = TextSys.Instance.NewEntity("Prefabs/UI/FloatText");
+                    text.showPosition = target.Position;
                     text.Value = data.value.ToString();
                     text.Color = Color.white;
                 };

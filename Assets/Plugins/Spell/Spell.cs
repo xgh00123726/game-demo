@@ -6,20 +6,33 @@ namespace GameBase.Spells
     {
         internal bool isTrig = false;
         internal bool isWaitCast = false;
+        internal float cooldownRemain = 0;
+        internal bool isCoolOver = false;
 
         public float point;            // 前摇
         public float backswing;        // 后摇
         public float duration;         // 持续时间
         public float minCastAngle;     // 最小施法角度
+        public float cooldown;
 
-        public int iconTextureID;
+        public string textureName;
+        public CampSet campInclude;
+        public CampSet campExclude;
+        public CampType campFixed;
+        public CampType camp;
+        public Vector3 castPosition;
+        public Tag tag;
+        public CastIndicatorType indicatorType;
+        public float length;
+        public float radius;
 
         public ISpeller speller;
         public ISpellAction action;
-        public ISpellCoolingdown spellCoolingdown = new CommonSpellCoolingdown();
-        public ISpellInteractive interactive;
+        
 
         public bool IsTrig => isTrig;
+        public float CooldownRemain => cooldownRemain;
+        public bool IsCoolOver => isCoolOver;
 
         public void TryCast()
         {

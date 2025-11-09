@@ -6,12 +6,12 @@ namespace GameBase.UI
 {
     public class SuperImage
     {
-        private int _textureID;
+        private string _textureName;
         private Sprite _sprite;
         private Image _image;
         private Color _colorHide;
         private Color _colorShow;
-        public int TextureID => _textureID;
+        public string TextureName => _textureName;
         public Sprite Sprite => _sprite;
 
         public SuperImage(Image image)
@@ -19,22 +19,22 @@ namespace GameBase.UI
             _image = image;
         }
 
-        public void SetIcon(int textureID)
+        public void SetIcon(string textureName)
         {
-            if (_textureID == textureID)
+            if (_textureName == textureName)
             {
                 return;
             }
-            if (textureID < 0)
+            if (textureName == null)
             {
                 _sprite = null;
                 _image.sprite = null;
-                _textureID = textureID;
+                _textureName = textureName;
                 return;
             }
-            
-            _textureID = textureID;
-            _sprite = ResourcesLoader.GetSpriteFromTextureID(textureID);
+
+            _textureName = textureName;
+            _sprite = ResourcesLoader.GetSprite(textureName);
             _image.sprite = _sprite;
         }
 
@@ -57,12 +57,12 @@ namespace GameBase.UI
             (_image.color, other._image.color) = (other._image.color, _image.color);
             (_colorHide, other._colorHide) = (other._colorHide, _colorHide);
             (_colorShow, other._colorShow) = (other._colorShow, _colorShow);
-            (_textureID, other._textureID) = (other._textureID, _textureID);
+            (_textureName, other._textureName) = (other._textureName, _textureName);
         }
 
         public void Copy(SuperImage other)
         {
-            SetIcon(other.TextureID);
+            SetIcon(other.TextureName);
             SetColor(other._image.color);
             SetHideColor(other._colorHide);
         }

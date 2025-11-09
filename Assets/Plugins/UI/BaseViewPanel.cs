@@ -16,7 +16,7 @@ namespace GameBase.UI
         protected internal LinkedList<T> _entitiesNeedRemove = new LinkedList<T>();
         protected internal bool _inUpdating = false;
 
-        protected internal int defaultObjID = 34;
+        protected internal string itemPrefabName = "Prefabs/UI/InventoryItem";
         protected internal ListContainer<T> container = new();
         protected internal GameObject panel;
 
@@ -99,27 +99,27 @@ namespace GameBase.UI
         }
 
 
-        public BaseViewPanel(int prefabID,
-            int defaultObjID)
+        public BaseViewPanel(string prefabName,
+            string itemPrefabName)
         {
             SingletonEntitySysInstance.CreateShadowMono(this); 
 
-            panel = GameObject.Instantiate(ResourcesLoader.GetPrefab(prefabID));
+            panel = GameObject.Instantiate(ResourcesLoader.GetPrefab(prefabName));
             panel.transform.SetParent(RootCanvas.Instance.Layer(0), false);
             panel.SetActive(false);
-            this.defaultObjID = defaultObjID;
+            this.itemPrefabName = itemPrefabName;
         }
 
         public virtual IEContainer<T> Entities => container;
 
-        protected virtual GameObject GetGameObject(int id)
+        protected virtual GameObject GetGameObject(string name)
         {
-            return GameObject.Instantiate(ResourcesLoader.GetPrefab(id));
+            return GameObject.Instantiate(ResourcesLoader.GetPrefab(name));
         }
 
         protected virtual BaseUI InstantiateObj(T e)
         {
-            var obj = GetGameObject(e.objID);
+            var obj = GetGameObject(e.prefabName);
             e.obj = obj;
 
             var triggerObj = obj.transform.Find("Trigger").gameObject;
@@ -215,16 +215,16 @@ namespace GameBase.UI
             _entitiesNeedRemove.Clear();
         }
 
-        public T NewEntity(int objID = -1)
+        public T NewEntity(string name = null)
         {
             var e = new T();
-            if (objID > 0)
+            if (name != null)
             {
-                e.objID = objID;
+                e.prefabName = name;
             }
             else
             {
-                e.objID = defaultObjID;
+                e.prefabName = itemPrefabName;
             }
             return NewEntity(e);
         }
