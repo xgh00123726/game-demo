@@ -2,31 +2,33 @@ using UnityEngine;
 
 namespace GameBase.Flyings
 {
-    public class Vector : CurveBase
+    public class Vector : Curve
     {
-        private bool isCurveEnd = false;
-        public Vector(ICurveable projectile) : base(projectile)
-        {
-        }
+        protected bool _isTravelEnd = false;
 
+        public float length;
         protected override Vector3 GetDirDelta()
         {
             return _projectile.Dir;
         }
 
-        protected override Vector3 GetPosDelta()
+        protected override void PosUpdate()
         {
-            if ((_projectile.Position - _projectile.Src).magnitude >= _projectile.MaxTravel)
+            if ((_projectile.Position - _projectile.Src).magnitude >= length)
             {
-                isCurveEnd = true;
-                return Vector3.zero;
+                _isTravelEnd = true;
+                return;
             }
-            return base.GetPosDelta();
+            Vector3 delta = GetPosDelta();
+
+            if (_freezeY)
+            {
+                delta.y = 0f;
+            }
+
+            _projectile.Position = _projectile.Position + GetPosDelta();
         }
 
-        public override bool CurveEnd()
-        {
-            return isCurveEnd;
-        }
+        protected override bool IsTravelEnd => _isTravelEnd;
     }
 }

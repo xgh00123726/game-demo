@@ -2,14 +2,10 @@ using UnityEngine;
 
 namespace GameBase.Flyings
 {
-    public class Tracer : CurveBase
+    public class Tracer : Curve
     {
         public float turnSpeed = 1f;
         public float turnAcc = 3f;
-        public Tracer(ICurveable projectile) : base(projectile)
-        {
-        }
-
         protected override Vector3 GetDirDelta()
         {
             Vector3 currDir = _projectile.Dir;

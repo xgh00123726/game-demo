@@ -21,6 +21,8 @@ namespace GameBase.EntitySystem
     public abstract class YamlFactory<T_YamlData, T_Entity, T_Factory> : Singleton<T_Factory>
         where T_Factory : YamlFactory<T_YamlData, T_Entity, T_Factory>, new()
     {
+        public const string TEMPLATE_NAME = "Template.yaml";
+
         private Dictionary<string, T_YamlData> _dataDict;
 
         protected abstract string YamlFolder { get; }
@@ -43,6 +45,10 @@ namespace GameBase.EntitySystem
             }
             foreach (FileInfo f in dir.GetFiles())
             {
+                if (f.Name == TEMPLATE_NAME)
+                {
+                    continue;
+                }
                 if (f.Name.EndsWith(".yaml") || f.Name.EndsWith(".yml"))
                 {
                     using var reader = File.OpenText(f.FullName);
@@ -59,7 +65,7 @@ namespace GameBase.EntitySystem
                         catch (Exception e)
                         {
                             XLogger.Instance.Level(XLogger.LogLevel.Error)
-                                .Log(e);
+                                .Log($"error in file:{f.Name}, exception:{e}");
                         }
                     }
                 }
@@ -140,7 +146,7 @@ namespace GameBase.EntitySystem
                 {
                     return;
                 }
-                path = $"{YamlFolder}/Template.yaml";
+                path = $"{YamlFolder}/{TEMPLATE_NAME}";
             }
             var data = GetTemplateData();
             if (data == null)
@@ -152,7 +158,7 @@ namespace GameBase.EntitySystem
             var yaml = serializer.Serialize(data);
             if (comment != null)
             {
-                yaml = $"# {comment}\n{yaml}";
+                yaml = $"# {comment}\n# this is a template file, which will be ignored\n{yaml}";
             }
             File.WriteAllText(path, yaml);
             XLogger.Instance.Log($"success to write template file to: {path}");

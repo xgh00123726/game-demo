@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace GameBase.Flyings
 {
-    public class Fall : CurveBase
+    public class Fall : Curve
     {
-        public Fall(ICurveable projectile) : base(projectile)
+        public Fall()
         {
-            freezeY = false;
+            _freezeY = false;
         }
         protected override Vector3 GetDirDelta()
         {

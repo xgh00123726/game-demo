@@ -3,21 +3,13 @@ using GameBase.Triggers;
 using GameBase.UI;
 using UnityEngine;
 
-namespace Constructor.Triggers.Action
+namespace GameBase.Projectiles
 {
-    public struct DamageData
+    public class ProjectileAction : ITriggerAction
     {
-        public float value;
-    }
-
-    public class Damage : ITriggerAction
-    {
-        public DamageData data;
-
-        public Damage(float value = 0)
-        {
-            data.value = value;
-        }
+        public float damage;
+        public Color color;
+        public string prefabName;
 
         void ITriggerAction.Effect(Trigger e, ITriggerTarget target)
         {
@@ -25,13 +17,13 @@ namespace Constructor.Triggers.Action
             {
                 var modifyer = ModifyerSys.Instance.NewEntity();
                 modifyer.type = ModifyType.Once | ModifyType.Forever;
-                modifyer.value = -data.value;
+                modifyer.value = -damage;
                 modifyer.OnModify += () =>
                 {
-                    var text = TextSys.Instance.NewEntity("Prefabs/UI/FloatText");
+                    var text = TextSys.Instance.NewEntity(prefabName);
                     text.showPosition = target.Position;
-                    text.Value = data.value.ToString();
-                    text.Color = Color.white;
+                    text.Value = damage.ToString();
+                    text.Color = color;
                 };
 
                 modifyer.AddTo(mTarget.Modifyables["currHP"]);

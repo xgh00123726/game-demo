@@ -16,7 +16,7 @@ namespace GameBase.Triggers
         {
             e.trigPeriod = 1;
             e.trigStyle = TrigStyle.External;
-            e.existTime = 1;
+            e.existTime = 10;
             e.actualEffectTimes = 0;
             e.maxEffectTimes = 1;
             e.hasWhite = false;
@@ -33,6 +33,7 @@ namespace GameBase.Triggers
             e.createEffect = null;
             e.hitAudio = null;
             e.createAudio = null;
+            e.attach = null;
             e.OnTrig = null;
             e.OnTrigEnd = null;
         }
@@ -54,7 +55,11 @@ namespace GameBase.Triggers
                 return;
             }
 
-            float size = e.shape.Size;
+            float size = 1;
+            if (e.shape != null)
+            {
+                size = e.shape.Size;
+            }
             EffectSys.Instance.PlayAtPS(e.hitEffect, position, new Vector3(size, size, size));
         }
 
@@ -65,9 +70,14 @@ namespace GameBase.Triggers
                 return;
             }
 
-            float size = e.shape.Size;
-            Vector2 shapeDir = e.shape.Dir;
-            Vector3 dir = new Vector3(shapeDir.x, 0, shapeDir.y);
+            float size = 1;
+            Vector3 dir = Vector3.one;
+            if (e.shape != null)
+            {
+                size = e.shape.Size;
+                Vector2 shapeDir = e.shape.Dir;
+                dir = new Vector3(shapeDir.x, 0, shapeDir.y);
+            }
             EffectSys.Instance.PlayAtPSD(e.trigEffect, e.attach.Position, new Vector3(size, size, size), dir);
         }
 
@@ -186,7 +196,7 @@ namespace GameBase.Triggers
                     }
                     else
                     {
-                        foreach (var target in e.targetsSet.TargetsInShape(e.shape, e.camp))
+                        foreach (var target in e.targetsSet.TargetsInShape(e.shape, e.targetCamp))
                         {
                             if (e.actualEffectTimes >= e.maxEffectTimes)
                             {

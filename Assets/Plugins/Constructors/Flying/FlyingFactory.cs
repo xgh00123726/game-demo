@@ -11,18 +11,11 @@ namespace Constructor.Flyings
         {
             var e = FlyingSys.Instance.NewEntity(data.prefabName);
 
-            if (data.curveType != CurveFactory.CurveType.None)
-            {
-                e.curveType = data.curveType;
-                e.curve = CurveFactory.CreateInstance(data.curveType, e);
-                e.curve.speed = data.speed;
-            }
-
-            e.speed = data.speed;
+            e.curve = CurveFactory.CreateInstance(data.curve);
+            e.Speed = data.speed;
             e.minExistTime = data.minExistTime;
 
             e.releaseEffect = data.releaseEffectName;
-            e.hitEffect = data.hitEffectName;
 
             return e;
         }

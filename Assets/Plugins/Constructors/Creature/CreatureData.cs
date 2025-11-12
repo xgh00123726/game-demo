@@ -1,5 +1,6 @@
 using GameBase.AI;
 using GameBase.Animations;
+using GameBase.Creatures;
 using UnityEngine;
 
 namespace Constructor.Creatures
@@ -7,7 +8,7 @@ namespace Constructor.Creatures
     public class CreatureData
     {
         public string prefabName;
-        public GameBase.Creatures.CampType camp;
+        public Camp.Typedef camp;
         public AnimType animType;
         public AIType aiType;
         public float damage;

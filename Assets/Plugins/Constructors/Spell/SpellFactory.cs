@@ -1,3 +1,4 @@
+using GameBase.Creatures;
 using GameBase.EntitySystem;
 using GameBase.Spells;
 using GameBase.Tools;
@@ -31,9 +32,11 @@ namespace Constructor.Spells
             spell.cooldown = data.cooldown;
             spell.tag = data.tag;
 
-            spell.campInclude = data.camp.include;
-            spell.campExclude = data.camp.exclude;
-            spell.campFixed = data.camp.fixedType;
+            spell.targetCampSet = new CampSet()
+            {
+                include = data.camp.include,
+                exclude = data.camp.exclude,
+            };
             spell.action = SpellActionFactory.Instance.GetFromData(data.actionData);
 
             spell.indicatorType = data.indicator.type;

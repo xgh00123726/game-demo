@@ -1,3 +1,4 @@
+using GameBase.Creatures;
 using GameBase.Indicators;
 using GameBase.Spells;
 
@@ -5,9 +6,8 @@ namespace Constructor.Spells
 {
     public class SpellCampData
     {
-        public CampSet include;
-        public CampSet exclude;
-        public CampType fixedType;
+        public CampSet.Typedef include;
+        public CampSet.Typedef exclude;
     }
 
     public class SpellIndicatorData

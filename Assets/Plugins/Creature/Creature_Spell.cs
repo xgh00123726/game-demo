@@ -12,7 +12,7 @@ namespace GameBase.Creatures
 
         float ISpeller.CoolingAccelerate => modifyables["coolingAccelerate"].Value;
 
-        Spells.CampType ISpeller.Camp => (Spells.CampType)camp;
+        ISpellCamp ISpeller.Camp => camp;
 
         public void AddSpell(Spell spell)
         {

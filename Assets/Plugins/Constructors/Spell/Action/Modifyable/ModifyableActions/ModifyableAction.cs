@@ -1,6 +1,7 @@
 using Constructor.Triggers;
 using Constructor.Triggers.Action;
 using GameBase.Flyings;
+using GameBase.Projectiles;
 using GameBase.Spells;
 using GameBase.Tools;
 using GameBase.Triggers;
@@ -16,7 +17,7 @@ namespace Constructor.Spells
         private float _angleInit = 0f;
         private float _angleDelta = 0f;
 
-        protected virtual Flying GenFlying(Spell spell, in SpellActionModifierData modifyData)
+        protected virtual Projectile GenProjectile(Spell spell, in SpellActionModifierData modifyData)
         {
             return null;
         }
@@ -29,12 +30,12 @@ namespace Constructor.Spells
 
             for (int i = 0; i < 1 + _modifiedData.flyingNums; i++)
             {
-                var flying = GenFlying(spell, modifyData);
+                var projectile = GenProjectile(spell, modifyData);
 
-                if (flying != null) 
+                if (projectile != null && projectile.flying != null) 
                 {
-                    flying.startAngleOffset = GetAngleOffset(i);
-                    RecorrectFlying(flying);
+                    projectile.flying.startAngleOffset = GetAngleOffset(i);
+                    RecorrectFlying(projectile.flying);
                     ret = true;
                 }
             }

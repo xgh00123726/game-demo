@@ -16,10 +16,8 @@ namespace GameBase.Spells
         public float cooldown;
 
         public string textureName;
-        public CampSet campInclude;
-        public CampSet campExclude;
-        public CampType campFixed;
-        public CampType camp;
+        public ISpellCampSet targetCampSet;
+        public ISpellCamp targetCamp;
         public Vector3 castPosition;
         public Tag tag;
         public CastIndicatorType indicatorType;
@@ -28,7 +26,6 @@ namespace GameBase.Spells
 
         public ISpeller speller;
         public ISpellAction action;
-        
 
         public bool IsTrig => isTrig;
         public float CooldownRemain => cooldownRemain;

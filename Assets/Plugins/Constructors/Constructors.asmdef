@@ -8,7 +8,6 @@
         "GMath",
         "UI",
         "Modify",
-        "GSpell",
         "Move",
         "Animations",
         "Flying",
@@ -19,7 +18,8 @@
         "Triggers",
         "ResourcesMgr",
         "YamlDotNet",
-        "Projectile"
+        "Projectile",
+        "Spell"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

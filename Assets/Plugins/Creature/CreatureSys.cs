@@ -112,14 +112,14 @@ public class CreatureSys : KeyEntitySys<string, Creature, CreatureSys>
     /// <item><param name="rangeLimit"><paramref name="rangeLimit"/>:只会寻找到rangeLimit距离内的实体</param></item>
     /// </list></summary>
     /// <returns>符合条件最近的实体，没有实体满足条件则返回null</returns>
-    public Creature NearestEntity(Vector3 position, GameBase.Creatures.CampType camp, float rangeLimit = 10)
+    public Creature NearestEntity(Vector3 position, Camp camp, float rangeLimit = 10)
     {
         Creature c = null;
         float minDistance = float.PositiveInfinity;
 
         foreach (var e in Entities)
         {
-            if ((e.camp & camp) == 0)
+            if (e.camp.And(camp).IsNone())
             {
                 continue;
             }

@@ -4,12 +4,8 @@ namespace GameBase.Flyings
 {
     // 直线轨迹
     // @speed: 速度
-    public class Linear : CurveBase
+    public class Linear : Curve
     {
-        public Linear(ICurveable projectile) : base(projectile)
-        {
-        }
-
         protected override Vector3 GetDirDelta()
         {
             return _projectile.Dir;

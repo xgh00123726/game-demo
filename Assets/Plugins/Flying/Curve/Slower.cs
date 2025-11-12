@@ -7,10 +7,6 @@ namespace GameBase.Flyings
         private float speedActual;
         public float factor = 0f;
         public float slowDis = 2f;
-        public Slower(ICurveable projectile) : base(projectile)
-        {
-        }
-
         protected override Vector3 GetPosDelta()
         {
             float disToDest = (_projectile.Position - _projectile.Dest).magnitude;

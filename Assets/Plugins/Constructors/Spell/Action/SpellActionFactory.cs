@@ -8,6 +8,7 @@ namespace Constructor.Spells
     {
         MTriggerOnHit,
         MBuffSelf,
+        MShot,
 
         MAreaFixedDis,
         MNearestTarget,
@@ -56,6 +57,14 @@ namespace Constructor.Spells
             else if (data.type == SpellActionType.MTriggerOnly)
             {
                 return new MTriggerOnly()
+                {
+                    data = data,
+                    Size = data.slotNum,
+                };
+            }
+            else if (data.type == SpellActionType.MShot)
+            {
+                return new MShot()
                 {
                     data = data,
                     Size = data.slotNum,

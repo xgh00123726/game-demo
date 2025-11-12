@@ -6,6 +6,7 @@ using GameBase.Creatures;
 using GameBase.EntitySystem;
 using GameBase.Flyings;
 using GameBase.Math;
+using GameBase.Projectiles;
 using GameBase.Spells;
 using GameBase.Tools;
 using GameBase.Triggers;
@@ -15,7 +16,7 @@ namespace Constructor.Spells.Action
 {
     public class MTriggerOnHit : ModifyableAction
     {
-        protected override Flying GenFlying(Spell spell, in SpellActionModifierData modifyData)
+        protected override Projectile GenProjectile(Spell spell, in SpellActionModifierData modifyData)
         {
             if (spell.speller is Creature c)
             {
@@ -26,14 +27,13 @@ namespace Constructor.Spells.Action
                 {
                     Position = spell.castPosition,
                 };
-                p.searchTargetStyle = GameBase.Projectiles.SearchTargetStyle.BaseFlying;
                 var t = p.trigger;
                 t.owner = c;
-                t.camp = (GameBase.Triggers.CampType)spell.camp;
+                t.targetCamp = (Camp)spell.targetCamp.ToUint();
                 var damage = data.damage + c.modifyables["damage"].Value * data.ampFactor;
                 t.action = new Damage(damage);
 
-                return f;
+                return p;
             }
 
             return null;

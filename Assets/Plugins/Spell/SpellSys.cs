@@ -20,7 +20,8 @@ namespace GameBase.Spells
                 RemoveEntity(e);
                 return;
             }
-            e.camp = CampUtil.GetCampType(e.campInclude, e.campExclude, e.speller.Camp) | e.campFixed;
+
+            e.targetCamp = e.targetCampSet.GetCamp(e.speller.Camp);
         }
 
         protected override void UpdateEntity(Spell e)

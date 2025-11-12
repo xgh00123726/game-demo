@@ -5,6 +5,7 @@ using Constructor.Triggers.Action;
 using GameBase.Creatures;
 using GameBase.EntitySystem;
 using GameBase.Flyings;
+using GameBase.Projectiles;
 using GameBase.Spells;
 using GameBase.Triggers;
 using UnityEngine;
@@ -16,18 +17,18 @@ namespace Constructor.Spells.Action
     /// </summary>
     public class MNearestTarget : ModifyableAction
     {
-        protected override Flying GenFlying(Spell spell, in SpellActionModifierData modifyData)
+        protected override Projectile GenProjectile(Spell spell, in SpellActionModifierData modifyData)
         {
             if (spell.speller is Creature c)
             {
                 float attackRange = c.modifyables["attackRange"].Value;
 
                 var center = new Vector3(c.Position.x, 0, c.Position.z);
-                var target = CommonTargetSet.Instance.NearestTarget(center, attackRange, spell.camp);
+                var target = CommonTargetSet.Instance.NearestTarget(center, attackRange, (Camp)spell.targetCamp.ToUint());
                 if (target != null)
                 {
                     var p = ProjectileFactory.Instance.GetFromData(data.projectile);
-                    p.target = target;
+                    p.Target = target;
                     var t = p.trigger;
                     t.owner = c;
                     var damage = data.damage + c.modifyables["damage"].Value * data.ampFactor;
@@ -36,7 +37,7 @@ namespace Constructor.Spells.Action
                     var f = p.flying;
                     f.Src = c.HandPosition;
 
-                    return f;
+                    return p;
                 }
             }
 

@@ -6,6 +6,6 @@ namespace GameBase.Triggers
 {
     public interface ITriggerTargetsSet
     {
-        List<ITriggerTarget> TargetsInShape(IShape2D shape, CampType camp);
+        List<ITriggerTarget> TargetsInShape(IShape2D shape, ITriggerCamp camp);
     }
 }

@@ -1,42 +1,68 @@
 namespace GameBase.Flyings
 {
+    public enum CurveType
+    {
+        None = 0,
+        Linear,
+        Tracer,
+        Slower,
+        Fall,
+        Vector,
+    }
+
+    public struct CurveData
+    {
+        public CurveType type;
+        public float length;
+        public float duration;
+        public float turnSpeed;
+        public float turnAcc;
+    }
     public class CurveFactory
     {
-        public enum CurveType
+        public static Curve CreateInstance(CurveData data)
         {
-            None = 0,
-            Linear,
-            Tracer,
-            Slower,
-            Fall,
-            Vector,
-        }
-
-        public static CurveBase CreateInstance(CurveType type, ICurveable e)
-        {
-            if (type == CurveType.None)
+            if (data.type == CurveType.None)
             {
                 return null;
             }
-            if (type == CurveType.Linear)
+            if (data.type == CurveType.Linear)
             {
-                return new Linear(e);
+                return new Linear()
+                {
+                    duration = data.duration,
+                };
             }
-            if (type == CurveType.Tracer)
+            if (data.type == CurveType.Tracer)
             {
-                return new Tracer(e);
+                return new Tracer()
+                {
+                    duration = data.duration,
+                    turnSpeed = data.turnSpeed,
+                    turnAcc = data.turnAcc
+                };
             }
-            if (type == CurveType.Slower)
+            if (data.type == CurveType.Slower)
             {
-                return new Slower(e);
+                return new Slower()
+                {
+                    duration = data.duration,
+                };
             }
-            if (type == CurveType.Fall)
+            if (data.type == CurveType.Fall)
             {
-                return new Fall(e);
+                return new Fall()
+                {
+                    duration = data.duration,
+                };
             }
-            if (type == CurveType.Vector)
+            if (data.type == CurveType.Vector)
             {
-                return new Vector(e);
+                return new Vector()
+                {
+                    duration = data.duration,
+                    length = data.length,
+                };
             }
 
             return null;

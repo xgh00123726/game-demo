@@ -3,23 +3,25 @@ using UnityEngine;
 
 namespace GameBase.Flyings
 {
-    public abstract class CurveBase
+    public abstract class Curve
     {
-        public ICurveable _projectile;
+        protected ICurveable _projectile;
+        protected bool _freezeY = true;
+
         public float speed = 1f;
-        public bool freezeY = true;
-        
-        public CurveBase(ICurveable projectile)
+        public float duration = 10f;
+
+        internal void SetOwner(ICurveable curveable)
         {
-            _projectile = projectile;
+            _projectile = curveable;
         }
 
         protected abstract Vector3 GetDirDelta();
 
-        public virtual void DirUpdate()
+        protected virtual void DirUpdate()
         {
             var dir = GetDirDelta();
-            if (freezeY)
+            if (_freezeY)
             {
                 dir.y = 0;
             }
@@ -35,12 +37,12 @@ namespace GameBase.Flyings
         {
             return _projectile.Dir * speed * Time.deltaTime;
         }
-        public virtual void PosUpdate()
+        protected virtual void PosUpdate()
         {
             Vector3 delta = GetPosDelta();
             var distanceVec = _projectile.Position - _projectile.Dest;
 
-            if (freezeY)
+            if (_freezeY)
             {
                 delta.y = 0f;
                 distanceVec.y = 0f;
@@ -59,6 +61,19 @@ namespace GameBase.Flyings
             }
         }
 
-        public virtual bool CurveEnd() => false;
+        protected virtual bool IsTravelEnd => false;
+        private bool IsTimeout => _projectile.LifeTime > duration;
+        public bool IsEnd => IsTravelEnd || IsTimeout;
+
+        public void Update()
+        {
+            if (_projectile.LifeTime > duration)
+            {
+                return;
+            }
+
+            DirUpdate();
+            PosUpdate();
+        }
     }
 }

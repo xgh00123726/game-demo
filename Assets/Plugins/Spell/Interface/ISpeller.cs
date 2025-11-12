@@ -10,6 +10,6 @@ namespace GameBase.Spells
         Vector3 Position { get; }
         Vector3 Dir { get; }
         void LookAt(Vector3 pos);
-        CampType Camp { get; }
+        ISpellCamp Camp { get; }
     }
 }

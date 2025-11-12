@@ -25,9 +25,13 @@ namespace Constructor.Projectiles
         public ProjectileShapeData shape;
         public int maxEffectTimes;
         public bool hasWhite;
-        public float maxTravel;
         public GameBase.Projectiles.Tag tagEnum;
+        public float findTargetRange;
+        public float damage;
+        public float ampFactor;
+        public Color damageTextColor;
 
+        public string damageTextPrefabName;
         public string tag;
         public string hitEffectName;
         public string trigEffectName;

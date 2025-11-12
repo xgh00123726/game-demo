@@ -7,38 +7,43 @@ namespace GameBase.Flyings
 {
     public class Flying : ICurveable,
         IKeyEntity<string>,
-        ITriggerAttach
+        ITriggerAttach,
+        IFlyingTarget
     {
         public float arriveDis;
-        public int trailID;
         public float maxExistTime;
         public float minExistTime;
-        public float maxTravel;
-
-        public CurveBase curve;
-        public float speed;
-        public CurveFactory.CurveType curveType;
+        
         public IFlyingTarget target;
         public float startAngleOffset;
         public Vector3 dest;
-
-        public string hitEffect;
-        public string hitAudio;
+        public Curve curve;
 
         public string releaseEffect;
         public string releaseAudio;
 
-        public Action OnHit;
         public Action OnReleased;
 
-        internal bool hitFlag;
+        internal float speed;
         internal Vector3 src;
         internal bool alive;
-        internal GameObject trail;
         internal float instantiateTime;
+        public float Speed
+        {
+            get => speed;
+            set
+            {
+                speed = value;
+                if (curve != null)
+                {
+                    curve.speed = value;
+                }
+            }
+        }
+        public bool IsEnd => curve?.IsEnd == true;
 
         public bool Alive => alive;
-        Vector3 ICurveable.Position
+        public Vector3 Position
         {
             get => obj.transform.position;
             set => obj.transform.position = value;
@@ -59,8 +64,6 @@ namespace GameBase.Flyings
                 obj.transform.position = src;
             }
         }
-
-        float ICurveable.MaxTravel => maxTravel;
 
         float ICurveable.LifeTime => Time.time - instantiateTime;
 

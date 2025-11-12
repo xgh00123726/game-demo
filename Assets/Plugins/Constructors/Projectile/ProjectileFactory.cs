@@ -50,11 +50,14 @@ namespace Constructor.Projectiles
             t.trigAudio = data.trigAudioName;
             t.targetsSet = CommonTargetSet.Instance;
 
-            f.maxTravel = data.maxTravel;
-
             p.tag = data.tagEnum;
             p.trigger = t;
             p.flying = f;
+            p.damage = data.damage;
+            p.damageTextPrefabName = data.damageTextPrefabName;
+            p.damageTextColor = data.damageTextColor;
+            p.ampFactor = data.ampFactor;
+            p.findTargetRange = data.findTargetRange;
 
             return p;
         }

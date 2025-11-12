@@ -9,6 +9,11 @@ namespace GameBase.Tools
             return e1 | e2;
         }
 
+        public static uint And(uint e1, uint e2)
+        {
+            return e1 & e2;
+        }
+
         public static uint Sub(uint e1, uint e2)
         {
             return (e1 ^ e2) & e1;
