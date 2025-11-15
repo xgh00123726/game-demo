@@ -6,18 +6,18 @@ namespace GameBase.Math
     {
         public struct Rect2D : IShape2D
         {
-            public Vector2 dir;
+            public Vector3 dir;
             public Rect rect;
             public Rect2D(Rect rect)
             {
                 this.rect = rect;
-                dir = Vector2.zero;
+                dir = Vector3.zero;
             }
 
             public Rect2D(float width, float height)
             {
                 rect = Rect.MinMaxRect(0, 0, width, height);
-                dir = Vector2.zero;
+                dir = Vector3.zero;
             }
 
             public Rect2D(float xmin, float ymin, float xmax, float ymax)
@@ -26,12 +26,12 @@ namespace GameBase.Math
                 dir = Vector2.zero;
             }
 
-            Vector2 IShape2D.Center
+            Vector3 IShape2D.Center
             {
                 get => rect.center;
                 set => rect.center = value;
             }
-            Vector2 IShape2D.Dir
+            Vector3 IShape2D.Dir
             {
                 get => dir;
                 set => dir = value;
@@ -45,6 +45,11 @@ namespace GameBase.Math
                     rect.height = value / rect.width * rect.height;
                     rect.width = value;
                 }
+            }
+
+            bool IShape2D.Contains(Vector3 position)
+            {
+                return true;
             }
 
             public bool Contains(float x, float y)

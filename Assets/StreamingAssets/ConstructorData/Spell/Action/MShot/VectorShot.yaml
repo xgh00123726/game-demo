@@ -1,0 +1,25 @@
+projectile:
+  flying:      
+    curve:
+      type: Vector
+      length: 10
+      duration: 10
+    prefabName: Prefabs/Projectile/Sword12_Green
+    speed: 10
+  shape:
+    type: Circle
+    radius: 0.5
+  damage: 10
+  ampFactor: 1
+  damageTextPrefabName: Prefabs/UI/FloatText
+  damageTextColor:
+    r: 1
+    g: 1
+    b: 1
+    a: 1
+  maxEffectTimes: 1
+  tag: DestroyOnEffectMaxTimes | DestroyOnFlyingEnd
+  findTargetRange: 2
+  hitAudioName: Explore1.wav
+  hitEffectName: Prefabs/Effect/Hit/Hit2
+slotNum: 4

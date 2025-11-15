@@ -80,7 +80,7 @@ namespace XLua
                 // Create State
                 rawL = LuaAPI.luaL_newstate();
 
-                //Init Base Libs
+                //InitFile Base Libs
                 LuaAPI.luaopen_xlua(rawL);
                 LuaAPI.luaopen_i64lib(rawL);
 

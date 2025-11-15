@@ -8,15 +8,15 @@ namespace GameBase.Math
     {
         public struct Circle : IShape2D
         {
-            public Vector2 c;
+            public Vector3 c;
             public float r;
-            public Vector2 dir;
-            Vector2 IShape2D.Center
+            public Vector3 dir;
+            Vector3 IShape2D.Center
             {
                 get => c;
                 set => c = value;
             }
-            Vector2 IShape2D.Dir
+            Vector3 IShape2D.Dir
             {
                 get => dir;
                 set => dir = value;
@@ -41,10 +41,12 @@ namespace GameBase.Math
                 dir = Vector2.zero;
             }
 
-            public bool Contains(float x, float y)
+            public bool Contains(Vector3 position)
             {
+                float x = position.x;
+                float y = position.z;
                 float dx = x - c.x;
-                float dy = y - c.y;
+                float dy = y - c.z;
                 return dx * dx + dy * dy < r * r;
             }
         }

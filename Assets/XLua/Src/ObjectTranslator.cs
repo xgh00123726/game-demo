@@ -1001,7 +1001,7 @@ namespace XLua
 
         Dictionary<Type, int> typeIdMap = new Dictionary<Type, int>();
 
-        //only store the type id to type map for struct
+        //only store the type reflectedID to type map for struct
         Dictionary<int, Type> typeMap = new Dictionary<int, Type>();
 
         public int GetTypeId(RealStatePtr L, Type type)

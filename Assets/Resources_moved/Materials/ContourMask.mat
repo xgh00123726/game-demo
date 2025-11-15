@@ -136,7 +136,7 @@ Material:
     - _GlossyReflections: 0
     - _Mask: 0
     - _MaskAlpha: 0.43
-    - _MaskFull: 0
+    - _MaskFull: 0.52328765
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005

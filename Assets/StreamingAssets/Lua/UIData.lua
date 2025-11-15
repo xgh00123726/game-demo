@@ -3,10 +3,10 @@ local AlignType = CS.Instance.AlignType
 UIData = {
     AlignType = AlignType,
     CommonDragView = {
-        PrefabID = 37,
+        PrefabName = "Prefabs/UI/InventoryShadowItem",
     },
     CommonDetailView = {
-        PrefabID = 4,
+        PrefabName = "Prefabs/UI/DetailUI",
     },
     Attr = {
         ShowAttr = {0, 1, 3, 2, 5, 7, 4, 12, 14, 6, 15, 9},
@@ -62,7 +62,7 @@ UIData = {
     },
     Spell = {
         Layout = {
-            xInterval = 235,
+            xInterval = 185,
             yInterval = 100,
             width = 1200,
             height = 600,

@@ -32,7 +32,7 @@ namespace GameBase.Tools
             {
                 float alpha = Mathf.PI * 2 / CIRCLE_LINE * i;
                 float x = circle.r * Mathf.Cos(alpha) + circle.c.x;
-                float z = circle.r * Mathf.Sin(alpha) + circle.c.y;
+                float z = circle.r * Mathf.Sin(alpha) + circle.c.z;
                 end = new Vector3(x, y, z);
                 if (i == 0)
                 {
@@ -71,10 +71,10 @@ namespace GameBase.Tools
             var leftBottom2D = line.LeftBottom;
             var rightBottom2D = line.RightBottom;
 
-            var leftTop = new Vector3(leftTop2D.x, y, leftTop2D.y);
-            var rightTop = new Vector3(rightTop2D.x, y, rightTop2D.y);
-            var leftBottom = new Vector3(leftBottom2D.x, y, leftBottom2D.y);
-            var rightBottom = new Vector3(rightBottom2D.x, y, rightBottom2D.y);
+            var leftTop = new Vector3(leftTop2D.x, y, leftTop2D.z);
+            var rightTop = new Vector3(rightTop2D.x, y, rightTop2D.z);
+            var leftBottom = new Vector3(leftBottom2D.x, y, leftBottom2D.z);
+            var rightBottom = new Vector3(rightBottom2D.x, y, rightBottom2D.z);
 
             Gizmos.DrawLine(leftTop, rightTop);
             Gizmos.DrawLine(rightTop, rightBottom);

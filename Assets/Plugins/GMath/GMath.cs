@@ -26,6 +26,11 @@ namespace GameBase.Math
             return new Vector2(-v.y, v.x);
         }
 
+        public static Vector3 VerticalVector2(Vector3 v)
+        {
+            return new Vector3(-v.z, v.y, v.x);
+        }
+
         public static float GameDistance(Vector3 c1, Vector3 c2)
         {
             float x1 = c1.x;

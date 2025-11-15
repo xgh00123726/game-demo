@@ -17,6 +17,11 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 99e66562739860d4fa975f7650113420
   m_SerializeEntries:
+  - m_GUID: 00b32e5433d40724088e8d1a43932d67
+    m_Address: Textures/universalIcon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 00d39d07cd361e34e97f8ed711c5d9e4
     m_Address: Textures/AllBlack
     m_ReadOnly: 0
@@ -39,6 +44,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 02aaacbbc35ea7648b7f39e90d5e0434
     m_Address: Materials/TechCircle2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 02ffcdcce496f7b429bc8890255da4a6
+    m_Address: Prefabs/Projectile/Sword15_Earth
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -72,13 +82,48 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 16f55d79387ca264588e4e15fe72c693
-    m_Address: Sprite/Spell_Speeder
+  - m_GUID: 0ea8c9294b55014449028f9fbe007091
+    m_Address: Textures/strengthIcon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0eee814802a95fb4889b8902aa80a5e0
+    m_Address: Textures/Equipment/strength1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0f048c33755a2084bb263371a5d8ffe3
+    m_Address: Textures/Equipment/coolingAccelerate1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 136c654e4e3618345b3d3d67883e6308
+    m_Address: Prefabs/UI/WorldCanvas.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 14c6229518e665146b130e31bf32aac2
+    m_Address: Textures/IndicatorRectDecal
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 16b7f58d0c301fa45bc690070e749aae
+    m_Address: Textures/Equipment/moveSpeed1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 171238f540b76b347a9543482c0dcb48
+    m_Address: Prefabs/UI/InventoryShadowItem
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1a014eb03492e8b4eb1cf538ddc3e5ea
     m_Address: Prefabs/Effect/Hits and explosions/Star hit
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1a168003231c1614f82034c43d92c67a
+    m_Address: Textures/SpellActionModifier/FireDisfuse-30.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -94,6 +139,16 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1cdb4f0ba62d4894c921b789dac3bb46
     m_Address: Prefabs/Effect/Magic shields/Magic shield blue
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1dbf24f8a486a5d43aa8eef186e3375d
+    m_Address: Prefabs/Projectile/Sword15_Frost
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1ef3ad7f405fde24098ff4334d5b40e0
+    m_Address: Prefabs/Effect/Hit/SectorSlash.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -132,8 +187,23 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2571b3f3684ca3149ac77a1262ab220c
-    m_Address: Prefabs/Info/HealthBar
+  - m_GUID: 23c8a3ae2290cff498d237aa7b5d662f
+    m_Address: Textures/Equipment/coolingAccelerate2.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 272b1d2d16ab65b44a2024880f7ad8cc
+    m_Address: Textures/Spell/FallStone1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 27baf0aa80cebea4d9026946e1b254c7
+    m_Address: Textures/Equipment/base.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 287c806d216ad2c49b812e862efffde4
+    m_Address: Btn2.wav
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -142,8 +212,63 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 29ce16626e51ded42a42a1622d3db2a4
+    m_Address: Prefabs/Info/CircleIndicator
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 29dda53818382554791ec6945d6a87c0
+    m_Address: Prefabs/Info/RectIndicator
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2a310fdccb4b2ce4db3324468f3981ae
+    m_Address: Textures/Spell_ArrowRain
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2b354916f87bef04e82cfe88c0a97337
     m_Address: Prefabs/UI/SpellItem
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2c5a0950e1647a74fa7c68545225124e
+    m_Address: Prefabs/UI/InventoryItem
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2d712c0c0a4484b4fa07dc1265b82e13
+    m_Address: Prefabs/UI/SpellItemShadowView.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2e379f87c7a99f148b6eb52c5dcb4851
+    m_Address: Prefabs/UI/DetailUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2ea613443cfaea94ea3557eb63058dc1
+    m_Address: Textures/EquipmentShape
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2efd1c51d7e487f4ba79e734c950eca8
+    m_Address: Prefabs/Projectile/Sword12_Green
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2fc90a2127889a242800c5effe90e598
+    m_Address: Btn1.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 30df1e8312c4fec44a91b1a8080f4e4c
+    m_Address: Textures/Increasing/Magic.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3364ec23b2a6c6242b1866a022b53b16
+    m_Address: Textures/DiamondShape
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -158,7 +283,12 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 35738a1e71d6c9a4b8ed4332a7c03b0d
-    m_Address: Prefabs/Effect/Hits and explosions/Green hit
+    m_Address: Prefabs/Effect/Hit/Hit2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 36b99838a63a3134681c8cfb6c756701
+    m_Address: Textures/MagicDamageIcon
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -177,6 +307,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 386e802be36f5d8458bcb87b2a9ab495
+    m_Address: Textures/Increasing/Health.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3c75438cee60ed848a1d2ad7e9fbb2e8
     m_Address: Textures/Snowflake
     m_ReadOnly: 0
@@ -184,6 +319,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3ecde855bcb751d458a8f81639c831e1
     m_Address: Prefabs/Effect/Portals/Portal yellow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3fb99935854f74949a688d943dd3df2d
+    m_Address: Prefabs/UI/RootCanvs.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -217,8 +357,23 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 49654abca07d4c54988ab60e718dc7d0
+    m_Address: Prefabs/Audio/AudioSource.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4ab9f00ebc959dc4a9ef58b67adc4a10
+    m_Address: Textures/DamageIcon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4bf510cf9e0bba644affa2c5557c371b
     m_Address: Materials/Circle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4c54f1c8e1b9e8a4c813397ee0264e0e
+    m_Address: beat.wav
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -227,18 +382,33 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4ed82086929c2e94c998d47ff0a4796c
+    m_Address: Textures/Increasing/base.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4f552e9740e48fb4cbe2fb15e8d91085
     m_Address: Prefabs/Effect/Character auras/Debuff
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 525a83d1d2b9bd3469e6b36cc71dd0e0
-    m_Address: Assets/Resources_moved/Textures/UIShader.png
+  - m_GUID: 50b9c797f29c04948a3ecb8ff7007721
+    m_Address: Prefabs/UI/EpicExpBar.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 53f8c774bbf4aaa409d0f46a7a312f5c
     m_Address: Prefabs/Effect/Hits and explosions/Default
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 546dc0c26b970f242a4b02ebfe1cbf32
+    m_Address: Explore4.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 55da9a3f367de0146b77b90e2dc0cb47
+    m_Address: Prefabs/UI/FixedDetailUI
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -257,8 +427,38 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5a4c883df7646374abd76ade6f9b9f02
+    m_Address: Prefabs/UI/PassivePanel
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5b0a3c2ff398d574892c13409305f7cf
+    m_Address: Prefabs/Projectile/Empty
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5b520656cd2b3ca48b8f211c32a0309a
+    m_Address: Textures/AttrIcon/spellAccelerateIcon.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5baa6b64dde7c024b9cf4ba1f8c90190
+    m_Address: Ka1.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c1aa190d796f634ba7fbd13a90d0bc0
+    m_Address: Textures/SpellActionModifier/CastTimes2.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5c2742eb713e13c4288e003af72c860a
     m_Address: Materials/Floor3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c6ab9d5988880b4caaa6732a45d6371
+    m_Address: Textures/SpellActionModifier/FlyingNum4.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -272,8 +472,28 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5d4f2782dc84fce44bff88b02fe7c94e
+    m_Address: Ka2.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5d86f8ce51bdd714b9bd02a0af00f04a
     m_Address: Materials/Crack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5e8eb55ff3d07524cb06771971abc955
+    m_Address: Wave1.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5f4466fd59085d94a856aacf46fe31a1
+    m_Address: Textures/SpellActionModifier/Distance4.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6079122acf54cf64d967048cac73bdab
+    m_Address: Textures/AttrIcon/healthRegenIcon.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -292,6 +512,26 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 63fa701f288fb26449d6e0b4d24ba97e
+    m_Address: Textures/agilityIcon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6470b4f0b0763d54cbb4b34891ceffb3
+    m_Address: Textures/Spell_Speeder
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 66baa2086862a7b4fa178d6480fbfebc
+    m_Address: Textures/AttrIcon/attackRangeIcon.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 66d1e5c5f4148714c9b99c90e7d0a320
+    m_Address: Levelup1.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 67b5ffc520c2cb44c823530ba007486c
     m_Address: Textures/Flare
     m_ReadOnly: 0
@@ -302,8 +542,43 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 692f8b38021d02d4483dbab13116508b
-    m_Address: Shader/SkillIndicatorDecal
+  - m_GUID: 68f2afb8401df8c4e913aab40b965290
+    m_Address: Materials/ArrowDecal
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6c2a6fa57ac09094e86ef89cfd4d2a84
+    m_Address: Textures/SpellActionModifier/FlyingNum3.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6d85a086f864d5a4faaa1cd3508fe447
+    m_Address: Textures/Increasing/Move.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6f27cd4c39e5f7d4db7756126f9c2184
+    m_Address: Textures/MagicDefenseIcon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6f61fcb58d814304fa1cf91c1a039ff6
+    m_Address: Prefabs/Entity/Zombie1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7110e2c68752e8640b1ab6acb533ca75
+    m_Address: Textures/SpellActionModifier/FireDisfuse60.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 718856468a1b456499585d203055830f
+    m_Address: Textures/AttrPanelBackGround
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 722aa8b0639fe4640b84cd1fe0ff20f4
+    m_Address: Prefabs/UI/SpellActionModifierItem.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -313,7 +588,12 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 755cd1439725c564691250681244f889
-    m_Address: Prefabs/Effect/RightClickEffect
+    m_Address: Prefabs/Effect/Move/RightClickEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 76eba83c9614a5a4c83959efd823de93
+    m_Address: Textures/Equipment/agility1.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -322,8 +602,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7839939669270314d9d3291853bd557f
+    m_Address: Prefabs/Projectile/Sword12_Purple
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 79da7101e844ee14f9d40822baa936c3
     m_Address: Prefabs/Effect/AoE effects/Laser AOE
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7ad802d771513b644afca5da569496e1
+    m_Address: Prefabs/UI/EquipmentItem
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -337,6 +627,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7c6c87bc72f57674d947a034b7039ffa
+    m_Address: Textures/SpellActionModifier/Distance1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7d42a027e51a93249bba859af55d5f64
+    m_Address: Prefabs/UI/EpicManaBar
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7f12fa216df1eb94181563e8ea03826b
     m_Address: Materials/VFXatlas
     m_ReadOnly: 0
@@ -347,6 +647,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 80b057e1cc878634488547feae408d42
+    m_Address: Prefabs/Projectile/Sword15_Iron
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 80b58f19dbfb46343b2ec062280b00f0
     m_Address: Prefabs/Effect/Slash effects/Charge slash blue
     m_ReadOnly: 0
@@ -354,6 +659,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 82e6bf167cb432c4a992cde3246b834f
     m_Address: Prefabs/Effect/Magic circles/Freeze circle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8489c200e6893d44fae6efe3f6471c3f
+    m_Address: Prefabs/Info/SelectorDrawer.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -387,13 +697,43 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8a4afc6dd97b11d40b6512a670207f36
+    m_Address: Textures/SpellActionModifier/CastTimes4.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8a998afdae746404eab632f00ab27937
     m_Address: Prefabs/Effect/Slash effects/Stone slash
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8aff042815a76bd46975d727a254e8bb
+    m_Address: Textures/EquipmentBackground
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8b756c1bc42ee4a4db4b7d4b94c5f21c
     m_Address: Prefabs/Effect/Hits and explosions/Electro hit
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8cbbbbef432cabb45833e1b41a27c433
+    m_Address: Beat1.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8e5d5bdc271373a4b914fc2858b4b691
+    m_Address: Prefabs/Info/CreatureCircleIndicator.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8e7d33a2644a68d438c65b942644ec6e
+    m_Address: Textures/Spell/blackHole1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8ebcee3303e151c48bba3ee8b6485303
+    m_Address: Textures/SpellActionModifier/Distance2.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -407,13 +747,33 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 90a3612fadc0f7848bc09a08fd7ee10f
+    m_Address: Prefabs/Projectile/FallingStone2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 91d29e46072f4484c9797069d11ec71d
+    m_Address: Dangdang1.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 91e44afac9479ed41aeff4ec66e325eb
+    m_Address: Textures/Increasing/Defense.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 94312f7404bd7794e835db8f25320007
+    m_Address: Textures/AttrIcon/healthIcon.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9437099e5efbdea4a96be77148ebd302
     m_Address: Materials/MagicCircle
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 95b5f7ed449e9554aaa7ddb3ee46ba13
-    m_Address: Sprite/Spell_ArrowRain
+  - m_GUID: 9672a1628a2c2fb4fb21e28b7621c12c
+    m_Address: Textures/attackSpeedIcon
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -422,8 +782,23 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 97d88fb9a3565d84daf5fff081fcbb91
+    m_Address: Prefabs/Projectile/Sword15_Lava
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9844afb59689efe48916829afcdea2bd
     m_Address: Textures/Point1n
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 993698df3a5bd664195a0b3dc988a1b7
+    m_Address: Textures/SpellActionModifier/CastTimes3.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 997deec201d9ce34aac8082832da8ce0
+    m_Address: Prefabs/Projectile/FallingStone
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -438,7 +813,22 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9c760473ad645974e9a0ec1aa7882487
-    m_Address: Prefabs/Effect/Hits and explosions/Explosion
+    m_Address: Prefabs/Effect/Hit/Explosion
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a15b406eedbcd294da3d18079614eb10
+    m_Address: Textures/SquareContour
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a3f1976606b9e7647a3d2412014bb3cc
+    m_Address: Explore2.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a4d0d15d6791d034da02c80312a81a4c
+    m_Address: Textures/Equipment/moveSpeed2.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -467,11 +857,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ad33436d3a6b5f14c9d19b9b322da601
-    m_Address: Assets/Resources_moved/Materials/Mask.mat
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ad3c804766a4f964f9289265ddc5fb04
     m_Address: Materials/CardSuit
     m_ReadOnly: 0
@@ -482,6 +867,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: af0ea384e7dc1454d88edc29b8acd69b
+    m_Address: Explore1.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b1c965172a423de4582721d477c239b1
     m_Address: Prefabs/Effect/Slash effects/Charge slash red
     m_ReadOnly: 0
@@ -489,6 +879,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b383f5416ebe14442ace0605759c15ad
     m_Address: Prefabs/Effect/Character auras/Lightning aura
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b56214b5a1d4bc6418867cbdae1b7e27
+    m_Address: Textures/SquareShape
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -507,6 +902,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b7476182f52b600499abc44192c155c9
+    m_Address: Textures/DiamondContour
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b847a0596cb58714ca5d4db64a7a06e3
     m_Address: Textures/Trail67
     m_ReadOnly: 0
@@ -514,6 +914,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: baaa31ff42893ae44b22f2640c165baa
     m_Address: Prefabs/Effect/Hits and explosions/Love hit
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bb817ee6598c7ad4399eced921bcbdca
+    m_Address: Textures/SpellActionModifier/FlyingNum1.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -527,23 +932,28 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bc6b68d1512cc8742926a06c4c0de9fb
-    m_Address: Materials/Mask1
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bd054bcc5b987354497da1b5023dd5a9
     m_Address: Prefabs/Projectile/Frisbee
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: be7c57106c3f7264d976d54ff4f27373
-    m_Address: Materials/SkillIndicatorDecal
+  - m_GUID: be9b8359a3dbc1a4ca3b7c61e31fb6cc
+    m_Address: Prefabs/UI/ShopNearView.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bec66de079ce97349885785ae3873037
+    m_Address: Prefabs/UI/ShopPanel.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c0c274d8dc3146344acb1643a440ebd5
     m_Address: Materials/Star
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c129b44f62096ca46ab56bca997ff5ea
+    m_Address: Textures/SpellActionModifier/Distance8.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -567,8 +977,28 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c6671730c3ee4a544831eefa72f09688
+    m_Address: Textures/Equipment/damage1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c725f28fe018754489f28b253cc9791d
+    m_Address: Textures/Equipment/universal1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c772dddb3ab9d1e45beff81f03a8bb58
+    m_Address: Textures/SpellActionModifier/FireDisfuse30.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: caf2fa2ae1b3a68488974f90f5ce83dd
     m_Address: Textures/Mask1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cc2ec7128c0d3b246bfd813e92c07ff9
+    m_Address: Prefabs/UI/SpellActionModifierPanel.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -577,8 +1007,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cdcaec7b1f421c3469eafa8f571d0728
+    m_Address: Prefabs/UI/InventoryPanel
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d0868bab79d55b84bb0c5973f7bd6904
     m_Address: Prefabs/Effect/Character auras/Star aura
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d0df50aedac249a43a7a623e9553d332
+    m_Address: Prefabs/Entity/PicoChan
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -587,8 +1027,23 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d3fc971c07af5ff4aa7052b202790e6b
+    m_Address: Textures/SpellActionModifier/CastTimes1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d41f8fa6436f6a3469884c5bd29d727d
+    m_Address: Textures/EquipmentContour
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d4a51fca589e7f34898d6ac6bf3d5b27
     m_Address: Textures/Flash2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d749ed896b49f864f8f8bc86cf076993
+    m_Address: Prefabs/Effect/Hit/ForwardSlash.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -597,13 +1052,43 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d9b2ceb2a91b5724d940c8ba68685c37
+    m_Address: Prefabs/UI/AttrSelectItem.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d9fa60a2c8d3ef247b47081a3641601f
+    m_Address: Explore3.wav
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: da02f65c3eca5714f8c4aad25dec5819
     m_Address: Textures/HalfBlack
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: daf8133190fc1db4c8337541e201742f
+    m_Address: Textures/SpellActionModifier/FlyingNum2.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: db36274bb3aba104e84d83f3c77f4fd8
+    m_Address: Prefabs/UI/EquipmentPanel
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: db8cee9b1b178574ab0bb31c88f94c03
+    m_Address: Prefabs/UI/PassiveItem
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dbb676dfa82b3bb48a565153b7a52870
     m_Address: Textures/MagicCircle2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ddc116520da603441a2aaaddcd48d7e3
+    m_Address: Wave2.wav
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -617,13 +1102,33 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e624487489edb0c44bed21cff1de13ea
-    m_Address: Shader/CircleIndicator
+  - m_GUID: e574e2ee76ed9e643b2536fb6af41a3d
+    m_Address: Textures/intelligenceIcon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e5af1190cb5fd224cb257457c5b1c4fd
+    m_Address: Textures/Equipment/attackSpeed1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e62f9500b51a9e94fa0e9788c3788fdb
+    m_Address: Assets/Resources_moved/Materials/SpellIcon.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e8e49164482ea7c4ebf0b22cdaf0842d
+    m_Address: Prefabs/UI/EpicHealthBar
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e96e991603c19ea42841c59dbb8a59a2
     m_Address: Prefabs/Prop/Runes/Runes_Arcane
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e98c70946a8cd3142aa609df29607ed9
+    m_Address: Textures/Equipment/intelligence1.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -634,6 +1139,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ea09a2af70c3c614a919bd377fd2e879
     m_Address: Prefabs/Effect/AoE effects/AoE slash blue
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eba57d17dd25cfa47a13fa4b7d5b7285
+    m_Address: Prefabs/UI/ShopItem.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -652,6 +1162,21 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: edbd29e3a4d9cb441bc7b93178804a84
+    m_Address: Textures/Spell/Shoot1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ee4810f20e256c0439d44e5924ee512a
+    m_Address: Textures/moveSpeedIcon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ef33c5ed3852f394a9071aa14e77b326
+    m_Address: Textures/Equipment/defense1.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: efa1bd10ff217b949a581a8e1b97183c
     m_Address: Prefabs/Effect/AoE effects/AoE slash orange
     m_ReadOnly: 0
@@ -664,6 +1189,21 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f363ead7ab7a9be4fb2f4ef561912e13
     m_Address: Prefabs/Effect/CircleIndicator
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f3a820a7fc9cfa746856e7f16fccc9ea
+    m_Address: Textures/DefenseIcon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f43ec291304339143be7ef3e354d329c
+    m_Address: Prefabs/UI/AttrSelectPanel.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f87db360c1b6d1f4ca6f0fc656efad38
+    m_Address: Prefabs/Projectile/Sword12_Red
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -682,8 +1222,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fc826db0f38b58846a017de1f7b232ae
+    m_Address: Textures/Increasing/Attack.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fd9b514397ad90e478ce5c84ec0e1d89
     m_Address: Materials/Point
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ff94862002e1a014db2d873395ae1048
+    m_Address: Textures/SpellActionModifier/FireDisfuse-60.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

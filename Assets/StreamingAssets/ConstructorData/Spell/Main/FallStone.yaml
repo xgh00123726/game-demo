@@ -1,0 +1,24 @@
+# minCastAngle: 10
+# textureName: Textures/Spell/FallStone1.png
+# cooldown: 5
+# tag: CastOnMousePosition
+# camp:
+#   include: Others
+# indicator:
+#   type: Circle
+#   radius: 1
+# actionData:
+#   type: MTriggerOnHit
+#   projectile:
+#     flying:
+#       prefabName: Prefabs/Projectile/FallingStone
+#       speed: 10
+#     shape:
+#       type: Circle
+#       radius: 1
+#     maxEffectTimes: 99
+#     hasWhite: true
+#     tag: DestroyOnEffectMaxTimes
+#     hitEffectName: Prefabs/Effect/Hit/Explosion
+#     trigAudioName: Explore1.wav
+#   slotNum: 2

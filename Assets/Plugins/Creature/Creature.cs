@@ -16,7 +16,6 @@ namespace GameBase.Creatures
         ITriggerOwner,
         ITriggerTarget,
         IHealthBarOwner,
-        IModifieder,
         IBuffOwner,
         IMover, 
         ITriggerAttach,
@@ -73,7 +72,7 @@ namespace GameBase.Creatures
 
         Move.CircleCollider IMover.Collider => collider;
 
-        Modifyables IModifieder.Modifyables => modifyables;
+        
 
 
         public void AddBuff(int id, float duration = -1)

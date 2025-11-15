@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 namespace GameBase.Creatures
 {
-    public partial class Creature
+    public partial class Creature :
+        IModifieder
     {
         public Modifyables modifyables = new();
         private Dictionary<string, float> _possibleAttr = new();
@@ -35,6 +36,8 @@ namespace GameBase.Creatures
         private Modifyer _uniToAgiPercent;
         private Modifyer _uniToStrgPercent;
         private Modifyer _uniToIntlPercent;
+
+        public Modifyables Modifyables => modifyables;
 
         internal void HighLevelAttrInit()
         {

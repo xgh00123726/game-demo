@@ -1,0 +1,9 @@
+minCastAngle: 10
+textureName: Textures/Spell/Shoot1.png
+cooldown: 2
+tag: CastOnMousePosition
+camp:
+  include: Others
+indicator:
+  type: Circle
+actionName: Slash

@@ -1,0 +1,125 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Picola
+  m_EditorClassIdentifier: 
+  m_GroupName: Picola
+  m_Data:
+    m_SerializedData: []
+  m_GUID: a62fe701ce6188640870e694ad2242e7
+  m_SerializeEntries:
+  - m_GUID: 0377d09af80237c479cb59178fdfe75e
+    m_Address: Assets/Picola/PicoChan/Textures/pico_chan_chr_pico_00_clothes_highlightmap.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 10038fdbf93c4dd43af9ce774d03a956
+    m_Address: Assets/Picola/PicoChan/Models/pico_chan_chr_pico_00.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1268dd8f8ea75114b92b482aa2d01c11
+    m_Address: Assets/Picola/PicoChan/Textures/pico_chan_chr_pico_00_eye_c.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4464871847db3c14b949eb453ba68c76
+    m_Address: Assets/Picola/PicoChan/Textures/pico_chan_chr_pico_00_hair_c.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4b25c0ff4a2122446aaae36e8e280175
+    m_Address: Assets/Picola/PicoChan/Textures/pico_chan_chr_pico_00_body_c.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4d9e79636f142374baf5df39ad6fe194
+    m_Address: Assets/Picola/PicoChan/Materials/pico_body_m.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6c06ac16cf3f25149af389a0f575eaee
+    m_Address: Assets/Picola/PicoChan/Textures/pico_chan_chr_pico_00_bag_c.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7b2a83947805e6446b467d3dff391145
+    m_Address: Assets/Picola/PicoChan/Materials/pico_bag_m.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 82a19a6ce888024438324fcf79468067
+    m_Address: Assets/Picola/PicoChan/Textures/pico_chan_chr_pico_00_eyeh_c.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 83628a2e699576147adabb30587f44d4
+    m_Address: Assets/Picola/PicoChan/Prefabs/PicoChan.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 878aefd75248a2046904bc20188aeef8
+    m_Address: Assets/Picola/PicoChan/Materials/pico_eye_m.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 931caee363d9040409f9d43593d21469
+    m_Address: Assets/Picola/PicoChan/Materials/pico_body_metal_m.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9db64f59438bddf4fa3a1e4514aa10f6
+    m_Address: Assets/Picola/PicoChan/Materials/pico_hair_m.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a536b623e9a4ec54581a8c2fc17418fe
+    m_Address: Assets/Picola/PicoChan/Materials/pico_clothes_lens_m.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b025e7212b95566479c77e8be2cc07ef
+    m_Address: Assets/Picola/PicoChan/Materials/pico_face_m.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c09f00b9fc06ea7478baf60cd314e58c
+    m_Address: Assets/Picola/PicoChan/Materials/pico_clothes_m.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c859e58b31490ab4c95b165ff9449821
+    m_Address: Assets/Picola/PicoChan/Textures/pico_chan_chr_pico_00_face_c.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ca05c380c9340bf49ad5c5f0b8669a49
+    m_Address: Assets/Picola/PicoChan/Materials/pico_clothes_metal_m.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e583d88312692ba45a779fb2d40ca88e
+    m_Address: Assets/Picola/PicoChan/Textures/pico_chan_chr_pico_00_clothes_c.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f974f43b29494b941906f0eb9d727614
+    m_Address: Assets/Picola/PicoChan/Materials/pico_eye_h_m.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 4a220a0cf5014c147a511326b0c055bd, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: e6b977bdab15628419adf1691fbdb553, type: 2}
+    - {fileID: 11400000, guid: dc844448911cc2542a4b316052814471, type: 2}

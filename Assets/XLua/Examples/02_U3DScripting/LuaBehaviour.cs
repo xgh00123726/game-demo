@@ -58,7 +58,7 @@ namespace XLuaTest
 
             // 如果你希望在脚本内能够设置全局变量, 也可以直接将全局脚本域注入到当前脚本的脚本域中
             // 这样, 你就可以在 Lua 脚本中通过 Global.XXX 来访问全局变量
-            // scriptScopeTable.Set("Global", luaEnv.Global);
+            // _table.Set("Global", luaEnv.Global);
 
             // 执行脚本
             luaEnv.DoString(luaScript.text, luaScript.name, scriptScopeTable);

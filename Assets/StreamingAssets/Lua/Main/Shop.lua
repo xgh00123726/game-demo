@@ -25,7 +25,7 @@ UI.Shop.OnEnterDetail = function ( index )
 
     local info = dataBase[inventory[index]]
     local text = GetShopItemText(info)
-    
+
     view:SetText(text)
     view:Show()
 

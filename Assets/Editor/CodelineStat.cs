@@ -34,7 +34,7 @@ namespace ToolGood.CodeCounts
             sum += StatFolder("/Assets/Plugins", new() { ".cs" }, logFileInfo);
             sum += StatFolder("/Assets/Application", new() { ".cs" }, logFileInfo);
             sum += StatFolder("/Assets/Editor", new() { ".cs" }, logFileInfo);
-            sum += StatFolder("/Assets/StreamingAssets", new() { ".cs", ".json", ".csv" }, logFileInfo);
+            sum += StatFolder("/Assets/StreamingAssets", new() { ".cs", ".json", ".csv", ".lua" }, logFileInfo);
             XLogger.Instance.Log($"×ÜÐÐÊý: {sum}");
         }
 

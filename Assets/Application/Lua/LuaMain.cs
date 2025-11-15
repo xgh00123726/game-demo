@@ -4,14 +4,14 @@ using UnityEngine;
 using XLua;
 
 [LuaCallCSharp]
-public partial class LuaMain : MonoBehaviour
+public class LuaMain : MonoBehaviour
 {
     internal static LuaEnv luaEnv = new LuaEnv(); 
     internal static float lastGCTime = 0;
     internal const float GCInterval = 1;
 
-    public static Action OnInitOK;
-    public static Action LuaUpdate;
+    private static Action OnInitOK;
+    private static Action LuaUpdate;
 
     private static LuaTable _table;
     public static LuaTable Table => _table;
@@ -41,6 +41,8 @@ public partial class LuaMain : MonoBehaviour
         // 从 Lua 脚本域中获取定义的函数
         _table.Get("OnInitOK", out OnInitOK);
         _table.Get("Update", out LuaUpdate);
+
+        OnInitOK?.Invoke();
 
         DontDestroyOnLoad(this);
     }

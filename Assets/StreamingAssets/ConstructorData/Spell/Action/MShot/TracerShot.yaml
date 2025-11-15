@@ -1,0 +1,23 @@
+projectile:
+  flying:
+    curve:
+      type: Tracer
+      turnSpeed: 1
+      turnAcc: 0.1
+      duration: 10
+    prefabName: Prefabs/Projectile/Sword12_Green
+    speed: 20
+  damage: 10
+  ampFactor: 1
+  damageTextPrefabName: Prefabs/UI/FloatText
+  damageTextColor:
+    r: 1
+    g: 1
+    b: 1
+    a: 1
+  maxEffectTimes: 1
+  tag: DestroyOnEffectMaxTimes | AutoFindPossibleTarget | TrigOnlyWhenHitMainTarget
+  findTargetRange: 10
+  hitAudioName: Explore1.wav
+  hitEffectName: Prefabs/Effect/Hit/Hit2
+slotNum: 4

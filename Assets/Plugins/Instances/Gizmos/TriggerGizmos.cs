@@ -29,7 +29,7 @@ namespace Instance
         private void DrawTestGizmos()
         {
             var c = CreatureSys.Instance.GetCreatureFromID(0);
-            if (c != null && testShape.Contains(c.Position.x, c.Position.z))
+            if (c != null && testShape.Contains(c.Position))
             {
                 Gizmos.color = Color.red;
             }

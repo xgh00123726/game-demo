@@ -1,7 +1,7 @@
 using GameBase.Spells;
 using System;
 
-namespace Constructor.Spells.Action
+namespace Constructor.Spells
 {
     public class Editable : ISpellAction
     {

@@ -9,17 +9,16 @@ local CreatureSelector = CS.Instance.CreatureSelector.Instance
 
 local function GenPlayer()
     local playerData = CreatureData.Player
-    local player = Factory:Get(playerData.Type, playerData.ID)
+    local player = Factory:Get(playerData.Name)
     local x = playerData.GenPosition.x
     local y = playerData.GenPosition.y
     local z = playerData.GenPosition.z
     player.Position = Vector3(x, y, z)
 
-    player:AddSpell(Spell.Factory:Get(SpellData.Enum.SpellType.Common, 0))
-    player:AddSpell(Spell.Factory:Get(SpellData.Enum.SpellType.Common, 1))
-    player:AddSpell(Spell.Factory:Get(SpellData.Enum.SpellType.Common, 5))
-    player:AddSpell(Spell.Factory:Get(SpellData.Enum.SpellType.Common, 4))
-    player:AddSpell(Spell.GenBlinkSpell())
+    player:AddSpell(Spell.Factory:Get("Attack1_1"))
+    player:AddSpell(Spell.Factory:Get("Attack2_1"))
+    player:AddSpell(Spell.Factory:Get("HalfSlash"))
+    player:AddSpell(Spell.Factory:Get("ForwardSlash"))
 
     player:SetDefaultGetExpText()
 
@@ -47,8 +46,7 @@ local function CreateBase( creatureBaseData )
     local capacity = creatureBaseData.Capacity
     local refreshPeriod = creatureBaseData.RefreshPeriod
     local refreshPerNum = creatureBaseData.RefreshPerNum
-    local creatureType = creatureBaseData.CreatureType
-    local creatureID = creatureBaseData.CreatureID
+    local creatureName = creatureBaseData.CreatureName
     local basePosition = creatureBaseData.Position
     local generateRange = creatureBaseData.GenerateRange
     local xMin = basePosition.x + generateRange.x.min
@@ -58,6 +56,8 @@ local function CreateBase( creatureBaseData )
     local zMin = basePosition.z + generateRange.z.min
     local zMax = basePosition.z + generateRange.z.max
     local deadExp = creatureBaseData.DeadExp
+    local spellName = creatureBaseData.Spells[1]
+
 
     local OnDead = function ( c )
         baseState.currentCreatureNum = baseState.currentCreatureNum - 1
@@ -67,21 +67,20 @@ local function CreateBase( creatureBaseData )
     Timer.AddLoop(refreshPeriod, function ()
         if (baseState.currentCreatureNum < capacity) then
             for _ = 1, refreshPerNum do
-                local c = Factory:Get(creatureType, creatureID)
+                local c = Factory:Get(creatureName)
                 local x = math.random(xMin, xMax)
                 local y = math.random(yMin, yMax)
                 local z = math.random(zMin, zMax)
                 c.Position = Vector3(x, y, z)
                 c.deadExp = deadExp
                 c.OnDead = OnDead
-                c:AddSpell(Spell.Factory:Get(SpellData.Enum.SpellType.Common, 6))
-                c:AddSpell(Spell.Factory:Get(SpellData.Enum.SpellType.Common, 8))
+                local spell = Spell.Factory:Get(spellName)
+                c:AddSpell(spell)
 
                 if (c.ai ~= nil) then
                     c.ai.arriveDis = 2
                     c.ai.OnFollowArrive = function ()
-                        -- c.spells[0]:TryCast()
-                        Controller.AutoCaster.CastByStyle(c.spells[1])
+                        Controller.AutoCaster.CastByStyle(c:GetSpell(0))
                     end
                 end
 

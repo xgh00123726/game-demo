@@ -56,7 +56,7 @@ public static class ExampleConfig
     //    "NativeLeakDetectionMode", "WWWAudioExtensions", "UnityEngine.Experimental",
     //};
 
-    //static bool isExcluded(Type type)
+    //static bool isExcluded(AIType type)
     //{
     //    var fullName = type.FullName;
     //    for (int i = 0; i < exclude.Count; i++)
@@ -70,7 +70,7 @@ public static class ExampleConfig
     //}
 
     //[LuaCallCSharp]
-    //public static IEnumerable<Type> LuaCallCSharp
+    //public static IEnumerable<AIType> LuaCallCSharp
     //{
     //    get
     //    {
@@ -100,19 +100,19 @@ public static class ExampleConfig
 
     ////自动把LuaCallCSharp涉及到的delegate加到CSharpCallLua列表，后续可以直接用lua函数做callback
     //[CSharpCallLua]
-    //public static List<Type> CSharpCallLua
+    //public static List<AIType> CSharpCallLua
     //{
     //    get
     //    {
     //        var lua_call_csharp = LuaCallCSharp;
-    //        var delegate_types = new List<Type>();
+    //        var delegate_types = new List<AIType>();
     //        var flag = BindingFlags.Public | BindingFlags.Instance
     //            | BindingFlags.Static | BindingFlags.IgnoreCase | BindingFlags.DeclaredOnly;
     //        foreach (var field in (from type in lua_call_csharp select type).SelectMany(type => type.GetFields(flag)))
     //        {
     //            if (typeof(Delegate).IsAssignableFrom(field.FieldType))
     //            {
-    //                delegate_types.Add(field.FieldType);
+    //                delegate_types.AddFixed(field.FieldType);
     //            }
     //        }
 
@@ -120,14 +120,14 @@ public static class ExampleConfig
     //        {
     //            if (typeof(Delegate).IsAssignableFrom(method.ReturnType))
     //            {
-    //                delegate_types.Add(method.ReturnType);
+    //                delegate_types.AddFixed(method.ReturnType);
     //            }
     //            foreach (var param in method.GetParameters())
     //            {
     //                var paramType = param.ParameterType.IsByRef ? param.ParameterType.GetElementType() : param.ParameterType;
     //                if (typeof(Delegate).IsAssignableFrom(paramType))
     //                {
-    //                    delegate_types.Add(paramType);
+    //                    delegate_types.AddFixed(paramType);
     //                }
     //            }
     //        }
@@ -138,7 +138,7 @@ public static class ExampleConfig
 
     /***************热补丁可以参考这份自动化配置***************/
     //[Hotfix]
-    //static IEnumerable<Type> HotfixInject
+    //static IEnumerable<AIType> HotfixInject
     //{
     //    get
     //    {
@@ -148,7 +148,7 @@ public static class ExampleConfig
     //    }
     //}
     //--------------begin 热补丁自动化配置-------------------------
-    //static bool hasGenericParameter(Type type)
+    //static bool hasGenericParameter(AIType type)
     //{
     //    if (type.IsGenericTypeDefinition) return true;
     //    if (type.IsGenericParameter) return true;
@@ -169,7 +169,7 @@ public static class ExampleConfig
     //    return false;
     //}
 
-    //static bool typeHasEditorRef(Type type)
+    //static bool typeHasEditorRef(AIType type)
     //{
     //    if (type.Namespace != null && (type.Namespace == "UnityEditor" || type.Namespace.StartsWith("UnityEditor.")))
     //    {
@@ -200,7 +200,7 @@ public static class ExampleConfig
     //    return false;
     //}
 
-    //static bool delegateHasEditorRef(Type delegateType)
+    //static bool delegateHasEditorRef(AIType delegateType)
     //{
     //    if (typeHasEditorRef(delegateType)) return true;
     //    var method = delegateType.GetMethod("Invoke");
@@ -214,12 +214,12 @@ public static class ExampleConfig
 
     // 配置某Assembly下所有涉及到的delegate到CSharpCallLua下，Hotfix下拿不准那些delegate需要适配到lua function可以这么配置
     //[CSharpCallLua]
-    //static IEnumerable<Type> AllDelegate
+    //static IEnumerable<AIType> AllDelegate
     //{
     //    get
     //    {
     //        BindingFlags flag = BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public;
-    //        List<Type> allTypes = new List<Type>();
+    //        List<AIType> allTypes = new List<AIType>();
     //        var allAssemblys = new Assembly[]
     //        {
     //            Assembly.Load("Assembly-CSharp")
@@ -229,7 +229,7 @@ public static class ExampleConfig
     //            var p = t;
     //            while (p != null)
     //            {
-    //                allTypes.Add(p);
+    //                allTypes.AddFixed(p);
     //                p = p.BaseType;
     //            }
     //        }

@@ -1,6 +1,6 @@
 require("SpellData")
 
-local SpellFactory = CS.Constructor.Spells.Main.SpellFactory.Instance
+local SpellFactory = CS.Constructor.Spells.SpellFactory.Instance
 local SpellSys = CS.GameBase.Spells.SpellSys.Instance
 
 local function CreatureBlink( spell )
@@ -9,7 +9,7 @@ local function CreatureBlink( spell )
 
     c.mover:LookAt(inter.position)
     c.Position = inter.position
-    c.mover:Stop()
+    c:Interrupt()
 end
 
 local function GenBlinkSpell()
@@ -29,4 +29,8 @@ Spell = {
     Factory = SpellFactory,
 
     GenBlinkSpell = GenBlinkSpell,
+
+    ---@ret isModifyable : bool
+    ---@arg1 spell : Spell
+    IsModifyable = CS.Constructor.Spells.Action.ModifyableAction.IsModifyable,
 }

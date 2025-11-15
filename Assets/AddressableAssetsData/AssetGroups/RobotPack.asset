@@ -87,11 +87,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 624582b3b65da9a45bc1d204b8a69122
-    m_Address: Prefabs/Entity/Player1
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 67c8b33e424ccdc4486edf538ab91c5a
     m_Address: Packs/SpaceRobotKyle/Sfx/Player_Footstep_08
     m_ReadOnly: 0

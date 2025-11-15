@@ -1,18 +1,18 @@
-17,iconTextureID, rarity, castTimes, flyingNums, fireDisfuse, flyingDistance
- 0,           44,      0,         0,          0, 30         ,              0
- 1,           45,      0,         0,          0, 60         ,              0
- 2,           46,      0,         0,          0, -30        ,              0
- 3,           47,      0,         0,          0, -60        ,              0
- 4,           40,      1,         0,          0, 0          ,              1
- 5,           41,      1,         0,          0, 0          ,              2
- 6,           42,      1,         0,          0, 0          ,              4
- 7,           43,      1,         0,          0, 0          ,              8
- 8,           43,      1,         0,          0, 0          ,             16
- 9,           48,      1,         0,          1, 0          ,              0
-10,           49,      2,         0,          2, 0          ,              0
-11,           50,      3,         0,          3, 0          ,              0
-12,           51,      4,         0,          4, 0          ,              0
-13,           36,      2,         1,          0, 0          ,              0
-14,           37,      3,         2,          0, 0          ,              0
-15,           38,      4,         3,          0, 0          ,              0
-16,           39,      5,         4,          0, 0          ,              0
+17, textureName                                    , rarity, castTimes, flyingNums, fireDisfuse, flyingDistance
+ 0, Textures/SpellActionModifier/FireDisfuse30.png ,      0,         0,          0, 30         ,              0
+ 1, Textures/SpellActionModifier/FireDisfuse60.png ,      0,         0,          0, 60         ,              0
+ 2, Textures/SpellActionModifier/FireDisfuse-30.png,      0,         0,          0, -30        ,              0
+ 3, Textures/SpellActionModifier/FireDisfuse-60.png,      0,         0,          0, -60        ,              0
+ 4, Textures/SpellActionModifier/Distance1.png     ,      1,         0,          0, 0          ,              1
+ 5, Textures/SpellActionModifier/Distance2.png     ,      1,         0,          0, 0          ,              2
+ 6, Textures/SpellActionModifier/Distance4.png     ,      1,         0,          0, 0          ,              4
+ 7, Textures/SpellActionModifier/Distance8.png     ,      1,         0,          0, 0          ,              8
+ 8, Textures/SpellActionModifier/Distance8.png     ,      1,         0,          0, 0          ,             16
+ 9, Textures/SpellActionModifier/FlyingNum1.png    ,      1,         0,          1, 0          ,              0
+10, Textures/SpellActionModifier/FlyingNum2.png    ,      2,         0,          2, 0          ,              0
+11, Textures/SpellActionModifier/FlyingNum3.png    ,      3,         0,          3, 0          ,              0
+12, Textures/SpellActionModifier/FlyingNum4.png    ,      4,         0,          4, 0          ,              0
+13, Textures/SpellActionModifier/CastTimes1.png    ,      2,         1,          0, 0          ,              0
+14, Textures/SpellActionModifier/CastTimes2.png    ,      3,         2,          0, 0          ,              0
+15, Textures/SpellActionModifier/CastTimes3.png    ,      4,         3,          0, 0          ,              0
+16, Textures/SpellActionModifier/CastTimes4.png    ,      5,         4,          0, 0          ,              0

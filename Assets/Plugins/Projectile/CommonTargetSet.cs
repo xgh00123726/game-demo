@@ -20,7 +20,7 @@ namespace Constructor.Triggers
                     continue;
                 }
 
-                if (shape.Contains(c.Position.x, c.Position.z))
+                if (shape.Contains(c.Position))
                 {
                     ret.Add(c);
                 }

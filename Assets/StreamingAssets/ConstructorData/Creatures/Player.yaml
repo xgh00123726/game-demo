@@ -1,0 +1,12 @@
+prefabName: Prefabs/Entity/PicoChan
+camp: Player
+animType: Human
+aiType: None
+damage: 10
+moveSpeed: 5
+maxHP: 1000
+healthRegen: 10
+attackRange: 10
+healthBarOffset:
+  y: 1.6
+collideEnable: true

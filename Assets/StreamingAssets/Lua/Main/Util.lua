@@ -96,13 +96,6 @@ function SwapInventoryAndSAM(c, spellIndex, modifierIndex, inventoryIndex)
     if (c == nil) then
         return false
     end
-    
-    -- 如果仓库对应位置不是一个技能修饰器，则失败
-    local inventory = Inventory.Instance
-    local itemData = inventory[inventoryIndex]
-    if (itemData.type ~= InventoryData.Enum.ItemType.SpellActionModifier) then
-        return false
-    end
 
     -- 如果没有该技能，则失败
     local spell = c:GetSpell(spellIndex)
@@ -116,6 +109,8 @@ function SwapInventoryAndSAM(c, spellIndex, modifierIndex, inventoryIndex)
         return false
     end
 
+    local inventory = Inventory.Instance
+    local itemData = inventory[inventoryIndex]
     local inventoryHasItem = inventory:HasItem(inventoryIndex)
     local inventoryHasModifier = false
     if (inventoryHasItem) then
@@ -131,14 +126,16 @@ function SwapInventoryAndSAM(c, spellIndex, modifierIndex, inventoryIndex)
         inventory[inventoryIndex] = newModifierInfo
         spellAction:RemoveModifier(modifierIndex)
         spellAction:AddModifier(itemData.reflectedID, modifierIndex)
-    elseif (modifierID == -1 and not inventoryHasModifier) then
-    -- 两边都是空的就啥都不干
-        return false
     elseif (modifierID == -1) then
-    -- 如果技能修饰器是空的，则装备物品栏上的技能修饰器
-        spellAction:AddModifier(itemData.reflectedID, modifierIndex)
-        inventory:Remove(inventoryIndex)
-    elseif (not inventoryHasItem) then
+        if inventoryHasModifier then
+            -- 如果技能修饰器是空的，则装备物品栏上的技能修饰器
+            spellAction:AddModifier(itemData.reflectedID, modifierIndex)
+            inventory:Remove(inventoryIndex)
+        else
+            -- 两边都是空的就啥都不干
+            return false
+        end
+    elseif (modifierID ~= -1 and not inventoryHasItem) then
     -- 如果物品栏是空的，就卸下技能装饰器
         spellAction:RemoveModifier(modifierIndex)
         inventory[inventoryIndex] = newModifierInfo

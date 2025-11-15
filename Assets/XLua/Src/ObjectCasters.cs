@@ -25,7 +25,7 @@ namespace XLua
 {
     public delegate bool ObjectCheck(RealStatePtr L, int idx);
 
-    public delegate object ObjectCast(RealStatePtr L, int idx, object target); // if target is null, will new one
+    public delegate object ObjectCast(RealStatePtr L, int idx, object target); // if Target is null, will new one
 
     public class ObjectCheckers
     {
@@ -670,7 +670,7 @@ namespace XLua
                             try
                             {
                                 prop.SetValue(obj, GetCaster(prop.PropertyType)(L, n + 1,
-                                    target == null || prop.PropertyType.IsPrimitive() || prop.PropertyType == typeof(string) ? null : prop.GetValue(obj, null)), null);
+                                    Target == null || prop.PropertyType.IsPrimitive() || prop.PropertyType == typeof(string) ? null : prop.GetValue(obj, null)), null);
                             }
                             catch (Exception e)
                             {

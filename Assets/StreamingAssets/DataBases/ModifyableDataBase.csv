@@ -1,17 +1,17 @@
-16,id, name             , iconTextureID
- 0, 0, universal        ,            19
- 1, 1, moveSpeed        ,            20
- 2, 2, strength         ,            18
- 3, 3, attackSpeed      ,            21
- 4, 4, agility          ,            14
- 5, 5, defense          ,            13
- 6, 6, intelligence     ,            15
- 7, 7, damage           ,            12
- 8, 8, currHP           ,             0
- 9, 9, maxHP            ,            60
-10,10, currMana         ,             0
-11,11, maxMana          ,             0
-12,12, coolingAccelerate,            58
-13,13, rotateSpeed      ,             0
-14,14, attackRange      ,            57
-15,15, healthRegen      ,            59
+16, id, name             , textureName
+ 0,  0, universal        , Textures/universalIcon
+ 1,  1, moveSpeed        , Textures/moveSpeedIcon
+ 2,  2, strength         , Textures/strengthIcon
+ 3,  3, attackSpeed      , Textures/attackSpeedIcon
+ 4,  4, agility          , Textures/agilityIcon
+ 5,  5, defense          , Textures/DefenseIcon
+ 6,  6, intelligence     , Textures/intelligenceIcon
+ 7,  7, damage           , Textures/DamageIcon
+ 8,  8, currHP           , Textures/Spell_Speeder
+ 9,  9, maxHP            , Textures/AttrIcon/healthIcon.png
+10, 10, currMana         , Textures/Spell_Speeder
+11, 11, maxMana          , Textures/Spell_Speeder
+12, 12, coolingAccelerate, Textures/AttrIcon/spellAccelerateIcon.png
+13, 13, rotateSpeed      , Textures/Spell_Speeder
+14, 14, attackRange      , Textures/AttrIcon/attackRangeIcon.png
+15, 15, healthRegen      , Textures/AttrIcon/healthRegenIcon.png

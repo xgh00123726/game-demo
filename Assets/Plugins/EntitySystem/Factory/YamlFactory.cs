@@ -10,7 +10,7 @@ namespace GameBase.EntitySystem
 {
     public class GenTemplateAttribute : Attribute
     {
-        public GenTemplateAttribute(string path, string comment)
+        public GenTemplateAttribute(string path = null, string comment = null)
         {
             Path = path;
             Comment = comment;
@@ -113,8 +113,6 @@ namespace GameBase.EntitySystem
             }
             if (!_dataDict.ContainsKey(key))
             {
-                XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log($"Factory:{GetType().Name} has no key: {key}");
                 return default;
             }
             T_YamlData data = _dataDict[key];

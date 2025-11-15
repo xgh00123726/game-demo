@@ -78,7 +78,7 @@ namespace XLua
 
     }
 
-    //只能标注Dictionary<Type, List<string>>的field或者property
+    //只能标注Dictionary<AIType, List<string>>的field或者property
     public class DoNotGenAttribute : Attribute
     {
         

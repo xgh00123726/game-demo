@@ -7,11 +7,11 @@ namespace GameBase.Math
         public struct Line : IShape2D
         {
             public float width;
-            public Vector2 begin;
-            public Vector2 end;
+            public Vector3 begin;
+            public Vector3 end;
             public float pivot;
 
-            public Line(Vector2 begin, Vector2 end)
+            public Line(Vector3 begin, Vector3 end)
             {
                 this.begin = begin;
                 this.end = end;
@@ -19,7 +19,7 @@ namespace GameBase.Math
                 pivot = 0.5f;
             }
 
-            public Line(Vector2 begin, Vector2 dir, float length)
+            public Line(Vector3 begin, Vector3 dir, float length)
             {
                 this.begin = begin;
                 this.end = begin + dir.normalized * length;
@@ -27,7 +27,15 @@ namespace GameBase.Math
                 pivot = 0.5f;
             }
 
-            public Vector2 Dir
+            public Line(float length)
+            {
+                begin = Vector3.zero;
+                end = begin + Vector3.one.normalized * length;
+                width = 0;
+                pivot = 0.5f;
+            }
+
+            public Vector3 Dir
             {
                 get => end - begin;
                 set
@@ -44,11 +52,11 @@ namespace GameBase.Math
                     end = begin + Dir.normalized * value;
                 }
             }
-            public Vector2 LeftBottom => begin - GMath.VerticalVector2(Dir).normalized * width / 2;
-            public Vector2 LeftTop => end - GMath.VerticalVector2(Dir).normalized * width / 2;
-            public Vector2 RightBottom => begin + GMath.VerticalVector2(Dir).normalized * width / 2;
-            public Vector2 RightTop => end + GMath.VerticalVector2(Dir).normalized * width / 2;
-            Vector2 IShape2D.Center
+            public Vector3 LeftBottom => begin - GMath.VerticalVector2(Dir).normalized * width / 2;
+            public Vector3 LeftTop => end - GMath.VerticalVector2(Dir).normalized * width / 2;
+            public Vector3 RightBottom => begin + GMath.VerticalVector2(Dir).normalized * width / 2;
+            public Vector3 RightTop => end + GMath.VerticalVector2(Dir).normalized * width / 2;
+            Vector3 IShape2D.Center
             {
                 get => begin + pivot * Dir;
                 set
@@ -69,16 +77,19 @@ namespace GameBase.Math
                 }
             }
 
-            bool IShape2D.Contains(float x, float y)
+            public bool Contains(Vector3 position)
             {
-                var dir1 = end - begin;
-                var dir2 = new Vector2(x, y) - begin;
+                float x = position.x;
+                float y = position.z;
+                var dir1_3 = end - begin;
+                var dir1 = new Vector2(dir1_3.x, dir1_3.z);
+                var dir2 = new Vector2(x, y) - new Vector2(begin.x, begin.z);
                 float angle1 = Vector2.Angle(dir1, dir2);
                 if (angle1 > 90f)
                 {
                     return false;
                 }
-                var dir3 = new Vector2(x, y) - end;
+                var dir3 = new Vector2(x, y) - new Vector2(end.x, end.z);
                 float angle2 = Vector2.Angle(-dir1, dir3);
                 if (angle2 > 90f)
                 {

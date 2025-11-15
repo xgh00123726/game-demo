@@ -43,7 +43,7 @@ local function CommonDragViewInit()
         return
     end
 
-    local dragView = CS.Instance.CommonDragView(UIData.CommonDragView.PrefabID)
+    local dragView = CS.Instance.CommonDragView(UIData.CommonDragView.PrefabName)
     CommonDragViewController:SetActive(true)
     CommonDragViewController.dragView = dragView
     LCommonDragViewController.DragView = dragView
@@ -54,7 +54,7 @@ local function CommonDetailViewInit()
         return
     end
 
-    local detailView = CS.Instance.CommonDetailView(UIData.CommonDetailView.PrefabID)
+    local detailView = CS.Instance.CommonDetailView(UIData.CommonDetailView.PrefabName)
     CommonDetailViewController:SetActive(true)
     CommonDetailViewController.detailView = detailView
     LCommonDetailViewController.DetailView = detailView
@@ -116,7 +116,7 @@ end
 
 local function ShopUIInit()
     local panel = CS.Instance.ShopViewPanel() 
-    local nearView = CS.Instance.ShopNearView(39)
+    local nearView = CS.Instance.ShopNearView("Prefabs/UI/ShopNearView.prefab")
 
     SetLayout(panel, UIData.Shop.Layout)
 
@@ -210,7 +210,7 @@ local function SpellActionModifierUIInit()
 end
 
 local function AttrSelectUIInit()
-    local panel = CS.Instance.AttrSelectPanel(51, 52)
+    local panel = CS.Instance.AttrSelectPanel("Prefabs/UI/AttrSelectPanel.prefab", "Prefabs/UI/AttrSelectItem.prefab")
 
     SetLayout(panel, UIData.AttrSelect.Layout)
 

@@ -1,3 +1,4 @@
+using GameBase.Creatures;
 using GameBase.Modify;
 using GameBase.Triggers;
 using GameBase.UI;
@@ -13,7 +14,7 @@ namespace GameBase.Projectiles
 
         void ITriggerAction.Effect(Trigger e, ITriggerTarget target)
         {
-            if (target is IModifieder mTarget)
+            if (target is Creature c)
             {
                 var modifyer = ModifyerSys.Instance.NewEntity();
                 modifyer.type = ModifyType.Once | ModifyType.Forever;
@@ -26,7 +27,7 @@ namespace GameBase.Projectiles
                     text.Color = color;
                 };
 
-                modifyer.AddTo(mTarget.Modifyables["currHP"]);
+                modifyer.AddTo(c.Modifyables["currHP"]);
             }
         }
     }

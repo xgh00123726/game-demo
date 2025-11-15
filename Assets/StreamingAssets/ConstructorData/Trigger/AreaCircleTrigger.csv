@@ -1,5 +1,0 @@
-4, maxEffectTimes, hasWhite, radius, damage, targetSetType
-0,            999, true    ,    2  ,     10, Common
-1,            999, true    ,    0.8,     10, Common
-2,            999, true    ,    2  ,     10, TargetPlayer
-3,            999, true    ,    0.8,     10, TargetPlayer

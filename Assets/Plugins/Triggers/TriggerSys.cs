@@ -45,7 +45,14 @@ namespace GameBase.Triggers
                 return;
             }
 
-            EffectSys.Instance.PlayAtP(e.createEffect, e.attach.Position);
+            float size = 1;
+            Vector3 dir = Vector3.one;
+            if (e.shape != null)
+            {
+                size = e.shape.Size;
+                dir = e.shape.Dir;
+            }
+            EffectSys.Instance.PlayAtPSD(e.createEffect, e.attach.Position, new Vector3(size, size, size), dir);
         }
 
         private void PlayHitEffect(Trigger e, Vector3 position)
@@ -56,11 +63,13 @@ namespace GameBase.Triggers
             }
 
             float size = 1;
+            Vector3 dir = Vector3.one;
             if (e.shape != null)
             {
                 size = e.shape.Size;
+                dir = e.shape.Dir;
             }
-            EffectSys.Instance.PlayAtPS(e.hitEffect, position, new Vector3(size, size, size));
+            EffectSys.Instance.PlayAtPSD(e.hitEffect, position, new Vector3(size, size, size), dir);
         }
 
         private void PlayTrigEffect(Trigger e)
@@ -75,8 +84,7 @@ namespace GameBase.Triggers
             if (e.shape != null)
             {
                 size = e.shape.Size;
-                Vector2 shapeDir = e.shape.Dir;
-                dir = new Vector3(shapeDir.x, 0, shapeDir.y);
+                dir = e.shape.Dir;
             }
             EffectSys.Instance.PlayAtPSD(e.trigEffect, e.attach.Position, new Vector3(size, size, size), dir);
         }
@@ -148,6 +156,10 @@ namespace GameBase.Triggers
             {
                 e.isTrig = true;
             }
+            if (e.shape != null && e.attach != null)
+            {
+                e.shape.Center = e.attach.Position;
+            }
             PlayCreateAudio(e);
             PlayCreateEffect(e);
         }
@@ -188,7 +200,7 @@ namespace GameBase.Triggers
                 HitTarget(e);
                 if (e.shape != null)
                 {
-                    e.shape.Center = new Vector2(e.attach.Position.x, e.attach.Position.z);
+                    e.shape.Center = e.attach.Position;
                     if (e.targetsSet == null)
                     {
                         XLogger.Instance.Level(XLogger.LogLevel.Warning)

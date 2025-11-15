@@ -28,7 +28,6 @@ namespace GameBase.Projectiles
         public Tag tag;
         public float arriveDis;
 
-
         internal bool alive;
         internal Creature target;
         internal Creature owner;

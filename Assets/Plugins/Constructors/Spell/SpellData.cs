@@ -26,6 +26,6 @@ namespace Constructor.Spells
 
         public SpellCampData camp;
         public SpellIndicatorData indicator;
-        public SpellActionData actionData;
+        public string actionName;
     }
 }

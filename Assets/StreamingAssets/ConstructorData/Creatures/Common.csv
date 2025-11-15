@@ -1,5 +1,0 @@
-4, ObjID, tag           , AnimCtrler, AI          , damage, moveSpeed, maxHP, healthRegen, attackRange, healthbarX, y  , z, collide
-0,    27, Player        , Human     , None        ,     10,         4,   900,       100  ,           8, 0         , 1.6, 0, true
-1,     1, CommonCreature, Human     , None        ,     10,         1,   100,         0.5,           4, -0.1      , 2.1, 0, true
-2,     1, CommonCreature, Human     , FollowAttack,     10,         1,   100,         0.5,           4, -0.1      , 2.1, 0, true
-3,     1, CommonCreature, Human     , None        ,     10,         4,   100,         0.5,           4, -0.1      , 2.1, 0, true

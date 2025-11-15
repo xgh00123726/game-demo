@@ -70,6 +70,7 @@ function OnInitOK()
     Text.Init()
 
     Creature.CreateBase(CreatureData.CreatureBase.Base1)
+    Creature.CreateBase(CreatureData.CreatureBase.Base2)
 
     print("lua init ok")
 end

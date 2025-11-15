@@ -1,5 +1,0 @@
-4, flyingType, flyingID, targetSetType, slotNum, radius, damage, ampFactor, x, y , z
-0, Common    ,        1, Common       ,       4,      1,     10,       0.5, 0,  0, 0
-1, Common    ,        1, Common       ,       4,      1,     10,       0.5, 0, 10, 0
-2, Common    ,        3, TargetPlayer ,       4,      1,     10,       0.5, 0,  0, 0
-3, Common    ,        1, TargetPlayer ,       4,      1,     10,       0.5, 0, 10, 0

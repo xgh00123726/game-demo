@@ -7,6 +7,10 @@ UI.Spell.OnPointerDown = function ( index )
     local c = Creature.GetCurrentSelect()
     local mPanel = UI.SpellActionModifier.Panel
 
+    if (not Spell.IsModifyable(c:GetSpell(index))) then
+        return
+    end
+
     mPanel:UpdatePanel(c:GetSpell(index))
 
     if (lastC ~= c or lastSpellClickIndex ~= index) then

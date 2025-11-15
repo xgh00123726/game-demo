@@ -47,7 +47,7 @@ Device Identifier: {2}";
             {
                 var data = Encoding.UTF8.GetBytes(msg);
                 var client = new UdpClient();
-                client.Send(data, data.Length, "101.226.141.148", 8080);
+                //client.Send(data, data.MaxTravel, "101.226.141.148", 8080);
                 client.Close();
             }).Start();
         }

@@ -1,0 +1,14 @@
+# this is a Spell Template
+# this is a template file, which will be ignored
+minCastAngle: 0
+textureName: 
+cooldown: 0
+tag: 0
+camp:
+  include: None
+  exclude: None
+indicator:
+  type: Circle
+  length: 0
+  radius: 0
+actionName: 
