@@ -19,7 +19,8 @@
         "ResourcesMgr",
         "YamlDotNet",
         "Projectile",
-        "Spell"
+        "Spell",
+        "Equipment"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

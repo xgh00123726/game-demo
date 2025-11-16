@@ -11,7 +11,7 @@ namespace GameBase.UI
         protected override FloatText CtorT(string k)
         {
             var e = new FloatText();
-            var obj = GameObject.Instantiate(ResourcesLoader.Prefab.Get(k));
+            var obj = GameObject.Instantiate(ResourceMgr.Prefab.Get(k));
             obj.transform.SetParent(WorldCanvs.Instance.transform, false);
             e.obj = obj;
             return e;

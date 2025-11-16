@@ -43,7 +43,7 @@ namespace GameBase.UI
             _material.SetFloat("_Dir1", -1f);
             _material.SetFloat("_Dir2", -1f);
 
-            var texture = GameObject.Instantiate(ResourcesLoader.Texture2D.Get(textureName));
+            var texture = GameObject.Instantiate(ResourceMgr.Texture2D.Get(textureName));
 
             _material.SetTexture("_Target", texture);
 

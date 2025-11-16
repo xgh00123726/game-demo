@@ -11,7 +11,7 @@ namespace GameBase.Resources
 
         static AudioMgr()
         {
-            var prefab = ResourcesLoader.LoadAddressable<GameObject>("Prefabs/Audio/AudioSource.prefab");
+            var prefab = ResourceMgr.LoadAddressable<GameObject>("Prefabs/Audio/AudioSource.prefab");
             audioSouceObj = GameObject.Instantiate(prefab);
             audioSouce = audioSouceObj.GetComponent<AudioSource>();
         }
@@ -22,7 +22,7 @@ namespace GameBase.Resources
             {
                 return;
             }
-            audioSouce.clip = ResourcesLoader.AudioClip.Get(audioFile);
+            audioSouce.clip = ResourceMgr.AudioClip.Get(audioFile);
             audioSouce.Play();
         }
 
@@ -32,7 +32,7 @@ namespace GameBase.Resources
             {
                 return;
             }
-            audioSouce.clip = ResourcesLoader.AudioClip.Get(audioFile);
+            audioSouce.clip = ResourceMgr.AudioClip.Get(audioFile);
             audioSouceObj.transform.position = position;
             audioSouce.Play();
         }

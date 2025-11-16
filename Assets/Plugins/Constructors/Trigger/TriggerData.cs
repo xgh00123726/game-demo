@@ -27,6 +27,7 @@ namespace Constructor.Triggers
         public float delay;
         public float trigPeriod;
         public float existTime;
+        public float buffDuration;
 
         public float damage;
         public float ampFactor;
@@ -39,6 +40,7 @@ namespace Constructor.Triggers
         public string hitAudioName;
         public string createEffectName;
         public string createAudioName;
+        public string buffName;
         public string tag;
     }
 }

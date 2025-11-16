@@ -2,7 +2,8 @@ function GetInventoryItemText( info )
     local text = "NNN"
 
     if (info.type == InventoryData.Enum.ItemType.Equipment) then
-        text = Text.GetBuffText(info.reflectedID)
+        local name = Equipment.GetName(info.reflectedID)
+        text = Text.GetEquipmentText(name).detail
     elseif (info.type == InventoryData.Enum.ItemType.SpellActionModifier) then
         text = Text.GetSpellActionModifierText(info.reflectedID)
     end
@@ -68,7 +69,7 @@ function SwapInventoryAndEquipments(c, equipIndex, inventoryIndex)
     -- 如果背包里和装备位置都有物品，则交换
         inventory[inventoryIndex] = oldEquipmentInfo
         c:RemoveEquipment(equipIndex)
-        c:AddEquipment(newEquipmentInfo.reflectedID, equipIndex)
+        c:AddEquipmentByID(newEquipmentInfo.reflectedID, equipIndex)
     elseif (not hasEquipItem and not hasEquipment) then
     -- 如果都没有物品，啥都不干
         return false
@@ -79,9 +80,8 @@ function SwapInventoryAndEquipments(c, equipIndex, inventoryIndex)
     elseif (not hasEquipment) then
     -- 如果装备栏没有物品，则装备仓库上的物品
         inventory:Remove(inventoryIndex)
-        c:AddEquipment(newEquipmentInfo.reflectedID, equipIndex)
+        c:AddEquipmentByID(newEquipmentInfo.reflectedID, equipIndex)
     end
-    print("this")
     return true
 end
 

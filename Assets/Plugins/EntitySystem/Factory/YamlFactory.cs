@@ -30,7 +30,7 @@ namespace GameBase.EntitySystem
 
         public YamlFactory()
         {
-            _dataDict = GetData();
+            _dataDict = ReadData();
         }
 
         protected virtual void OnInitYamlData(T_YamlData data) { }
@@ -77,7 +77,7 @@ namespace GameBase.EntitySystem
             }
         }
 
-        protected virtual Dictionary<string, T_YamlData> GetData()
+        protected virtual Dictionary<string, T_YamlData> ReadData()
         {
             var deserializer = new DeserializerBuilder()
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
@@ -101,6 +101,22 @@ namespace GameBase.EntitySystem
         public T_Entity GetFromData(T_YamlData data)
         {
             return GetEntity(data);
+        }
+
+        public T_YamlData GetData(string key)
+        {
+            if (_dataDict == null)
+            {
+                XLogger.Instance.Level(XLogger.LogLevel.Error)
+                    .Log($"Factory:{GetType().Name} has not yaml dict");
+                return default;
+            }
+            if (!_dataDict.ContainsKey(key))
+            {
+                return default;
+            }
+
+            return _dataDict[key];
         }
 
         public T_Entity Get(string key)

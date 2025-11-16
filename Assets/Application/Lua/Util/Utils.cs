@@ -19,7 +19,7 @@ namespace LuaUtil
         {
             if (data.type == InventoryItemType.Equipment)
             {
-                return c.AddEquipment(data.reflectedID, index);
+                return c.AddEquipment(null, index);
             }
 
             return false;

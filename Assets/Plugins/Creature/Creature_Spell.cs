@@ -16,8 +16,13 @@ namespace GameBase.Creatures
 
         public void AddSpell(Spell spell)
         {
+            if (spell == null)
+            {
+                XLogger.Instance.Level(XLogger.LogLevel.Warning)
+                    .Log("try to add null spell to creature");
+                return;
+            }
             var i = spells.Add(spell);
-            XLogger.Instance.IF(false).Log($"add spell: {i}");
             spell.speller = this;
         }
 

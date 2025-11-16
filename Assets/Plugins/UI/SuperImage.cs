@@ -34,7 +34,7 @@ namespace GameBase.UI
             }
 
             _textureName = textureName;
-            _sprite = ResourcesLoader.Sprite.Get(textureName);
+            _sprite = ResourceMgr.Sprite.Get(textureName);
             _image.sprite = _sprite;
         }
 

@@ -44,6 +44,8 @@ namespace Constructor.Triggers
                 color = data.damageTextColor,
                 tag = data.tagEnum,
                 prefabName = data.damageTextPrefabName,
+                buffName = data.buffName,
+                buffDuration = data.buffDuration,
             };
 
             t.maxEffectTimes = data.maxEffectTimes;

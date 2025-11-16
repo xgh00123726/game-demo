@@ -19,6 +19,7 @@ local function GenPlayer()
     player:AddSpell(Spell.Factory:Get("Attack2_1"))
     player:AddSpell(Spell.Factory:Get("HalfSlash"))
     player:AddSpell(Spell.Factory:Get("ForwardSlash"))
+    player:AddSpell(Spell.Factory:Get("BuffSelf"))
 
     player:SetDefaultGetExpText()
 

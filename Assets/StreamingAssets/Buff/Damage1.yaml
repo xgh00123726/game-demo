@@ -1,0 +1,6 @@
+textureName: Textures/Equipment/damage1.png
+rarity: 0
+tag: 
+modifiers:
+- key: damage
+  value: 10

@@ -15,7 +15,7 @@ namespace GameBase.UI
         protected override EpicBar CtorT(string k)
         {
             var e = new EpicBar();
-            var obj = GameObject.Instantiate(ResourcesLoader.Prefab.Get(k));
+            var obj = GameObject.Instantiate(ResourceMgr.Prefab.Get(k));
 
             obj.transform.SetParent(RootCanvas.Instance.Layer(2), false);
 

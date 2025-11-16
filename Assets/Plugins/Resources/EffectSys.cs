@@ -23,7 +23,7 @@ namespace GameBase.Resources
         protected override Effect CtorT(string k)
         {
             Effect e = new();
-            var particleObj = GameObject.Instantiate(ResourcesLoader.LoadAddressable<GameObject>(k));
+            var particleObj = GameObject.Instantiate(ResourceMgr.LoadAddressable<GameObject>(k));
             e.particle = particleObj.GetComponent<ParticleSystem>();
             e.duration = e.particle.main.duration;
             return e;

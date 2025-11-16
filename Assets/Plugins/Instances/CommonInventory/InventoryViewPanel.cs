@@ -1,6 +1,7 @@
 using Constructor.Spells;
 using GameBase.Buffs;
 using GameBase.Config;
+using GameBase.Equipments;
 using GameBase.Inventorys;
 using GameBase.Tools;
 using GameBase.UI;
@@ -105,9 +106,9 @@ namespace Instance
 
                 if (info.type == InventoryItemType.Equipment)
                 {
-                    var eInfo = BuffDataBase.Instance[info.reflectedID];
-                    textureName = eInfo.textureName;
-                    rarity = eInfo.rarity;
+                    var equipData = EquipmentFactory.Instance.GetData(info.reflectedID);
+                    textureName = equipData.textureName;
+                    rarity = equipData.rarity;
                 }
                 else if (info.type == InventoryItemType.SpellActionModifier)
                 {

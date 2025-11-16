@@ -27,7 +27,7 @@ namespace Instance
                     .Log("error");
             }
             _instance = this;
-            _pool.InstantiateFunc = () => GameObject.Instantiate(ResourcesLoader.Prefab.Get(itemPrefabName));
+            _pool.InstantiateFunc = () => GameObject.Instantiate(ResourceMgr.Prefab.Get(itemPrefabName));
             _pool.InstantiateAction = static (e) => e.SetActive(true);
             _pool.ReleaseAction = static (e) => e.SetActive(false);
         }
@@ -54,10 +54,6 @@ namespace Instance
             e.iconMaterial.SetFloat("_Dir1", -1f);
             e.iconMaterial.SetFloat("_Dir2", -1f);
 
-            var texture = GameObject.Instantiate(ResourcesLoader.Texture2D.Get(e.iconTextureName));
-
-            e.iconMaterial.SetTexture("_Target", texture);
-
             return obj;
         }
 
@@ -66,11 +62,10 @@ namespace Instance
             FillItem(index + 1);
 
             var item = this[index];
-            var info = BuffDataBase.Instance[buff.id];
 
             item.obj.SetActive(true);
             item.buff = buff;
-            item.iconMaterial.SetTexture("_Target", GameObject.Instantiate(ResourcesLoader.Texture2D.Get(info.textureName)));
+            item.iconMaterial.SetTexture("_Target", GameObject.Instantiate(ResourceMgr.Texture2D.Get(buff.textureName)));
         }
 
         public void UpdatePanel(Creature c)
@@ -78,11 +73,7 @@ namespace Instance
             int index = 0;
             foreach (var buff in c.buffs)
             {
-                var info = BuffDataBase.Instance[buff.id];
-                if (info.type == BuffType.Common)
-                {
-                    UpdateItem(buff, index++);
-                }
+                UpdateItem(buff, index++);
             }
             for (int i = index; i < Entities.Count; i++)
             {

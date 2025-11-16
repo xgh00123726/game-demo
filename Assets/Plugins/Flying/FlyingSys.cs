@@ -11,7 +11,7 @@ namespace GameBase.Flyings
         protected override Flying CtorT(string k)
         {
             Flying e = new Flying();
-            var obj = GameObject.Instantiate(ResourcesLoader.Prefab.Get(k));
+            var obj = GameObject.Instantiate(ResourceMgr.Prefab.Get(k));
             e.obj = obj;
             return e;
         }

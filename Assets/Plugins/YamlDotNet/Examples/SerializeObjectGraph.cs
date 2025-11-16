@@ -20,6 +20,7 @@
 // SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 using Xunit.Abstractions;
 using YamlDotNet.Samples.Helpers;
 using YamlDotNet.Serialization;
@@ -50,6 +51,21 @@ namespace YamlDotNet.Samples
 
             var receipt = new Receipt
             {
+                dict = new()
+                {
+                    {10, new Address()
+                    {
+                        street = "123 Tornado Alley\nSuite 16",
+                        city = "East Westville",
+                        state = "KS"
+                    } },
+                    {20, new Address()
+                    {
+                        street = "1111Suite 16",
+                        city = "East Westville",
+                        state = "KS"
+                    } },
+                },
                 receipt = "Oz-Ware Purchase Invoice",
                 date = new DateTime(2007, 8, 6),
                 customer = new Customer
@@ -98,6 +114,7 @@ namespace YamlDotNet.Samples
 
     public class Receipt
     {
+        public Dictionary<int, Address> dict;
         public string receipt { get; set; }
         public DateTime date { get; set; }
         public Customer customer { get; set; }

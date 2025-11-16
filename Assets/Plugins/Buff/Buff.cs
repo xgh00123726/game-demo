@@ -1,12 +1,12 @@
 using GameBase.Modify;
-using GameBase.Tools;
-using System;
-using GameBase.EntitySystem;
-using UnityEngine;
 using System.Collections.Generic;
 
 namespace GameBase.Buffs
 {
+    public enum BuffTag : uint
+    {
+        InfiDuration = 1 << 0,
+    }
     public class Buff
     {
         internal float durationRemain;
@@ -14,41 +14,29 @@ namespace GameBase.Buffs
         internal int stackNum = 1;
         internal bool alive;
         internal IBuffOwner owner;
-        internal bool isInfiDuration;
 
-        public int id;
+        public BuffTag tag;
+        public string textureName;
+        public int rarity;
         public float durationSet;
+        public List<KeyValuePair<int, float>> iModifiers;
         public List<Modifyer> modifyers = new();
 
         public bool ALive => alive;
         public float DurationRemain => durationRemain;
+
+        public bool IsInfiDuration => (tag & BuffTag.InfiDuration) != 0;
 
 
         public void AddTo(IBuffOwner owner, float duration = -1)
         {
             this.owner = owner;
 
-            var info = BuffDataBase.Instance[id];
-            int modifiersID = info.buffModifiersID;
-            var modifierDict = BuffDataBase.datas[modifiersID];
-            foreach (var kvp in modifierDict)
-            {
-                int modifyKey = kvp.Key;
-                float value = kvp.Value;
-                var m = ModifyerSys.Instance.NewEntity();
-                m.value = value;
-                m.type = ModifyType.Temporary | ModifyType.Always;
-                m.AddTo(owner.Modifyables[modifyKey]);
-                modifyers.Add(m);
-            }
-
             if (duration > 0)
             {
                 this.durationSet = duration;
                 this.durationRemain = duration;
             }
-
-            owner.OnGetBuff(this);
         }
 
         public void Remove()

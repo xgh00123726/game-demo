@@ -34,7 +34,7 @@ namespace GameBase.LifeTime
         {
             DontDestroyOnLoad(gameObject);
 
-            ResourcesLoader.LoadAllAsset();
+            ResourceMgr.LoadAllAsset();
 
             SceneManager.LoadScene(managerScene);
             if (backgroundScenes.Count > 0)

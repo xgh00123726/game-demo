@@ -13,7 +13,6 @@ namespace GameBase.Texts
         MeetKeywordsFirstK,
         MeetKeywordsKDot,
         ParsingKeywordStr,
-
     }
 
     public partial class TextMgr
@@ -21,6 +20,8 @@ namespace GameBase.Texts
         public static string languagePath = "zh-cn";
         private static Dictionary<string, string> keywords = new();
         private static Dictionary<string, string[]> _dataTexts = new();
+
+        public static YamlTextLoader<EquipmentTextData> Equipment { get; set; } = new();
 
         static TextMgr()
         {

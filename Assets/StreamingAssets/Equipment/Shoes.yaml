@@ -1,0 +1,6 @@
+textureName: Textures/Equipment/moveSpeed1.png
+rarity: 0
+tag: 
+modifiers:
+- key: moveSpeed
+  value: 1

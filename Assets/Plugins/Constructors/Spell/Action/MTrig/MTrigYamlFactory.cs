@@ -8,7 +8,7 @@ namespace Constructor.Spells
     [GenTemplate]
     public class MTrigYamlFactory : YamlFactory<MTrigData, MTrig, MTrigYamlFactory>
     {
-        protected override string YamlFolder => $"{Application.streamingAssetsPath}/ConstructorData/Spell/Action/MTrig";
+        protected override string YamlFolder => $"{Application.streamingAssetsPath}/Spell/Action/MTrig";
 
         protected override void OnInitYamlData(MTrigData data)
         {

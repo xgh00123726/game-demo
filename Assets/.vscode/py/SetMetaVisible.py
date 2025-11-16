@@ -16,5 +16,5 @@ with open(settings_file_path, 'w') as f:
         f.write(line)
 
 is_visible_cn = '不可见' if is_visible == 'true' else '可见'
-print(f'meta 文件替换完成')
+print(f'settings 文件替换完成')
 print(f'现在meta文件已经{is_visible_cn}')

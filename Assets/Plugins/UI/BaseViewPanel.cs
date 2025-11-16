@@ -104,7 +104,7 @@ namespace GameBase.UI
         {
             SingletonEntitySysInstance.CreateShadowMono(this); 
 
-            panel = GameObject.Instantiate(ResourcesLoader.Prefab.Get(prefabName));
+            panel = GameObject.Instantiate(ResourceMgr.Prefab.Get(prefabName));
             panel.transform.SetParent(RootCanvas.Instance.Layer(0), false);
             panel.SetActive(false);
             this.itemPrefabName = itemPrefabName;
@@ -114,7 +114,7 @@ namespace GameBase.UI
 
         protected virtual GameObject GetGameObject(string name)
         {
-            return GameObject.Instantiate(ResourcesLoader.Prefab.Get(name));
+            return GameObject.Instantiate(ResourceMgr.Prefab.Get(name));
         }
 
         protected virtual BaseUI InstantiateObj(T e)

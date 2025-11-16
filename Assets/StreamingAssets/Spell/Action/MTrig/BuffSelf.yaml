@@ -1,0 +1,15 @@
+trigPositionStyle: Mouse
+trigger:
+  maxEffectTimes: 1
+  shape:
+    type: Circle
+    radius: 1
+  trigStyle: Once
+  trigEffectName: 
+  trigAudioName: 
+  createEffectName: 
+  createAudioName: 
+  buffName: Accelerate1
+  buffDuration: 5
+  tag: AddBuff
+slotNum: 0

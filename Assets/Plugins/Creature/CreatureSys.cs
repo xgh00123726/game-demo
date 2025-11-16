@@ -16,7 +16,7 @@ public class CreatureSys : KeyEntitySys<string, Creature, CreatureSys>
     protected override Creature CtorT(string k)
     {
         var e = new Creature();
-        var obj = GameObject.Instantiate(ResourcesLoader.Prefab.Get(k));
+        var obj = GameObject.Instantiate(ResourceMgr.Prefab.Get(k));
         e.obj = obj;
         return e;
     }

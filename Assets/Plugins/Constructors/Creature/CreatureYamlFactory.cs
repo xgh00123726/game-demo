@@ -8,7 +8,7 @@ namespace Constructor.Creatures
 {
     public class CreatureYamlFactory : YamlFactory<CreatureData, Creature, CreatureYamlFactory>
     {
-        protected override string YamlFolder => $"{Application.streamingAssetsPath}/ConstructorData/Creatures";
+        protected override string YamlFolder => $"{Application.streamingAssetsPath}/Creatures";
 
         protected override Creature GetEntity(CreatureData data)
         {

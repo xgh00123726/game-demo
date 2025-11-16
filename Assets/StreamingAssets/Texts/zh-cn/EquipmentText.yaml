@@ -1,0 +1,15 @@
+Shoes:
+  name: 鞋子
+  detail: 增加1点移速
+AccelerateLoop:
+  name: 加速环
+  detail: 增加5技能急速
+OverclockedCore:
+  name: 超频核心
+  detail: 增加100技能急速
+QuickSpellRing:
+  name: 施法指环
+  detail: 增加10技能急速
+SwiftTalisman:
+  name: 迅捷护符
+  detail: 增加15技能急速

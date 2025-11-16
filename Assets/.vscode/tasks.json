@@ -3,10 +3,16 @@
     // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
+        // {
+        //     "label": "设置meta文件可见性",
+        //     "type": "shell",
+        //     "command": "python ${workspaceFolder}/.vscode/py/SetMetaVisible.py ${workspaceFolder} ${input:isVisible}",
+        //     "problemMatcher": []
+        // },        
         {
-            "label": "设置meta文件可见性",
+            "label": "切换meta文件可见性",
             "type": "shell",
-            "command": "python ${workspaceFolder}/.vscode/py/SetMetaVisible.py ${workspaceFolder} ${input:isVisible}",
+            "command": "python ${workspaceFolder}/.vscode/py/ToggleMetaVisible.py ${workspaceFolder}",
             "problemMatcher": []
         }
     ],

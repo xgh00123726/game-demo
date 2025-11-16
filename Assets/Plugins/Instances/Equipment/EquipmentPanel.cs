@@ -27,10 +27,9 @@ namespace Instance
                 var equipment = c.GetEquipment(i);
                 if (equipment != null)
                 {
-                    var info = BuffDataBase.Instance[equipment.id];
-                    this[i].triggerImage.SetIcon(info.textureName);
+                    this[i].triggerImage.SetIcon(equipment.textureName);
                     this[i].triggerImage.Show();
-                    this[i].triggerImage.SetColor(info.rarity);
+                    this[i].triggerImage.SetColor(equipment.rarity);
                 }
                 else
                 {

@@ -1,4 +1,5 @@
 using GameBase.Buffs;
+using GameBase.Equipments;
 using GameBase.Inventorys;
 using GameBase.Tools;
 using GameBase.UI;
@@ -67,8 +68,8 @@ namespace Instance
                 // 如果表中没有配置材质贴图，并且商品是背包物品，那就使用其物品的材质号
                 if (info.textureName == null && info.type == ShopItemType.InventoryItem)
                 {
-                    var eInfo = BuffDataBase.Instance[info.typeID];
-                    viewItem.triggerImage.SetIcon(eInfo.textureName);
+                    var equipData = EquipmentFactory.Instance.GetData(info.typeID);
+                    viewItem.triggerImage.SetIcon(equipData.textureName);
                     viewItem.identifyText.text = $"装备";
                     viewItem.identifyImage.SetIcon("Textures/Equipment/base.png");
                 }

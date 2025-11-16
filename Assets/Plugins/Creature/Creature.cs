@@ -75,9 +75,9 @@ namespace GameBase.Creatures
         
 
 
-        public void AddBuff(int id, float duration = -1)
+        public void AddBuff(string name, float duration = -1)
         {
-            BuffFactory.Get(id).AddTo(this, duration);
+            BuffFactory.Instance.Get(name).AddTo(this, duration);
         }
 
         public void AddAI(AIType type)

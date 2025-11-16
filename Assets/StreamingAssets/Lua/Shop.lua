@@ -17,7 +17,7 @@ local function GenShop( dataTable )
     inventory.Size = dataTable.GoodsNum
     inventory:Refresh()
 
-    local obj = CS.GameBase.Resources.ResourcesLoader.InstantiateGameObject(dataTable.PrefabName)
+    local obj = CS.GameBase.Resources.ResourceMgr.InstantiateGameObject(dataTable.PrefabName)
     local pos = CS.UnityEngine.Vector3(dataTable.Position.x, dataTable.Position.y, dataTable.Position.z)
     obj.transform.position = pos
     obj.name = dataTable.Name

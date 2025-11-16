@@ -1,31 +1,42 @@
-using GameBase.Modify;
+using GameBase.EntitySystem;
+using GameBase.Tools;
 
 namespace GameBase.Buffs
 {
-    public class BuffFactory
+    public struct BuffName
     {
-        /// <summary>
-        /// ¥”info idªÒ»°buff
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public static Buff Get(int id)
+        public string name;
+    }
+    public class BuffNameDataBase : CsvDataBase<BuffName, BuffNameDataBase> { }
+    public class BuffFactory : MultiFactory<Buff, BuffFactory>
+    {
+        public BuffFactory()
         {
-            var info = BuffDataBase.Instance[id];
-            var buff = BuffSys.Instance.NewEntity();
-            if (info.type == BuffType.Common)
+            Register(BuffYamlFactory.Instance.Get);
+        }
+
+        public string GetName(int id)
+        {
+            if (id >= BuffNameDataBase.Instance.Size)
             {
-                buff.isInfiDuration = false;
-                buff.durationSet = info.duration;
-                buff.durationRemain = info.duration;
+                return null;
             }
-            else if (info.type == BuffType.Equipment)
+            return BuffNameDataBase.Instance[id].name;
+        }
+
+        public Buff GetByID(int id)
+        {
+            return BuffYamlFactory.Instance.GetFromData(GetData(id));
+        }
+
+        public BuffData GetData(int id)
+        {
+            if (id >= BuffNameDataBase.Instance.Size)
             {
-                buff.isInfiDuration = true;
+                return null;
             }
 
-            buff.id = id;
-            return buff;
+            return BuffYamlFactory.Instance.GetData(GetName(id));
         }
     }
 }

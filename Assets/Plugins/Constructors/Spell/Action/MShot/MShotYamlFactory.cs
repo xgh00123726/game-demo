@@ -18,7 +18,7 @@ namespace Constructor.Spells
     [GenTemplate]
     public class MShotYamlFactory : YamlFactory<MShotData, ISpellAction, MShotYamlFactory>
     {
-        protected override string YamlFolder => $"{Application.streamingAssetsPath}/ConstructorData/Spell/Action/MShot";
+        protected override string YamlFolder => $"{Application.streamingAssetsPath}/Spell/Action/MShot";
 
         protected override void OnInitYamlData(MShotData data)
         {
