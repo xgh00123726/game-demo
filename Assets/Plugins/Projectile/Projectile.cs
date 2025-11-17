@@ -33,10 +33,10 @@ namespace GameBase.Projectiles
         internal Creature owner;
 
         public bool Alive => alive;
-        public bool IsDestroyOnEffectMaxTimes() => (tag & Tag.DestroyOnEffectMaxTimes) != 0;
-        public bool IsTrigOnlyWhenHitMainTarget() => (tag & Tag.TrigOnlyWhenHitMainTarget) != 0;
-        public bool IsDestroyOnFlyingEnd() => (tag & Tag.DestroyOnFlyingEnd) != 0;
-        public bool IsAutoFindPossibleTarget() => (tag & Tag.AutoFindPossibleTarget) != 0;
+        public bool IsDestroyOnEffectMaxTimes => (tag & Tag.DestroyOnEffectMaxTimes) != 0;
+        public bool IsTrigOnlyWhenHitMainTarget => (tag & Tag.TrigOnlyWhenHitMainTarget) != 0;
+        public bool IsDestroyOnFlyingEnd => (tag & Tag.DestroyOnFlyingEnd) != 0;
+        public bool IsAutoFindPossibleTarget => (tag & Tag.AutoFindPossibleTarget) != 0;
 
         public Creature Target
         {

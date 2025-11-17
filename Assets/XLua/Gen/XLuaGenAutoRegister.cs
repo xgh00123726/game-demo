@@ -210,6 +210,8 @@ namespace XLua
 	    
 		delegate bool __GEN_DELEGATE0( GameBase.Creatures.Creature c,  Instance.InventoryData data,  int index);
 		
+		delegate void __GEN_DELEGATE1( GameBase.Tools.Command command,  string key,  System.Action<string> action);
+		
 	    static InternalGlobals()
 		{
 		    extensionMethodMap = new Dictionary<Type, IEnumerable<MethodInfo>>()
@@ -218,6 +220,17 @@ namespace XLua
 				{typeof(GameBase.Creatures.Creature), new List<MethodInfo>(){
 				
 				  new __GEN_DELEGATE0(LuaUtil.Utils.TryEquipInventoryItem)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				}},
+				
+				{typeof(GameBase.Tools.Command), new List<MethodInfo>(){
+				
+				  new __GEN_DELEGATE1(LuaUtil.Utils.RegisterStringActionArg)
 #if UNITY_WSA && !UNITY_EDITOR
                                       .GetMethodInfo(),
 #else

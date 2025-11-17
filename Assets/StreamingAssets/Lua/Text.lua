@@ -4,23 +4,25 @@ local TextMgr = CS.GameBase.Texts.TextMgr
 local EquipmentTextMgr = TextMgr.Equipment
 
 local function Init()
-    TextMgr.InitFile(TextData.BuffTextFilePath)
-    TextMgr.InitFile(TextData.SpellActionModifierTextPath)
-    TextMgr.InitFile(TextData.ModifierTextFilePath)
+    TextMgr.Lang = "zh-cn"
 
-    EquipmentTextMgr:LoadData("EquipmentText.yaml", "zh-cn")
+    local cmd = CS.GameBase.Tools.Command()
+    cmd:RegisterStringActionArg("switch-lang", function ( lang )
+        TextMgr.Lang = lang
+        print("language has been switched to "..lang)
+    end)
 end
 
 local function GetBuffText( id )
-    return TextMgr.Get(TextData.BuffTextFilePath, id)
+    return ""
 end
 
 local function GetSpellActionModifierText( id )
-    return TextMgr.Get(TextData.SpellActionModifierTextPath, id)
+    return ""
 end
 
 local function GetModifierText( id )
-    return TextMgr.Get(TextData.ModifierTextFilePath, id)
+    return ""
 end
 
 local function GetEquipmentText( name )

@@ -27,17 +27,10 @@ public class TestContainer
     }
 
     [MenuItem("Tools/TimerTest", false)]
-    public static void PlayModeUseFirstScene()
+    public static void Test()
     {
-        HashSet<TestStruct> hash1 = new();
-        hash1.Add(new TestStruct { a = 1, b = 2 });
-        hash1.Add(new TestStruct { a = 1, b = 2 });
-        Debug.Log($"hash1 len:{hash1.Count}, is contain:{hash1.Contains(new TestStruct { a = 1, b = 2 })}");
-
-        HashSet<TestClass> hash2 = new();
-        hash2.Add(new TestClass { a = 1, b = 2 });
-        hash2.Add(new TestClass { a = 1, b = 2 });
-        Debug.Log($"hash2 len:{hash2.Count}, is contain:{hash2.Contains(new TestClass { a = 1, b = 2 })}");
+        TextMgr.Lang = "zh-cn";
+        TextMgr.LoadAll();
     }
 
 }

@@ -4,6 +4,7 @@ using GameBase.Spells;
 using GameBase.Tools;
 using GameBase.UI;
 using Instance;
+using System;
 using XLua;
 
 namespace LuaUtil
@@ -21,8 +22,12 @@ namespace LuaUtil
             {
                 return c.AddEquipment(null, index);
             }
-
             return false;
+        }
+
+        public static void RegisterStringActionArg(this Command command, string key, Action<string> action)
+        {
+            Command.Register(key, action);
         }
     }
 }

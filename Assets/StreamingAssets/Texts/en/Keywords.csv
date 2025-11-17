@@ -1,0 +1,23 @@
+keywordName, zh-cn
+Inc        , <color=green>increase</color>
+MovSpd     , <color=#66ccff>move speed</color>
+SplAcc     , <color=#66ccff>spell accleerate</color>
+Dmg        , <color=#66ccff>damage</color>
+Curr       , current
+Sum        , sum
+Uni        , <color=#66ccff>universal</color>
+Strn       , <color=#66ccff>strengthen</color>
+Agi        , <color=#66ccff>aglity</color>
+Intl       , <color=#66ccff>intelligence</color>
+Def        , <color=#66ccff>defense</color>
+AtkSpd     , <color=#66ccff>attack speed</color>
+SplMuti    , <color=#66ccff>spell multiple</color>
+SplDis     , <color=#66ccff>spell range</color>
+ProjDfu    , <color=#66ccff>projectile disfuse</color>
+ProjNum    , <color=#66ccff>projectile num</color>
+CurHP      , <color=green>current health</color>
+MaxHP      , <color=green>max health</color>
+CurMN      , <color=blue>current mana</color>
+MaxMN      , <color=blue>max nama</color>
+RotSpd     , <color=#66ccff>turn speed</color>
+Range      , <color=#66ccff>attack range</color>

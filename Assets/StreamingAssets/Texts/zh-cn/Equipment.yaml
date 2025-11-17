@@ -1,0 +1,15 @@
+Shoes:
+  name: 鞋子
+  detail: '{K.Inc} 1 {K.MovSpd}'
+AccelerateLoop:
+  name: 加速环
+  detail: '{K.Inc} 5 {K.SplAcc}'
+OverclockedCore:
+  name: 超频核心
+  detail: '{K.Inc} 100 {K.SplAcc}'
+QuickSpellRing:
+  name: 施法指环
+  detail: '{K.Inc} 10 {K.SplAcc}'
+SwiftTalisman:
+  name: 迅捷护符
+  detail: '{K.Inc} 15 {K.SplAcc}'

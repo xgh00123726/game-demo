@@ -84,7 +84,7 @@ namespace XLua.TemplateEngine
             /*          var surrogateMin = (char)0xD800;
             var surrogateMax = (char)0xDFFF;
             for (char sur = surrogateMin; sur <= surrogateMax; sur++)
-                output.Replace(sur, '\uFFFD');*/
+                output.ReplaceKeyword(sur, '\uFFFD');*/
             return output;
         }
 

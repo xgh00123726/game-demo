@@ -2,20 +2,58 @@ using GameBase.Tools;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using UnityEngine;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
 namespace GameBase.Texts
 {
-    public class YamlTextLoader<T>
+    public class YamlTextLoader<T> where T : IKeywordText
     {
         private Dictionary<string, T> _dataDict;
 
-        public void LoadData(string fileName, string lang)
+        internal string lang;
+        internal string defaultLang;
+        internal string fileName;
+
+        public string Lang
         {
+            get => lang;
+            set
+            {
+                if (defaultLang == null && value != null)
+                {
+                    defaultLang = value;
+                }
+
+                if (lang == null)
+                {
+                    lang = value;
+                }
+                else
+                {
+                    if (lang != value)
+                    {
+                        lang = value;
+                        ReloadData();
+                    }
+                }
+            }
+        }
+
+        public void ReloadData()
+        {
+            LoadData(this.fileName);
+        }
+
+        public void LoadData(string fileName)
+        {
+            this.fileName = fileName;
             _dataDict = ReadData(fileName, lang);
+            foreach (var val in _dataDict.Values)
+            {
+                val.ReplaceKeywords();
+            }
             XLogger.Instance.IF(false).Log($"read {_dataDict.Count} item from file: {fileName}");
         }
 
@@ -40,6 +78,16 @@ namespace GameBase.Texts
         protected virtual Dictionary<string, T> ReadData(string fileName, string lang)
         {
             var fullPath = $"{Application.streamingAssetsPath}/Texts/{lang}/{fileName}";
+            if (!File.Exists(fullPath))
+            {
+                fullPath = $"{Application.streamingAssetsPath}/Texts/{defaultLang}/{fileName}";
+            }
+            if (!File.Exists(fullPath))
+            {
+                XLogger.Instance.Level(XLogger.LogLevel.Error)
+                    .Log($"missing {fileName} in folder: {Application.streamingAssetsPath}/Texts/{defaultLang}");
+                return null;
+            }
             using var reader = File.OpenText(fullPath);
             if (reader == null)
             {

@@ -1,15 +1,15 @@
 Shoes:
   name: 鞋子
-  detail: 增加1点移速
+  detail: 1234
 AccelerateLoop:
   name: 加速环
-  detail: 增加5技能急速
+  detail: '{K.Inc} 5 {K.SplAcc}'
 OverclockedCore:
   name: 超频核心
-  detail: 增加100技能急速
+  detail: '{K.Inc} 100 {K.SplAcc}'
 QuickSpellRing:
   name: 施法指环
-  detail: 增加10技能急速
+  detail: '{K.Inc} 10 {K.SplAcc}'
 SwiftTalisman:
   name: 迅捷护符
-  detail: 增加15技能急速
+  detail: '{K.Inc} 15 {K.SplAcc}'

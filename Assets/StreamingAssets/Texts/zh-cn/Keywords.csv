@@ -1,5 +1,5 @@
 keywordName, zh-cn
-Inc        , 增加
+Inc        , <color=green>增加</color>
 MovSpd     , <color=#66ccff>移动速度</color>
 SplAcc     , <color=#66ccff>技能急速</color>
 Dmg        , <color=#66ccff>攻击力</color>
@@ -18,6 +18,6 @@ ProjNum    , <color=#66ccff>弹幕数量</color>
 CurHP      , <color=green>当前生命值</color>
 MaxHP      , <color=green>最大生命值</color>
 CurMN      , <color=blue>当前魔法值</color>
-MaxMN      , <color=blue>当前魔法值</color>
+MaxMN      , <color=blue>最大魔法值</color>
 RotSpd     , <color=#66ccff>转身速度</color>
 Range      , <color=#66ccff>攻击距离</color>

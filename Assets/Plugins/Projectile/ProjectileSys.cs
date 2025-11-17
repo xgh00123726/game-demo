@@ -46,12 +46,28 @@ namespace GameBase.Projectiles
             {
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
                     .Log("projectile must has flying and trigger");
+                return;
+            }
+
+            if (e.IsAutoFindPossibleTarget && e.target == null)
+            {
+                var c = CreatureSys.Instance.NearestEntity(e.flying.Position, (Camp)e.trigger.targetCamp, e.findTargetRange);
+                if (c != null)
+                {
+                    e.Target = c;
+                    e.flying.target = c;
+                }
+                else
+                {
+                    RemoveEntity(e);
+                    return;
+                }
             }
 
             e.flying.target = e.target;
             e.flying.Src = e.owner.HandPosition;
 
-            if (e.IsTrigOnlyWhenHitMainTarget())
+            if (e.IsTrigOnlyWhenHitMainTarget)
             {
                 e.trigger.trigStyle = Triggers.TrigStyle.External;
             }
@@ -79,7 +95,7 @@ namespace GameBase.Projectiles
 
         private void TraceMainTargetProcess(Projectile e)
         {
-            if (e.IsTrigOnlyWhenHitMainTarget() && e.target != null)
+            if (e.IsTrigOnlyWhenHitMainTarget && e.target != null)
             {
                 float arriveDis = e.arriveDis;
                 arriveDis += e.target.radius;
@@ -91,22 +107,9 @@ namespace GameBase.Projectiles
             }
         }
 
-        private void FindTargetProcess(Projectile e)
-        {
-            if (e.IsAutoFindPossibleTarget() && e.target == null)
-            {
-                var c = CreatureSys.Instance.NearestEntity(e.flying.Position, (Camp)e.trigger.targetCamp, e.findTargetRange);
-                if (c != null)
-                {
-                    e.Target = c;
-                    e.flying.target = c;
-                }
-            }
-        }
-
         private void DestroyProcess(Projectile e)
         {
-            if (e.IsDestroyOnEffectMaxTimes())
+            if (e.IsDestroyOnEffectMaxTimes)
             {
                 if (e.trigger.ActualEffectTimes >= e.trigger.maxEffectTimes)
                 {
@@ -121,7 +124,7 @@ namespace GameBase.Projectiles
                     RemoveEntity(e);
                     return;
                 }
-                if (e.IsDestroyOnFlyingEnd() && e.flying.IsEnd)
+                if (e.IsDestroyOnFlyingEnd && e.flying.IsEnd)
                 {
                     RemoveEntity(e);
                     return;
@@ -136,7 +139,6 @@ namespace GameBase.Projectiles
             {
                 return;
             }
-            FindTargetProcess(e);
             if (e.flying != null)
             {
                 TraceMainTargetProcess(e);

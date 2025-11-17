@@ -72,16 +72,18 @@ namespace GameBase.EntitySystem
                 _container.Add(e);
             }
             _entityNeedRegister.Clear();
-            foreach (var e in _entitiesNeedRemove)
-            {
-                _container.Remove(e);
-            }
-            _entitiesNeedRemove.Clear();
+
             foreach (var e in _entitiesNeedStart)
             {
                 _StartAction?.Invoke(e);
             }
             _entitiesNeedStart.Clear();
+
+            foreach (var e in _entitiesNeedRemove)
+            {
+                _container.Remove(e);
+            }
+            _entitiesNeedRemove.Clear();
 
             _currIterIndex = 0;
             _inUpdating = true;

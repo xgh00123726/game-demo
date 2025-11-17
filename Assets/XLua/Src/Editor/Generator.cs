@@ -609,7 +609,7 @@ namespace CSObjectWrapEditor
             try
             {
                 string genCode = XLua.TemplateEngine.LuaTemplate.Execute(template, type_info);
-                //string filePath = save_path + type.ToString().Replace("+", "").Replace(".", "").Replace("`", "").Replace("&", "").Replace("[", "").Replace("]", "").Replace(",", "") + file_suffix + ".cs";
+                //string filePath = save_path + type.ToString().ReplaceKeyword("+", "").ReplaceKeyword(".", "").ReplaceKeyword("`", "").ReplaceKeyword("&", "").ReplaceKeyword("[", "").ReplaceKeyword("]", "").ReplaceKeyword(",", "") + file_suffix + ".cs";
                 textWriter.Write(genCode);
                 textWriter.Flush();
             }
