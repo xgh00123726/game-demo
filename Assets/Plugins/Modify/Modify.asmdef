@@ -3,7 +3,8 @@
     "rootNamespace": "",
     "references": [
         "Tools",
-        "EntitySystem"
+        "EntitySystem",
+        "Item"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

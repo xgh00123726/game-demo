@@ -9,9 +9,8 @@ namespace GameBase.Move
         internal float yMin;
         internal float yMax;
 
-        public float w;
-        public float h;
-        
+        public float Width { get; set; }
+        public float Height { get; set; }
         public float XMin => xMin;
         public float XMax => xMax;
         public float YMin => yMin;
@@ -20,10 +19,10 @@ namespace GameBase.Move
         protected internal override void Update()
         {
             base.Update();
-            xMin = position.x - w / 2;
-            xMax = position.x + w / 2;
-            yMin = position.y - h / 2;
-            yMax = position.y + h / 2;
+            xMin = position.x - Width / 2;
+            xMax = position.x + Width / 2;
+            yMin = position.y - Height / 2;
+            yMax = position.y + Height / 2;
         }
 
         public override void CollideTo(Collider other)

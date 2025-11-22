@@ -10,11 +10,11 @@ namespace Instance
     }
     public struct ShopItemInfo
     {
-        public ShopItemType type;
-        public int typeID;
-        public string textureName;
-        public int rarity;
-        public int price;
+        public ShopItemType Type {  get; set; }
+        public int TypeID { get; set; }
+        public string TextureName { get; set; }
+        public int Rarity { get; set; }
+        public int Price { get; set; }
     }
     public class ShopDataBase : CsvDataBase<ShopItemInfo, ShopDataBase>
     {

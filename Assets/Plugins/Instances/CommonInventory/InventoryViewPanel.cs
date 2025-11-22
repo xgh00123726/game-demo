@@ -1,8 +1,7 @@
-using Constructor.Spells;
-using GameBase.Buffs;
 using GameBase.Config;
 using GameBase.Equipments;
 using GameBase.Inventorys;
+using GameBase.Items;
 using GameBase.Tools;
 using GameBase.UI;
 using UnityEngine;
@@ -84,7 +83,7 @@ namespace Instance
             panelXMoveSpeed = InventoryConfig.Float.InventoryPanelHideSpeed;
         }
 
-        public void UpdatePanel(DynInventory<InventoryData> model)
+        public void UpdatePanel(DynInventory<ItemData> model)
         {
             FillItem(model.Size);
             for (int i = 0; i < model.Size; ++i)
@@ -93,41 +92,34 @@ namespace Instance
             }
         }
 
-        public void UpdateItem(DynInventory<InventoryData> model, int index)
+        public void UpdateItem(DynInventory<ItemData> model, int index)
         {
             var viewItem = this[index];
 
             if (model.HasItem(index))
             {
-                var info = model[index];
+                var item = model[index];
 
                 string textureName = null;
                 int rarity = -1;
 
-                if (info.type == InventoryItemType.Equipment)
+                if (item is EquipmentData equip)
                 {
-                    var equipData = EquipmentFactory.Instance.GetData(info.reflectedID);
-                    textureName = equipData.textureName;
-                    rarity = equipData.rarity;
-                }
-                else if (info.type == InventoryItemType.SpellActionModifier)
-                {
-                    var samInfo = SpellActionModifierDataBase.Instance[info.reflectedID];
-                    textureName = samInfo.textureName;
-                    rarity = samInfo.rarity;
+                    textureName = equip.TextureName;
+                    rarity = equip.Rarity;
                 }
 
-                viewItem.triggerImage.SetIcon(textureName);
-                viewItem.triggerImage.SetColor(rarity);
-                viewItem.triggerImage.Show();
-                viewItem.interactiveEnable = true;
+                viewItem.TriggerImage.SetIcon(textureName);
+                viewItem.TriggerImage.SetColor(rarity);
+                viewItem.TriggerImage.Show();
+                viewItem.InteractiveEnable = true;
             }
             else
             {
-                viewItem.triggerImage.SetIcon(null);
-                viewItem.triggerImage.Hide();
-                viewItem.triggerImage.HideColor();
-                viewItem.interactiveEnable = false;
+                viewItem.TriggerImage.SetIcon(null);
+                viewItem.TriggerImage.Hide();
+                viewItem.TriggerImage.HideColor();
+                viewItem.InteractiveEnable = false;
             }
         }
     }

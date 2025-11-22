@@ -12,7 +12,6 @@ namespace GameBase.Inventorys
     /// </summary>
     /// <typeparam name="T_Item"></typeparam>
     public class CommonInventory<T_Item>
-        where T_Item : new()
     {
         protected class CInventoryItem
         {
@@ -28,8 +27,8 @@ namespace GameBase.Inventorys
         protected List<CInventoryItem> _items = new();
         protected SortedIntList _nullIndexes = new((x, y) => (y - x));
 
-        public Action<int> OnAddItem;
-        public Action<int> OnRemoveItem;
+        public Action<int> OnAddItem { get; set; }
+        public Action<int> OnRemoveItem { get; set; }
 
         public virtual int Size
         {
@@ -44,7 +43,7 @@ namespace GameBase.Inventorys
 
                 for (int i = 0; i < value - size; ++i)
                 {
-                    _items.Add(new CInventoryItem(new T_Item(), false));
+                    _items.Add(new CInventoryItem(default, false));
                     _nullIndexes.Push(i);
                 }
             }

@@ -10,7 +10,7 @@ namespace GameBase.Modify
         {
             e.instantiateTime = Time.time;
             e.lastEnableTime = Time.time;
-            e.target = null;
+            e.Target = null;
         }
 
         protected override void OnRelease(Modifyer e)
@@ -33,7 +33,7 @@ namespace GameBase.Modify
 
         protected override void UpdateEntity(Modifyer e)
         {
-            if (e.target == null)
+            if (e.Target == null)
             {
                 RemoveEntity(e);
                 return;
@@ -41,14 +41,14 @@ namespace GameBase.Modify
 
             bool enable = false;
 
-            if ((e.type & ModifyType.Always) != 0 || (e.type & ModifyType.Once) != 0)
+            if ((e.Type & ModifyType.Always) != 0 || (e.Type & ModifyType.Once) != 0)
             {
                 enable = true;
             }
 
-            if ((e.type & ModifyType.Periodoic) != 0)
+            if ((e.Type & ModifyType.Periodoic) != 0)
             {
-                if (Time.time - e.lastEnableTime > e.dt)
+                if (Time.time - e.lastEnableTime > e.DT)
                 {
                     enable = true;
                     e.lastEnableTime = Time.time;
@@ -57,18 +57,18 @@ namespace GameBase.Modify
 
             if (enable)
             {
-                if ((e.type & ModifyType.Temporary) != 0)
+                if ((e.Type & ModifyType.Temporary) != 0)
                 {
-                    e.target.tempValue += e.value;
+                    e.Target.tempValue += e.Value;
                 }
-                else if ((e.type & ModifyType.Forever) != 0)
+                else if ((e.Type & ModifyType.Forever) != 0)
                 {
-                    e.target.valueSet += e.value;
+                    e.Target.valueSet += e.Value;
                 }
                 e.OnModify?.Invoke();
             }
 
-            if ((e.type & ModifyType.Once) != 0)
+            if ((e.Type & ModifyType.Once) != 0)
             {
                 RemoveEntity(e);
             }

@@ -22,10 +22,10 @@ namespace Instance
         }
         public static void CastByStyle(Spell spell)
         {
-            var c = CreatureSys.Instance.NearestEntity(spell.speller.Position, (Camp)spell.targetCamp.ToUint());
+            var c = CreatureSys.Instance.NearestEntity(spell.Speller.Position, (Camp)spell.TargetCamp.ToUint());
             if (c != null)
             {
-                spell.castPosition = c.Position;
+                spell.CastPosition = c.Position;
             }
             spell.TryCast();
         }

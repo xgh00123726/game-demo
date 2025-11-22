@@ -16,17 +16,16 @@ namespace Instance
         private static Vector3 _selectBeginPos;
         private static bool _selectEnable;
 
-        public static float drawY = -7;
-        public static float trigTime = 0.1f;
-        public static string lineRendererPrefabName = "Prefabs/Info/SelectorDrawer.prefab";
-
-        public static Action OnDrawBegin;
-        public static Action OnDrawEnd;
-        public static Action<Rect> OnDraw;
+        public static float DrawY { get; set; } = -7;
+        public static float TrigTime { get; set; } = 0.1f;
+        public static string LineRendererPrefabName { get; set; } = "Prefabs/Info/SelectorDrawer.prefab";
+        public static Action OnDrawBegin { get; set; }
+        public static Action OnDrawEnd { get; set; }
+        public static Action<Rect> OnDraw {  get; set; }
 
         public RectDrawer()
         {
-            _lineRendererObj = GameObject.Instantiate(ResourceMgr.Prefab.Get(lineRendererPrefabName));
+            _lineRendererObj = GameObject.Instantiate(ResourceMgr.Prefab.Get(LineRendererPrefabName));
             _lineRenderer = _lineRendererObj.transform.Find("Line").GetComponent<LineRenderer>();
         }
 
@@ -52,7 +51,7 @@ namespace Instance
                 }
             }
 
-            if (_selectEnable && Time.time > _selectBeginTime + trigTime)
+            if (_selectEnable && Time.time > _selectBeginTime + TrigTime)
             {
                 var pos = CameraSys.MouseHitPosition;
                 float beginX = _selectBeginPos.x;
@@ -61,7 +60,7 @@ namespace Instance
                 float endZ = pos.z;
 
                 _lineRendererObj.SetActive(true);
-                _lineRenderer.DrawRect(Rect.MinMaxRect(beginX, beginZ, endX, endZ), drawY);
+                _lineRenderer.DrawRect(Rect.MinMaxRect(beginX, beginZ, endX, endZ), DrawY);
 
                 float minX = Mathf.Min(beginX, endX);
                 float maxX = Mathf.Max(beginX, endX);

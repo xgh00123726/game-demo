@@ -9,14 +9,14 @@ namespace GameBase.Creatures
 {
     public partial class Creature
     {
-        public int currentExp;
-        public int deadExp = 1;
-        public List<int> levelUpExpTable = new();
-        public int currentLevel = 1;
-        public int levelUpExp = 10;
+        public int CurrentExp { get; private set; }
+        public int DeadExp { get; set; } = 1;
+        public List<int> LevelUpExpTable { get; set; } = new();
+        public int CurrentLevel { get; private set; } = 1;
+        public int LevelUpExp { get; private set; } = 10;
 
-        public Action<Creature> OnLevelUp;
-        public Action<Creature, int> OnGetExp;
+        public Action<Creature> OnLevelUp {  get; set; }
+        public Action<Creature, int> OnGetExp { get; set; }
 
         public void SetDefaultGetExpText()
         {
@@ -33,26 +33,26 @@ namespace GameBase.Creatures
 
         public void RefreshLevelUpExp()
         {
-            if (levelUpExpTable.Count >= currentLevel)
+            if (LevelUpExpTable.Count >= CurrentLevel)
             {
-                levelUpExp = levelUpExpTable[currentLevel - 1];
+                LevelUpExp = LevelUpExpTable[CurrentLevel - 1];
             }
             else
             {
-                levelUpExp = currentLevel * 10;
+                LevelUpExp = CurrentLevel * 10;
             }
         }
 
         public void GetExp(int exp)
         {
-            currentExp += exp;
+            CurrentExp += exp;
             OnGetExp?.Invoke(this, exp);
             RefreshLevelUpExp();
 
-            while (currentExp >= levelUpExp)
+            while (CurrentExp >= LevelUpExp)
             {
-                currentExp -= levelUpExp;
-                currentLevel++;
+                CurrentExp -= LevelUpExp;
+                CurrentLevel++;
                 OnLevelUp?.Invoke(this);
             }
         }

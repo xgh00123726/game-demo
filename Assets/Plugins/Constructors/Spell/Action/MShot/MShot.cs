@@ -8,16 +8,16 @@ namespace Constructor.Spells
 {
     public class MShot : ModifyableAction
     {
-        public MShotData data;
+        public MShotData Data { get; set; }
         protected override Projectile GenProjectile(Spell spell, in SpellActionModifierData modifyData)
         {
-            if (spell.speller is Creature c)
+            if (spell.Speller is Creature c)
             {
-                var p = ProjectileYamlFactory.Instance.GetFromData(data.projectile);
-                p.trigger.targetCamp = (Camp)spell.targetCamp.ToUint();
+                var p = ProjectileYamlFactory.Instance.GetFromData(Data.Projectile);
+                p.Trigger.TargetCamp = (Camp)spell.TargetCamp.ToUint();
                 p.Owner = c;
-                p.flying.Dir = spell.castPosition - c.Position;
-                p.flying.dest = spell.castPosition;
+                p.Flying.Dir = spell.CastPosition - c.Position;
+                p.Flying.Dest = spell.CastPosition;
 
                 return p;
             }

@@ -2,6 +2,8 @@ require("TextData")
 
 local TextMgr = CS.GameBase.Texts.TextMgr
 local EquipmentTextMgr = TextMgr.Equipment
+local SpellActionTextMgr = TextMgr.SpellAction
+local ModifierTextMgr = TextMgr.Modifier
 
 local function Init()
     TextMgr.Lang = "zh-cn"
@@ -17,12 +19,12 @@ local function GetBuffText( id )
     return ""
 end
 
-local function GetSpellActionModifierText( id )
-    return ""
+local function GetSpellActionModifierText( name )
+    return SpellActionTextMgr:GetData(name)
 end
 
-local function GetModifierText( id )
-    return ""
+local function GetModifierText( name )
+    return ModifierTextMgr:GetData(name)
 end
 
 local function GetEquipmentText( name )
@@ -36,10 +38,10 @@ Text = {
     --- @arg1 id : int
     GetBuffText = GetBuffText,
 
-    --- @arg1 id : int
+    --- @arg1 name : string
     GetSpellActionModifierText = GetSpellActionModifierText,
 
-    --- @arg1 id : int
+    --- @arg1 name : string
     GetModifierText = GetModifierText,
 
     --- @arg1 name : string

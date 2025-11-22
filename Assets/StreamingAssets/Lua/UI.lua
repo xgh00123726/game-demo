@@ -45,7 +45,7 @@ local function CommonDragViewInit()
 
     local dragView = CS.Instance.CommonDragView(UIData.CommonDragView.PrefabName)
     CommonDragViewController:SetActive(true)
-    CommonDragViewController.dragView = dragView
+    CommonDragViewController.DragView = dragView
     LCommonDragViewController.DragView = dragView
 end
 
@@ -56,18 +56,18 @@ local function CommonDetailViewInit()
 
     local detailView = CS.Instance.CommonDetailView(UIData.CommonDetailView.PrefabName)
     CommonDetailViewController:SetActive(true)
-    CommonDetailViewController.detailView = detailView
+    CommonDetailViewController.DetailView = detailView
     LCommonDetailViewController.DetailView = detailView
 end
 
 local function SetLayout( panel, layoutData)
     local layout = CS.Instance.CommonLayout()
-    layout.xInterval = layoutData.xInterval
-    layout.yInterval = layoutData.yInterval
-    layout.width = layoutData.width
-    layout.height = layoutData.height
-    layout.align = layoutData.align
-    panel.layout = layout
+    layout.XInterval = layoutData.xInterval
+    layout.YInterval = layoutData.yInterval
+    layout.Width = layoutData.width
+    layout.Height = layoutData.height
+    layout.Align = layoutData.align
+    panel.Layout = layout
 end
 
 local function AttrUIInit()
@@ -93,8 +93,8 @@ local function InventoryUIInit()
     SetLayout(panel, UIData.Inventory.Layout)
 
     InventoryUIInteractive:SetActive(true)
-    InventoryUIInteractive.enterDragTime = UIData.Inventory.EnterDragTime
-    InventoryUIInteractive.enterDetailTime = UIData.Inventory.EnterDetailTime
+    InventoryUIInteractive.EnterDragTime = UIData.Inventory.EnterDragTime
+    InventoryUIInteractive.EnterDetailTime = UIData.Inventory.EnterDetailTime
     
     panel.OnEnterDrag = UI.Inventory.OnEnterDrag
     panel.OnExitDrag = UI.Inventory.OnExitDrag
@@ -123,7 +123,7 @@ local function ShopUIInit()
     nearView:Hide()
 
     ShopUIInteractive:SetActive(true)
-    ShopUIInteractive.enterDetailTime = UIData.Shop.EnterDetailTime
+    ShopUIInteractive.EnterDetailTime = UIData.Shop.EnterDetailTime
 
     panel.OnEnterDetail = UI.Shop.OnEnterDetail
     panel.OnExitDetail = UI.Shop.OnExitDetail
@@ -147,8 +147,8 @@ local function EquipmentUIInit()
     panel:FillItem(UIData.Equipment.ItemNum)
 
     EquipmentUIInteractive:SetActive(true)
-    EquipmentUIInteractive.enterDetailTime = UIData.Equipment.EnterDetailTime
-    EquipmentUIInteractive.enterDragTime = UIData.Equipment.EnterDragTime
+    EquipmentUIInteractive.EnterDetailTime = UIData.Equipment.EnterDetailTime
+    EquipmentUIInteractive.EnterDragTime = UIData.Equipment.EnterDragTime
 
     panel.OnEnterDrag = UI.Equipment.OnEnterDrag
     panel.OnExitDrag = UI.Equipment.OnExitDrag

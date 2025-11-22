@@ -1,37 +1,52 @@
 using GameBase.EntitySystem;
+using GameBase.Items;
 using GameBase.Modify;
 using GameBase.Tools;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace GameBase.Equipments
 {
     [GenTemplate]
-    public class EquipmentYamlFactory : YamlFactory<EquipmentData, Equipment, EquipmentYamlFactory>
+    public class EquipmentYamlFactory : YamlFactory<EquipmentData, Equipment, EquipmentYamlFactory>,
+        IItemDataRegister<EquipmentData>
     {
-        protected override string YamlFolder => $"{Application.streamingAssetsPath}/Equipment";
+        protected override string Folder => $"{Application.streamingAssetsPath}/Equipment";
 
-        protected override void OnInitYamlData(EquipmentData data)
+        List<EquipmentData> IItemDataRegister<EquipmentData>.GetRegisteredItems()
         {
-            if (!SuperEnum.TryParse(data.tag, out data.tagEnum))
+            return Instance._dataDict.Values.ToList();
+        }
+
+        protected override void OnInitYamlData(ref EquipmentData data)
+        {
+            if (!SuperEnum.TryParse(data.Tag, out EquipmentTag tag))
             {
+                data.TagEnum = tag;
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log($"invalid enum string: {data.tag}");
+                    .Log($"invalid enum string: {data.Tag}");
             }
 
-            data.iModifiers = new();
-            foreach (var ps in data.modifiers)
+            data.IntKeyModifiers = new();
+            foreach (var ps in data.Modifiers)
             {
-                data.iModifiers.Add(new(ModifyTable.GetID(ps.Key), ps.Value));
+                data.IntKeyModifiers.Add(new()
+                {
+                    Key = ModifyTable.GetID(ps.Key),
+                    Value = ps.Value
+                });
             }
         }
 
         protected override Equipment GetEntity(EquipmentData data)
         {
             var e = EquipmentSys.Instance.NewEntity();
-            e.textureName = data.textureName;
-            e.rarity = data.rarity;
-            e.iModifiers = data.iModifiers;
-            e.tag = data.tagEnum;
+            e.TextureName = data.TextureName;
+            e.Rarity = data.Rarity;
+            e.IntKeyModifiers = data.IntKeyModifiers;
+            e.Tag = data.TagEnum;
+            e.ID = data.ID;
 
             return e;
         }

@@ -26,7 +26,7 @@ namespace GameBase.Move
         {
             Coord b = new Coord(_grid.GetXIndex(begin.x), _grid.GetYIndex(begin.z));
             Coord e = new Coord(_grid.GetXIndex(end.x), _grid.GetYIndex(end.z));
-            _aStarWay = _aStar.GetWay(_grid.map, b, e);
+            _aStarWay = _aStar.GetWay(_grid.Map, b, e);
             _way.Clear();
 
             Coord c = _aStarWay[^1];

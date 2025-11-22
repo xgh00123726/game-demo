@@ -1,4 +1,5 @@
 using GameBase.EntitySystem;
+using GameBase.Items;
 
 namespace GameBase.Equipments
 {
@@ -9,28 +10,15 @@ namespace GameBase.Equipments
             Register(EquipmentYamlFactory.Instance.Get);
         }
 
-        public string GetName(int id)
+        public Equipment Get(int id)
         {
-            if (id >= EquipmentNameDataBase.Instance.Size)
+            var item = ItemDataMgr.Get(id);
+            if (item is EquipmentData e)
             {
-                return null;
-            }
-            return EquipmentNameDataBase.Instance[id].name;
-        }
-
-        public Equipment GetByID(int id)
-        {
-            return EquipmentYamlFactory.Instance.GetFromData(GetData(id));
-        }
-
-        public EquipmentData GetData(int id)
-        {
-            if (id >= EquipmentNameDataBase.Instance.Size)
-            {
-                return null;
+                return EquipmentYamlFactory.Instance.GetFromData(e);
             }
 
-            return EquipmentYamlFactory.Instance.GetData(GetName(id));
+            return null;
         }
     }
 }

@@ -17,7 +17,7 @@ public class CreatureSys : KeyEntitySys<string, Creature, CreatureSys>
     {
         var e = new Creature();
         var obj = GameObject.Instantiate(ResourceMgr.Prefab.Get(k));
-        e.obj = obj;
+        e.Obj = obj;
         return e;
     }
 
@@ -25,10 +25,10 @@ public class CreatureSys : KeyEntitySys<string, Creature, CreatureSys>
     {
         e.OnDead = null;
 
-        e.mover = MoveSys.Instance.NewEntity();
-        e.mover.owner = e;
+        e.Mover = MoveSys.Instance.NewEntity();
+        e.Mover.Owner = e;
 
-        e.animator = e.obj.GetComponent<Animator>();
+        e.Animator = e.Obj.GetComponent<Animator>();
         e.id = _creatureInstantiatedNum++;
         _creatureDict.Add(e.id, e);
     }
@@ -37,12 +37,12 @@ public class CreatureSys : KeyEntitySys<string, Creature, CreatureSys>
     {
         e.Alive = true;
 
-        e.healthBar = HealthBarSys.Instance.NewEntity("Prefabs/UI/HealthBar");
-        e.healthBar.owner = e;
+        e.HealthBar = HealthBarSys.Instance.NewEntity("Prefabs/UI/HealthBar");
+        e.HealthBar.Owner = e;
 
         e.HighLevelAttrInit();
 
-        e.obj.SetActive(true);
+        e.Obj.SetActive(true);
     }
 
     protected override void OnRelease(Creature e)
@@ -51,31 +51,31 @@ public class CreatureSys : KeyEntitySys<string, Creature, CreatureSys>
 
         e.HighLevelAttrDispose();
 
-        MoveSys.Instance.RemoveEntity(e.mover);
-        if (e.collider != null)
+        MoveSys.Instance.RemoveEntity(e.Mover);
+        if (e.Collider != null)
         {
-            CollideSys.Instance.RemoveEntity(e.collider);
+            CollideSys.Instance.RemoveEntity(e.Collider);
         }
 
-        for(int i = 0; i < e.spells.Size; i++)
+        for(int i = 0; i < e.Spells.Size; i++)
         {
-            var spell = e.spells[i];
-            e.spells.Remove(i);
+            var spell = e.Spells[i];
+            e.Spells.Remove(i);
             SpellSys.Instance.RemoveEntity(spell);
         }
 
-        AISys.Instance.RemoveEntity(e.ai);
+        AISys.Instance.RemoveEntity(e.AI);
 
         _creatureDict.Remove(e.id);
 
-        e.obj.SetActive(false);
+        e.Obj.SetActive(false);
     }
 
     protected override void UpdateEntity(Creature e)
     {
         e.HighLevelAttrUpdate();
 
-        float currHP = e.modifyables["currHP"].Value;
+        float currHP = e.Modifyables["currHP"].Value;
         if (currHP <= 0)
         {
             e.OnDead?.Invoke(e);
@@ -83,12 +83,12 @@ public class CreatureSys : KeyEntitySys<string, Creature, CreatureSys>
             return;
         }
 
-        float maxHP = e.modifyables["maxHP"].Value;
-        float healthRegen = e.modifyables["healthRegen"].Value * Time.deltaTime;
+        float maxHP = e.Modifyables["maxHP"].Value;
+        float healthRegen = e.Modifyables["healthRegen"].Value * Time.deltaTime;
 
         healthRegen = Mathf.Min(healthRegen, maxHP - currHP);
 
-        e.modifyables.ForceModify(8, healthRegen); // 8： currHP
+        e.Modifyables.ForceModify(8, healthRegen); // 8： currHP
     }
 
 
@@ -107,7 +107,7 @@ public class CreatureSys : KeyEntitySys<string, Creature, CreatureSys>
 
     /// <summary>
     /// 返回指定位置最近的游戏实体
-    /// <list type="bullet">
+    /// <list Type="bullet">
     /// <item><param name="position"><paramref name="position"/>:指定的位置</param></item>
     /// <item><param name="rangeLimit"><paramref name="rangeLimit"/>:只会寻找到rangeLimit距离内的实体</param></item>
     /// </list></summary>
@@ -119,13 +119,13 @@ public class CreatureSys : KeyEntitySys<string, Creature, CreatureSys>
 
         foreach (var e in Entities)
         {
-            if (e.camp.And(camp).IsNone())
+            if (e.Camp.And(camp).IsNone())
             {
                 continue;
             }
 
 
-            float dis = (e.obj.transform.position - position).magnitude;
+            float dis = (e.Obj.transform.position - position).magnitude;
 
             if (dis > rangeLimit) continue;
 

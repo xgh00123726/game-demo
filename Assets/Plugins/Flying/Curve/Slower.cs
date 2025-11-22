@@ -5,19 +5,19 @@ namespace GameBase.Flyings
     public class Slower : Linear
     {
         private float speedActual;
-        public float factor = 0f;
-        public float slowDis = 2f;
+        public float Factor { get; set; } = 0f;
+        public float SlowDis { get; set; } = 2f;
         protected override Vector3 GetPosDelta()
         {
             float disToDest = (_projectile.Position - _projectile.Dest).magnitude;
 
-            if (disToDest < slowDis)
+            if (disToDest < SlowDis)
             {
-                speedActual = (factor + disToDest) / (factor + slowDis) * speed;
+                speedActual = (Factor + disToDest) / (Factor + SlowDis) * Speed;
             }
             else
             {
-                speedActual = speed;
+                speedActual = Speed;
             }
 
             return _projectile.Dir * speedActual * Time.deltaTime;

@@ -6,7 +6,7 @@ namespace Constructor.Spells
 {
     public class MShotData
     {
-        public ProjectileData projectile;
-        public int slotNum;
+        public ProjectileData Projectile {  get; set; }
+        public int SlotNum { get; set; }
     }
 }

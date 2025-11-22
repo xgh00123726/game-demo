@@ -8,9 +8,9 @@ namespace Instance
         internal bool isActive;
         internal bool isTargetNear;
 
-        public int instanceID;
-        public ShopInventory inventory;
-        public GameObject obj;
-        public float detectRange;
+        public int InstanceID { get; set; }
+        public ShopInventory Inventory { get; set; }
+        public GameObject Obj { get; set; }
+        public float DetectRange { get; set; }
     }
 }

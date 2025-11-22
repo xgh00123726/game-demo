@@ -4,9 +4,9 @@ namespace GameBase.Move
 {
     public class Collider
     {
-        public Vector2 localPosition;
-        public bool isCollide;
-        public Vector2 force;
+        public Vector2 LocalPosition { get; set; }
+        public bool IsCollide { get; internal set; }
+        public Vector2 Force { get; internal set; }
 
         internal bool hasOwner;
         internal Transform owner;
@@ -26,11 +26,11 @@ namespace GameBase.Move
         {
             if (hasOwner)
             {
-                position = new Vector2(localPosition.x + owner.position.x, localPosition.y + owner.position.z);
+                position = new Vector2(LocalPosition.x + owner.position.x, LocalPosition.y + owner.position.z);
             }
             else
             {
-                position = localPosition;
+                position = LocalPosition;
             }
         }
         public virtual void CollideTo(Collider other) { }

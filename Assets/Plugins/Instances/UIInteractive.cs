@@ -9,11 +9,11 @@ namespace Instance
         where T_Panel : BaseViewPanel<T_PanelItem>
         where T_PanelItem : BaseViewItem, new()
     {
-        public float enterDragTime = 0.1f;
-        public float enterDetailTime = 0.2f;
+        public float EnterDragTime { get; set; } = 0.1f;
+        public float EnterDetailTime { get; set; } = 0.2f;
 
-        public Func<int, bool> IsUIItemDrag;
-        public Func<int, bool> IsUIItemDetail;
+        public Func<int, bool> IsUIItemDrag {  get; set; }
+        public Func<int, bool> IsUIItemDetail {  get; set; }
 
         public UIInteractive()
         {
@@ -35,7 +35,7 @@ namespace Instance
                 return false;
             }
 
-            return panel[i].uiScript.PointerDownTime > enterDragTime;
+            return panel[i].UIScript.PointerDownTime > EnterDragTime;
         }
 
         private bool DefaultIsUIItemDetail(int i)
@@ -50,7 +50,7 @@ namespace Instance
                 return false;
             }
 
-            return panel[i].uiScript.EnterTime > enterDetailTime;
+            return panel[i].UIScript.EnterTime > EnterDetailTime;
         }
 
         protected override void Update()

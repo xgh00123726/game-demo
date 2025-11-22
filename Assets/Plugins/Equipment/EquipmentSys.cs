@@ -8,22 +8,22 @@ namespace GameBase.Equipments
     {
         protected override void OnGet(Equipment e)
         {
-            e.textureName = null;
+            e.TextureName = null;
         }
 
         protected override void OnRelease(Equipment e)
         {
-            foreach (var m in e.modifyers)
+            foreach (var m in e.Modifyers)
             {
                 m.Release();
             }
-            e.modifyers.Clear();
-            e.owner.OnRemoveEquipment(e);
+            e.Modifyers.Clear();
+            e.Owner.OnRemoveEquipment(e);
         }
 
         protected override void EntityStart(Equipment e)
         {
-            if (e.owner == null)
+            if (e.Owner == null)
             {
                 XLogger.Instance.Level(XLogger.LogLevel.Warning)
                     .Log("equipment has no owner");
@@ -31,16 +31,16 @@ namespace GameBase.Equipments
                 return;
             }
 
-            foreach (var kvp in e.iModifiers)
+            foreach (var kvp in e.IntKeyModifiers)
             {
                 var m = ModifyerSys.Instance.NewEntity();
-                m.value = kvp.Value;
-                m.type = ModifyType.Temporary | ModifyType.Always;
-                m.AddTo(e.owner.Modifyables[kvp.Key]);
-                e.modifyers.Add(m);
+                m.Value = kvp.Value;
+                m.Type = ModifyType.Temporary | ModifyType.Always;
+                m.AddTo(e.Owner.Modifyables[kvp.Key]);
+                e.Modifyers.Add(m);
             }
 
-            e.owner.OnGetEquipment(e);
+            e.Owner.OnGetEquipment(e);
         }
     }
 }

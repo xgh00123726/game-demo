@@ -42,6 +42,8 @@ public class LuaMain : MonoBehaviour
         _table.Get("OnInitOK", out OnInitOK);
         _table.Get("Update", out LuaUpdate);
 
+        ItemWarpper.Init();
+
         OnInitOK?.Invoke();
 
         DontDestroyOnLoad(this);

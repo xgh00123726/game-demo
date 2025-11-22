@@ -123,6 +123,6 @@ namespace GameBase.Creatures
 
     public partial class Creature
     {
-        public Camp camp;
+        public Camp Camp { get; set; }
     }
 }

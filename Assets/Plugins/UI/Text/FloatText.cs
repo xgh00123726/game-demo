@@ -30,7 +30,7 @@ namespace GameBase.UI
         internal RectTransform rectTransform;
         internal TextMeshProUGUI textObj;
 
-        public GameObject obj;
+        public GameObject Obj { get; set; }
         public string Key { get; set; } = "Prefabs/UI/FloatText";
         public Color Color
         {

@@ -6,7 +6,7 @@ namespace Instance
     public class CommonDragViewController : SingletonInstance<CommonDragViewController>
     {
         private bool _isAttachToMouse = false;
-        public CommonDragView dragView;
+        public CommonDragView DragView { get; set; }
 
         public void AttachToMouse()
         {
@@ -20,14 +20,14 @@ namespace Instance
 
         protected override void Update()
         {
-            if (dragView == null)
+            if (DragView == null)
             {
                 return;
             }
 
             if (_isAttachToMouse) 
             {
-                dragView.SetPosition(UnityEngine.Input.mousePosition);
+                DragView.SetPosition(UnityEngine.Input.mousePosition);
             }
         }
     }

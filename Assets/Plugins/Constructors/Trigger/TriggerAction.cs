@@ -31,8 +31,8 @@ namespace Constructor.Triggers
             if ((tag & TriggerActionTag.HasDamage) != 0)
             {
                 var modifyer = ModifyerSys.Instance.NewEntity();
-                modifyer.type = ModifyType.Once | ModifyType.Forever;
-                modifyer.value = -damage;
+                modifyer.Type = ModifyType.Once | ModifyType.Forever;
+                modifyer.Value = -damage;
                 modifyer.OnModify += () =>
                 {
                     var text = TextSys.Instance.NewEntity(prefabName);
@@ -41,7 +41,7 @@ namespace Constructor.Triggers
                     text.Color = color;
                 };
 
-                modifyer.AddTo(c.modifyables["currHP"]);
+                modifyer.AddTo(c.Modifyables["currHP"]);
             }
 
             if ((tag & TriggerActionTag.AddBuff) != 0)

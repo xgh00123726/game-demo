@@ -11,21 +11,21 @@ namespace GameBase.Creatures
     {
         private void OnDestroy()
         {
-            GizmosCfg.isDrawGizmos = false;
+            GizmosCfg.IsDrawGizmos = false;
         }
 
         private void DrawMove(Creature e)
         {
-            if (!GizmosCfg.isDrawMove)
+            if (!GizmosCfg.IsDrawMove)
             {
                 return;
             }
 
-            if (!e.mover.IsMoving)
+            if (!e.Mover.IsMoving)
             {
                 return;
             }
-            if (e.mover.DestQueue.Count == 0)
+            if (e.Mover.DestQueue.Count == 0)
             {
                 return;
             }
@@ -33,9 +33,9 @@ namespace GameBase.Creatures
             Gizmos.color = Color.green;
 
             Vector3 from = e.Position;
-            Vector3 to = e.mover.Dest;
+            Vector3 to = e.Mover.Dest;
             GizmosAppend.DrawLine(from, to, 5);
-            foreach (var pos in e.mover.DestQueue)
+            foreach (var pos in e.Mover.DestQueue)
             {
                 from = to;
                 to = pos;
@@ -45,7 +45,7 @@ namespace GameBase.Creatures
 
         private void DrawAttackRange(Creature e)
         {
-            if (!GizmosCfg.isDrawAttackRange)
+            if (!GizmosCfg.IsDrawAttackRange)
             {
                 return;
             }
@@ -53,19 +53,19 @@ namespace GameBase.Creatures
             Gizmos.color = Color.white;
             GizmosAppend.DrawCircle(new GMath.Circle
             {
-                c = new Vector2(e.mover.owner.Position.x, e.mover.owner.Position.z),
-                r = e.modifyables["attackRange"].Value,
+                c = new Vector2(e.Mover.Owner.Position.x, e.Mover.Owner.Position.z),
+                r = e.Modifyables["attackRange"].Value,
             }, GizmosCfg.drawY);
         }
 
         private void DrawFollowAttackAI(Creature e)
         {
-            if (!GizmosCfg.isDrawAI)
+            if (!GizmosCfg.IsDrawAI)
             {
                 return;
             }
 
-            if (e.ai is AIFollowAttack ai)
+            if (e.AI is AIFollowAttack ai)
             {
                 if (ai.target != null)
                 {
@@ -82,14 +82,14 @@ namespace GameBase.Creatures
 
                 GizmosAppend.DrawCircle(new GMath.Circle
                 {
-                    c = new Vector2(e.mover.owner.Position.x, e.mover.owner.Position.z),
-                    r = e.radius,
+                    c = new Vector2(e.Mover.Owner.Position.x, e.Mover.Owner.Position.z),
+                    r = e.Radius,
                 }, GizmosCfg.drawY);
 
                 Gizmos.color = Color.yellow;
                 GizmosAppend.DrawCircle(new GMath.Circle
                 {
-                    c = new Vector2(e.mover.owner.Position.x, e.mover.owner.Position.z),
+                    c = new Vector2(e.Mover.Owner.Position.x, e.Mover.Owner.Position.z),
                     r = ai.arriveDis,
                 }, GizmosCfg.drawY);
 
@@ -98,7 +98,7 @@ namespace GameBase.Creatures
                     Gizmos.color = Color.white;
                     GizmosAppend.DrawCircle(new GMath.Circle
                     {
-                        c = new Vector2(e.mover.owner.Position.x, e.mover.owner.Position.z),
+                        c = new Vector2(e.Mover.Owner.Position.x, e.Mover.Owner.Position.z),
                         r = e.GetPossibleAttr("FollowRange"),
                     }, GizmosCfg.drawY);
                 }
@@ -107,7 +107,7 @@ namespace GameBase.Creatures
 
         void OnDrawGizmos()
         {
-            if (!GizmosCfg.isDrawGizmos)
+            if (!GizmosCfg.IsDrawGizmos)
             {
                 return;
             }

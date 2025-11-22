@@ -1,6 +1,6 @@
 ﻿/*
  * Tencent is pleased to support the open source community by making xLua available.
- * Copyright (C) 2016 THL A29 Limited, a Tencent company. All rights reserved.
+ * Copyright (c) 2016 THL A29 Limited, a Tencent company. All rights reserved.
  * Licensed under the MIT License (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  * http://opensource.org/licenses/MIT
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
@@ -233,7 +233,7 @@ namespace XLua
                         }
                         luaStackPos++;
                     }
-                    //UnityEngine.Debug.Log("value:" + args[inPosArray[i]]);
+                    //UnityEngine.Debug.Log("Value:" + args[inPosArray[i]]);
                 }
 
                 object ret = null;
@@ -336,7 +336,7 @@ namespace XLua
 
         public LuaCSFunction GetConstructorWrap(Type type)
         {
-            //UnityEngine.Debug.LogWarning("GetConstructor:" + type);
+            //UnityEngine.Debug.LogWarning("GetConstructor:" + Type);
             if (!constructorCache.ContainsKey(type))
             {
                 var constructors = type.GetConstructors();
@@ -401,7 +401,7 @@ namespace XLua
 
         public LuaCSFunction GetMethodWrap(Type type, string methodName)
         {
-            //UnityEngine.Debug.LogWarning("GetMethodWrap:" + type + " " + methodName);
+            //UnityEngine.Debug.LogWarning("GetMethodWrap:" + Type + " " + methodName);
             if (!methodsCache.ContainsKey(type))
             {
                 methodsCache[type] = new Dictionary<string, LuaCSFunction>();
@@ -427,7 +427,7 @@ namespace XLua
 
         public LuaCSFunction GetMethodWrapInCache(Type type, string methodName)
         {
-            //string retriKey = type.ToString() + "." + methodName;
+            //string retriKey = Type.ToString() + "." + methodName;
             //return methodsCache.ContainsKey(retriKey) ? methodsCache[retriKey] : null;
             if (!methodsCache.ContainsKey(type))
             {
@@ -439,7 +439,7 @@ namespace XLua
 
         public LuaCSFunction GetDelegateWrap(Type type)
         {
-            //UnityEngine.Debug.LogWarning("GetDelegateWrap:" + type );
+            //UnityEngine.Debug.LogWarning("GetDelegateWrap:" + Type );
             if (!typeof(Delegate).IsAssignableFrom(type))
             {
                 return null;

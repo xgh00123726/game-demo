@@ -8,9 +8,9 @@ namespace GameBase.EntitySystem
     {
         protected LinkedList<T> _objects = new LinkedList<T>();
 
-        public Action<T> InstantiateAction;
-        public Action<T> ReleaseAction;
-        public Func<T> InstantiateFunc;
+        public Action<T> InstantiateAction { get; set; }
+        public Action<T> ReleaseAction { get; set; }
+        public Func<T> InstantiateFunc { get; set; }
 
         // 对象池是否为空
         public bool Empty => _objects.Count == 0;

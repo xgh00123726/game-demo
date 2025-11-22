@@ -1,12 +1,15 @@
-textureName: 
-rarity: 0
-iModifiers: 
-tagEnum: 0
-tag: 
-modifiers:
+Name: 
+TextureName: 
+Rarity: 0
+IntKeyModifiers: 
+TagEnum: 0
+Tag: 
+Modifiers:
 - Key: cooldown
   Value: 0.1
 - Key: speed
   Value: 0.2
 - Key: attack
   Value: 0.3
+ID: 0
+Type: EquipmentData

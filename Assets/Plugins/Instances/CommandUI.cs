@@ -16,11 +16,10 @@ namespace Instance.UI
         private int _currTipNum = 0;
         private bool _lastInCmdMode = false;
         private string _lastCmd;
+        private bool _inCmdMode = false;
+        private TMP_InputField _inputTextField;
 
-        public bool _inCmdMode = false;
-        public int maxTipNum = 10;
-        public TMP_InputField _inputTextField;
-
+        public int MaxTipNum { get; set; } = 10;
 
         private void SetElemActive(bool flag)
         {
@@ -31,7 +30,7 @@ namespace Instance.UI
         /// <summary>
         /// 更新cmd面板上方的提示文字
         /// </summary>
-        /// <param name="currInput"></param>
+        /// <param Name="currInput"></param>
         private void UpdateTipText(string currInput)
         {
             var keys = Command.CommandKeys;
@@ -40,7 +39,7 @@ namespace Instance.UI
             _currTipNum = 0;
             foreach (var key in keys)
             {
-                if (_currTipNum >= maxTipNum)
+                if (_currTipNum >= MaxTipNum)
                 {
                     break;
                 }
@@ -68,7 +67,7 @@ namespace Instance.UI
 
             _inputTextField.onValueChanged.AddListener(UpdateTipText);
 
-            _tipTexts = new string[maxTipNum];
+            _tipTexts = new string[MaxTipNum];
 
             SetElemActive(false);
         }

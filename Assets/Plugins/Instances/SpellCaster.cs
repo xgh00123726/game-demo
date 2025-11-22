@@ -43,7 +43,7 @@ namespace Instance
         public static void SetTarget(Creature c)
         {
             _target = c;
-            _spellsNum = c.spells.Size;
+            _spellsNum = c.Spells.Size;
             _isIndicatorReadys.Resize(_spellsNum, false);
             _isFastCasts.Resize(_spellsNum, false);
         }
@@ -52,10 +52,10 @@ namespace Instance
         {
             for (int i = 0; i < _spellsNum; ++i)
             {
-                var spell = _target.spells[i];
+                var spell = _target.Spells[i];
 
                 var isIndicatorReady = _isIndicatorReadys[i]; 
-                var indicator = CastIndicatorFactory.Get((IndicatorType)spell.indicatorType);
+                var indicator = CastIndicatorFactory.Get((IndicatorType)spell.IndicatorType);
 
                 if (spell.IsCoolOver)
                 {
@@ -64,9 +64,9 @@ namespace Instance
 
                     if (isFastCast && Inputs.GetKeyDown(func, "spell"))
                     {
-                        if ((spell.tag & GameBase.Spells.Tag.CastOnMousePosition) != 0)
+                        if ((spell.Tag & GameBase.Spells.Tag.CastOnMousePosition) != 0)
                         {
-                            spell.castPosition = CameraSys.MouseHitPosition;
+                            spell.CastPosition = CameraSys.MouseHitPosition;
                         }
                         spell.TryCast();
                         DeReadyAll();
@@ -80,9 +80,9 @@ namespace Instance
                         }
                         else if (isIndicatorReady && Inputs.GetKeyDown(KeyFunction.MouseConfirm, "spell"))
                         {
-                            if ((spell.tag & GameBase.Spells.Tag.CastOnMousePosition) != 0)
+                            if ((spell.Tag & GameBase.Spells.Tag.CastOnMousePosition) != 0)
                             {
-                                spell.castPosition = CameraSys.MouseHitPosition;
+                                spell.CastPosition = CameraSys.MouseHitPosition;
                             }
                             spell.TryCast();
 
@@ -103,7 +103,7 @@ namespace Instance
                 {
                     indicator.Set(new IndicatorConfig()
                     {
-                        length = spell.length,
+                        length = spell.Length,
                         position = _target.Position,
                         targetPosition = CameraSys.MouseHitPosition
                     });

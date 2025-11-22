@@ -7,6 +7,6 @@ namespace GameBase.UI
         float CurrHP { get; }
         float MaxHP {  get; }
         Vector3 HealthBarPosition { get; }
-        bool ALive { get; }
+        bool Alive { get; }
     }
 }

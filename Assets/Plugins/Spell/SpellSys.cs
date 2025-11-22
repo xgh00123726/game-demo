@@ -14,19 +14,19 @@ namespace GameBase.Spells
 
         protected override void EntityStart(Spell e)
         {
-            if (e.speller == null)
+            if (e.Speller == null)
             {
                 XLogger.Instance.Log($"spell has been remove.");
                 RemoveEntity(e);
                 return;
             }
 
-            e.targetCamp = e.targetCampSet.GetCamp(e.speller.Camp);
+            e.TargetCamp = e.TargetCampSet.GetCamp(e.Speller.Camp);
         }
 
         protected override void UpdateEntity(Spell e)
         {
-            if (e.speller == null)
+            if (e.Speller == null)
             {
                 XLogger.Instance.Log($"spell has been remove.");
                 RemoveEntity(e);
@@ -37,7 +37,7 @@ namespace GameBase.Spells
             {
                 if (e.isCoolOver)
                 {
-                    e.speller.LookAt(e.castPosition);
+                    e.Speller.LookAt(e.CastPosition);
                     e.isWaitCast = true;
                 }
                 e.isTrig = false;
@@ -45,21 +45,21 @@ namespace GameBase.Spells
 
             if (e.isWaitCast)
             {
-                var dir1 = e.castPosition - e.speller.Position;
+                var dir1 = e.CastPosition - e.Speller.Position;
                 dir1.y = 0;
-                var dir2 = new Vector3(e.speller.Dir.x, 0, e.speller.Dir.z);
+                var dir2 = new Vector3(e.Speller.Dir.x, 0, e.Speller.Dir.z);
                 float angle = Vector3.Angle(dir1, dir2);
-                if (angle < Mathf.Max(e.minCastAngle, e.minCastAngle))
+                if (angle < Mathf.Max(e.MinCastAngle, e.MinCastAngle))
                 {
-                    if (e.action?.CastAction(e) == true)
+                    if (e.Action?.CastAction(e) == true)
                     {
-                        e.cooldownRemain = e.cooldown;
+                        e.cooldownRemain = e.Cooldown;
                     }
                     e.isWaitCast = false;
                 }
             }
 
-            float acc = e.speller.CoolingAccelerate * 0.01f + 1;
+            float acc = e.Speller.CoolingAccelerate * 0.01f + 1;
             if (e.cooldownRemain > 0)
             {
                 e.cooldownRemain -= Time.deltaTime * acc;

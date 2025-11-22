@@ -23,7 +23,7 @@ CreatureData = {
 
     CreatureBase = {
         Base1 = {
-            Capacity = 5,
+            Capacity = 0,
             RefreshPeriod = 1,
             RefreshPerNum = 3,
             CreatureName = "Enermy1",
@@ -41,7 +41,7 @@ CreatureData = {
             },
         },
         Base2 = {
-            Capacity = 1,
+            Capacity = 0,
             RefreshPeriod = 1,
             RefreshPerNum = 1,
             CreatureName = "Enermy1",

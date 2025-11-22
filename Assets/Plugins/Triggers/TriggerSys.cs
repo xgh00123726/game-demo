@@ -14,133 +14,133 @@ namespace GameBase.Triggers
 
         protected override void OnGet(Trigger e)
         {
-            e.trigPeriod = 1;
-            e.trigStyle = TrigStyle.External;
-            e.existTime = 10;
+            e.TrigPeriod = 1;
+            e.TrigStyle = TrigStyle.External;
+            e.ExistTime = 10;
             e.actualEffectTimes = 0;
-            e.maxEffectTimes = 1;
-            e.hasWhite = false;
+            e.MaxEffectTimes = 1;
+            e.HasWhite = false;
             e.isTrig = false;
             e.whites = null;
-            e.targetsSet = null;
-            e.target = null;
-            e.owner = null;
-            e.action = null;
+            e.TargetsSet = null;
+            e.Target = null;
+            e.Owner = null;
+            e.Action = null;
             e.instantiateTime = Time.time;
             e.lastTrigTime = Time.time;
-            e.shape = null;
-            e.hitEffect = null;
-            e.createEffect = null;
-            e.hitAudio = null;
-            e.createAudio = null;
-            e.attach = null;
+            e.Shape = null;
+            e.HitEffect = null;
+            e.CreateEffect = null;
+            e.HitAudio = null;
+            e.CreateAudio = null;
+            e.Attach = null;
             e.OnTrig = null;
             e.OnTrigEnd = null;
         }
 
         private void PlayCreateEffect(Trigger e)
         {
-            if (e.createEffect == null)
+            if (e.CreateEffect == null)
             {
                 return;
             }
 
             float size = 1;
             Vector3 dir = Vector3.one;
-            if (e.shape != null)
+            if (e.Shape != null)
             {
-                size = e.shape.Size;
-                dir = e.shape.Dir;
+                size = e.Shape.Size;
+                dir = e.Shape.Dir;
             }
-            EffectSys.Instance.PlayAtPSD(e.createEffect, e.attach.Position, new Vector3(size, size, size), dir);
+            EffectSys.Instance.PlayAtPSD(e.CreateEffect, e.Attach.Position, new Vector3(size, size, size), dir);
         }
 
         private void PlayHitEffect(Trigger e, Vector3 position)
         {
-            if (e.hitEffect == null)
+            if (e.HitEffect == null)
             {
                 return;
             }
 
             float size = 1;
             Vector3 dir = Vector3.one;
-            if (e.shape != null)
+            if (e.Shape != null)
             {
-                size = e.shape.Size;
-                dir = e.shape.Dir;
+                size = e.Shape.Size;
+                dir = e.Shape.Dir;
             }
-            EffectSys.Instance.PlayAtPSD(e.hitEffect, position, new Vector3(size, size, size), dir);
+            EffectSys.Instance.PlayAtPSD(e.HitEffect, position, new Vector3(size, size, size), dir);
         }
 
         private void PlayTrigEffect(Trigger e)
         {
-            if (e.trigEffect == null)
+            if (e.TrigEffect == null)
             {
                 return;
             }
 
             float size = 1;
             Vector3 dir = Vector3.one;
-            if (e.shape != null)
+            if (e.Shape != null)
             {
-                size = e.shape.Size;
-                dir = e.shape.Dir;
+                size = e.Shape.Size;
+                dir = e.Shape.Dir;
             }
-            EffectSys.Instance.PlayAtPSD(e.trigEffect, e.attach.Position, new Vector3(size, size, size), dir);
+            EffectSys.Instance.PlayAtPSD(e.TrigEffect, e.Attach.Position, new Vector3(size, size, size), dir);
         }
 
         private void PlayCreateAudio(Trigger e)
         {
-            if (e.createAudio == null)
+            if (e.CreateAudio == null)
             {
                 return;
             }
 
-            AudioMgr.PlayAt(e.createAudio, e.attach.Position);
+            AudioMgr.PlayAt(e.CreateAudio, e.Attach.Position);
         }
 
         private void PlayHitAudio(Trigger e, Vector3 position)
         {
-            if (e.hitAudio == null)
+            if (e.HitAudio == null)
             {
                 return;
             }
 
-            AudioMgr.PlayAt(e.hitAudio, position);
+            AudioMgr.PlayAt(e.HitAudio, position);
         }
 
         private void PlayTrigAudio(Trigger e)
         {
-            if (e.trigAudio == null)
+            if (e.TrigAudio == null)
             {
                 return;
             }
 
-            AudioMgr.PlayAt(e.trigAudio, e.attach.Position);
+            AudioMgr.PlayAt(e.TrigAudio, e.Attach.Position);
         }
 
         internal void HitTarget(Trigger e)
         {
-            if (e.target != null && e.actualEffectTimes < e.maxEffectTimes)
+            if (e.Target != null && e.actualEffectTimes < e.MaxEffectTimes)
             {
-                EffectTarget(e, e.target);
-                PlayHitAudio(e, e.target.Position);
-                PlayHitEffect(e, e.target.Position);
+                EffectTarget(e, e.Target);
+                PlayHitAudio(e, e.Target.Position);
+                PlayHitEffect(e, e.Target.Position);
             }
         }
 
         private void EffectTarget(Trigger e, ITriggerTarget target)
         {
-            if (e.hasWhite && e.whites.Contains(target))
+            if (e.HasWhite && e.whites.Contains(target))
             {
                 return;
             }
 
-            e.action?.Effect(e, target);
+            e.Action?.Effect(e, target);
             PlayHitAudio(e, target.Position);
             PlayHitEffect(e, target.Position);
             e.actualEffectTimes++;
-            if (e.hasWhite)
+            if (e.HasWhite)
             {
                 e.whites.Add(target);
             }
@@ -148,17 +148,17 @@ namespace GameBase.Triggers
 
         protected override void EntityStart(Trigger e)
         {
-            if (e.hasWhite)
+            if (e.HasWhite)
             {
                 e.whites = new();
             }
-            if (e.trigStyle == TrigStyle.Period || e.trigStyle == TrigStyle.Once)
+            if (e.TrigStyle == TrigStyle.Period || e.TrigStyle == TrigStyle.Once)
             {
                 e.isTrig = true;
             }
-            if (e.shape != null && e.attach != null)
+            if (e.Shape != null && e.Attach != null)
             {
-                e.shape.Center = e.attach.Position;
+                e.Shape.Center = e.Attach.Position;
             }
             PlayCreateAudio(e);
             PlayCreateEffect(e);
@@ -166,7 +166,7 @@ namespace GameBase.Triggers
 
         protected override void UpdateEntity(Trigger e)
         {
-            if (e.owner == null)
+            if (e.Owner == null)
             {
                 XLogger.Instance.Level(XLogger.LogLevel.Warning)
                     .Log("null owner");
@@ -174,20 +174,20 @@ namespace GameBase.Triggers
                 return;
             }
 
-            if (Time.time < e.instantiateTime + e.delay)
+            if (Time.time < e.instantiateTime + e.Delay)
             {
                 return;
             }
 
-            if (e.trigStyle == TrigStyle.Period)
+            if (e.TrigStyle == TrigStyle.Period)
             {
-                if (Time.time >= e.lastTrigTime + e.trigPeriod)
+                if (Time.time >= e.lastTrigTime + e.TrigPeriod)
                 {
                     e.isTrig = true;
                 }
             }
 
-            if (e.trigStyle == TrigStyle.Always)
+            if (e.TrigStyle == TrigStyle.Always)
             {
                 e.isTrig = true;
             }
@@ -198,19 +198,19 @@ namespace GameBase.Triggers
                 PlayTrigAudio(e);
                 PlayTrigEffect(e);
                 HitTarget(e);
-                if (e.shape != null)
+                if (e.Shape != null)
                 {
-                    e.shape.Center = e.attach.Position;
-                    if (e.targetsSet == null)
+                    e.Shape.Center = e.Attach.Position;
+                    if (e.TargetsSet == null)
                     {
                         XLogger.Instance.Level(XLogger.LogLevel.Warning)
                             .Log("trigger has no targetset, will hit none target");
                     }
                     else
                     {
-                        foreach (var target in e.targetsSet.TargetsInShape(e.shape, e.targetCamp))
+                        foreach (var target in e.TargetsSet.TargetsInShape(e.Shape, e.TargetCamp))
                         {
-                            if (e.actualEffectTimes >= e.maxEffectTimes)
+                            if (e.actualEffectTimes >= e.MaxEffectTimes)
                             {
                                 break;
                             }
@@ -223,14 +223,14 @@ namespace GameBase.Triggers
                 e.OnTrigEnd?.Invoke();
             }
 
-            if (e.actualEffectTimes >= e.maxEffectTimes)
+            if (e.actualEffectTimes >= e.MaxEffectTimes)
             {
                 RemoveEntity(e);
                 return;
             }
 
-            if (Time.time >= e.instantiateTime + e.existTime
-                || e.trigStyle == TrigStyle.Once)
+            if (Time.time >= e.instantiateTime + e.ExistTime
+                || e.TrigStyle == TrigStyle.Once)
             {
                 RemoveEntity(e);
                 return;

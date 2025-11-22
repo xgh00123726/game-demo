@@ -18,7 +18,7 @@ namespace GameBase.UI
 
             obj.transform.SetParent(WorldCanvs.Instance.transform, false);
 
-            e.obj = obj;
+            e.Obj = obj;
 
             return e;
         }
@@ -27,21 +27,21 @@ namespace GameBase.UI
 
         protected override void OnGet(HealthBar e)
         {
-            e.current = e.obj.transform.Find("Current").gameObject;
+            e.current = e.Obj.transform.Find("Current").gameObject;
             e.currentRectTransform = e.current.GetComponent<RectTransform>();
 
-            e.losing = e.obj.transform.Find("Losing").gameObject;
+            e.losing = e.Obj.transform.Find("Losing").gameObject;
             e.losingRectTransform = e.losing.GetComponent<RectTransform>();
 
             e.currPercent = 1f;
             e.losingPercent = 1f;
 
-            e.obj.SetActive(true);
+            e.Obj.SetActive(true);
         }
 
         protected override void OnRelease(HealthBar e)
         {
-            e.obj.SetActive(false);
+            e.Obj.SetActive(false);
         }
 
         private void SetWidth(RectTransform bar, float percent, float widthMax)
@@ -55,33 +55,33 @@ namespace GameBase.UI
 
         protected override void UpdateEntity(HealthBar e)
         {
-            if (!e.owner.ALive)
+            if (!e.Owner.Alive)
             {
                 RemoveEntity(e);
                 return;
             }
 
-            if (e.healthBarFollow)
+            if (e.HealthBarFollow)
             {
-                e.obj.transform.position = e.owner.HealthBarPosition;
+                e.Obj.transform.position = e.Owner.HealthBarPosition;
             }
 
             if (e.losingPercent > e.currPercent)
             {
                 e.losingPercent -= losingSpeed * Time.deltaTime;
-                SetWidth(e.losingRectTransform, e.losingPercent, e.width);
+                SetWidth(e.losingRectTransform, e.losingPercent, e.Width);
             }
 
-            int currHP = (int)e.owner.CurrHP;
-            int maxHP = (int)e.owner.MaxHP;
+            int currHP = (int)e.Owner.CurrHP;
+            int maxHP = (int)e.Owner.MaxHP;
 
             if (currHP == e.lastCurrHP && maxHP == e.lastMaxHP)
             {
                 return;
             }
 
-            e.currPercent = Mathf.Clamp01(e.owner.CurrHP / e.owner.MaxHP);
-            SetWidth(e.currentRectTransform, e.currPercent, e.width);
+            e.currPercent = Mathf.Clamp01(e.Owner.CurrHP / e.Owner.MaxHP);
+            SetWidth(e.currentRectTransform, e.currPercent, e.Width);
 
             e.lastCurrHP = currHP;
             e.lastMaxHP = maxHP;

@@ -9,12 +9,13 @@ namespace GameBase.Equipments
     }
     public class Equipment
     {
-        public EquipmentTag tag;
-        public IEquipmentOwner owner;
-        public string textureName;
-        public int rarity;
-        public List<KeyValuePair<int, float>> iModifiers;
-        public List<Modifyer> modifyers = new();
+        public int ID {  get; set; }
+        public EquipmentTag Tag { get; set; }
+        public IEquipmentOwner Owner { get; set; }
+        public string TextureName { get; set; }
+        public int Rarity { get; set; }
+        public List<IModifierPair> IntKeyModifiers { get; set; }
+        public List<Modifyer> Modifyers { get; set; } = new();
 
         public void Remove()
         {

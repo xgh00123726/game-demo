@@ -1,6 +1,7 @@
-textureName: Textures/Equipment/coolingAccelerate1.png
-rarity: 2
-tag: 
-modifiers:
-- key: coolingAccelerate
-  value: 15
+ID: 4
+TextureName: Textures/Equipment/coolingAccelerate1.png
+Rarity: 2
+Tag: 
+Modifiers:
+- Key: coolingAccelerate
+  Value: 15

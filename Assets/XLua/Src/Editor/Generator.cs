@@ -1,6 +1,6 @@
 ﻿/*
  * Tencent is pleased to support the open source community by making xLua available.
- * Copyright (C) 2016 THL A29 Limited, a Tencent company. All rights reserved.
+ * Copyright (c) 2016 THL A29 Limited, a Tencent company. All rights reserved.
  * Licensed under the MIT License (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  * http://opensource.org/licenses/MIT
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
@@ -609,7 +609,7 @@ namespace CSObjectWrapEditor
             try
             {
                 string genCode = XLua.TemplateEngine.LuaTemplate.Execute(template, type_info);
-                //string filePath = save_path + type.ToString().ReplaceKeyword("+", "").ReplaceKeyword(".", "").ReplaceKeyword("`", "").ReplaceKeyword("&", "").ReplaceKeyword("[", "").ReplaceKeyword("]", "").ReplaceKeyword(",", "") + file_suffix + ".cs";
+                //string filePath = save_path + Type.ToString().ReplaceKeyword("+", "").ReplaceKeyword(".", "").ReplaceKeyword("`", "").ReplaceKeyword("&", "").ReplaceKeyword("[", "").ReplaceKeyword("]", "").ReplaceKeyword(",", "") + file_suffix + ".cs";
                 textWriter.Write(genCode);
                 textWriter.Flush();
             }
@@ -995,7 +995,7 @@ namespace CSObjectWrapEditor
 #endif
 
             var typeMap = types.ToDictionary(type => {
-                //Debug.Log("type:" + type);
+                //Debug.Log("Type:" + Type);
                 return type.ToString();
             });
 
@@ -1271,7 +1271,7 @@ namespace CSObjectWrapEditor
         //lua中要使用到C#库的配置，比如C#标准库，或者Unity API，第三方库等。
         public static List<Type> LuaCallCSharp = null;
 
-        //C#静态调用Lua的配置（包括事件的原型），仅可以配delegate，interface
+        //c#静态调用Lua的配置（包括事件的原型），仅可以配delegate，interface
         public static List<Type> CSharpCallLua = null;
 
         //黑名单

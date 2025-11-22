@@ -13,13 +13,13 @@ namespace GameBase.Animations
             clipName = name;
         }
 
-        public bool ctrlEnable = true;
-        public Func<bool> IsAnim;
-        public bool isAnim;
-        public bool lastAnim;
-        public string clipName;
-        public Animator animator;
-        public float stateDuration;
+        internal bool ctrlEnable = true;
+        internal Func<bool> IsAnim;
+        internal bool isAnim;
+        internal bool lastAnim;
+        internal string clipName;
+        internal Animator animator;
+        internal float stateDuration;
 
         public void Update()
         {

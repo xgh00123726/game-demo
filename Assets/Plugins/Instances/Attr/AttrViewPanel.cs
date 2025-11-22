@@ -25,7 +25,7 @@ namespace Instance
         {
             var obj = base.InstantiateObj(e);
 
-            e.valueTMP = e.obj.transform.Find("ValueText").GetComponent<TextMeshProUGUI>();
+            e.valueTMP = e.Obj.transform.Find("ValueText").GetComponent<TextMeshProUGUI>();
 
             return obj;
         }
@@ -34,7 +34,7 @@ namespace Instance
         {
             FillItem(index + 1);
             this[index].attrKey = key;
-            this[index].triggerImage.SetIcon(ModifyTable.GetTextureName(key));
+            this[index].TriggerImage.SetIcon(ModifyTable.GetTextureName(key));
         }
 
         public void SetAttrValue(Creature c)
@@ -43,7 +43,7 @@ namespace Instance
             {
                 return;
             }
-            SetAttrValue(c.modifyables);
+            SetAttrValue(c.Modifyables);
         }
 
         public void SetAttrValue(Modifyables modifyables)

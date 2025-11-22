@@ -17,7 +17,7 @@ namespace Instance
         public void Show(Shop shop)
         {
             nearViewObj.SetActive(true);
-            nearViewObj.transform.position = shop.obj.transform.position;
+            nearViewObj.transform.position = shop.Obj.transform.position;
         }
 
         public void Hide()

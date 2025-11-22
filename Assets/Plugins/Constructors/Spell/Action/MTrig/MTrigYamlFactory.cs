@@ -8,19 +8,20 @@ namespace Constructor.Spells
     [GenTemplate]
     public class MTrigYamlFactory : YamlFactory<MTrigData, MTrig, MTrigYamlFactory>
     {
-        protected override string YamlFolder => $"{Application.streamingAssetsPath}/Spell/Action/MTrig";
+        protected override string Folder => $"{Application.streamingAssetsPath}/Spell/Action/MTrig";
 
-        protected override void OnInitYamlData(MTrigData data)
+        protected override void OnInitYamlData(ref MTrigData data)
         {
-            if (data == null || data.trigger == null)
+            if (data == null || data.Trigger == null)
             {
                 return;
             }
 
-            if (!SuperEnum.TryParse(data.trigger.tag, out data.trigger.tagEnum))
+            if (!SuperEnum.TryParse(data.Trigger.Tag, out TriggerActionTag tag))
             {
+                data.Trigger.TagEnum = tag;
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log($"invalid enum string: {data.trigger.tag}");
+                    .Log($"invalid enum string: {data.Trigger.Tag}");
             }
         }
 
@@ -28,8 +29,8 @@ namespace Constructor.Spells
         {
             return new MTrig()
             {
-                Size = data.slotNum,
-                data = data,
+                Size = data.SlotNum,
+                Data = data,
             };
         }
     }

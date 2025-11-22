@@ -75,7 +75,7 @@ namespace GameBase.Modify
             if (ContainsKey(id))
             {
                 var m = ModifyerSys.Instance.NewEntity();
-                m.value = value;
+                m.Value = value;
                 m.AddTo(_modifyables[id]);
             }
         }

@@ -18,18 +18,19 @@ namespace Constructor.Spells
     [GenTemplate]
     public class MShotYamlFactory : YamlFactory<MShotData, ISpellAction, MShotYamlFactory>
     {
-        protected override string YamlFolder => $"{Application.streamingAssetsPath}/Spell/Action/MShot";
+        protected override string Folder => $"{Application.streamingAssetsPath}/Spell/Action/MShot";
 
-        protected override void OnInitYamlData(MShotData data)
+        protected override void OnInitYamlData(ref MShotData data)
         {
-            if (data == null || data.projectile == null)
+            if (data == null || data.Projectile == null)
             {
                 return;
             }
-            if (!SuperEnum.TryParse(data.projectile.tag, out data.projectile.tagEnum))
+            if (!SuperEnum.TryParse(data.Projectile.Tag, out GameBase.Projectiles.Tag tag))
             {
+                data.Projectile.TagEnum = tag;
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log($"invalid enum string: {data.projectile.tag}");
+                    .Log($"invalid enum string: {data.Projectile.Tag}");
             }
         }
 
@@ -37,8 +38,8 @@ namespace Constructor.Spells
         {
             return new MShot()
             {
-                data = data,
-                Size = data.slotNum,
+                Data = data,
+                Size = data.SlotNum,
             };
         }
     }

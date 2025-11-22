@@ -17,7 +17,7 @@ namespace GameBase.Texts
 
     public static class TextMgr
     {
-        public static string lang;
+        internal static string lang;
         public static string Lang
         {
             get => lang;
@@ -54,5 +54,7 @@ namespace GameBase.Texts
         }
         public static KeywordsMgr Keywords { get; } = KeywordsMgr.Instance;
         public static YamlTextLoader<EquipmentTextData> Equipment { get; } = new();
+        public static YamlTextLoader<SpellActionTextData> SpellAction { get; } = new();
+        public static YamlTextLoader<ModifierTextData> Modifier {  get; } = new();
     }
 }

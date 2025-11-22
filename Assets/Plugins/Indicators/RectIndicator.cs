@@ -4,7 +4,7 @@ namespace GameBase.Indicators
 {
     public class RectIndicator : CastIndicator
     {
-        public Indicator indicator;
+        public Indicator Indicator { get; set; }
 
         public Vector3 Dir
         {
@@ -13,27 +13,27 @@ namespace GameBase.Indicators
                 float x = value.x;
                 float z = value.z;
                 float angle = Vector2.SignedAngle(new Vector2(x, z), new Vector2(0, 1));
-                indicator.obj.transform.rotation = Quaternion.Euler(90, angle, 0);
+                Indicator.Obj.transform.rotation = Quaternion.Euler(90, angle, 0);
             }
             get
             {
-                return indicator.obj.transform.right;
+                return Indicator.Obj.transform.right;
             }
         }
 
         public override void Hide()
         {
-            indicator.obj.SetActive(false);
+            Indicator.Obj.SetActive(false);
         }
 
         public override void Set(IndicatorConfig config)
         {
-            indicator.obj.transform.position = config.position;
+            Indicator.Obj.transform.position = config.position;
         }
 
         public override void Show()
         {
-            indicator.obj.SetActive(true);
+            Indicator.Obj.SetActive(true);
         }
     }
 }

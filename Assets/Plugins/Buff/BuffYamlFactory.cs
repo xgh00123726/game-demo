@@ -8,12 +8,12 @@ namespace GameBase.Buffs
     [GenTemplate]
     public class BuffYamlFactory : YamlFactory<BuffData, Buff, BuffYamlFactory>
     {
-        protected override string YamlFolder => $"{Application.streamingAssetsPath}/Buff";
+        protected override string Folder => $"{Application.streamingAssetsPath}/Buff";
 
         protected override BuffData GetTemplateData()
         {
             var data = new BuffData();
-            data.modifiers = new ()
+            data.Modifiers = new ()
             {
                 new("cooldown", 0.1f),
                 new("speed", 0.2f),
@@ -23,28 +23,29 @@ namespace GameBase.Buffs
             return data;
         }
 
-        protected override void OnInitYamlData(BuffData data)
+        protected override void OnInitYamlData(ref BuffData data)
         {
-            if (!SuperEnum.TryParse(data.tag, out data.tagEnum))
+            if (!SuperEnum.TryParse(data.Tag, out BuffTag tag))
             {
+                data.TagEnum = tag;
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log($"invalid enum string: {data.tag}");
+                    .Log($"invalid enum string: {data.Tag}");
             }
 
-            data.iModifiers = new();
-            foreach (var ps in data.modifiers)
+            data.IntKeyModifiers = new();
+            foreach (var ps in data.Modifiers)
             {
-                data.iModifiers.Add(new (ModifyTable.GetID(ps.Key), ps.Value));
+                data.IntKeyModifiers.Add(new (ModifyTable.GetID(ps.Key), ps.Value));
             }
         }
 
         protected override Buff GetEntity(BuffData data)
         {
             var buff = BuffSys.Instance.NewEntity();
-            buff.textureName = data.textureName;
-            buff.rarity = data.rarity;
-            buff.iModifiers = data.iModifiers;
-            buff.tag = data.tagEnum;
+            buff.TextureName = data.TextureName;
+            buff.Rarity = data.Rarity;
+            buff.IntKeyModifiers = data.IntKeyModifiers;
+            buff.Tag = data.TagEnum;
 
             return buff;
         }

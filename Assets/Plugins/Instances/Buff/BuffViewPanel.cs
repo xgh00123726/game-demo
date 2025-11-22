@@ -40,14 +40,14 @@ namespace Instance
         protected override void Remove(BuffViewItem e)
         {
             base.Remove(e);
-            _pool.Release(e.obj);
+            _pool.Release(e.Obj);
         }
 
         protected override BaseUI InstantiateObj(BuffViewItem e)
         {
             var obj = base.InstantiateObj(e);
 
-            var image = e.uiScript.GetComponent<Image>();
+            var image = e.UIScript.GetComponent<Image>();
             e.iconMaterial = new Material(image.material);
             image.material = e.iconMaterial;
 
@@ -63,21 +63,21 @@ namespace Instance
 
             var item = this[index];
 
-            item.obj.SetActive(true);
+            item.Obj.SetActive(true);
             item.buff = buff;
-            item.iconMaterial.SetTexture("_Target", GameObject.Instantiate(ResourceMgr.Texture2D.Get(buff.textureName)));
+            item.iconMaterial.SetTexture("_Target", GameObject.Instantiate(ResourceMgr.Texture2D.Get(buff.TextureName)));
         }
 
         public void UpdatePanel(Creature c)
         {
             int index = 0;
-            foreach (var buff in c.buffs)
+            foreach (var buff in c.Buffs)
             {
                 UpdateItem(buff, index++);
             }
             for (int i = index; i < Entities.Count; i++)
             {
-                this[i].obj.SetActive(false);
+                this[i].Obj.SetActive(false);
             }
         }
 
@@ -91,7 +91,7 @@ namespace Instance
             }
 
             var durationRemain = e.buff.DurationRemain;
-            var durationSet = e.buff.durationSet;
+            var durationSet = e.buff.DurationSet;
             e.iconMaterial.SetFloat("_MaskFull", 1 - durationRemain / durationSet);
         }
     }

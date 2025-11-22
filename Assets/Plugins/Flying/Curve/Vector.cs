@@ -6,7 +6,7 @@ namespace GameBase.Flyings
     {
         protected bool _isTravelEnd = false;
 
-        public float length;
+        public float Length { get; set; }
         protected override Vector3 GetDirDelta()
         {
             return _projectile.Dir;
@@ -14,7 +14,7 @@ namespace GameBase.Flyings
 
         protected override void PosUpdate()
         {
-            if ((_projectile.Position - _projectile.Src).magnitude >= length)
+            if ((_projectile.Position - _projectile.Src).magnitude >= Length)
             {
                 _isTravelEnd = true;
                 return;

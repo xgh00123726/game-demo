@@ -16,13 +16,12 @@ namespace GameBase.UI
         protected internal bool inDragState;
         protected internal bool inDetailState;
 
-        public bool interactiveEnable = true;
-        public string prefabName;
-        public GameObject obj;
-        public string iconTextureName;
-        public SuperImage triggerImage;
-        public BaseUI uiScript;
-
+        public bool InteractiveEnable { get; set; } = true;
+        public string PrefabName { get; set; }
+        public GameObject Obj {  get; set; }
+        public string IconTextureName { get; set; }
+        public SuperImage TriggerImage { get; set; }
+        public BaseUI UIScript { get; set; }
         public int ItemIndex => itemIndex;
         public RectTransform RectTransform => triggerRectTransform;
     }

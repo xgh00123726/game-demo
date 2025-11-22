@@ -1,3 +1,5 @@
+using GameBase.EntitySystem;
+using GameBase.Items;
 using System.Collections.Generic;
 
 namespace GameBase.Equipments
@@ -9,18 +11,24 @@ namespace GameBase.Equipments
 
         public ModifierPair(string key, float value)
         {
-            this.Key = key;
-            this.Value = value;
+            Key = key;
+            Value = value;
         }
     }
-    public class EquipmentData
+    public struct IModifierPair
     {
-        public string textureName;
-        public int rarity;
-        public List<KeyValuePair<int, float>> iModifiers;
-        public EquipmentTag tagEnum;
+        public int Key { get; set; }
+        public float Value { get; set; }
+    }
+    public class EquipmentData : ItemData, INamedData
+    {
+        public string Name { get; set; }
+        public string TextureName { get; set; }
+        public int Rarity { get; set; }
+        public List<IModifierPair> IntKeyModifiers { get; set; }
+        public EquipmentTag TagEnum { get; set; }
 
-        public string tag;
-        public List<ModifierPair> modifiers;
+        public string Tag {  get; set; }
+        public List<ModifierPair> Modifiers { get; set; }
     }
 }

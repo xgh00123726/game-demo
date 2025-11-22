@@ -2,6 +2,7 @@ using GameBase.Buffs;
 using GameBase.Creatures;
 using GameBase.Equipments;
 using GameBase.Inventorys;
+using GameBase.Items;
 using GameBase.Tools;
 using GameBase.UI;
 using TMPro;
@@ -27,12 +28,12 @@ namespace Instance
         {
             var obj = base.InstantiateObj(e);
 
-            e.iconObj = e.obj.transform.Find("Icon").gameObject;
+            e.iconObj = e.Obj.transform.Find("Icon").gameObject;
 
             var image = e.iconObj.GetComponent<Image>();
             e.iconImage = new SuperImage(image);
 
-            e.text = e.obj.transform.Find("Text").GetComponent<TextMeshProUGUI>();
+            e.text = e.Obj.transform.Find("Text").GetComponent<TextMeshProUGUI>();
 
             return obj;
         }
@@ -47,33 +48,33 @@ namespace Instance
                 var info = ShopDataBase.Instance[goodID];
 
                 // 如果表中没有配置材质贴图，并且商品是背包物品，那就使用其物品的材质号
-                if (info.textureName == null && info.type == ShopItemType.InventoryItem)
+                if (info.TextureName == null && info.Type == ShopItemType.InventoryItem)
                 {
-                    var equipData = EquipmentFactory.Instance.GetData(info.typeID);
-                    viewItem.iconImage.SetIcon(equipData.textureName);
+                    var equipData = ItemDataMgr.Get<EquipmentData>(info.TypeID);
+                    viewItem.iconImage.SetIcon(equipData.TextureName);
                     viewItem.text.text = $"装备";
                 }
                 // 如果是增益效果，那就使用在表格中配置的材质贴图
-                else if (info.type == ShopItemType.Buff)
+                else if (info.Type == ShopItemType.Buff)
                 {
                     viewItem.text.text = $"Buff";
-                    viewItem.iconImage.SetIcon(info.textureName);
+                    viewItem.iconImage.SetIcon(info.TextureName);
                 }
-                else if (info.type == ShopItemType.Modifier)
+                else if (info.Type == ShopItemType.Modifier)
                 {
                     viewItem.text.text = $"属性";
-                    viewItem.iconImage.SetIcon(info.textureName);
+                    viewItem.iconImage.SetIcon(info.TextureName);
                 }
 
-                viewItem.obj.SetActive(true);
-                var color = ViewConfig.GetColor(info.rarity);
-                color.a = viewItem.triggerImage.Color.a;
-                viewItem.triggerImage.Color = color;
+                viewItem.Obj.SetActive(true);
+                var color = ViewConfig.GetColor(info.Rarity);
+                color.a = viewItem.TriggerImage.Color.a;
+                viewItem.TriggerImage.Color = color;
                 viewItem.iconImage.Show();
             }
             else
             {
-                viewItem.obj.SetActive(false);
+                viewItem.Obj.SetActive(false);
             }
         }
 

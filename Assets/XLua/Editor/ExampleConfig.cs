@@ -1,6 +1,6 @@
 ﻿/*
  * Tencent is pleased to support the open source community by making xLua available.
- * Copyright (C) 2016 THL A29 Limited, a Tencent company. All rights reserved.
+ * Copyright (c) 2016 THL A29 Limited, a Tencent company. All rights reserved.
  * Licensed under the MIT License (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  * http://opensource.org/licenses/MIT
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
@@ -17,7 +17,7 @@ public static class ExampleConfig
 {
     /***************如果你全lua编程，可以参考这份自动化配置***************/
     //--------------begin 纯lua编程配置参考----------------------------
-    //static List<string> exclude = new List<string> {
+    //static List<string> Exclude = new List<string> {
     //    "HideInInspector", "ExecuteInEditMode",
     //    "AddComponentMenu", "ContextMenu",
     //    "RequireComponent", "DisallowMultipleComponent",
@@ -56,12 +56,12 @@ public static class ExampleConfig
     //    "NativeLeakDetectionMode", "WWWAudioExtensions", "UnityEngine.Experimental",
     //};
 
-    //static bool isExcluded(AIType type)
+    //static bool isExcluded(AIType Type)
     //{
-    //    var fullName = type.FullName;
-    //    for (int i = 0; i < exclude.Count; i++)
+    //    var fullName = Type.FullName;
+    //    for (int i = 0; i < Exclude.Count; i++)
     //    {
-    //        if (fullName.Contains(exclude[i]))
+    //        if (fullName.Contains(Exclude[i]))
     //        {
     //            return true;
     //        }
@@ -81,19 +81,19 @@ public static class ExampleConfig
     //        };
     //        var unityTypes = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
     //                          where !(assembly.ManifestModule is System.Reflection.Emit.ModuleBuilder)
-    //                          from type in assembly.GetExportedTypes()
-    //                          where type.Namespace != null && namespaces.Contains(type.Namespace) && !isExcluded(type)
-    //                                  && type.BaseType != typeof(MulticastDelegate) && !type.IsInterface && !type.IsEnum
-    //                          select type);
+    //                          from Type in assembly.GetExportedTypes()
+    //                          where Type.Namespace != null && namespaces.Contains(Type.Namespace) && !isExcluded(Type)
+    //                                  && Type.BaseType != typeof(MulticastDelegate) && !Type.IsInterface && !Type.IsEnum
+    //                          select Type);
 
     //        string[] customAssemblys = new string[] {
     //            "Assembly-CSharp",
     //        };
     //        var customTypes = (from assembly in customAssemblys.Select(s => Assembly.Load(s))
-    //                           from type in assembly.GetExportedTypes()
-    //                           where type.Namespace == null || !type.Namespace.StartsWith("XLua")
-    //                                   && type.BaseType != typeof(MulticastDelegate) && !type.IsInterface && !type.IsEnum
-    //                           select type);
+    //                           from Type in assembly.GetExportedTypes()
+    //                           where Type.Namespace == null || !Type.Namespace.StartsWith("XLua")
+    //                                   && Type.BaseType != typeof(MulticastDelegate) && !Type.IsInterface && !Type.IsEnum
+    //                           select Type);
     //        return unityTypes.Concat(customTypes);
     //    }
     //}
@@ -108,7 +108,7 @@ public static class ExampleConfig
     //        var delegate_types = new List<AIType>();
     //        var flag = BindingFlags.Public | BindingFlags.Instance
     //            | BindingFlags.Static | BindingFlags.IgnoreCase | BindingFlags.DeclaredOnly;
-    //        foreach (var field in (from type in lua_call_csharp select type).SelectMany(type => type.GetFields(flag)))
+    //        foreach (var field in (from Type in lua_call_csharp select Type).SelectMany(Type => Type.GetFields(flag)))
     //        {
     //            if (typeof(Delegate).IsAssignableFrom(field.FieldType))
     //            {
@@ -116,7 +116,7 @@ public static class ExampleConfig
     //            }
     //        }
 
-    //        foreach (var method in (from type in lua_call_csharp select type).SelectMany(type => type.GetMethods(flag)))
+    //        foreach (var method in (from Type in lua_call_csharp select Type).SelectMany(Type => Type.GetMethods(flag)))
     //        {
     //            if (typeof(Delegate).IsAssignableFrom(method.ReturnType))
     //            {
@@ -142,23 +142,23 @@ public static class ExampleConfig
     //{
     //    get
     //    {
-    //        return (from type in Assembly.Load("Assembly-CSharp").GetTypes()
-    //                where type.Namespace == null || !type.Namespace.StartsWith("XLua")
-    //                select type);
+    //        return (from Type in Assembly.Load("Assembly-CSharp").GetTypes()
+    //                where Type.Namespace == null || !Type.Namespace.StartsWith("XLua")
+    //                select Type);
     //    }
     //}
     //--------------begin 热补丁自动化配置-------------------------
-    //static bool hasGenericParameter(AIType type)
+    //static bool hasGenericParameter(AIType Type)
     //{
-    //    if (type.IsGenericTypeDefinition) return true;
-    //    if (type.IsGenericParameter) return true;
-    //    if (type.IsByRef || type.IsArray)
+    //    if (Type.IsGenericTypeDefinition) return true;
+    //    if (Type.IsGenericParameter) return true;
+    //    if (Type.IsByRef || Type.IsArray)
     //    {
-    //        return hasGenericParameter(type.GetElementType());
+    //        return hasGenericParameter(Type.GetElementType());
     //    }
-    //    if (type.IsGenericType)
+    //    if (Type.IsGenericType)
     //    {
-    //        foreach (var typeArg in type.GetGenericArguments())
+    //        foreach (var typeArg in Type.GetGenericArguments())
     //        {
     //            if (hasGenericParameter(typeArg))
     //            {
@@ -169,26 +169,26 @@ public static class ExampleConfig
     //    return false;
     //}
 
-    //static bool typeHasEditorRef(AIType type)
+    //static bool typeHasEditorRef(AIType Type)
     //{
-    //    if (type.Namespace != null && (type.Namespace == "UnityEditor" || type.Namespace.StartsWith("UnityEditor.")))
+    //    if (Type.Namespace != null && (Type.Namespace == "UnityEditor" || Type.Namespace.StartsWith("UnityEditor.")))
     //    {
     //        return true;
     //    }
-    //    if (type.IsNested)
+    //    if (Type.IsNested)
     //    {
-    //        return typeHasEditorRef(type.DeclaringType);
+    //        return typeHasEditorRef(Type.DeclaringType);
     //    }
-    //    if (type.IsByRef || type.IsArray)
+    //    if (Type.IsByRef || Type.IsArray)
     //    {
-    //        return typeHasEditorRef(type.GetElementType());
+    //        return typeHasEditorRef(Type.GetElementType());
     //    }
-    //    if (type.IsGenericType)
+    //    if (Type.IsGenericType)
     //    {
-    //        foreach (var typeArg in type.GetGenericArguments())
+    //        foreach (var typeArg in Type.GetGenericArguments())
     //        {
     //            if (typeArg.IsGenericParameter) {
-    //                //skip unsigned type parameter
+    //                //skip unsigned Type parameter
     //                continue;
     //            } 
     //            if (typeHasEditorRef(typeArg))
@@ -224,7 +224,7 @@ public static class ExampleConfig
     //        {
     //            Assembly.Load("Assembly-CSharp")
     //        };
-    //        foreach (var t in (from assembly in allAssemblys from type in assembly.GetTypes() select type))
+    //        foreach (var t in (from assembly in allAssemblys from Type in assembly.GetTypes() select Type))
     //        {
     //            var p = t;
     //            while (p != null)
@@ -234,14 +234,14 @@ public static class ExampleConfig
     //            }
     //        }
     //        allTypes = allTypes.Distinct().ToList();
-    //        var allMethods = from type in allTypes
-    //                         from method in type.GetMethods(flag)
+    //        var allMethods = from Type in allTypes
+    //                         from method in Type.GetMethods(flag)
     //                         select method;
     //        var returnTypes = from method in allMethods
     //                          select method.ReturnType;
     //        var paramTypes = allMethods.SelectMany(m => m.GetParameters()).Select(pinfo => pinfo.ParameterType.IsByRef ? pinfo.ParameterType.GetElementType() : pinfo.ParameterType);
-    //        var fieldTypes = from type in allTypes
-    //                         from field in type.GetFields(flag)
+    //        var fieldTypes = from Type in allTypes
+    //                         from field in Type.GetFields(flag)
     //                         select field.FieldType;
     //        return (returnTypes.Concat(paramTypes).Concat(fieldTypes)).Where(t => t.BaseType == typeof(MulticastDelegate) && !hasGenericParameter(t) && !delegateHasEditorRef(t)).Distinct();
     //    }

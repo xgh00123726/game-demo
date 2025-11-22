@@ -31,13 +31,13 @@ namespace Instance
         {
             var obj = base.InstantiateObj(e);
 
-            e.timeTMP = e.obj.transform.Find("CoolingDownText").GetComponent<TextMeshProUGUI>();
+            e.timeTMP = e.Obj.transform.Find("CoolingDownText").GetComponent<TextMeshProUGUI>();
 
-            e.chargeTMP = e.obj.transform.Find("Charge").GetComponent<TextMeshProUGUI>();
+            e.chargeTMP = e.Obj.transform.Find("Charge").GetComponent<TextMeshProUGUI>();
 
-            var image = e.uiScript.GetComponent<Image>();
+            var image = e.UIScript.GetComponent<Image>();
 
-            e.maskImage = new MaskImage(image);
+            e.MaskImage = new MaskImage(image);
 
             return obj;
         }
@@ -46,10 +46,10 @@ namespace Instance
         {
             base.UpdateEntity(e);
 
-            float coolingTimeRemain = e.coolingTimeRemain;
+            float coolingTimeRemain = e.CoolingTimeRemain;
 
-            float fullVal = coolingTimeRemain / e.coolingTimeSet;
-            e.maskImage.Material.SetFloat("_MaskFull", fullVal);
+            float fullVal = coolingTimeRemain / e.CoolingTimeSet;
+            e.MaskImage.Material.SetFloat("_MaskFull", fullVal);
 
             string coolingText = string.Empty;
             if (coolingTimeRemain > 1)
@@ -62,7 +62,7 @@ namespace Instance
             }
             e.timeTMP.text = coolingText;
 
-            if (e.uiScript.IsPointerDown)
+            if (e.UIScript.IsPointerDown)
             {
                 OnClickedItem?.Invoke(e.ItemIndex);
                 _lastClickedItemIndex = e.ItemIndex;
@@ -71,23 +71,23 @@ namespace Instance
 
         public void UpdatePanel(Creature c)
         {
-            var spells = c.spells;
-            var size = c.spells.Size;
+            var spells = c.Spells;
+            var size = c.Spells.Size;
             FillItem(size);
             for (int i = 0; i < size; ++i)
             {
-                this[i].obj.SetActive(true);
-                this[i].maskImage.SetIcon(spells[i].textureName);
+                this[i].Obj.SetActive(true);
+                this[i].MaskImage.SetIcon(spells[i].TextureName);
             }
             for (int i = 0; i < size; ++i)
             {
-                this[i].coolingTimeRemain = spells[i].CooldownRemain;
-                this[i].coolingTimeSet = spells[i].cooldown;
+                this[i].CoolingTimeRemain = spells[i].CooldownRemain;
+                this[i].CoolingTimeSet = spells[i].Cooldown;
             }
 
             for (int i = size; i < Entities.Count; ++i)
             {
-                this[i].obj.SetActive(false);
+                this[i].Obj.SetActive(false);
             }
         }
 

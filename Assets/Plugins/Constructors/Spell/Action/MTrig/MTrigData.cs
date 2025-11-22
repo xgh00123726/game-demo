@@ -9,8 +9,8 @@ namespace Constructor.Spells
     }
     public class MTrigData
     {
-        public TrigPositionStyle trigPositionStyle;
-        public TriggerData trigger;
-        public int slotNum;
+        public TrigPositionStyle TrigPositionStyle { get; set; }
+        public TriggerData Trigger {  get; set; }
+        public int SlotNum { get; set; }
     }
 }

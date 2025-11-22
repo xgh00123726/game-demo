@@ -1,5 +1,6 @@
 using GameBase.Creatures;
 using GameBase.Inventorys;
+using GameBase.Items;
 using GameBase.Spells;
 using GameBase.Tools;
 using GameBase.UI;
@@ -12,17 +13,9 @@ namespace LuaUtil
     [LuaCallCSharp]
     public static class Utils
     {
-        public static DynInventory<InventoryData> NewInstance()
+        public static DynInventory<ItemData> NewItemInventory()
         {
-            return new DynInventory<InventoryData>();
-        }
-        public static bool TryEquipInventoryItem(this Creature c, InventoryData data, int index)
-        {
-            if (data.type == InventoryItemType.Equipment)
-            {
-                return c.AddEquipment(null, index);
-            }
-            return false;
+            return new DynInventory<ItemData>();
         }
 
         public static void RegisterStringActionArg(this Command command, string key, Action<string> action)

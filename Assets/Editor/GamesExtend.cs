@@ -23,7 +23,7 @@ public class GamesExtend
     /// <summary>
     /// 13213
     /// </summary>
-    /// <param name="assembly"></param>
+    /// <param Name="assembly"></param>
     /// <returns>1656</returns>
     private static bool IsTargetAssembly(Assembly assembly)
     {
@@ -37,8 +37,8 @@ public class GamesExtend
         return false;
     }
 
-    [MenuItem("Tools/GenerateAllYamlTemplate", false)]
-    public static void GenerateAllYamlTemplate()
+    [MenuItem("Tools/GenerateAllConfigFileTemplate", false)]
+    public static void GenerateAllConfigFileTemplate()
     {
         foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies().Where(a => IsTargetAssembly(a)))
         {

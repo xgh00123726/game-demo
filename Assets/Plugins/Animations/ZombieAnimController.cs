@@ -11,8 +11,6 @@ namespace GameBase.Animations
         private SimpleAnimClipController moveController;
         private SimpleAnimClipController attackController;
 
-        public bool boringEnable = false;
-
         public override void Update()
         {
             moveController.Update();
@@ -22,12 +20,12 @@ namespace GameBase.Animations
 
         private bool IsMoving()
         {
-            return owner.mover.IsMoving;
+            return owner.Mover.IsMoving;
         }
 
         private bool IsIdle()
         {
-            return !owner.mover.IsMoving;
+            return !owner.Mover.IsMoving;
         }
 
         private bool IsAttack()
@@ -37,7 +35,7 @@ namespace GameBase.Animations
 
         public override void OnAddTo(Creature creature)
         {
-            _animator = creature.animator;
+            _animator = creature.Animator;
 
             idleController = new SimpleAnimClipController(_animator, IsIdle, "Idle");
             moveController = new SimpleAnimClipController(_animator, IsMoving, "Run");

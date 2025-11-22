@@ -61,7 +61,7 @@ namespace GameBase.AI
 
         protected override void OnAddTo(Creature c)
         {
-            mover = c.mover;
+            mover = c.Mover;
             partolP1 = c.Position;
             var delta = GMath.RollRandomDir(Random.Range(randomDisMin, randomDisMax));
             delta.y = 0;

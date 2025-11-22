@@ -7,36 +7,36 @@ namespace Instance
 {
     public class CommonDragView
     {
-        public GameObject obj;
-        public SuperImage triggerImage;
+        public GameObject Obj { get; set; }
+        public SuperImage TriggerImage { get; set; }
 
         public CommonDragView(string prefabName = "Prefabs/UI/InventoryShadowItem")
         {
-            obj = GameObject.Instantiate(ResourceMgr.Prefab.Get(prefabName));
+            Obj = GameObject.Instantiate(ResourceMgr.Prefab.Get(prefabName));
 
-            obj.transform.SetParent(RootCanvas.Instance.Layer(1), false);
+            Obj.transform.SetParent(RootCanvas.Instance.Layer(1), false);
 
-            var image = obj.transform.Find("Trigger").GetComponent<Image>();
+            var image = Obj.transform.Find("Trigger").GetComponent<Image>();
 
-            triggerImage = new SuperImage(image);
-            triggerImage.SetHideColor(image.color);
+            TriggerImage = new SuperImage(image);
+            TriggerImage.SetHideColor(image.color);
 
             Hide();
         }
 
         public void SetPosition(Vector3 position)
         {
-            obj.transform.position = position;
+            Obj.transform.position = position;
         }
 
         public void Show()
         {
-            obj.SetActive(true);
+            Obj.SetActive(true);
         }
 
         public void Hide()
         {
-            obj.SetActive(false);
+            Obj.SetActive(false);
         }
     }
 }

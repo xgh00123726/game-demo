@@ -5,39 +5,39 @@ namespace GameBase.Move
 {
     public class FCRectCollider : RectCollider
     {
-        public float filletedCornerR = 0.1f;
-        public float fcrFactor = 0.2f;
+        public float FilletedCornerR { get; set; } = 0.1f;
+        public float FcrFactor { get; set; } = 0.2f;
 
         public GMath.Circle LeftBottomCircle
         {
             get => new GMath.Circle()
             {
-                r = filletedCornerR,
-                c = new Vector2(xMin + filletedCornerR, yMin + filletedCornerR)
+                r = FilletedCornerR,
+                c = new Vector2(xMin + FilletedCornerR, yMin + FilletedCornerR)
             };
         }
         public GMath.Circle LeftTopCircle
         {
             get => new GMath.Circle()
             {
-                r = filletedCornerR,
-                c = new Vector2(xMin + filletedCornerR, yMax - filletedCornerR)
+                r = FilletedCornerR,
+                c = new Vector2(xMin + FilletedCornerR, yMax - FilletedCornerR)
             };
         }
         public GMath.Circle RightBottomCircle
         {
             get => new GMath.Circle()
             {
-                r = filletedCornerR,
-                c = new Vector2(xMax - filletedCornerR, yMin + filletedCornerR)
+                r = FilletedCornerR,
+                c = new Vector2(xMax - FilletedCornerR, yMin + FilletedCornerR)
             };
         }
         public GMath.Circle RightTopCircle
         {
             get => new GMath.Circle()
             {
-                r = filletedCornerR,
-                c = new Vector2(xMax - filletedCornerR, yMax - filletedCornerR)
+                r = FilletedCornerR,
+                c = new Vector2(xMax - FilletedCornerR, yMax - FilletedCornerR)
             };
         }
 
@@ -45,7 +45,7 @@ namespace GameBase.Move
         protected internal override void Update()
         {
             base.Update();
-            filletedCornerR = Mathf.Min(w, h) * fcrFactor;
+            FilletedCornerR = Mathf.Min(Width, Height) * FcrFactor;
         }
 
         public override void CollideTo(Collider other)

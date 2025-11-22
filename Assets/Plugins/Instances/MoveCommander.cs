@@ -13,12 +13,10 @@ namespace Instance
     public class MoveCommander : SingletonInstance<MoveCommander>
     {
         private static List<Creature> _targets = new();
-
-        public static Action OnMoveInput;
-
         private static List<Vector3> _disfusedDest = new();
         private static List<Coord> _disfusedCoords = new();
 
+        public static Action OnMoveInput { get; set; }
 
         private static void GetDirs(int num, ref List<Coord> coords)
         {
@@ -80,7 +78,7 @@ namespace Instance
             for (int i = 0; i < collideCreature.Count; i++)
             {
                 Coord c = _disfusedCoords[i];
-                output.Add(target + new Vector3(c.x, 0, c.y) * collideCreature[i].collider.r * 3);
+                output.Add(target + new Vector3(c.x, 0, c.y) * collideCreature[i].Collider.r * 3);
             }
         }
 
@@ -97,13 +95,13 @@ namespace Instance
                     var dest = _disfusedDest[i];
                     if (isImmediately)
                     {
-                        c.mover.MoveTo(dest);
+                        c.Mover.MoveTo(dest);
                     }
                     else
                     {
-                        c.mover.ThenMoveTo(dest);
+                        c.Mover.ThenMoveTo(dest);
                     }
-                    c.ai?.Disable();
+                    c.AI?.Disable();
                 }
 
                 MoveIndicator.Show(CameraSys.MouseHitPosition);
@@ -116,7 +114,7 @@ namespace Instance
                 foreach (var c in _targets)
                 {
                     c.Interrupt();
-                    c.ai?.Disable();
+                    c.AI?.Disable();
                 }
             }
         }

@@ -10,58 +10,58 @@ namespace GameBase.Flyings
         Vector,
     }
 
-    public struct CurveData
+    public class CurveData
     {
-        public CurveType type;
-        public float length;
-        public float duration;
-        public float turnSpeed;
-        public float turnAcc;
+        public CurveType Type {  get; set; }
+        public float Length { get; set; }
+        public float Duration { get; set; }
+        public float TurnSpeed { get; set; }
+        public float TurnAcc {  get; set; }
     }
     public class CurveFactory
     {
         public static Curve CreateInstance(CurveData data)
         {
-            if (data.type == CurveType.None)
+            if (data.Type == CurveType.None)
             {
                 return null;
             }
-            if (data.type == CurveType.Linear)
+            if (data.Type == CurveType.Linear)
             {
                 return new Linear()
                 {
-                    duration = data.duration,
+                    Duration = data.Duration,
                 };
             }
-            if (data.type == CurveType.Tracer)
+            if (data.Type == CurveType.Tracer)
             {
                 return new Tracer()
                 {
-                    duration = data.duration,
-                    turnSpeed = data.turnSpeed,
-                    turnAcc = data.turnAcc
+                    Duration = data.Duration,
+                    TurnSpeed = data.TurnSpeed,
+                    TurnAcc = data.TurnAcc
                 };
             }
-            if (data.type == CurveType.Slower)
+            if (data.Type == CurveType.Slower)
             {
                 return new Slower()
                 {
-                    duration = data.duration,
+                    Duration = data.Duration,
                 };
             }
-            if (data.type == CurveType.Fall)
+            if (data.Type == CurveType.Fall)
             {
                 return new Fall()
                 {
-                    duration = data.duration,
+                    Duration = data.Duration,
                 };
             }
-            if (data.type == CurveType.Vector)
+            if (data.Type == CurveType.Vector)
             {
                 return new Vector()
                 {
-                    duration = data.duration,
-                    length = data.length,
+                    Duration = data.Duration,
+                    Length = data.Length,
                 };
             }
 

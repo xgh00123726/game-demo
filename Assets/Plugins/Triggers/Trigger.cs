@@ -15,40 +15,34 @@ namespace GameBase.Triggers
 
     public class Trigger
     {
-        // require
-        public int maxEffectTimes;
-        public ITriggerAttach attach;
-        public ITriggerTarget target;
-        public IShape2D shape;
-        public ITriggerTargetsSet targetsSet;
-        public ITriggerOwner owner;
-        public ITriggerAction action;
-
-        // optional
-        public float delay;
-        public float trigPeriod;
-        public bool hasWhite;
-        public float existTime;
-        public TrigStyle trigStyle;
-        public ITriggerCamp targetCamp;
-
-        public string createEffect;
-        public string trigEffect;
-        public string hitEffect;
-
-        public string createAudio;
-        public string trigAudio;
-        public string hitAudio;
-
-        public Action OnTrig;
-        public Action OnTrigEnd;
-
         internal float lastTrigTime;
         internal float instantiateTime;
         internal bool isTrig;
         internal int actualEffectTimes;
         internal HashSet<ITriggerTarget> whites;
-
+        // require
+        public int MaxEffectTimes {  get; set; }
+        public ITriggerAttach Attach { get; set; }
+        public ITriggerTarget Target { get; set; }
+        public IShape2D Shape { get; set; }
+        public ITriggerTargetsSet TargetsSet { get; set; }
+        public ITriggerOwner Owner { get; set; }
+        public ITriggerAction Action { get; set; }
+        // optional
+        public float Delay { get; set; }
+        public float TrigPeriod { get; set; }
+        public bool HasWhite {  get; set; }
+        public float ExistTime { get; set; }
+        public TrigStyle TrigStyle { get; set; }
+        public ITriggerCamp TargetCamp { get; set; }
+        public string CreateEffect {  get; set; }
+        public string TrigEffect { get; set; }
+        public string HitEffect { get; set; }
+        public string CreateAudio { get; set; }
+        public string TrigAudio { get; set; }
+        public string HitAudio { get; set; }
+        public Action OnTrig { get; set; }
+        public Action OnTrigEnd { get; set; }
         public int ActualEffectTimes => actualEffectTimes;
 
         public void Trig()

@@ -7,7 +7,7 @@ namespace Instance
     {
         private void DrawGrid()
         {
-            if (!GizmosCfg.isDrawGrid)
+            if (!GizmosCfg.IsDrawGrid)
             {
                 return;
             }
@@ -33,7 +33,7 @@ namespace Instance
 
         private void DrawObstacle()
         {
-            if (!GizmosCfg.isDrawObstacle)
+            if (!GizmosCfg.IsDrawObstacle)
             {
                 return;
             }
@@ -63,7 +63,7 @@ namespace Instance
 
         private void OnDrawGizmos()
         {
-            if (!GizmosCfg.isDrawGizmos)
+            if (!GizmosCfg.IsDrawGizmos)
             {
                 return;
             }

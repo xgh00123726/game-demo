@@ -9,16 +9,16 @@ namespace GameBase.GCamera
         private Vector3 _dragCameraPosition;
         private Vector3 _dragMousePosition;
 
-        public bool enableEdgeAutoDrag = true;
-        public bool enableScrollToChangeFOV = true;
+        public bool EnableEdgeAutoDrag { get; set; } = true;
+        public bool EnableScrollToChangeFOV { get; set; } = true;
 
-        public float dragFactor = 100f;
-        public float xMoveSpeed = 10f;
-        public float yMoveSpeed = 10f;
-        public float xBorder = 20f;
-        public float yBorder = 20f;
-        public float xMax = 1920;
-        public float yMax = 1080;
+        public float DragFactor { get; set; } = 100f;
+        public float XMoveSpeed { get; set; } = 10f;
+        public float YMoveSpeed { get; set; } = 10f;
+        public float XBorder { get; set; } = 20f;
+        public float YBorder { get; set; } = 20f;
+        public float XMax { get; set; } = 1920;
+        public float YMax { get; set; } = 1080;
 
         // Start is called before the first frame update
         void Start()
@@ -27,11 +27,11 @@ namespace GameBase.GCamera
             CameraSys.Main = GetComponent<Camera>();
             Command.Register("enableScrollChangeFOV", () =>
             {
-                enableScrollToChangeFOV = true;
+                EnableScrollToChangeFOV = true;
             });
             Command.Register("disableScrollChangeFOV", () =>
             {
-                enableScrollToChangeFOV = false;
+                EnableScrollToChangeFOV = false;
             });
         }
 
@@ -89,7 +89,7 @@ namespace GameBase.GCamera
                 var position = transform.position;
                 var mousePosition = Input.mousePosition;
                 var mouseDir = mousePosition - _dragMousePosition;
-                var worldDir = MouseDirToWorldDir(mouseDir) / dragFactor;
+                var worldDir = MouseDirToWorldDir(mouseDir) / DragFactor;
                 Vector3 currPosition = _dragCameraPosition - worldDir;
                 currPosition.y = transform.position.y;
                 transform.position = currPosition;
@@ -104,21 +104,21 @@ namespace GameBase.GCamera
 
             Vector3 moveDir = Vector3.zero;
 
-            if (x > xMax - xBorder && x <= xMax)
+            if (x > XMax - XBorder && x <= XMax)
             {
-                moveDir += DirRight() * xMoveSpeed;
+                moveDir += DirRight() * XMoveSpeed;
             }
-            else if (x < xBorder && x >= 0)
+            else if (x < XBorder && x >= 0)
             {
-                moveDir -= DirRight() * xMoveSpeed;
+                moveDir -= DirRight() * XMoveSpeed;
             }
-            if (y > yMax - yBorder && y <= yMax)
+            if (y > YMax - YBorder && y <= YMax)
             {
-                moveDir += DirUp() * yMoveSpeed;
+                moveDir += DirUp() * YMoveSpeed;
             }
-            else if (y < yBorder && y >= 0)
+            else if (y < YBorder && y >= 0)
             {
-                moveDir -= DirUp() * yMoveSpeed;
+                moveDir -= DirUp() * YMoveSpeed;
             }
 
             transform.position = transform.position + moveDir * Time.deltaTime;
@@ -132,7 +132,7 @@ namespace GameBase.GCamera
         private void Update()
         {
             DragUpdate();
-            if (enableEdgeAutoDrag)
+            if (EnableEdgeAutoDrag)
             {
                 EdgeAutoUpdate();
             }
@@ -142,7 +142,7 @@ namespace GameBase.GCamera
                 CameraReset();
             }
 
-            if (enableScrollToChangeFOV)
+            if (EnableScrollToChangeFOV)
             {
                 FOVUpdate();
             }

@@ -8,8 +8,8 @@ namespace GameBase.Flyings
         protected ICurveable _projectile;
         protected bool _freezeY = true;
 
-        public float speed = 1f;
-        public float duration = 10f;
+        public float Speed { get; set; } = 1f;
+        public float Duration { get; set; } = 10f;
 
         internal void SetOwner(ICurveable curveable)
         {
@@ -35,7 +35,7 @@ namespace GameBase.Flyings
 
         protected virtual Vector3 GetPosDelta()
         {
-            return _projectile.Dir * speed * Time.deltaTime;
+            return _projectile.Dir * Speed * Time.deltaTime;
         }
         protected virtual void PosUpdate()
         {
@@ -62,12 +62,12 @@ namespace GameBase.Flyings
         }
 
         protected virtual bool IsTravelEnd => false;
-        private bool IsTimeout => _projectile.LifeTime > duration;
+        private bool IsTimeout => _projectile.LifeTime > Duration;
         public bool IsEnd => IsTravelEnd || IsTimeout;
 
         public void Update()
         {
-            if (_projectile.LifeTime > duration)
+            if (_projectile.LifeTime > Duration)
             {
                 return;
             }

@@ -30,24 +30,21 @@ namespace GameBase.UI
 
             e.regenText = obj.transform.Find("RegenText").gameObject.GetComponent<TextMeshProUGUI>();
 
-            e.obj = obj;
+            e.Obj = obj;
             return e;
         }
-
-
-
         protected override void OnGet(EpicBar e)
         {
             e.currPercent = 1f;
             e.losingPercent = 1f;
             e.hpChange = true;
 
-            e.obj.SetActive(true);
+            e.Obj.SetActive(true);
         }
 
         protected override void OnRelease(EpicBar e)
         {
-            e.obj.SetActive(false);
+            e.Obj.SetActive(false);
         }
 
         private void SetWidth(RectTransform bar, float percent, float widthMax)
@@ -63,12 +60,12 @@ namespace GameBase.UI
             if (e.losingPercent > e.currPercent)
             {
                 e.losingPercent -= losingSpeed * Time.deltaTime;
-                SetWidth(e.losingRectTransform, e.losingPercent, e.width);
+                SetWidth(e.losingRectTransform, e.losingPercent, e.Width);
             }
 
-            if (e.regen > 0)
+            if (e.Regen > 0)
             {
-                e.regenText.text = $"+{String.Format("{0:0.#}", e.regen)}/s";
+                e.regenText.text = $"+{String.Format("{0:0.#}", e.Regen)}/s";
             }
             else
             {
@@ -86,7 +83,7 @@ namespace GameBase.UI
 
             e.currPercent = Mathf.Clamp01(e.currHP / e.maxHP);
             e.textComponent.text = $"{String.Format("{0:0}", e.currHP)} / {String.Format("{0:0}", e.maxHP)}";
-            SetWidth(e.currentRectTransform, e.currPercent, e.width);
+            SetWidth(e.currentRectTransform, e.currPercent, e.Width);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Instance
     {
         private void DrawCircleCollide(GameBase.Move.Collider c)
         {
-            if (!GizmosCfg.isDrawCollider)
+            if (!GizmosCfg.IsDrawCollider)
             {
                 return;
             }
@@ -18,7 +18,7 @@ namespace Instance
                 return;
             }
 
-            if (cc.isCollide)
+            if (cc.IsCollide)
             {
                 Gizmos.color = Color.red;
             }
@@ -36,7 +36,7 @@ namespace Instance
 
         private void DrawRectCollider(GameBase.Move.Collider c)
         {
-            if (!GizmosCfg.isDrawCollider)
+            if (!GizmosCfg.IsDrawCollider)
             {
                 return;
             }
@@ -45,7 +45,7 @@ namespace Instance
                 return;
             }
 
-            if (rc.isCollide)
+            if (rc.IsCollide)
             {
                 Gizmos.color = Color.red;
             }
@@ -62,18 +62,18 @@ namespace Instance
 
         private void DrawForce(GameBase.Move.Collider c)
         {
-            if (!GizmosCfg.isDrawForce)
+            if (!GizmosCfg.IsDrawForce)
             {
                 return;
             }
 
-            if (!c.isCollide)
+            if (!c.IsCollide)
             {
                 return;
             }
 
             Vector3 center = new Vector3(c.Position.x, GizmosCfg.drawY, c.Position.y);
-            Vector3 dir = new Vector3(c.force.x, 0, c.force.y) * GizmosCfg.forceLenTimes;
+            Vector3 dir = new Vector3(c.Force.x, 0, c.Force.y) * GizmosCfg.ForceLenTimes;
 
             Gizmos.color = new Color(0.85f, 0.29f, 0.77f, 1f);
             for (int i = 0; i < GizmosCfg.drawTimes; ++i)
@@ -84,7 +84,7 @@ namespace Instance
 
         private void OnDrawGizmos()
         {
-            if (!GizmosCfg.isDrawGizmos)
+            if (!GizmosCfg.IsDrawGizmos)
             {
                 return;
             }

@@ -8,46 +8,46 @@ namespace Instance
 
         public static int drawTimes = 10;
 
-        public static bool isDrawGizmos = false;
-        public static bool isDrawCollider = true;
-        public static bool isDrawMove = true;
-        public static bool isDrawForce = false;
-        public static bool isDrawAI = false;
-        public static bool isDrawAttackRange = true;
-        public static bool isDrawTrigger = true;
-        public static bool isDrawGrid = true;
-        public static bool isDrawObstacle = true;
+        public static bool IsDrawGizmos { get; set; } = false;
+        public static bool IsDrawCollider { get; set; } = true;
+        public static bool IsDrawMove { get; set; } = true;
+        public static bool IsDrawForce { get; set; } = false;
+        public static bool IsDrawAI { get; set; } = false;
+        public static bool IsDrawAttackRange { get; set; } = true;
+        public static bool IsDrawTrigger { get; set; } = true;
+        public static bool IsDrawGrid { get; set; } = true;
+        public static bool IsDrawObstacle { get; set; } = true;
 
-        public static float forceLenTimes = 5;
+        public static float ForceLenTimes { get; set; } = 5;
         static GizmosCfg()
         {
             Command.Register("toggle-all-gizmos", () =>
             {
-                isDrawGizmos = !isDrawGizmos;
+                IsDrawGizmos = !IsDrawGizmos;
             });
             Command.Register("toggle-draw-force", () =>
             {
-                isDrawForce = !isDrawForce;
+                IsDrawForce = !IsDrawForce;
             });
             Command.Register("toggle-draw-collide", () =>
             {
-                isDrawCollider = !isDrawCollider;
+                IsDrawCollider = !IsDrawCollider;
             });
             Command.Register("toggle-draw-move", () =>
             {
-                isDrawMove = !isDrawMove;
+                IsDrawMove = !IsDrawMove;
             });
             Command.Register("toggle-draw-attackRange", () =>
             {
-                isDrawAttackRange = !isDrawAttackRange;
+                IsDrawAttackRange = !IsDrawAttackRange;
             });
             Command.Register("toggle-draw-trigger", () =>
             {
-                isDrawTrigger = !isDrawTrigger;
+                IsDrawTrigger = !IsDrawTrigger;
             });
             Command.Register("toggle-draw-grid", () =>
             {
-                isDrawGrid = !isDrawGrid;
+                IsDrawGrid = !IsDrawGrid;
             });
         }
     }

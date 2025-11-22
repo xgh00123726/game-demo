@@ -20,23 +20,19 @@ namespace GameBase.UI
         protected internal ListContainer<T> container = new();
         protected internal GameObject panel;
 
-
-        public ILayout layout;
-        public IDetailableControl detailableControl;
-
-        public Action<int> OnEnterDrag;
-        public Action<int> OnExitDrag;
-        public Action<int> OnDrag;
-
-        public Action<int> OnEnterDetail;
-        public Action<int> OnExitDetail;
-        public Action<int> OnDetail;
-
         private Action<int> _OnPointerDown;
         private Action<int> _OnPointerRightDown;
         private Action<int> _OnPointerUp;
         private Action<int> _OnPointerEnter;
         private Action<int> _OnPointerExit;
+        public ILayout Layout { get; set; }
+        public Action<int> OnEnterDrag { get; set; }
+        public Action<int> OnExitDrag { get; set; }
+        public Action<int> OnDrag {  get; set; }
+        public Action<int> OnEnterDetail { get; set; }
+        public Action<int> OnExitDetail { get; set; }
+        public Action<int> OnDetail { get; set; }
+
         public Action<int> OnPointerDown
         {
             get => _OnPointerDown;
@@ -45,7 +41,7 @@ namespace GameBase.UI
                 _OnPointerDown = value;
                 foreach (var e in Entities)
                 {
-                    e.uiScript.OnPointerDown = value;
+                    e.UIScript.OnPointerDown = value;
                 }
             }
         }
@@ -57,7 +53,7 @@ namespace GameBase.UI
                 _OnPointerRightDown = value;
                 foreach (var e in Entities)
                 {
-                    e.uiScript.OnPointerRightDown += value;
+                    e.UIScript.OnPointerRightDown += value;
                 }
             }
         }
@@ -69,7 +65,7 @@ namespace GameBase.UI
                 _OnPointerUp = value;
                 foreach (var e in Entities)
                 {
-                    e.uiScript.OnPointerUp += value;
+                    e.UIScript.OnPointerUp += value;
                 }
             }
         }
@@ -81,7 +77,7 @@ namespace GameBase.UI
                 _OnPointerEnter = value;
                 foreach (var e in Entities)
                 {
-                    e.uiScript.OnPointerEnter += value;
+                    e.UIScript.OnPointerEnter += value;
                 }
             }
         }
@@ -93,7 +89,7 @@ namespace GameBase.UI
                 _OnPointerExit = value;
                 foreach (var e in Entities)
                 {
-                    e.uiScript.OnPointerExit += value;
+                    e.UIScript.OnPointerExit += value;
                 }
             }
         }
@@ -119,15 +115,15 @@ namespace GameBase.UI
 
         protected virtual BaseUI InstantiateObj(T e)
         {
-            var obj = GetGameObject(e.prefabName);
-            e.obj = obj;
+            var obj = GetGameObject(e.PrefabName);
+            e.Obj = obj;
 
             var triggerObj = obj.transform.Find("Trigger").gameObject;
             var ui = triggerObj.AddComponent<BaseUI>();
 
             var image = triggerObj.GetComponent<Image>();
-            e.triggerImage = new SuperImage(image);
-            e.triggerImage.SetHideColor(image.color);
+            e.TriggerImage = new SuperImage(image);
+            e.TriggerImage.SetHideColor(image.color);
 
             e.triggerObject = triggerObj;
 
@@ -135,14 +131,14 @@ namespace GameBase.UI
 
             e.triggerRectTransform = e.triggerObject.GetComponent<RectTransform>();
 
-            e.uiScript = ui;
+            e.UIScript = ui;
 
             return ui;
         }
 
         private void DragableUpdate(T e)
         {
-            if (!e.interactiveEnable)
+            if (!e.InteractiveEnable)
             {
                 return;
             }
@@ -154,7 +150,7 @@ namespace GameBase.UI
 
         private void DetailbleUpdate(T e)
         {
-            if (!e.interactiveEnable)
+            if (!e.InteractiveEnable)
             {
                 return;
             }
@@ -166,30 +162,30 @@ namespace GameBase.UI
 
         private void LayoutUpdate(T e)
         {
-            if (layout == null)
+            if (Layout == null)
             {
                 return;
             }
 
-            e.obj.transform.localPosition = layout.GetItemLocalPosition(e.itemIndex);
+            e.Obj.transform.localPosition = Layout.GetItemLocalPosition(e.itemIndex);
         }
 
         protected virtual void UpdateEntity(T e)
         {
-            if (e.uiScript.isPointerOn)
+            if (e.UIScript.isPointerOn)
             {
-                e.uiScript.enterTime += Time.deltaTime;
+                e.UIScript.enterTime += Time.deltaTime;
             }
-            if (e.uiScript.isPointerDown)
+            if (e.UIScript.isPointerDown)
             {
-                e.uiScript.pointerDownTime += Time.deltaTime;
+                e.UIScript.pointerDownTime += Time.deltaTime;
             }
-            if (!e.obj.activeSelf)
+            if (!e.Obj.activeSelf)
             {
-                e.uiScript.isPointerOn = false;
-                e.uiScript.isPointerDown = false;
-                e.uiScript.enterTime = 0;
-                e.uiScript.pointerDownTime = 0;
+                e.UIScript.isPointerOn = false;
+                e.UIScript.isPointerDown = false;
+                e.UIScript.enterTime = 0;
+                e.UIScript.pointerDownTime = 0;
             }
 
             LayoutUpdate(e);
@@ -203,7 +199,7 @@ namespace GameBase.UI
             foreach (var e in Entities)
             {
                 e.itemIndex = index;
-                e.uiScript.index = index;
+                e.UIScript.index = index;
                 _inUpdating = true;
                 UpdateEntity(e);
                 index++;
@@ -220,11 +216,11 @@ namespace GameBase.UI
             var e = new T();
             if (name != null)
             {
-                e.prefabName = name;
+                e.PrefabName = name;
             }
             else
             {
-                e.prefabName = itemPrefabName;
+                e.PrefabName = itemPrefabName;
             }
             return NewEntity(e);
         }
@@ -232,12 +228,12 @@ namespace GameBase.UI
         public virtual T NewEntity(T e)
         {
             Entities.Add(e);
-            e.uiScript = InstantiateObj(e);
-            e.uiScript.OnPointerDown = _OnPointerDown;
-            e.uiScript.OnPointerEnter = _OnPointerEnter;
-            e.uiScript.OnPointerRightDown = _OnPointerRightDown;
-            e.uiScript.OnPointerExit = _OnPointerExit;
-            e.uiScript.OnPointerUp = _OnPointerUp;
+            e.UIScript = InstantiateObj(e);
+            e.UIScript.OnPointerDown = _OnPointerDown;
+            e.UIScript.OnPointerEnter = _OnPointerEnter;
+            e.UIScript.OnPointerRightDown = _OnPointerRightDown;
+            e.UIScript.OnPointerExit = _OnPointerExit;
+            e.UIScript.OnPointerUp = _OnPointerUp;
             ViewMgr.RegisterView(e);
             return e;
         }
@@ -307,7 +303,7 @@ namespace GameBase.UI
             foreach (var e in Entities)
             {
                 Rect r = e.RectTransform.rect;
-                r.center = e.uiScript.transform.position;
+                r.center = e.UIScript.transform.position;
                 if (r.Contains(triggerPosition))
                 {
                     return e;
@@ -321,8 +317,8 @@ namespace GameBase.UI
         {
             var item1 = this[p1];
             var item2 = this[p2];
-            item1.triggerImage.Swap(item2.triggerImage);
-            (item1.interactiveEnable, item2.interactiveEnable) = (item2.interactiveEnable, item1.interactiveEnable);
+            item1.TriggerImage.Swap(item2.TriggerImage);
+            (item1.InteractiveEnable, item2.InteractiveEnable) = (item2.InteractiveEnable, item1.InteractiveEnable);
         }
 
         public void AddChild(GameObject child)
@@ -337,7 +333,7 @@ namespace GameBase.UI
 
         public void EnterDragState(int index)
         {
-            if (!this[index].interactiveEnable)
+            if (!this[index].InteractiveEnable)
             {
                 return;
             }
@@ -350,7 +346,7 @@ namespace GameBase.UI
 
         public void ExitDragState(int index)
         {
-            if (!this[index].interactiveEnable)
+            if (!this[index].InteractiveEnable)
             {
                 return;
             }
@@ -363,7 +359,7 @@ namespace GameBase.UI
 
         public void EnterDetailState(int index)
         {
-            if (!this[index].interactiveEnable)
+            if (!this[index].InteractiveEnable)
             {
                 return;
             }
@@ -376,7 +372,7 @@ namespace GameBase.UI
 
         public void ExitDetailState(int index)
         {
-            if (!this[index].interactiveEnable)
+            if (!this[index].InteractiveEnable)
             {
                 return;
             }
@@ -411,7 +407,7 @@ namespace GameBase.UI
 
         public SuperImage GetItemImage(int index)
         {
-            return this[index].triggerImage;
+            return this[index].TriggerImage;
         }
 
         void IBaseSys.Update()

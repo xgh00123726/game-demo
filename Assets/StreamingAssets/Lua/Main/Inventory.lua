@@ -12,8 +12,8 @@ end
 UI.Inventory.OnEnterDrag = function ( index )
     local controller = UI.Inventory.DragViewController
     local view = controller.DragView
-    local dragImage = view.triggerImage
-    local dragedItemImage = UI.Inventory.Panel[index].triggerImage
+    local dragImage = view.TriggerImage
+    local dragedItemImage = UI.Inventory.Panel[index].TriggerImage
 
     dragImage:Copy(dragedItemImage)
     dragedItemImage:Hide()
@@ -27,7 +27,7 @@ UI.Inventory.OnExitDrag = function ( index )
     local view = controller.DragView
     local inventoryPanel = UI.Inventory.Panel
     local dragedItem = inventoryPanel[index]
-    local dragedItemImage = dragedItem.triggerImage
+    local dragedItemImage = dragedItem.TriggerImage
     local inventory = Inventory.Instance
 
     dragedItemImage:Show()

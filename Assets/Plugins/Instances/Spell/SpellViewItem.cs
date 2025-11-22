@@ -9,8 +9,8 @@ namespace Instance
         internal TextMeshProUGUI timeTMP;
         internal TextMeshProUGUI chargeTMP;
 
-        public MaskImage maskImage;
-        public float coolingTimeRemain;
-        public float coolingTimeSet;
+        public MaskImage MaskImage { get; set; }
+        public float CoolingTimeRemain { get; set; }
+        public float CoolingTimeSet { get; set; }
     }
 }

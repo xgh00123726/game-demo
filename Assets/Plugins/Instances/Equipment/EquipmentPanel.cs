@@ -27,14 +27,14 @@ namespace Instance
                 var equipment = c.GetEquipment(i);
                 if (equipment != null)
                 {
-                    this[i].triggerImage.SetIcon(equipment.textureName);
-                    this[i].triggerImage.Show();
-                    this[i].triggerImage.SetColor(equipment.rarity);
+                    this[i].TriggerImage.SetIcon(equipment.TextureName);
+                    this[i].TriggerImage.Show();
+                    this[i].TriggerImage.SetColor(equipment.Rarity);
                 }
                 else
                 {
-                    this[i].triggerImage.Hide();
-                    this[i].triggerImage.HideColor();
+                    this[i].TriggerImage.Hide();
+                    this[i].TriggerImage.HideColor();
                 }
             }
         }

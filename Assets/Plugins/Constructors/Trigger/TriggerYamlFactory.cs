@@ -6,27 +6,27 @@ namespace Constructor.Triggers
 {
     public class TriggerYamlFactory : YamlFactory<TriggerData, Trigger, TriggerYamlFactory>
     {
-        protected override string YamlFolder => null;
+        protected override string Folder => null;
 
         public IShape2D GetShape(TriggerShapeData data)
         {
             if (data == null) return null;
 
-            if (data.type == TriggerShapeType.Circle)
+            if (data.Type == TriggerShapeType.Circle)
             {
-                var c = new GMath.Circle(data.radius);
+                var c = new GMath.Circle(data.Radius);
                 return c;
             }
-            if (data.type == TriggerShapeType.Linear)
+            if (data.Type == TriggerShapeType.Linear)
             {
-                var l = new GMath.Line(data.length)
+                var l = new GMath.Line(data.Length)
                 {
-                    width = data.width,
-                    pivot = data.pivot
+                    width = data.Width,
+                    pivot = data.Pivot
                 };
                 return l;
             }
-            if (data.type == TriggerShapeType.Rect)
+            if (data.Type == TriggerShapeType.Rect)
             {
                 return null;
             }
@@ -38,28 +38,28 @@ namespace Constructor.Triggers
         {
             var t = TriggerSys.Instance.NewEntity();
 
-            t.action = new TriggerAction()
+            t.Action = new TriggerAction()
             {
-                damage = data.damage,
-                color = data.damageTextColor,
-                tag = data.tagEnum,
-                prefabName = data.damageTextPrefabName,
-                buffName = data.buffName,
-                buffDuration = data.buffDuration,
+                damage = data.Damage,
+                color = data.DamageTextColor,
+                tag = data.TagEnum,
+                prefabName = data.DamageTextPrefabName,
+                buffName = data.BuffName,
+                buffDuration = data.BuffDuration,
             };
 
-            t.maxEffectTimes = data.maxEffectTimes;
-            t.shape = GetShape(data.shape);
-            t.delay = data.delay;
-            t.trigStyle = data.trigStyle;
-            t.trigPeriod = data.trigPeriod;
-            t.existTime = data.existTime;
-            t.createAudio = data.createAudioName;
-            t.createEffect = data.createEffectName;
-            t.trigAudio = data.trigAudioName;
-            t.trigEffect = data.trigEffectName;
-            t.hitAudio = data.hitAudioName;
-            t.hitEffect = data.hitEffectName;
+            t.MaxEffectTimes = data.MaxEffectTimes;
+            t.Shape = GetShape(data.Shape);
+            t.Delay = data.Delay;
+            t.TrigStyle = data.TrigStyle;
+            t.TrigPeriod = data.TrigPeriod;
+            t.ExistTime = data.ExistTime;
+            t.CreateAudio = data.CreateAudioName;
+            t.CreateEffect = data.CreateEffectName;
+            t.TrigAudio = data.TrigAudioName;
+            t.TrigEffect = data.TrigEffectName;
+            t.HitAudio = data.HitAudioName;
+            t.HitEffect = data.HitEffectName;
 
             return t;
         }

@@ -1,11 +1,11 @@
-function GetInventoryItemText( info )
+function GetInventoryItemText( item )
     local text = "NNN"
 
-    if (info.type == InventoryData.Enum.ItemType.Equipment) then
-        local name = Equipment.GetName(info.reflectedID)
-        text = Text.GetEquipmentText(name).detail
-    elseif (info.type == InventoryData.Enum.ItemType.SpellActionModifier) then
-        text = Text.GetSpellActionModifierText(info.reflectedID)
+    local type = item.Type
+    if (type == ItemData.Enum.ItemType.EquipmentData) then
+        local name = item.Name
+        local info = Text.GetEquipmentText(name)
+        text = info.Name.."\n\n"..info.Detail
     end
 
     return text
@@ -49,38 +49,41 @@ function SwapInventoryAndEquipments(c, equipIndex, inventoryIndex)
         return false
     end
 
+
     local inventory = Inventory.Instance
     local hasItem = inventory:HasItem(inventoryIndex)
-    local hasEquipItem = false
+    local hasEquipItem = false -- 背包中是否有装备
     if (hasItem) then
-        hasEquipItem = inventory[inventoryIndex].type == InventoryData.Enum.ItemType.Equipment
+        hasEquipItem = inventory[inventoryIndex].type == ItemData.Enum.ItemType.EquipmentData
     end
     local equipment = c:GetEquipment(equipIndex)
-    local hasEquipment = equipment ~= nil
+    local hasEquipment = equipment ~= nil -- 人物身上是否有装备
 
-    local oldEquipmentInfo = InventoryData.Struct.DataType()
-    if (hasEquipment) then
-        oldEquipmentInfo.type = InventoryData.Enum.ItemType.Equipment
-        oldEquipmentInfo.reflectedID = equipment.id
+    local inventoryID = -1
+    local equipmentID = -1
+    if (hasEquipItem) then
+        inventoryID = inventory[inventoryIndex].ID
     end
-    local newEquipmentInfo = inventory[inventoryIndex]
+    if (hasEquipment) then
+        equipmentID = equipment.ID
+    end
 
     if (hasEquipItem and hasEquipment) then
     -- 如果背包里和装备位置都有物品，则交换
-        inventory[inventoryIndex] = oldEquipmentInfo
+        inventory[inventoryIndex] = Item.Mgr.Get(equipmentID)
         c:RemoveEquipment(equipIndex)
-        c:AddEquipmentByID(newEquipmentInfo.reflectedID, equipIndex)
+        c:AddEquipmentByID(inventoryID, equipIndex)
     elseif (not hasEquipItem and not hasEquipment) then
     -- 如果都没有物品，啥都不干
         return false
     elseif (not hasItem) then
     -- 如果仓库没有物品，则卸下装备
-        inventory[inventoryIndex] = oldEquipmentInfo
+        inventory[inventoryIndex] = Item.Mgr.Get(equipmentID)
         c:RemoveEquipment(equipIndex)
     elseif (not hasEquipment) then
     -- 如果装备栏没有物品，则装备仓库上的物品
         inventory:Remove(inventoryIndex)
-        c:AddEquipmentByID(newEquipmentInfo.reflectedID, equipIndex)
+        c:AddEquipmentByID(inventoryID, equipIndex)
     end
     return true
 end

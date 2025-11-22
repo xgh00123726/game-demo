@@ -1,13 +1,9 @@
 using GameBase.EntitySystem;
+using GameBase.Items;
 using GameBase.Tools;
 
 namespace GameBase.Buffs
 {
-    public struct BuffName
-    {
-        public string name;
-    }
-    public class BuffNameDataBase : CsvDataBase<BuffName, BuffNameDataBase> { }
     public class BuffFactory : MultiFactory<Buff, BuffFactory>
     {
         public BuffFactory()
@@ -15,28 +11,15 @@ namespace GameBase.Buffs
             Register(BuffYamlFactory.Instance.Get);
         }
 
-        public string GetName(int id)
+        public Buff Get(int id)
         {
-            if (id >= BuffNameDataBase.Instance.Size)
+            var item = ItemDataMgr.Get(id);
+            if (item is BuffData b)
             {
-                return null;
-            }
-            return BuffNameDataBase.Instance[id].name;
-        }
-
-        public Buff GetByID(int id)
-        {
-            return BuffYamlFactory.Instance.GetFromData(GetData(id));
-        }
-
-        public BuffData GetData(int id)
-        {
-            if (id >= BuffNameDataBase.Instance.Size)
-            {
-                return null;
+                return BuffYamlFactory.Instance.GetFromData(b);
             }
 
-            return BuffYamlFactory.Instance.GetData(GetName(id));
+            return null;
         }
     }
 }

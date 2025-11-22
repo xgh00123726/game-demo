@@ -15,17 +15,17 @@ namespace GameBase.Buffs
         internal bool alive;
         internal IBuffOwner owner;
 
-        public BuffTag tag;
-        public string textureName;
-        public int rarity;
-        public float durationSet;
-        public List<KeyValuePair<int, float>> iModifiers;
-        public List<Modifyer> modifyers = new();
+        public BuffTag Tag { get; set; }
+        public string TextureName { get; set; }
+        public int Rarity { get; set; }
+        public float DurationSet { get; set; }
+        public List<KeyValuePair<int, float>> IntKeyModifiers { get; set; }
+        public List<Modifyer> Modifyers { get; set; } = new();
 
         public bool ALive => alive;
         public float DurationRemain => durationRemain;
 
-        public bool IsInfiDuration => (tag & BuffTag.InfiDuration) != 0;
+        public bool IsInfiDuration => (Tag & BuffTag.InfiDuration) != 0;
 
 
         public void AddTo(IBuffOwner owner, float duration = -1)
@@ -34,7 +34,7 @@ namespace GameBase.Buffs
 
             if (duration > 0)
             {
-                this.durationSet = duration;
+                this.DurationSet = duration;
                 this.durationRemain = duration;
             }
         }

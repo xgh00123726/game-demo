@@ -34,15 +34,15 @@ local function ControllerInit()
     CreatureSelector.Instance:AddHotKeyCreature(KeyFunction.SelectF2, Creature.Player)
     CreatureSelector.Instance:SetActive(true)
 
-    GizmosCfg.isDrawGizmos = true
-    GizmosCfg.isDrawCollider = false
-    GizmosCfg.isDrawMove = false
-    GizmosCfg.isDrawForce = false
-    GizmosCfg.isDrawAI = false
-    GizmosCfg.isDrawAttackRange = false
-    GizmosCfg.isDrawTrigger = true
-    GizmosCfg.isDrawGrid = false
-    GizmosCfg.isDrawObstacle = true
+    GizmosCfg.IsDrawGizmos = true
+    GizmosCfg.IsDrawCollider = false
+    GizmosCfg.IsDrawMove = false
+    GizmosCfg.IsDrawForce = false
+    GizmosCfg.IsDrawAI = false
+    GizmosCfg.IsDrawAttackRange = false
+    GizmosCfg.IsDrawTrigger = true
+    GizmosCfg.IsDrawGrid = false
+    GizmosCfg.IsDrawObstacle = true
 end
 
 Controller = {

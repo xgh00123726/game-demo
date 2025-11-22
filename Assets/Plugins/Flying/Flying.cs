@@ -10,19 +10,16 @@ namespace GameBase.Flyings
         ITriggerAttach,
         IFlyingTarget
     {
-        public float arriveDis;
-        public float maxExistTime;
-        public float minExistTime;
-        
-        public IFlyingTarget target;
-        public float startAngleOffset;
-        public Vector3 dest;
-        public Curve curve;
-
-        public string releaseEffect;
-        public string releaseAudio;
-
-        public Action OnReleased;
+        public float ArriveDis { get; set; }
+        public float MaxExistTime { get; set; }
+        public float MinExistTime { get; set; }
+        public IFlyingTarget Target { get; set; }
+        public float StartAngleOffset { get; set; }
+        public Vector3 Dest {  get; set; }
+        public Curve Curve { get; set; }
+        public string ReleaseEffect { get; set; }
+        public string ReleaseAudio { get; set; }
+        public Action OnReleased { get; set; }
 
         internal float speed;
         internal Vector3 src;
@@ -34,26 +31,25 @@ namespace GameBase.Flyings
             set
             {
                 speed = value;
-                if (curve != null)
+                if (Curve != null)
                 {
-                    curve.speed = value;
+                    Curve.Speed = value;
                 }
             }
         }
-        public bool IsEnd => curve?.IsEnd == true;
+        public bool IsEnd => Curve?.IsEnd == true;
 
         public bool Alive => alive;
         public Vector3 Position
         {
-            get => obj.transform.position;
-            set => obj.transform.position = value;
+            get => Obj.transform.position;
+            set => Obj.transform.position = value;
         }
         public Vector3 Dir
         {
-            get => obj.transform.forward;
-            set => obj.transform.forward = value;
+            get => Obj.transform.forward;
+            set => Obj.transform.forward = value;
         }
-        public Vector3 Dest => dest;
 
         public Vector3 Src
         {
@@ -61,15 +57,15 @@ namespace GameBase.Flyings
             set
             {
                 src = value;
-                obj.transform.position = src;
+                Obj.transform.position = src;
             }
         }
 
         float ICurveable.LifeTime => Time.time - instantiateTime;
 
-        public GameObject obj;
+        public GameObject Obj { get; set; }
         public string Key { get; set; }
 
-        Vector3 ITriggerAttach.Position => obj.transform.position;
+        Vector3 ITriggerAttach.Position => Obj.transform.position;
     }
 }

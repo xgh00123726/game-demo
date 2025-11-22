@@ -13,15 +13,15 @@ namespace GameBase.UI
             var e = new FloatText();
             var obj = GameObject.Instantiate(ResourceMgr.Prefab.Get(k));
             obj.transform.SetParent(WorldCanvs.Instance.transform, false);
-            e.obj = obj;
+            e.Obj = obj;
             return e;
         }
 
 
         protected override void OnGet(FloatText e)
         {
-            e.rectTransform = e.obj.GetComponent<RectTransform>();
-            e.textObj = e.obj.GetComponent<TextMeshProUGUI>();
+            e.rectTransform = e.Obj.GetComponent<RectTransform>();
+            e.textObj = e.Obj.GetComponent<TextMeshProUGUI>();
 
             e.duration = FloatTextConfig.Float.existTime;
             e.instantiateTime = Time.time;
@@ -37,13 +37,13 @@ namespace GameBase.UI
 
         protected override void EntityStart(FloatText e)
         {
-            e.obj.SetActive(true);
+            e.Obj.SetActive(true);
         }
 
 
         protected override void OnRelease(FloatText e)
         {
-            e.obj.SetActive(false);
+            e.Obj.SetActive(false);
         }
 
         protected override void UpdateEntity(FloatText e)

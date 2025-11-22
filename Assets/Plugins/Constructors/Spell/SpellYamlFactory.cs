@@ -9,27 +9,27 @@ namespace Constructor.Spells
     [GenTemplate(null, "this is a Spell Template")]
     public class SpellYamlFactory : YamlFactory<SpellData, Spell, SpellYamlFactory>
     {
-        protected override string YamlFolder => $"{Application.streamingAssetsPath}/Spell/Main";
+        protected override string Folder => $"{Application.streamingAssetsPath}/Spell/Main";
 
         protected override Spell GetEntity(SpellData data)
         {
             var spell = SpellSys.Instance.NewEntity();
-            spell.minCastAngle = data.minCastAngle;
-            spell.textureName = data.textureName;
-            spell.cooldown = data.cooldown;
-            spell.tag = data.tag;
+            spell.MinCastAngle = data.MinCastAngle;
+            spell.TextureName = data.TextureName;
+            spell.Cooldown = data.Cooldown;
+            spell.Tag = data.Tag;
 
-            spell.targetCampSet = new CampSet()
+            spell.TargetCampSet = new CampSet()
             {
-                include = data.camp.include,
-                exclude = data.camp.exclude,
+                include = data.Camp.Include,
+                exclude = data.Camp.Exclude,
             };
             
-            spell.action = SpellActionFactory.Instance.Get(data.actionName);
+            spell.Action = SpellActionFactory.Instance.Get(data.ActionName);
 
-            spell.indicatorType = data.indicator.type;
-            spell.radius = data.indicator.radius;
-            spell.length = data.indicator.length;
+            spell.IndicatorType = data.Indicator.Type;
+            spell.Radius = data.Indicator.Radius;
+            spell.Length = data.Indicator.Length;
 
             return spell;
         }

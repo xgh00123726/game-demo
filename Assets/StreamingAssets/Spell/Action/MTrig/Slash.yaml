@@ -1,23 +1,23 @@
-trigPositionStyle: Self
-trigger:
-  maxEffectTimes: 99
-  trigStyle: Once
-  shape:
-    type: Circle
-    radius: 1
-  damage: 10
-  ampFactor: 1
-  damageTextColor:
+TrigPositionStyle: Self
+Trigger:
+  MaxEffectTimes: 99
+  TrigStyle: Once
+  Shape:
+    Type: Circle
+    Radius: 1
+  Damage: 10
+  AmpFactor: 1
+  DamageTextColor:
     r: 1
     g: 1
     b: 1
     a: 1
-  damageTextPrefabName: Prefabs/UI/FloatText
-  trigEffectName: 
-  trigAudioName: 
-  hitEffectName: 
-  hitAudioName: 
-  createEffectName: Prefabs/Effect/Hit/SectorSlash.prefab
-  createAudioName: Wave1.wav
-  tag: HasDamage
-slotNum: 2
+  DamageTextPrefabName: Prefabs/UI/FloatText
+  TrigEffectName: 
+  TrigAudioName: 
+  HitEffectName: 
+  HitAudioName: 
+  CreateEffectName: Prefabs/Effect/Hit/SectorSlash.prefab
+  CreateAudioName: Wave1.wav
+  Tag: HasDamage
+SlotNum: 2

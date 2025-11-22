@@ -6,10 +6,10 @@ namespace Instance
 {
     public class InventoryInteractive : SingletonInstance<InventoryInteractive>
     {
-        public static Func<bool> ActiveCmd;
-        public static Func<bool> InActiveCmd;
-        public static Action OnActive;
-        public static Action OnInActive;
+        public static Func<bool> ActiveCmd { get; set; }
+        public static Func<bool> InActiveCmd { get; set; }
+        public static Action OnActive {  get; set; }
+        public static Action OnInActive { get; set; }
 
         public InventoryInteractive()
         {

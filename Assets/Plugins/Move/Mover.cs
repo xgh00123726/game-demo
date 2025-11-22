@@ -13,11 +13,9 @@ namespace GameBase.Move
         internal bool isArrive;
         internal Vector3 finalDest;
 
-        public IMover owner;
-        public Vector3 targetDir;
-
+        public IMover Owner { get; set; }
+        public Vector3 TargetDir { get; set; }
         public Queue<Vector3> DestQueue => destQueue;
-
         public bool IsMoving => isMoving;
         public bool IsRotating => isRotating;
         public Vector3 Dest => dest;
@@ -29,7 +27,7 @@ namespace GameBase.Move
             isMoving = true;
             destQueue.Clear();
             var aStar = MoveSys.Instance.aStar;
-            var positions = aStar.GetWay(owner.Position, position);
+            var positions = aStar.GetWay(Owner.Position, position);
             for (int i = 0; i < positions.Count - 1; i++)
             {
                 ThenMoveTo(positions[i]);
@@ -45,14 +43,14 @@ namespace GameBase.Move
 
         public void LookAt(Vector3 position)
         {
-            targetDir = position - owner.Obj.transform.position;
+            TargetDir = position - Owner.Obj.transform.position;
         }
 
         public void Interrupt()
         {
             isMoving = false;
-            dest = owner.Position;
-            finalDest = owner.Position;
+            dest = Owner.Position;
+            finalDest = Owner.Position;
             destQueue.Clear();
         }
     }

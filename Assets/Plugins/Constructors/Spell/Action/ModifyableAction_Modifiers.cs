@@ -80,7 +80,7 @@ namespace Constructor.Spells
 
         public static bool IsModifyable(Spell spell)
         {
-            return spell.action is ModifyableAction;
+            return spell.Action is ModifyableAction;
         }
     }
 

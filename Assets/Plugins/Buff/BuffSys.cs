@@ -18,11 +18,11 @@ namespace GameBase.Buffs
         protected override void OnRelease(Buff e)
         {
             e.owner.OnRemoveBuff(e);
-            foreach (var m in e.modifyers)
+            foreach (var m in e.Modifyers)
             {
                 m.Release();
             }
-            e.modifyers.Clear();
+            e.Modifyers.Clear();
             e.alive = false;
             e.owner = null;
         }
@@ -37,16 +37,16 @@ namespace GameBase.Buffs
                 return;
             }
 
-            foreach (var kvp in e.iModifiers)
+            foreach (var kvp in e.IntKeyModifiers)
             {
                 var m = ModifyerSys.Instance.NewEntity();
-                m.value = kvp.Value;
-                m.type = ModifyType.Temporary | ModifyType.Always;
+                m.Value = kvp.Value;
+                m.Type = ModifyType.Temporary | ModifyType.Always;
                 m.AddTo(e.owner.Modifyables[kvp.Key]);
-                e.modifyers.Add(m);
+                e.Modifyers.Add(m);
             }
 
-            e.durationRemain = e.durationSet;
+            e.durationRemain = e.DurationSet;
             e.owner.OnGetBuff(e);
         }
 
@@ -62,12 +62,12 @@ namespace GameBase.Buffs
 
             if (e.IsInfiDuration)
             {
-                e.durationSet = 9999f;
-                e.durationRemain = e.durationSet;
+                e.DurationSet = 9999f;
+                e.durationRemain = e.DurationSet;
             }
             else
             {
-                e.durationRemain = e.durationSet - (Time.time - e.instantiateTime);
+                e.durationRemain = e.DurationSet - (Time.time - e.instantiateTime);
             }
                 
 

@@ -11,26 +11,26 @@ namespace Instance
     /// </summary>
     public class SpellShadowView
     {
-        internal GameObject shadowObj;
-        public SuperImage image;
+        internal GameObject obj;
+        public SuperImage Image {  get; set; }
         public SpellShadowView(Transform parent)
         {
-            shadowObj = GameObject.Instantiate(ResourceMgr.Prefab.Get("Prefabs/UI/SpellItemShadowView.prefab"));
+            obj = GameObject.Instantiate(ResourceMgr.Prefab.Get("Prefabs/UI/SpellItemShadowView.prefab"));
 
-            shadowObj.transform.SetParent(parent, false);
+            obj.transform.SetParent(parent, false);
 
-            shadowObj.name = "SpellShadowView";
+            obj.name = "SpellShadowView";
 
-            var _rawImage = shadowObj.transform.Find("Trigger").GetComponent<Image>();
+            var _rawImage = obj.transform.Find("Trigger").GetComponent<Image>();
 
-            image = new SuperImage(_rawImage);
-            if (image == null)
+            Image = new SuperImage(_rawImage);
+            if (Image == null)
             {
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
                     .Log("panel item must has icon object");
             }
 
-            image.SetHideColor(_rawImage.color);
+            Image.SetHideColor(_rawImage.color);
         }
     }
 }

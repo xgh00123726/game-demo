@@ -20,7 +20,8 @@
         "YamlDotNet",
         "Projectile",
         "Spell",
-        "Equipment"
+        "Equipment",
+        "Item"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

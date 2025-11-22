@@ -8,37 +8,37 @@ namespace Constructor.Creatures
 {
     public class CreatureYamlFactory : YamlFactory<CreatureData, Creature, CreatureYamlFactory>
     {
-        protected override string YamlFolder => $"{Application.streamingAssetsPath}/Creatures";
+        protected override string Folder => $"{Application.streamingAssetsPath}/Creatures";
 
         protected override Creature GetEntity(CreatureData data)
         {
-            var e = CreatureSys.Instance.NewEntity(data.prefabName);
-            e.camp = data.camp;
-            e.healthBarOffset = data.healthBarOffset;
+            var e = CreatureSys.Instance.NewEntity(data.PrefabName);
+            e.Camp = data.Camp;
+            e.HealthBarOffset = data.HealthBarOffset;
 
-            e.modifyables.Set("universal", 0f);
-            e.modifyables.Set("moveSpeed", data.moveSpeed);
-            e.modifyables.Set("strength", 0f);
-            e.modifyables.Set("attackSpeed", 1f);
-            e.modifyables.Set("agility", 0f);
-            e.modifyables.Set("defense", 0f);
-            e.modifyables.Set("intelligence", 0f);
-            e.modifyables.Set("damage", data.damage);
+            e.Modifyables.Set("universal", 0f);
+            e.Modifyables.Set("moveSpeed", data.MoveSpeed);
+            e.Modifyables.Set("strength", 0f);
+            e.Modifyables.Set("attackSpeed", 1f);
+            e.Modifyables.Set("agility", 0f);
+            e.Modifyables.Set("defense", 0f);
+            e.Modifyables.Set("intelligence", 0f);
+            e.Modifyables.Set("damage", data.Damage);
 
-            e.modifyables.Set("healthRegen", data.healthRegen);
-            e.modifyables.Set("currHP", data.maxHP);
-            e.modifyables.Set("maxHP", data.maxHP);
-            e.modifyables.Set("currMana", 100f);
-            e.modifyables.Set("maxMana", 100f);
-            e.modifyables.Set("coolingAccelerate", 0f);
-            e.modifyables.Set("rotateSpeed", 720f);
-            e.modifyables.Set("attackRange", data.attackRange);
-            AnimControllerFactory.Get(data.animType)?.AddTo(e);
-            if (data.collideEnable)
+            e.Modifyables.Set("healthRegen", data.HealthRegen);
+            e.Modifyables.Set("currHP", data.MaxHP);
+            e.Modifyables.Set("maxHP", data.MaxHP);
+            e.Modifyables.Set("currMana", 100f);
+            e.Modifyables.Set("maxMana", 100f);
+            e.Modifyables.Set("coolingAccelerate", 0f);
+            e.Modifyables.Set("rotateSpeed", 720f);
+            e.Modifyables.Set("attackRange", data.AttackRange);
+            AnimControllerFactory.Get(data.AnimType)?.AddTo(e);
+            if (data.CollideEnable)
             {
                 e.AddCollider();
             }
-            AIFactory.Get(data.aiType)?.AddTo(e);
+            AIFactory.Get(data.AIType)?.AddTo(e);
 
             return e;
         }

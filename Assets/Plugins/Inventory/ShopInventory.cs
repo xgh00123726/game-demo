@@ -1,7 +1,4 @@
 using GameBase.Tools;
-using NReco.Csv;
-using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 namespace GameBase.Inventorys

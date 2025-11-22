@@ -6,7 +6,6 @@ using System.Reflection;
 namespace GameBase.Tools
 {
     public class CsvReaderReflect<T>
-        where T : new()
     {
         private bool _isStruct;
         private FieldInfo[] _fieldInfos;
@@ -74,7 +73,7 @@ namespace GameBase.Tools
 
         private T ParseClass(FieldInfo[] fieldInfos, CsvReader csvReader)
         {
-            var ret = new T();
+            var ret = Activator.CreateInstance<T>();
             for (int i = 0; i < fieldInfos.Length; ++i)
             {
                 var field = fieldInfos[i];
@@ -117,7 +116,7 @@ namespace GameBase.Tools
 
         private T ParseStruct(FieldInfo[] fieldInfos, CsvReader csvReader)
         {
-            var ret = new T();
+            var ret = Activator.CreateInstance<T>();
             TypedReference retRef = __makeref(ret);
             for (int i = 0; i < fieldInfos.Length; ++i)
             {

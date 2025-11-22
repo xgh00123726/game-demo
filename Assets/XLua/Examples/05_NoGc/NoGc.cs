@@ -1,6 +1,6 @@
 ﻿/*
  * Tencent is pleased to support the open source community by making xLua available.
- * Copyright (C) 2016 THL A29 Limited, a Tencent company. All rights reserved.
+ * Copyright (c) 2016 THL A29 Limited, a Tencent company. All rights reserved.
  * Licensed under the MIT License (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  * http://opensource.org/licenses/MIT
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
@@ -186,11 +186,11 @@ namespace XLuaTest
         // Update is called once per frame
         void Update()
         {
-            // c# call lua function with value type but no gc (using delegate)
-            f1(1); // primitive type
+            // c# call lua function with Value Type but no gc (using delegate)
+            f1(1); // primitive Type
             f2(new Vector3(1, 2, 3)); // vector3
             MyStruct mystruct1 = new MyStruct(5, 6);
-            f3(mystruct1); // custom complex value type
+            f3(mystruct1); // custom complex Value Type
             f4(MyEnum.E1); //enum
             decimal dec1 = -32132143143100109.00010001010M;
             f5(dec1); //decimal
@@ -198,14 +198,14 @@ namespace XLuaTest
             // using LuaFunction.Func<T1, T2, TResult>
             add.Func<int, int, int>(34, 56); // LuaFunction.Func<T1, T2, TResult>
 
-            // lua access c# value type array no gc
-            farr(a1); //primitive value type array
+            // lua access c# Value Type array no gc
+            farr(a1); //primitive Value Type array
             farr(a2); //vector3 array
             farr(a3); //custom struct array
             farr(a4); //enum arry
             farr(a5); //decimal arry
 
-            // lua call c# no gc with value type
+            // lua call c# no gc with Value Type
             flua();
 
             //c# call lua using interface

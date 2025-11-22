@@ -4,7 +4,7 @@ namespace GameBase.Indicators
 {
     public class LinearIndicator : CastIndicator
     {
-        public Indicator indicator;
+        public Indicator Indicator { get; set; }
         public float Length
         {
             set
@@ -15,28 +15,28 @@ namespace GameBase.Indicators
 
         private void SetLength(float value)
         {
-            indicator.Size = new Vector3(0.2f, value);
-            indicator.Pivot = new Vector3(0f, value / 2, 0f);
+            Indicator.Size = new Vector3(0.2f, value);
+            Indicator.Pivot = new Vector3(0f, value / 2, 0f);
         }
 
         public override void Show()
         {
-            indicator.obj.SetActive(true);
+            Indicator.Obj.SetActive(true);
         }
 
         public override void Hide()
         {
-            indicator.obj.SetActive(false);
+            Indicator.Obj.SetActive(false);
         }
 
         public override void Set(IndicatorConfig config)
         {
-            indicator.obj.transform.position = config.position;
+            Indicator.Obj.transform.position = config.position;
             Vector3 dir = config.targetPosition - config.position;
             float x = dir.x;
             float z = dir.z;
             float angle = Vector2.SignedAngle(new Vector2(x, z), new Vector2(0, 1));
-            indicator.obj.transform.rotation = Quaternion.Euler(90, angle, 0);
+            Indicator.Obj.transform.rotation = Quaternion.Euler(90, angle, 0);
             SetLength(dir.magnitude);
         }
     }

@@ -1,6 +1,6 @@
 ﻿/*
  * Tencent is pleased to support the open source community by making xLua available.
- * Copyright (C) 2016 THL A29 Limited, a Tencent company. All rights reserved.
+ * Copyright (c) 2016 THL A29 Limited, a Tencent company. All rights reserved.
  * Licensed under the MIT License (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  * http://opensource.org/licenses/MIT
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
@@ -77,13 +77,13 @@ namespace Tutorial
             Debug.Log("_G.c = " + luaenv.Global.Get<bool>("c"));
 
 
-            DClass d = luaenv.Global.Get<DClass>("d");//映射到有对应字段的class，by value
+            DClass d = luaenv.Global.Get<DClass>("d");//映射到有对应字段的class，by Value
             Debug.Log("_G.d = {f1=" + d.f1 + ", f2=" + d.f2 + "}");
 
-            Dictionary<string, double> d1 = luaenv.Global.Get<Dictionary<string, double>>("d");//映射到Dictionary<string, double>，by value
+            Dictionary<string, double> d1 = luaenv.Global.Get<Dictionary<string, double>>("d");//映射到Dictionary<string, double>，by Value
             Debug.Log("_G.d = {f1=" + d1["f1"] + ", f2=" + d1["f2"] + "}, d.Count=" + d1.Count);
 
-            List<double> d2 = luaenv.Global.Get<List<double>>("d"); //映射到List<double>，by value
+            List<double> d2 = luaenv.Global.Get<List<double>>("d"); //映射到List<double>，by Value
             Debug.Log("_G.d.len = " + d2.Count);
 
             ItfD d3 = luaenv.Global.Get<ItfD>("d"); //映射到interface实例，by ref，这个要求interface加到生成列表，否则会返回null，建议用法

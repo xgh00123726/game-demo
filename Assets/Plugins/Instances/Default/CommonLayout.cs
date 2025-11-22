@@ -15,38 +15,38 @@ namespace Instance
     }
     public class CommonLayout : ILayout
     {
-        public float xInterval = 115;
-        public float yInterval = 115;
-        public float width = 1200;
-        public float height = 600;
-        public AlignType align = AlignType.Left | AlignType.Bottom;
+        public float XInterval { get; set; } = 115;
+        public float YInterval { get; set; } = 115;
+        public float Width { get; set; } = 1200;
+        public float Height { get; set; } = 600;
+        public AlignType Align { get; set; } = AlignType.Left | AlignType.Bottom;
 
         public Vector3 GetItemLocalPosition(int index)
         {
-            var itemPerLine = (int)Mathf.Floor(width / (xInterval));
+            var itemPerLine = (int)Mathf.Floor(Width / (XInterval));
             var x = index % itemPerLine;
             var y = index / itemPerLine;
 
             float vx = 0f;
-            if ((align & AlignType.Left) != 0)
+            if ((Align & AlignType.Left) != 0)
             {
-                vx = (xInterval) * x;
+                vx = (XInterval) * x;
             }
-            else if ((align & AlignType.HCenter) != 0)
+            else if ((Align & AlignType.HCenter) != 0)
             {
-                vx = (xInterval) * x;
-                float remainWidth = itemPerLine * (xInterval);
+                vx = (XInterval) * x;
+                float remainWidth = itemPerLine * (XInterval);
                 vx -= remainWidth / 2;
             }
 
             float vy = 0f;
-            if ((align & AlignType.Top) != 0)
+            if ((Align & AlignType.Top) != 0)
             {
-                vy = height - yInterval * y;
+                vy = Height - YInterval * y;
             }
-            else if ((align & AlignType.Bottom) != 0)
+            else if ((Align & AlignType.Bottom) != 0)
             {
-                vy = yInterval * y;
+                vy = YInterval * y;
             }
 
 

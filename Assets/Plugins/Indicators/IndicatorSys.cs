@@ -10,12 +10,12 @@ namespace GameBase.Indicators
     {
         protected override void OnGet(Indicator e)
         {
-            e.obj.SetActive(true);
+            e.Obj.SetActive(true);
         }
 
         protected override void OnRelease(Indicator e)
         {
-            e.obj.SetActive(false);
+            e.Obj.SetActive(false);
         }
 
         protected override Indicator CtorT(string k)
@@ -27,21 +27,21 @@ namespace GameBase.Indicators
             e.decalMaterial = new Material(e.urpProjector.material);
             e.urpProjector.material = e.decalMaterial;
 
-            e.obj = obj;
+            e.Obj = obj;
 
             return e;
         }
 
         protected override void EntityStart(Indicator e)
         {
-            var texture = GameObject.Instantiate(ResourceMgr.Texture2D.Get(e.textureName));
+            var texture = GameObject.Instantiate(ResourceMgr.Texture2D.Get(e.TextureName));
 
             e.decalMaterial.SetTexture("_Texture2D", texture);
         }
 
         protected override void UpdateEntity(Indicator e)
         {
-            if (!e.obj.activeSelf)
+            if (!e.Obj.activeSelf)
             {
                 return;
             }

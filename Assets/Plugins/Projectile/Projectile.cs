@@ -16,27 +16,24 @@ namespace GameBase.Projectiles
 
     public class Projectile
     {
-        public Flying flying;
-        public Trigger trigger;
-
-        public float findTargetRange;
-        public float damage;
-        public float ampFactor;
-        public Color damageTextColor;
-        public string damageTextPrefabName;
-
-        public Tag tag;
-        public float arriveDis;
-
         internal bool alive;
         internal Creature target;
         internal Creature owner;
 
+        public Flying Flying { get; set; }
+        public Trigger Trigger { get; set; }
+        public float FindTargetRange { get; set; }
+        public float Damage {  get; set; }
+        public float AmpFactor { get; set; }
+        public Color DamageTextColor { get; set; }
+        public string DamageTextPrefabName { get; set; }
+        public Tag Tag { get; set; }
+        public float ArriveDis {  get; internal set; }
         public bool Alive => alive;
-        public bool IsDestroyOnEffectMaxTimes => (tag & Tag.DestroyOnEffectMaxTimes) != 0;
-        public bool IsTrigOnlyWhenHitMainTarget => (tag & Tag.TrigOnlyWhenHitMainTarget) != 0;
-        public bool IsDestroyOnFlyingEnd => (tag & Tag.DestroyOnFlyingEnd) != 0;
-        public bool IsAutoFindPossibleTarget => (tag & Tag.AutoFindPossibleTarget) != 0;
+        public bool IsDestroyOnEffectMaxTimes => (Tag & Tag.DestroyOnEffectMaxTimes) != 0;
+        public bool IsTrigOnlyWhenHitMainTarget => (Tag & Tag.TrigOnlyWhenHitMainTarget) != 0;
+        public bool IsDestroyOnFlyingEnd => (Tag & Tag.DestroyOnFlyingEnd) != 0;
+        public bool IsAutoFindPossibleTarget => (Tag & Tag.AutoFindPossibleTarget) != 0;
 
         public Creature Target
         {
@@ -48,13 +45,13 @@ namespace GameBase.Projectiles
                 {
                     return;
                 }
-                if (trigger.targetCamp == null)
+                if (Trigger.TargetCamp == null)
                 {
-                    trigger.targetCamp = target.camp;
+                    Trigger.TargetCamp = target.Camp;
                 }
                 else
                 {
-                    trigger.targetCamp = trigger.targetCamp.Or(target.camp);
+                    Trigger.TargetCamp = Trigger.TargetCamp.Or(target.Camp);
                 }
             }
         }
@@ -65,8 +62,8 @@ namespace GameBase.Projectiles
             set
             {
                 owner = value;
-                trigger.owner = value;
-                flying.Src = owner.HandPosition;
+                Trigger.Owner = value;
+                Flying.Src = owner.HandPosition;
             }
         }
     }

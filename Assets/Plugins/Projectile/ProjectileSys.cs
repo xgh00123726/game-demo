@@ -16,33 +16,33 @@ namespace GameBase.Projectiles
         protected override void OnGet(Projectile e)
         {
             e.alive = true;
-            e.arriveDis = 0.1f;
-            e.damage = 1;
-            e.ampFactor = 1f;
-            e.damageTextColor = Color.white;
-            e.damageTextPrefabName = "Prefabs/UI/FloatText";
+            e.ArriveDis = 0.1f;
+            e.Damage = 1;
+            e.AmpFactor = 1f;
+            e.DamageTextColor = Color.white;
+            e.DamageTextPrefabName = "Prefabs/UI/FloatText";
         }
 
         protected override void OnRelease(Projectile e)
         {
             e.alive = false;
-            e.trigger.targetCamp = null;
+            e.Trigger.TargetCamp = null;
 
-            if (e.flying.Alive)
+            if (e.Flying.Alive)
             {
-                FlyingSys.Instance.RemoveEntity(e.flying);
+                FlyingSys.Instance.RemoveEntity(e.Flying);
             }
-            TriggerSys.Instance.RemoveEntity(e.trigger);
+            TriggerSys.Instance.RemoveEntity(e.Trigger);
 
-            e.flying = null;
-            e.trigger = null;
+            e.Flying = null;
+            e.Trigger = null;
             e.owner = null;
             e.target = null;
         }
 
         protected override void EntityStart(Projectile e)
         {
-            if (e.flying == null || e.trigger == null)
+            if (e.Flying == null || e.Trigger == null)
             {
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
                     .Log("projectile must has flying and trigger");
@@ -51,11 +51,11 @@ namespace GameBase.Projectiles
 
             if (e.IsAutoFindPossibleTarget && e.target == null)
             {
-                var c = CreatureSys.Instance.NearestEntity(e.flying.Position, (Camp)e.trigger.targetCamp, e.findTargetRange);
+                var c = CreatureSys.Instance.NearestEntity(e.Flying.Position, (Camp)e.Trigger.TargetCamp, e.FindTargetRange);
                 if (c != null)
                 {
                     e.Target = c;
-                    e.flying.target = c;
+                    e.Flying.Target = c;
                 }
                 else
                 {
@@ -64,45 +64,45 @@ namespace GameBase.Projectiles
                 }
             }
 
-            e.flying.target = e.target;
-            e.flying.Src = e.owner.HandPosition;
+            e.Flying.Target = e.target;
+            e.Flying.Src = e.owner.HandPosition;
 
             if (e.IsTrigOnlyWhenHitMainTarget)
             {
-                e.trigger.trigStyle = Triggers.TrigStyle.External;
+                e.Trigger.TrigStyle = Triggers.TrigStyle.External;
             }
             else
             {
-                e.trigger.trigStyle = Triggers.TrigStyle.Always;
+                e.Trigger.TrigStyle = Triggers.TrigStyle.Always;
             }
 
             // 如果没有阵营，则默认射弹向敌方发出
-            e.trigger.targetCamp ??= new CampSet()
+            e.Trigger.TargetCamp ??= new CampSet()
                 {
                     include = CampSet.Typedef.Others,
-                }.GetCamp(e.owner.camp);
+                }.GetCamp(e.owner.Camp);
 
-            e.trigger.action = new ProjectileAction()
+            e.Trigger.Action = new ProjectileAction()
             {
-                damage = e.owner.modifyables["damage"].Value * e.ampFactor + e.damage,
-                prefabName = e.damageTextPrefabName,
-                color = e.damageTextColor,
+                damage = e.owner.Modifyables["damage"].Value * e.AmpFactor + e.Damage,
+                prefabName = e.DamageTextPrefabName,
+                color = e.DamageTextColor,
             };
 
-            e.trigger.attach = e.flying;
-            e.trigger.target = e.target;
+            e.Trigger.Attach = e.Flying;
+            e.Trigger.Target = e.target;
         }
 
         private void TraceMainTargetProcess(Projectile e)
         {
             if (e.IsTrigOnlyWhenHitMainTarget && e.target != null)
             {
-                float arriveDis = e.arriveDis;
-                arriveDis += e.target.radius;
-                if ((e.flying.Dest - e.flying.Position).magnitude <= arriveDis)
+                float arriveDis = e.ArriveDis;
+                arriveDis += e.target.Radius;
+                if ((e.Flying.Dest - e.Flying.Position).magnitude <= arriveDis)
                 {
-                    e.trigger.target = e.target;
-                    e.trigger.Trig();
+                    e.Trigger.Target = e.target;
+                    e.Trigger.Trig();
                 }
             }
         }
@@ -111,20 +111,20 @@ namespace GameBase.Projectiles
         {
             if (e.IsDestroyOnEffectMaxTimes)
             {
-                if (e.trigger.ActualEffectTimes >= e.trigger.maxEffectTimes)
+                if (e.Trigger.ActualEffectTimes >= e.Trigger.MaxEffectTimes)
                 {
                     RemoveEntity(e);
                     return;
                 }
             }
-            if (e.flying != null)
+            if (e.Flying != null)
             {
-                if (!e.flying.Alive)
+                if (!e.Flying.Alive)
                 {
                     RemoveEntity(e);
                     return;
                 }
-                if (e.IsDestroyOnFlyingEnd && e.flying.IsEnd)
+                if (e.IsDestroyOnFlyingEnd && e.Flying.IsEnd)
                 {
                     RemoveEntity(e);
                     return;
@@ -139,7 +139,7 @@ namespace GameBase.Projectiles
             {
                 return;
             }
-            if (e.flying != null)
+            if (e.Flying != null)
             {
                 TraceMainTargetProcess(e);
             }

@@ -5,10 +5,6 @@ namespace GameBase.UI
 {
     public class HealthBar : IKeyEntity<string>
     {
-        public IHealthBarOwner owner;
-        public float width = 0.9f;
-        public bool healthBarFollow = true;
-
         internal int lastCurrHP;
         internal int lastMaxHP;
         internal float currPercent;
@@ -18,7 +14,10 @@ namespace GameBase.UI
         internal GameObject losing;
         internal RectTransform losingRectTransform;
 
-        public GameObject obj;
+        public IHealthBarOwner Owner { get; set; }
+        public float Width { get; set; } = 0.9f;
+        public bool HealthBarFollow { get; set; } = true;
+        public GameObject Obj { get; set; }
         public string Key { get; set; }
     }
 }

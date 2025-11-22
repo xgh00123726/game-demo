@@ -6,26 +6,26 @@ namespace Constructor.Spells
 {
     public class SpellCampData
     {
-        public CampSet.Typedef include;
-        public CampSet.Typedef exclude;
+        public CampSet.Typedef Include {  get; set; }
+        public CampSet.Typedef Exclude { get; set; }
     }
 
     public class SpellIndicatorData
     {
-        public CastIndicatorType type;
-        public float length;
-        public float radius;
+        public CastIndicatorType Type { get; set; }
+        public float Length { get; set; }
+        public float Radius { get; set; }
     }
 
     public class SpellData
     {
-        public float minCastAngle;
-        public string textureName;
-        public float cooldown;
-        public GameBase.Spells.Tag tag;
+        public float MinCastAngle {  get; set; }
+        public string TextureName { get; set; }
+        public float Cooldown {  get; set; }
+        public GameBase.Spells.Tag Tag { get; set; }
 
-        public SpellCampData camp;
-        public SpellIndicatorData indicator;
-        public string actionName;
+        public SpellCampData Camp { get; set; }
+        public SpellIndicatorData Indicator { get; set; }
+        public string ActionName { get; set; }
     }
 }

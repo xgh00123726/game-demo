@@ -7,7 +7,6 @@ namespace GameBase.Inventorys
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class DynInventory<T> : CommonInventory<T>
-        where T : new()
     {
         public override int Add(T item)
         {

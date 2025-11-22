@@ -1,6 +1,6 @@
 ﻿/*
  * Tencent is pleased to support the open source community by making xLua available.
- * Copyright (C) 2016 THL A29 Limited, a Tencent company. All rights reserved.
+ * Copyright (c) 2016 THL A29 Limited, a Tencent company. All rights reserved.
  * Licensed under the MIT License (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  * http://opensource.org/licenses/MIT
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
@@ -681,7 +681,7 @@ namespace XLua
 				string memberName = LuaAPI.lua_tostring(L, LuaAPI.xlua_upvalueindex(3));
 				bool isStatic = LuaAPI.lua_toboolean(L, LuaAPI.xlua_upvalueindex(4));
 				LuaCSFunction wrap = null;
-				//UnityEngine.Debug.Log(">>>>> " + type + " " + memberName);
+				//UnityEngine.Debug.Log(">>>>> " + Type + " " + memberName);
 
 				switch (memberType)
 				{
@@ -826,7 +826,7 @@ namespace XLua
 
             int top_enter = LuaAPI.lua_gettop(L);
 			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			//create obj meta table
+			//create Obj meta table
 			LuaAPI.luaL_getmetatable(L, type.FullName);
 			if (LuaAPI.lua_isnil(L, -1))
 			{
@@ -862,7 +862,7 @@ namespace XLua
 			makeReflectionWrap(L, type, cls_field, cls_getter, cls_setter, obj_field, obj_getter, obj_setter, obj_meta,
 				out item_getter, out item_setter, privateAccessible ? (BindingFlags.Public | BindingFlags.NonPublic) : BindingFlags.Public);
 
-			// init obj metatable
+			// init Obj metatable
 			LuaAPI.xlua_pushasciistring(L, "__gc");
 			LuaAPI.lua_pushstdcallcfunction(L, translator.metaFunctions.GcMeta);
 			LuaAPI.lua_rawset(L, obj_meta);
@@ -905,7 +905,7 @@ namespace XLua
 			LuaAPI.lua_rawset(L, -3);
 			LuaAPI.lua_pop(L, 1);
 			LuaAPI.lua_rawset(L, obj_meta); // set __newindex
-											//finish init obj metatable
+											//finish init Obj metatable
 
 			LuaAPI.xlua_pushasciistring(L, "UnderlyingSystemType");
 			translator.PushAny(L, type);

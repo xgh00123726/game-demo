@@ -21,9 +21,9 @@ namespace Instance
                 return;
             }
             var c = CollideSys.Instance.NewEntity<FCRectCollider>();
-            c.localPosition = _rectBuffer.center;
-            c.w = _rectBuffer.width;
-            c.h = _rectBuffer.height;
+            c.LocalPosition = _rectBuffer.center;
+            c.Width = _rectBuffer.width;
+            c.Height = _rectBuffer.height;
         }
 
         private static void StackDrawRect(Rect rect)

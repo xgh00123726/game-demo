@@ -1,6 +1,7 @@
-textureName: Textures/Equipment/moveSpeed1.png
-rarity: 0
-tag: 
-modifiers:
-- key: moveSpeed
-  value: 1
+ID: 3
+TextureName: Textures/Equipment/moveSpeed1.png
+Rarity: 0
+Tag: 
+Modifiers:
+- Key: moveSpeed
+  Value: 1

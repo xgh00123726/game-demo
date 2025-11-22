@@ -9,24 +9,21 @@ namespace GameBase.Spells
         internal float cooldownRemain = 0;
         internal bool isCoolOver = false;
 
-        public float point;            // 前摇
-        public float backswing;        // 后摇
-        public float duration;         // 持续时间
-        public float minCastAngle;     // 最小施法角度
-        public float cooldown;
-
-        public string textureName;
-        public ISpellCampSet targetCampSet;
-        public ISpellCamp targetCamp;
-        public Vector3 castPosition;
-        public Tag tag;
-        public CastIndicatorType indicatorType;
-        public float length;
-        public float radius;
-
-        public ISpeller speller;
-        public ISpellAction action;
-
+        public float Point { get; set; }            // 前摇
+        public float Backswing { get; set; }        // 后摇
+        public float Duration { get; set; }         // 持续时间
+        public float MinCastAngle { get; set; }     // 最小施法角度
+        public float Cooldown { get; set; }
+        public string TextureName { get; set; }
+        public ISpellCampSet TargetCampSet {  get; set; }
+        public ISpellCamp TargetCamp { get; set; }
+        public Vector3 CastPosition { get; set; }
+        public Tag Tag { get; set; }
+        public CastIndicatorType IndicatorType { get; set; }
+        public float Length { get; set; }
+        public float Radius { get; set; }
+        public ISpeller Speller { get; set; }
+        public ISpellAction Action { get; set; }
         public bool IsTrig => isTrig;
         public float CooldownRemain => cooldownRemain;
         public bool IsCoolOver => isCoolOver;

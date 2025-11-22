@@ -27,34 +27,34 @@ namespace Instance
 
         public void UpdatePanel(Spell spell)
         {
-            if (spell.action is ModifyableAction mAct)
+            if (spell.Action is ModifyableAction mAct)
             {
-                _spellShadowView.image.SetIcon(spell.textureName);
-                _spellShadowView.image.SetColor(UnityEngine.Color.green);
-                _spellShadowView.image.Show();
+                _spellShadowView.Image.SetIcon(spell.TextureName);
+                _spellShadowView.Image.SetColor(UnityEngine.Color.green);
+                _spellShadowView.Image.Show();
                 FillItem(mAct.Size);
 
                 for (int i = 0; i < mAct.Size; i++)
                 {
-                    this[i].obj.SetActive(true);
+                    this[i].Obj.SetActive(true);
                     int id = mAct.GetID(i);
                     if (id >= 0)
                     {
                         var data = SpellActionModifierDataBase.Instance[id];
 
-                        this[i].triggerImage.SetIcon(data.textureName);
-                        this[i].triggerImage.SetColor(data.rarity);
-                        this[i].triggerImage.Show();
+                        this[i].TriggerImage.SetIcon(data.textureName);
+                        this[i].TriggerImage.SetColor(data.rarity);
+                        this[i].TriggerImage.Show();
                     }
                     else
                     {
-                        this[i].triggerImage.HideColor();
-                        this[i].triggerImage.Hide();
+                        this[i].TriggerImage.HideColor();
+                        this[i].TriggerImage.Hide();
                     }
                 }
                 for (int i = mAct.Size; i < Entities.Count; i++)
                 {
-                    this[i].obj.SetActive(false);
+                    this[i].Obj.SetActive(false);
                 }
             }
         }

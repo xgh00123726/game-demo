@@ -23,57 +23,38 @@ namespace GameBase.Creatures
     {
         internal int id;
 
-        public float radius = 0.3f;
-        public Vector3 healthBarOffset = new Vector3(0, 1.6f, 0);
-        public Action<Creature> OnDead;
-       
-        public List<Buff> buffs = new();
-
-        public int instanceID;
-        public BaseAI ai;
-        public Mover mover;
-        public HealthBar healthBar;
-        public Animator animator;
-        public GameBase.Move.CircleCollider collider;
-
+        public float Radius { get; set; } = 0.3f;
+        public Vector3 HealthBarOffset { get; set; } = new Vector3(0, 1.6f, 0);
+        public Action<Creature> OnDead { get; set; }
+        public List<Buff> Buffs { get; set; } = new();
+        public BaseAI AI { get; set; }
+        public Mover Mover { get; set; }
+        public HealthBar HealthBar { get; set; }
+        public Animator Animator { get; set; }
+        public GameBase.Move.CircleCollider Collider { get; set; }
         public bool Alive { get; internal protected set; }
-        public GameObject obj;
+        public GameObject Obj { get; set; }
         public string Key { get; set; }
         public int ID => id;
-        public Vector3 Dir => obj.transform.forward;
+        public Vector3 Dir => Obj.transform.forward;
 
-        Vector3 IHealthBarOwner.HealthBarPosition => obj.transform.position + healthBarOffset;
+        Vector3 IHealthBarOwner.HealthBarPosition => Obj.transform.position + HealthBarOffset;
 
-        Vector3 ITriggerTarget.Position => obj.transform.position;
+        float IHealthBarOwner.CurrHP => _modifyables["currHP"].Value;
 
-        float ITriggerTarget.Radius => radius;
+        float IHealthBarOwner.MaxHP => _modifyables["maxHP"].Value;
 
-        float IHealthBarOwner.CurrHP => modifyables["currHP"].Value;
-
-        float IHealthBarOwner.MaxHP => modifyables["maxHP"].Value;
-
-        bool IHealthBarOwner.ALive => Alive;
-
-        public Vector3 HandPosition => obj.transform.position + new Vector3(0, 1, 0);
+        public Vector3 HandPosition => Obj.transform.position + new Vector3(0, 1, 0);
 
         public Vector3 Position
         {
-            get => obj.transform.position;
-            set => obj.transform.position = value;
+            get => Obj.transform.position;
+            set => Obj.transform.position = value;
         }
 
-        float IMover.MoveSpeed => modifyables["moveSpeed"].Value;
+        float IMover.MoveSpeed => _modifyables["moveSpeed"].Value;
 
-        float IMover.RotateSpeed => modifyables["rotateSpeed"].Value;
-
-        GameObject IMover.Obj => obj;
-
-        float IMover.Radius => radius;
-
-        Move.CircleCollider IMover.Collider => collider;
-
-        
-
+        float IMover.RotateSpeed => _modifyables["rotateSpeed"].Value;
 
         public void AddBuff(string name, float duration = -1)
         {
@@ -85,32 +66,31 @@ namespace GameBase.Creatures
             AIFactory.Get(type).AddTo(this);
         }
 
-
        void IBuffOwner.OnGetBuff(Buff buff)
         {
-            buffs.Add(buff);
+            Buffs.Add(buff);
         }
 
         void IBuffOwner.OnRemoveBuff(Buff buff)
         {
-            buffs.Remove(buff);
+            Buffs.Remove(buff);
         }
 
         public void AddCollider()
         {
-            collider = CollideSys.Instance.NewEntity<CircleCollider>();
-            collider.Owner = obj.transform;
-            collider.r = radius;
+            Collider = CollideSys.Instance.NewEntity<CircleCollider>();
+            Collider.Owner = Obj.transform;
+            Collider.r = Radius;
         }
 
         public void Interrupt()
         {
-            mover.Interrupt();
-            for (int i = 0; i < spells.Size; i++)
+            Mover.Interrupt();
+            for (int i = 0; i < Spells.Size; i++)
             {
-                if (spells.HasItem(i))
+                if (Spells.HasItem(i))
                 {
-                    spells[i].Interrupt();
+                    Spells[i].Interrupt();
                 }
             }
         }

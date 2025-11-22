@@ -23,9 +23,9 @@ public class CollideUtil
 
         if (intersectLen > 0)
         {
-            c1.isCollide = true;
+            c1.IsCollide = true;
 
-            c1.force += force.normalized * -intersectLen;
+            c1.Force += force.normalized * -intersectLen;
         }
     }
     public static void CircleCollideToCircle(CircleCollider c1, CircleCollider c2)
@@ -45,11 +45,11 @@ public class CollideUtil
 
         if (intersectLen > 0)
         {
-            c1.isCollide = true;
-            c2.isCollide = true;
+            c1.IsCollide = true;
+            c2.IsCollide = true;
 
-            c1.force += force.normalized * -intersectLen;
-            c2.force += force.normalized * intersectLen;
+            c1.Force += force.normalized * -intersectLen;
+            c2.Force += force.normalized * intersectLen;
         }
     }
 
@@ -67,8 +67,8 @@ public class CollideUtil
         var cy = cc.position.y;
         var rx = rc.position.x;
         var ry = rc.position.y;
-        var w = rc.w;
-        var h = rc.h;
+        var w = rc.Width;
+        var h = rc.Height;
         var r = cc.r;
 
         var rXMin = rc.xMin;
@@ -133,25 +133,25 @@ public class CollideUtil
 
         if (dir != CollideDir.None)
         {
-            cc.isCollide = true;
-            rc.isCollide = true;
+            cc.IsCollide = true;
+            rc.IsCollide = true;
         }
 
         if ((dir & CollideDir.Left) != 0)
         {
-            cc.force += new Vector2(-Mathf.Abs(outXMin - cx), 0);
+            cc.Force += new Vector2(-Mathf.Abs(outXMin - cx), 0);
         }
         if ((dir & CollideDir.Right) != 0)
         {
-            cc.force += new Vector2(Mathf.Abs(outXMax - cx), 0);
+            cc.Force += new Vector2(Mathf.Abs(outXMax - cx), 0);
         }
         if ((dir & CollideDir.Bottom) != 0)
         {
-            cc.force += new Vector2(0, -Mathf.Abs(outYMin - cy));
+            cc.Force += new Vector2(0, -Mathf.Abs(outYMin - cy));
         }
         if ((dir & CollideDir.Top) != 0)
         {
-            cc.force += new Vector2(0, Mathf.Abs(outYMax - cy));
+            cc.Force += new Vector2(0, Mathf.Abs(outYMax - cy));
         }
     }
 
@@ -161,10 +161,10 @@ public class CollideUtil
         var cy = cc.position.y;
         var rx = rc.position.x;
         var ry = rc.position.y;
-        var w = rc.w;
-        var h = rc.h;
+        var w = rc.Width;
+        var h = rc.Height;
         var r = cc.r;
-        var fcr = rc.filletedCornerR;
+        var fcr = rc.FilletedCornerR;
 
         var rXMin = rc.xMin;
         var rYMin = rc.yMin;
@@ -211,50 +211,50 @@ public class CollideUtil
             if (GMath.CircleContains(cx, cy, r, rXMin, rYMin))
             {
                 CircleColldeToMathCircle(cc, rc.LeftBottomCircle);
-                cc.isCollide = true;
-                rc.isCollide = true;
+                cc.IsCollide = true;
+                rc.IsCollide = true;
             }
             else if (GMath.CircleContains(cx, cy, r, rXMin, rYMax))
             {
                 CircleColldeToMathCircle(cc, rc.LeftTopCircle);
-                cc.isCollide = true;
-                rc.isCollide = true;
+                cc.IsCollide = true;
+                rc.IsCollide = true;
             }
             else if (GMath.CircleContains(cx, cy, r, rXMax, rYMin))
             {
                 CircleColldeToMathCircle(cc, rc.RightBottomCircle);
-                cc.isCollide = true;
-                rc.isCollide = true;
+                cc.IsCollide = true;
+                rc.IsCollide = true;
             }
             else if (GMath.CircleContains(cx, cy, r, rXMax, rYMax))
             {
                 CircleColldeToMathCircle(cc, rc.RightTopCircle);
-                cc.isCollide = true;
-                rc.isCollide = true;
+                cc.IsCollide = true;
+                rc.IsCollide = true;
             }
         }
 
         if (dir != CollideDir.None)
         {
-            cc.isCollide = true;
-            rc.isCollide = true;
+            cc.IsCollide = true;
+            rc.IsCollide = true;
         }
 
         if ((dir & CollideDir.Left) != 0)
         {
-            cc.force += new Vector2(-Mathf.Abs(outXMin - cx), 0);
+            cc.Force += new Vector2(-Mathf.Abs(outXMin - cx), 0);
         }
         if ((dir & CollideDir.Right) != 0)
         {
-            cc.force += new Vector2(Mathf.Abs(outXMax - cx), 0);
+            cc.Force += new Vector2(Mathf.Abs(outXMax - cx), 0);
         }
         if ((dir & CollideDir.Bottom) != 0)
         {
-            cc.force += new Vector2(0, -Mathf.Abs(outYMin - cy));
+            cc.Force += new Vector2(0, -Mathf.Abs(outYMin - cy));
         }
         if ((dir & CollideDir.Top) != 0)
         {
-            cc.force += new Vector2(0, Mathf.Abs(outYMax - cy));
+            cc.Force += new Vector2(0, Mathf.Abs(outYMax - cy));
         }
     }
 }

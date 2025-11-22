@@ -22,8 +22,7 @@ namespace GameBase.Move
         internal float boxW;
         internal float boxH;
         
-        public List<List<int>> map;
-
+        public List<List<int>> Map { get; set; }
         public int HorizontalNum => horizontalNum;
         public int VerticalNum => verticalNum;
         public Vector2 Center => new Vector2(centerX, centerY);
@@ -35,21 +34,21 @@ namespace GameBase.Move
         public float YMax => yMax;
         public List<int> this[int i]
         {
-            get => map[i];
+            get => Map[i];
         }
         public int this[Coord coord]
         {
             get
             {
-                if (map.Count == 0 || map[0].Count == 0)
+                if (Map.Count == 0 || Map[0].Count == 0)
                 {
                     return weightFactor;
                 }
-                if (coord.x >= map.Count || coord.y >= map[0].Count || coord.x < 0 || coord.y < 0)
+                if (coord.x >= Map.Count || coord.y >= Map[0].Count || coord.x < 0 || coord.y < 0)
                 {
                     return weightFactor;
                 }
-                return map[coord.x][coord.y];
+                return Map[coord.x][coord.y];
             }
         }
 
@@ -88,13 +87,13 @@ namespace GameBase.Move
             yMin = centerY - verticalNum / 2 * boxH;
             yMax = centerY + verticalNum / 2 * boxH;
 
-            map = new(horizontalNum);
+            Map = new(horizontalNum);
             for (int i = 0; i < horizontalNum; i++)
             {
-                map.Add(new(verticalNum));
+                Map.Add(new(verticalNum));
                 for (int j = 0; j < verticalNum; j++)
                 {
-                    map[i].Add(weightFactor);
+                    Map[i].Add(weightFactor);
                 }
             }
         }
@@ -111,11 +110,11 @@ namespace GameBase.Move
             {
                 for (int j = 0; j < dy / 2 + 1; j++)
                 {
-                    if (expr?.Invoke(map[minX + i][minY + j]) == true)
+                    if (expr?.Invoke(Map[minX + i][minY + j]) == true)
                     {
                         return true;
                     }
-                    if (expr?.Invoke(map[maxX - i][maxY - j]) == true)
+                    if (expr?.Invoke(Map[maxX - i][maxY - j]) == true)
                     {
                         return true;
                     }
@@ -139,7 +138,7 @@ namespace GameBase.Move
             {
                 for (int j = j1; j <= j2; j++)
                 {
-                    map[i][j] = (int)(weight * weightFactor);
+                    Map[i][j] = (int)(weight * weightFactor);
                 }
             }
         }

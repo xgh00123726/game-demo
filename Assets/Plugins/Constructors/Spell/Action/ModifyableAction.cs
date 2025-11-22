@@ -8,10 +8,13 @@ namespace Constructor.Spells
 {
     public abstract partial class ModifyableAction : ISpellAction
     {
-
         private float _processedDisfuse = 0f;
         private float _angleInit = 0f;
         private float _angleDelta = 0f;
+
+        protected float Disfuse => _processedDisfuse;
+        protected float AngleInit => _angleInit;
+        protected float AngleDelta => _angleDelta;
 
         protected virtual Projectile GenProjectile(Spell spell, in SpellActionModifierData modifyData)
         {
@@ -28,22 +31,16 @@ namespace Constructor.Spells
             {
                 var projectile = GenProjectile(spell, modifyData);
 
-                if (projectile != null && projectile.flying != null) 
+                if (projectile != null && projectile.Flying != null) 
                 {
-                    projectile.flying.startAngleOffset = GetAngleOffset(i);
-                    RecorrectFlying(projectile.flying);
+                    projectile.Flying.StartAngleOffset = GetAngleOffset(i);
+                    RecorrectFlying(projectile.Flying);
                     ret = true;
                 }
             }
 
             return ret;
         }
-
-        protected float Disfuse => _processedDisfuse;
-
-        protected float AngleInit => _angleInit;
-
-        protected float AngleDelta => _angleDelta;
 
         bool ISpellAction.CastAction(Spell spell)
         {

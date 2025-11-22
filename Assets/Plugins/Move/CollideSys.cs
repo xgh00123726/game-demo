@@ -25,8 +25,8 @@ namespace GameBase.Move
         {
             foreach (var c in Entities)
             {
-                c.isCollide = false;
-                c.force = Vector2.zero;
+                c.IsCollide = false;
+                c.Force = Vector2.zero;
             }
         }
 

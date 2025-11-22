@@ -8,20 +8,20 @@ namespace Instance
     {
         private static Creature _playerBarTarget;
 
-        public static EpicBar healthBar;
-        public static EpicBar manaBar;
-        public static EpicBar expBar;
+        public static EpicBar HealthBar { get; set; }
+        public static EpicBar ManaBar { get; set; }
+        public static EpicBar ExpBar { get; set; }
 
         public EpicBarController()
         {
-            healthBar = EpicBarSys.Instance.NewEntity("Prefabs/UI/EpicHealthBar");
-            healthBar.obj.SetActive(false);
+            HealthBar = EpicBarSys.Instance.NewEntity("Prefabs/UI/EpicHealthBar");
+            HealthBar.Obj.SetActive(false);
 
-            manaBar = EpicBarSys.Instance.NewEntity("Prefabs/UI/EpicManaBar");
-            manaBar.obj.SetActive(false);
+            ManaBar = EpicBarSys.Instance.NewEntity("Prefabs/UI/EpicManaBar");
+            ManaBar.Obj.SetActive(false);
 
-            expBar = EpicBarSys.Instance.NewEntity("Prefabs/UI/EpicExpBar.prefab");
-            expBar.obj.SetActive(false);
+            ExpBar = EpicBarSys.Instance.NewEntity("Prefabs/UI/EpicExpBar.prefab");
+            ExpBar.Obj.SetActive(false);
         }
 
         public static void SetPlayerBarTarget(Creature target)
@@ -29,15 +29,15 @@ namespace Instance
             _playerBarTarget = target;
             if (_playerBarTarget == null)
             {
-                healthBar.obj.SetActive(false);
-                manaBar.obj.SetActive(false);
-                expBar.obj.SetActive(false);
+                HealthBar.Obj.SetActive(false);
+                ManaBar.Obj.SetActive(false);
+                ExpBar.Obj.SetActive(false);
             }
             else
             {
-                healthBar.obj.SetActive(true);
-                manaBar.obj.SetActive(true);
-                expBar.obj.SetActive(true);
+                HealthBar.Obj.SetActive(true);
+                ManaBar.Obj.SetActive(true);
+                ExpBar.Obj.SetActive(true);
             }
         }
 
@@ -49,15 +49,15 @@ namespace Instance
             }
             else
             {
-                healthBar.CurrHP = _playerBarTarget.modifyables["currHP"].Value;
-                healthBar.MaxHP = _playerBarTarget.modifyables["maxHP"].Value;
-                healthBar.regen = _playerBarTarget.modifyables["healthRegen"].Value;
+                HealthBar.CurrHP = _playerBarTarget.Modifyables["currHP"].Value;
+                HealthBar.MaxHP = _playerBarTarget.Modifyables["maxHP"].Value;
+                HealthBar.Regen = _playerBarTarget.Modifyables["healthRegen"].Value;
 
-                manaBar.CurrHP = _playerBarTarget.modifyables["currMana"].Value;
-                manaBar.MaxHP = _playerBarTarget.modifyables["maxMana"].Value;
+                ManaBar.CurrHP = _playerBarTarget.Modifyables["currMana"].Value;
+                ManaBar.MaxHP = _playerBarTarget.Modifyables["maxMana"].Value;
 
-                expBar.CurrHP = _playerBarTarget.currentExp;
-                expBar.MaxHP = _playerBarTarget.levelUpExp;
+                ExpBar.CurrHP = _playerBarTarget.CurrentExp;
+                ExpBar.MaxHP = _playerBarTarget.LevelUpExp;
             }
         }
     }

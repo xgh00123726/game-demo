@@ -7,7 +7,7 @@ namespace GameBase.Indicators
 {
     public class Indicator : IKeyEntity<string>
     {
-        public string textureName;
+        public string TextureName { get; set; }
 
         internal Material decalMaterial;
         internal bool setSize;
@@ -39,7 +39,7 @@ namespace GameBase.Indicators
                 pivot = value;
             }
         }
-        public GameObject obj;
+        public GameObject Obj { get; set; }
         public string Key { get; set; }
     }
 }

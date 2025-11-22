@@ -31,7 +31,7 @@ namespace GameBase.Move
 
         protected override void EntityStart(Mover e)
         {
-            e.dest = e.owner.Position;
+            e.dest = e.Owner.Position;
         }
 
         private void MoveUpdate(Mover e)
@@ -42,22 +42,22 @@ namespace GameBase.Move
             }
 
             Vector3 delta = Vector3.zero;
-            Vector3 dest = e.owner.Position;
+            Vector3 dest = e.Owner.Position;
             if (e.isMoving)
             {
-                Vector3 dir = e.dest - e.owner.Position;
-                delta = e.owner.MoveSpeed * Time.deltaTime * dir.normalized;
-                dest = e.owner.Position + delta;
+                Vector3 dir = e.dest - e.Owner.Position;
+                delta = e.Owner.MoveSpeed * Time.deltaTime * dir.normalized;
+                dest = e.Owner.Position + delta;
                 e.LookAt(dest);
             }
 
-            var collider = e.owner.Collider;
+            var collider = e.Owner.Collider;
 
             if (collider != null)
             {
-                if (collider.isCollide)
+                if (collider.IsCollide)
                 {
-                    dest += new Vector3(collider.force.x, 0, collider.force.y);
+                    dest += new Vector3(collider.Force.x, 0, collider.Force.y);
                     
                     if (!e.isMoving)
                     {
@@ -66,7 +66,7 @@ namespace GameBase.Move
                 }
             }
 
-            if ((e.dest - e.owner.Position).magnitude <= delta.magnitude)
+            if ((e.dest - e.Owner.Position).magnitude <= delta.magnitude)
             {
                 if (e.destQueue.Count > 0)
                 {
@@ -86,16 +86,16 @@ namespace GameBase.Move
                 }
             }
 
-            if (e.isMoving || collider.isCollide)
+            if (e.isMoving || collider.IsCollide)
             {
-                e.owner.Position = dest;
+                e.Owner.Position = dest;
             }
         }
 
         private void RotateUpdate(Mover e)
         {
-            var currDir = e.owner.Dir;
-            Vector3 dirSetTemp = new Vector3(e.targetDir.x, 0, e.targetDir.z);
+            var currDir = e.Owner.Dir;
+            Vector3 dirSetTemp = new Vector3(e.TargetDir.x, 0, e.TargetDir.z);
             float angle = Vector3.Angle(currDir, dirSetTemp);
             float crossY = Vector3.Cross(currDir, dirSetTemp).y;
 
@@ -106,7 +106,7 @@ namespace GameBase.Move
             }
 
             e.isRotating = true;
-            e.owner.Obj.transform.Rotate(Vector3.up, e.owner.RotateSpeed * Time.deltaTime * Mathf.Sign(crossY), Space.Self);
+            e.Owner.Obj.transform.Rotate(Vector3.up, e.Owner.RotateSpeed * Time.deltaTime * Mathf.Sign(crossY), Space.Self);
         }
         protected override void UpdateEntity(Mover e)
         {

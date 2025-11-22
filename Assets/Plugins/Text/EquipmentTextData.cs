@@ -4,12 +4,12 @@ namespace GameBase.Texts
 {
     public class EquipmentTextData : IKeywordText
     {
-        public string name;
-        public string detail;
+        public string Name {  get; set; }
+        public string Detail {  get; set; }
 
         void IKeywordText.ReplaceKeywords()
         {
-            detail = KeywordsMgr.Instance.ReplaceString(detail);
+            Detail = KeywordsMgr.Instance.ReplaceString(Detail);
         }
     }
 }

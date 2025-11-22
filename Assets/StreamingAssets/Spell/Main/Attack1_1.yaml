@@ -1,9 +1,9 @@
-minCastAngle: 10
-textureName: Textures/Spell/Shoot1.png
-cooldown: 0.1
-tag: CastOnMousePosition
-camp:
-  include: Others
-indicator:
-  type: Linear
-actionName: VectorShot
+MinCastAngle: 10
+TextureName: Textures/Spell/Shoot1.png
+Cooldown: 0.1
+Tag: CastOnMousePosition
+Camp:
+  Include: Others
+Indicator:
+  Type: Linear
+ActionName: VectorShot

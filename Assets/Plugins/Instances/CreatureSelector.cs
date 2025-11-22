@@ -14,18 +14,15 @@ namespace Instance
     {
         private Dictionary<KeyFunction, float> _lastTrigTime = new();
         private Dictionary<KeyFunction, Creature> _hotKeyTargets = new();
-
         private float _lastPointerSelectTime;
 
-        public float doubleTrigInterval = 0.3f;
-        public float doublePointerSelectInterval = 0.3f;
-        public float pointerSelectRange = 0.5f;
-
-        public bool interactiveToCreatureRadiusDrawer = true;
-
-        public Action<Creature> OnSelected;
-        public Action OnFirstSelected;
-        public Creature currentSelect;
+        public float DoubleTrigInterval { get; set; } = 0.3f;
+        public float DoublePointerSelectInterval { get; set; } = 0.3f;
+        public float PointerSelectRange { get; set; } = 0.5f;
+        public bool InteractiveToCreatureRadiusDrawer { get; set; } = true;
+        public Action<Creature> OnSelected {  get; set; }
+        public Action OnFirstSelected { get; set; }
+        public Creature CurrentSelect {  get; set; }
 
         public CreatureSelector()
         {
@@ -76,25 +73,25 @@ namespace Instance
             AttrUIChanger.SetTarget(c);
             EpicBarController.SetPlayerBarTarget(c);
             EquipmentUIInteractive.Instance.Target = c;
-            Instance.currentSelect = c;
+            Instance.CurrentSelect = c;
         }
 
         private void OnFirstSelectCreature()
         {
             OnFirstSelected?.Invoke();
-            var keys = DrawCreatureRadius.colorSet.Keys.ToList();
+            var keys = DrawCreatureRadius.ColorSet.Keys.ToList();
             foreach (var c in keys)
             {
-                DrawCreatureRadius.colorSet[c] = Color.white;
+                DrawCreatureRadius.ColorSet[c] = Color.white;
             }
         }
 
         private void OnSelectCreature(Creature c)
         {
             OnSelected?.Invoke(c);
-            if (interactiveToCreatureRadiusDrawer)
+            if (InteractiveToCreatureRadiusDrawer)
             {
-                DrawCreatureRadius.colorSet[c] = Color.green;
+                DrawCreatureRadius.ColorSet[c] = Color.green;
             }
         }
 
@@ -102,9 +99,9 @@ namespace Instance
         {
             if (Inputs.GetKeyDown(KeyFunction.PointerSelect, "creatureSelector"))
             {
-                if (Time.time < _lastPointerSelectTime + doublePointerSelectInterval)
+                if (Time.time < _lastPointerSelectTime + DoublePointerSelectInterval)
                 {
-                    var c = CreatureSys.Instance.NearestEntity(CameraSys.MouseHitPosition, Camp.Typedef.ALL, pointerSelectRange);
+                    var c = CreatureSys.Instance.NearestEntity(CameraSys.MouseHitPosition, Camp.Typedef.ALL, PointerSelectRange);
                     if (c != null)
                     {
                         OnFirstSelectCreature();
@@ -121,7 +118,7 @@ namespace Instance
             {
                 if (Inputs.GetKeyDown(kvp.Key, "creatureSelector"))
                 {
-                    if (Time.time < _lastTrigTime[kvp.Key] + doubleTrigInterval)
+                    if (Time.time < _lastTrigTime[kvp.Key] + DoubleTrigInterval)
                     {
                         CameraSys.Main.LookAt(kvp.Value.Position);
                     }

@@ -26,24 +26,24 @@ namespace GameBase.Indicators
         public static CircleIndicator GetCircle()
         {
             var e = new CircleIndicator();
-            e.indicator = IndicatorSys.Instance.NewEntity("Prefabs/Info/CircleIndicator");
-            e.indicator.textureName = "Textures/Circle";
+            e.Indicator = IndicatorSys.Instance.NewEntity("Prefabs/Info/CircleIndicator");
+            e.Indicator.TextureName = "Textures/Circle";
             e.Hide();
             return e;
         }
         public static LinearIndicator GetLinear()
         {
             var e = new LinearIndicator();
-            e.indicator = IndicatorSys.Instance.NewEntity("Prefabs/Info/RectIndicator");
-            e.indicator.textureName = "Textures/IndicatorRectDecal";
+            e.Indicator = IndicatorSys.Instance.NewEntity("Prefabs/Info/RectIndicator");
+            e.Indicator.TextureName = "Textures/IndicatorRectDecal";
             e.Hide();
             return e;
         }
         public static FixedLinearIndicator GetFixedLinear()
         {
             var e = new FixedLinearIndicator();
-            e.indicator = IndicatorSys.Instance.NewEntity("Prefabs/Info/RectIndicator");
-            e.indicator.textureName = "Textures/IndicatorRectDecal";
+            e.Indicator = IndicatorSys.Instance.NewEntity("Prefabs/Info/RectIndicator");
+            e.Indicator.TextureName = "Textures/IndicatorRectDecal";
             e.Hide();
             return e;
         }
@@ -51,8 +51,8 @@ namespace GameBase.Indicators
         private static RectIndicator GetRect()
         {
             var e = new RectIndicator();
-            e.indicator = IndicatorSys.Instance.NewEntity("Prefabs/Info/RectIndicator");
-            e.indicator.textureName = "Textures/IndicatorRectDecal";
+            e.Indicator = IndicatorSys.Instance.NewEntity("Prefabs/Info/RectIndicator");
+            e.Indicator.TextureName = "Textures/IndicatorRectDecal";
             e.Hide();
             return e;
         }

@@ -10,8 +10,8 @@ namespace Instance
     {
         public class DelayDraw
         {
-            public IShape2D shape;
-            public float instantiateTime;
+            public IShape2D Shape { get; set; }
+            public float InstantiateTime {  get; set; }
         }
 
         private List<DelayDraw> _delayDraws = new();
@@ -42,7 +42,7 @@ namespace Instance
 
         void OnDrawGizmos()
         {
-            if (!GizmosCfg.isDrawGizmos)
+            if (!GizmosCfg.IsDrawGizmos)
             {
                 return;
             }
@@ -50,37 +50,37 @@ namespace Instance
 
             foreach (var e in TriggerSys.Instance.Entities)
             {
-                if (e.trigStyle == TrigStyle.Once)
+                if (e.TrigStyle == TrigStyle.Once)
                 {
-                    if (e.shape is GMath.Circle circle)
+                    if (e.Shape is GMath.Circle circle)
                     {
                         _delayDraws.Add(new DelayDraw()
                         {
-                            shape = circle,
-                            instantiateTime = Time.time
+                            Shape = circle,
+                            InstantiateTime = Time.time
                         });
                     }
-                    else if (e.shape is GMath.Line line)
+                    else if (e.Shape is GMath.Line line)
                     {
                         _delayDraws.Add(new DelayDraw()
                         {
-                            shape = line,
-                            instantiateTime = Time.time
+                            Shape = line,
+                            InstantiateTime = Time.time
                         });
                     }
                 }
                 else
                 {
                     Gizmos.color = Color.green;
-                    GizmosAppend.DrawShape(e.shape, GizmosCfg.drawY);
+                    GizmosAppend.DrawShape(e.Shape, GizmosCfg.drawY);
                 }
             }
             foreach (var e in _delayDraws)
             {
-                if (Time.time < e.instantiateTime + 1f)
+                if (Time.time < e.InstantiateTime + 1f)
                 {
                     Gizmos.color = Color.red;
-                    GizmosAppend.DrawShape(e.shape, GizmosCfg.drawY);
+                    GizmosAppend.DrawShape(e.Shape, GizmosCfg.drawY);
                 }
                 else
                 {

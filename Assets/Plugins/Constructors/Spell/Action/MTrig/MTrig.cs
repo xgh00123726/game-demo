@@ -11,34 +11,34 @@ namespace Constructor.Spells
 {
     public class MTrig : ModifyableAction
     {
-        public MTrigData data;
+        public MTrigData Data { get; set; }
         protected override bool CastAction(Spell spell, in SpellActionModifierData modifyData)
         {
-            if (spell.speller is Creature c)
+            if (spell.Speller is Creature c)
             {
-                var t = TriggerYamlFactory.Instance.GetFromData(data.trigger);
+                var t = TriggerYamlFactory.Instance.GetFromData(Data.Trigger);
                 var trigPosition = Vector3.zero;
-                if (data.trigPositionStyle == TrigPositionStyle.Mouse)
+                if (Data.TrigPositionStyle == TrigPositionStyle.Mouse)
                 {
-                    trigPosition = spell.castPosition;
+                    trigPosition = spell.CastPosition;
                 }
-                else if (data.trigPositionStyle == TrigPositionStyle.Self)
+                else if (Data.TrigPositionStyle == TrigPositionStyle.Self)
                 {
                     trigPosition = c.Position;
                 }
 
-                if (t.shape != null)
+                if (t.Shape != null)
                 {
-                    t.shape.Dir = spell.castPosition - spell.speller.Position;
+                    t.Shape.Dir = spell.CastPosition - spell.Speller.Position;
                 }
 
-                t.attach = new FixedAttacher()
+                t.Attach = new FixedAttacher()
                 {
                     Position = trigPosition
                 };
-                t.owner = c;
-                t.targetsSet = CommonTargetSet.Instance;
-                t.targetCamp = (Camp)spell.targetCamp.ToUint();
+                t.Owner = c;
+                t.TargetsSet = CommonTargetSet.Instance;
+                t.TargetCamp = (Camp)spell.TargetCamp.ToUint();
 
                 return true;
             }

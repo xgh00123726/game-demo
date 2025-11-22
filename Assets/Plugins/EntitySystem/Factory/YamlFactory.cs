@@ -18,14 +18,14 @@ namespace GameBase.EntitySystem
         public string Path { get; set; }
         public string Comment { get; set; }
     }
-    public abstract class YamlFactory<T_YamlData, T_Entity, T_Factory> : Singleton<T_Factory>
-        where T_Factory : YamlFactory<T_YamlData, T_Entity, T_Factory>, new()
+    public abstract class YamlFactory<T_Data, T_Entity, T_Factory> : Singleton<T_Factory>
+        where T_Factory : YamlFactory<T_Data, T_Entity, T_Factory>, new()
     {
         public const string TEMPLATE_NAME = "Template.yaml";
 
-        private Dictionary<string, T_YamlData> _dataDict;
+        protected Dictionary<string, T_Data> _dataDict;
 
-        protected abstract string YamlFolder { get; }
+        protected abstract string Folder { get; }
         protected virtual string TemplatePath { get; }
 
         public YamlFactory()
@@ -33,9 +33,16 @@ namespace GameBase.EntitySystem
             _dataDict = ReadData();
         }
 
-        protected virtual void OnInitYamlData(T_YamlData data) { }
+        protected virtual void OnInitYamlData(ref T_Data data) { }
+        protected virtual void SetName(string name, ref T_Data data)
+        {
+            if (data is INamedData nd)
+            {
+                nd.Name = name;
+            }
+        }
 
-        private void ReadYamlData(DirectoryInfo dir, IDeserializer deserializer, Dictionary<string, T_YamlData> dict)
+        private void ReadYamlData(DirectoryInfo dir, IDeserializer deserializer, Dictionary<string, T_Data> dict)
         {
             if (dir == null || !dir.Exists)
             {
@@ -58,9 +65,10 @@ namespace GameBase.EntitySystem
                         var name = secs[0];
                         try
                         {
-                            var yamlData = deserializer.Deserialize<T_YamlData>(reader);
+                            var yamlData = deserializer.Deserialize<T_Data>(reader);
                             dict[name] = yamlData;
-                            OnInitYamlData(yamlData);
+                            SetName(name, ref yamlData);
+                            OnInitYamlData(ref yamlData);
                         }
                         catch (Exception e)
                         {
@@ -77,33 +85,33 @@ namespace GameBase.EntitySystem
             }
         }
 
-        protected virtual Dictionary<string, T_YamlData> ReadData()
+        protected virtual Dictionary<string, T_Data> ReadData()
         {
             var deserializer = new DeserializerBuilder()
-                .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                .WithNamingConvention(NullNamingConvention.Instance)
                 .Build();
 
-            Dictionary<string, T_YamlData> ret;
-            if (YamlFolder == null || YamlFolder.Length == 0)
+            Dictionary<string, T_Data> ret;
+            if (Folder == null || Folder.Length == 0)
             {
                 ret = null;
             }
             else
             {
                 ret = new();
-                ReadYamlData(new DirectoryInfo(YamlFolder), deserializer, ret);
+                ReadYamlData(new DirectoryInfo(Folder), deserializer, ret);
             }
 
             return ret;
         }
-        protected abstract T_Entity GetEntity(T_YamlData data);
+        protected abstract T_Entity GetEntity(T_Data data);
 
-        public T_Entity GetFromData(T_YamlData data)
+        public T_Entity GetFromData(T_Data data)
         {
             return GetEntity(data);
         }
 
-        public T_YamlData GetData(string key)
+        public T_Data GetData(string key)
         {
             if (_dataDict == null)
             {
@@ -131,7 +139,7 @@ namespace GameBase.EntitySystem
             {
                 return default;
             }
-            T_YamlData data = _dataDict[key];
+            T_Data data = _dataDict[key];
             if (data == null)
             {
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
@@ -141,7 +149,7 @@ namespace GameBase.EntitySystem
             return GetEntity(data);
         }
 
-        protected virtual T_YamlData GetTemplateData() => default;
+        protected virtual T_Data GetTemplateData() => default;
 
         public void GenerateTemplate()
         {
@@ -156,16 +164,16 @@ namespace GameBase.EntitySystem
             }
             if (path == null)
             {
-                if (YamlFolder == null)
+                if (Folder == null)
                 {
                     return;
                 }
-                path = $"{YamlFolder}/{TEMPLATE_NAME}";
+                path = $"{Folder}/{TEMPLATE_NAME}";
             }
             var data = GetTemplateData();
             if (data == null)
             {
-                data = Activator.CreateInstance<T_YamlData>();
+                data = Activator.CreateInstance<T_Data>();
                 General.SetInstanceNotNull(data);
             }
             var serializer = new SerializerBuilder().Build();

@@ -12,35 +12,35 @@ namespace Constructor.Triggers
 
     public class TriggerShapeData
     {
-        public TriggerShapeType type;
-        public float radius;
-        public float length;
-        public float width;
-        public float pivot;
+        public TriggerShapeType Type {  get; set; }
+        public float Radius { get; set; }
+        public float Length { get; set; }
+        public float Width { get; set; }
+        public float Pivot { get; set; }
     }
     public class TriggerData
     {
-        public int maxEffectTimes;
-        public TriggerShapeData shape;
-        public TriggerActionTag tagEnum;
-        public TrigStyle trigStyle;
-        public float delay;
-        public float trigPeriod;
-        public float existTime;
-        public float buffDuration;
+        public int MaxEffectTimes { get; set; }
+        public TriggerShapeData Shape {  get; set; }
+        public TriggerActionTag TagEnum { get; set; }
+        public TrigStyle TrigStyle { get; set; }
+        public float Delay { get; set; }
+        public float TrigPeriod { get; set; }
+        public float ExistTime { get; set; }
+        public float BuffDuration { get; set; }
 
-        public float damage;
-        public float ampFactor;
-        public Color damageTextColor;
+        public float Damage {  get; set; }
+        public float AmpFactor { get; set; }
+        public Color DamageTextColor { get; set; }
 
-        public string damageTextPrefabName;
-        public string trigEffectName;
-        public string trigAudioName;
-        public string hitEffectName;
-        public string hitAudioName;
-        public string createEffectName;
-        public string createAudioName;
-        public string buffName;
-        public string tag;
+        public string DamageTextPrefabName { get; set; }
+        public string TrigEffectName { get; set; }
+        public string TrigAudioName { get; set; }
+        public string HitEffectName { get; set; }
+        public string HitAudioName { get; set; }
+        public string CreateEffectName { get; set; }
+        public string CreateAudioName {  get; set; }
+        public string BuffName { get; set; }
+        public string Tag {  get; set; }
     }
 }

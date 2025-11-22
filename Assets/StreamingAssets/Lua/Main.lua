@@ -8,6 +8,7 @@ require("Text")
 require("Spell")
 require("Controller")
 require("Equipment")
+require("Item")
 
 require("Main/Util")
 require("Main/Inventory")

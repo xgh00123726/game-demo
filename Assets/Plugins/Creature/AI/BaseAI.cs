@@ -31,7 +31,7 @@ namespace GameBase.AI
         {
             owner = c;
             OnAddTo(c);
-            c.ai = this;
+            c.AI = this;
         }
 
         protected abstract void OnAddTo(Creature c);

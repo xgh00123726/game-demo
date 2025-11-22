@@ -1,6 +1,6 @@
-textureName: Textures/Equipment/damage1.png
-rarity: 0
-tag: 
-modifiers:
-- key: damage
-  value: 10
+TextureName: Textures/Equipment/damage1.png
+Rarity: 0
+Tag: 
+Modifiers:
+- Key: damage
+  Value: 10

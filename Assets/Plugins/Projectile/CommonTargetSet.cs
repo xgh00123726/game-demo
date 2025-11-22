@@ -15,7 +15,7 @@ namespace Constructor.Triggers
             List<ITriggerTarget> ret = new();
             foreach(var c in CreatureSys.Instance.Entities)
             {
-                if (c.camp.And(camp.ToUint()).IsNone())
+                if (c.Camp.And(camp.ToUint()).IsNone())
                 {
                     continue;
                 }
@@ -35,7 +35,7 @@ namespace Constructor.Triggers
             Creature ret = null;
             foreach (var c in CreatureSys.Instance.Entities)
             {
-                if (c.camp.And(camp).IsNone())
+                if (c.Camp.And(camp).IsNone())
                 {
                     continue;
                 }

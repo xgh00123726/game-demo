@@ -6,7 +6,7 @@ namespace GameBase.Creatures
     public partial class Creature :
         IModifieder
     {
-        public Modifyables modifyables = new();
+        private Modifyables _modifyables = new();
         private Dictionary<string, float> _possibleAttr = new();
 
         public static float _agiToMoveSpeedFactor = 0.01f;
@@ -37,7 +37,7 @@ namespace GameBase.Creatures
         private Modifyer _uniToStrgPercent;
         private Modifyer _uniToIntlPercent;
 
-        public Modifyables Modifyables => modifyables;
+        public Modifyables Modifyables => _modifyables;
 
         internal void HighLevelAttrInit()
         {
@@ -55,63 +55,63 @@ namespace GameBase.Creatures
             _uniToStrgPercent      = ModifyerSys.Instance.NewEntity();
             _uniToIntlPercent      = ModifyerSys.Instance.NewEntity();
 
-            _agiToMoveSpeedPercent.value = 0;
-            _agiToMoveSpeedPercent.type  = ModifyType.Always | ModifyType.Temporary;
-            _agiToMoveSpeedPercent.AddTo(modifyables["moveSpeed"]);
+            _agiToMoveSpeedPercent.Value = 0;
+            _agiToMoveSpeedPercent.Type  = ModifyType.Always | ModifyType.Temporary;
+            _agiToMoveSpeedPercent.AddTo(_modifyables["moveSpeed"]);
 
-            _agiToAttackSpeed.value      = 0;
-            _agiToAttackSpeed.type       = ModifyType.Always | ModifyType.Temporary;
-            _agiToAttackSpeed.AddTo(modifyables["attackSpeed"]);
+            _agiToAttackSpeed.Value      = 0;
+            _agiToAttackSpeed.Type       = ModifyType.Always | ModifyType.Temporary;
+            _agiToAttackSpeed.AddTo(_modifyables["attackSpeed"]);
 
-            _strgToMaxHP.value           = 0;
-            _strgToMaxHP.type            = ModifyType.Always | ModifyType.Temporary;
-            _strgToMaxHP.AddTo(modifyables["maxHP"]);
-            _strgToHealthRegen.value     = 0;
-            _strgToHealthRegen.type      = ModifyType.Always | ModifyType.Temporary;
-            _strgToHealthRegen.AddTo(modifyables["healthRegen"]);
+            _strgToMaxHP.Value           = 0;
+            _strgToMaxHP.Type            = ModifyType.Always | ModifyType.Temporary;
+            _strgToMaxHP.AddTo(_modifyables["maxHP"]);
+            _strgToHealthRegen.Value     = 0;
+            _strgToHealthRegen.Type      = ModifyType.Always | ModifyType.Temporary;
+            _strgToHealthRegen.AddTo(_modifyables["healthRegen"]);
 
-            _intlToMaxMana.value         = 0;
-            _intlToMaxMana.type          = ModifyType.Always | ModifyType.Temporary;
-            _intlToMaxMana.AddTo(modifyables["maxMana"]);
-            _intlToCooldown.value        = 0;
-            _intlToCooldown.type         = ModifyType.Always | ModifyType.Temporary;
-            _intlToCooldown.AddTo(modifyables["coolingAccelerate"]);
+            _intlToMaxMana.Value         = 0;
+            _intlToMaxMana.Type          = ModifyType.Always | ModifyType.Temporary;
+            _intlToMaxMana.AddTo(_modifyables["maxMana"]);
+            _intlToCooldown.Value        = 0;
+            _intlToCooldown.Type         = ModifyType.Always | ModifyType.Temporary;
+            _intlToCooldown.AddTo(_modifyables["coolingAccelerate"]);
 
-            _uniToDamage.value           = 0;
-            _uniToDamage.type            = ModifyType.Always | ModifyType.Temporary;
-            _uniToDamage.AddTo(modifyables["damage"]);
-            _uniToAgiPercent.value       = 0;
-            _uniToAgiPercent.type        = ModifyType.Always | ModifyType.Temporary;
-            _uniToAgiPercent.AddTo(modifyables["agility"]);
-            _uniToStrgPercent.value      = 0;
-            _uniToStrgPercent.type       = ModifyType.Always | ModifyType.Temporary;
-            _uniToStrgPercent.AddTo(modifyables["strength"]);
-            _uniToIntlPercent.value      = 0;
-            _uniToIntlPercent.type       = ModifyType.Always | ModifyType.Temporary;
-            _uniToIntlPercent.AddTo(modifyables["intelligence"]);
+            _uniToDamage.Value           = 0;
+            _uniToDamage.Type            = ModifyType.Always | ModifyType.Temporary;
+            _uniToDamage.AddTo(_modifyables["damage"]);
+            _uniToAgiPercent.Value       = 0;
+            _uniToAgiPercent.Type        = ModifyType.Always | ModifyType.Temporary;
+            _uniToAgiPercent.AddTo(_modifyables["agility"]);
+            _uniToStrgPercent.Value      = 0;
+            _uniToStrgPercent.Type       = ModifyType.Always | ModifyType.Temporary;
+            _uniToStrgPercent.AddTo(_modifyables["strength"]);
+            _uniToIntlPercent.Value      = 0;
+            _uniToIntlPercent.Type       = ModifyType.Always | ModifyType.Temporary;
+            _uniToIntlPercent.AddTo(_modifyables["intelligence"]);
         }
 
         internal void HighLevelAttrUpdate()
         {
-            float agi = modifyables["agility"].Value;
-            float strg = modifyables["strength"].Value;
-            float intl = modifyables["intelligence"].Value;
-            float uni = modifyables["universal"].Value;
+            float agi = _modifyables["agility"].Value;
+            float strg = _modifyables["strength"].Value;
+            float intl = _modifyables["intelligence"].Value;
+            float uni = _modifyables["universal"].Value;
 
 
-            _agiToMoveSpeedPercent.value = agi * _agiToMoveSpeedFactor;
-            _agiToAttackSpeed.value = agi * _agiToAttackSpeedFactor;
+            _agiToMoveSpeedPercent.Value = agi * _agiToMoveSpeedFactor;
+            _agiToAttackSpeed.Value = agi * _agiToAttackSpeedFactor;
 
-            _strgToMaxHP.value = strg * _strgToMaxHPFactor;
-            _strgToHealthRegen.value = strg * _strgToHealthRegenFactor;
+            _strgToMaxHP.Value = strg * _strgToMaxHPFactor;
+            _strgToHealthRegen.Value = strg * _strgToHealthRegenFactor;
 
-            _intlToMaxMana.value = intl * _intlToMaxManaFactor;
-            _intlToCooldown.value = intl * _intlToCooldownFactor;
+            _intlToMaxMana.Value = intl * _intlToMaxManaFactor;
+            _intlToCooldown.Value = intl * _intlToCooldownFactor;
 
-            _uniToDamage.value = uni * _uniToDamageFactor;
-            _uniToAgiPercent.value = uni * _uniToAgiPercentFactor;
-            _uniToStrgPercent.value = uni * _uniToStrgPercentFactor;
-            _uniToIntlPercent.value = uni * _uniToIntlPercentFactor;
+            _uniToDamage.Value = uni * _uniToDamageFactor;
+            _uniToAgiPercent.Value = uni * _uniToAgiPercentFactor;
+            _uniToStrgPercent.Value = uni * _uniToStrgPercentFactor;
+            _uniToIntlPercent.Value = uni * _uniToIntlPercentFactor;
         }
 
         internal void HighLevelAttrDispose()

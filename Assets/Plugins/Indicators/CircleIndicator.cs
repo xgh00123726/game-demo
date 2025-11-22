@@ -2,21 +2,21 @@ namespace GameBase.Indicators
 {
     public class CircleIndicator : CastIndicator
     {
-        public Indicator indicator;
+        public Indicator Indicator { get; set; }
 
         public override void Show()
         {
-            indicator.obj.SetActive(true);
+            Indicator.Obj.SetActive(true);
         }
 
         public override void Hide()
         {
-            indicator.obj.SetActive(false);
+            Indicator.Obj.SetActive(false);
         }
 
         public override void Set(IndicatorConfig config)
         {
-            indicator.obj.transform.position = config.targetPosition;
+            Indicator.Obj.transform.position = config.targetPosition;
         }
     }
 }

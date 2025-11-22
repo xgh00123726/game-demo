@@ -17,8 +17,8 @@ namespace GameBase.Projectiles
             if (target is Creature c)
             {
                 var modifyer = ModifyerSys.Instance.NewEntity();
-                modifyer.type = ModifyType.Once | ModifyType.Forever;
-                modifyer.value = -damage;
+                modifyer.Type = ModifyType.Once | ModifyType.Forever;
+                modifyer.Value = -damage;
                 modifyer.OnModify += () =>
                 {
                     var text = TextSys.Instance.NewEntity(prefabName);

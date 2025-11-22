@@ -16,25 +16,23 @@ namespace GameBase.Modify
 
     public class Modifyer
     {
-        public ModifyType type = ModifyType.Once | ModifyType.Forever;
-        public bool trigOnGive;
-
-        public float dt;
-        public float value;
-        public Action OnModify;
-        public Modifyable target;
-
         internal float instantiateTime;
         internal float lastEnableTime;
 
+        public ModifyType Type { get; set; } = ModifyType.Once | ModifyType.Forever;
+        public float DT {  get; set; }
+        public float Value { get; set; }
+        public Action OnModify { get; set; }
+        public Modifyable Target { get; set; }
+
         public void AddTo(Modifyable target)
         {
-            this.target = target;
+            this.Target = target;
         }
 
         public void Release()
         {
-            target = null;
+            Target = null;
             ModifyerSys.Instance.RemoveEntity(this);
         }
     }

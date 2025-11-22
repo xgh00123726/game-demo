@@ -10,24 +10,24 @@ namespace Constructor.Projectiles
 {
     public class ProjectileYamlFactory : YamlFactory<ProjectileData, Projectile, ProjectileYamlFactory>
     {
-        protected override string YamlFolder => null;
+        protected override string Folder => null;
 
         public IShape2D GetShape(ProjectileShapeData data)
         {
             if (data == null) return null;
 
-            if (data.type == ProjectileShapeType.Circle)
+            if (data.Type == ProjectileShapeType.Circle)
             {
-                var c = new GMath.Circle(data.radius);
+                var c = new GMath.Circle(data.Radius);
                 return c;
             }
-            if (data.type == ProjectileShapeType.Linear)
+            if (data.Type == ProjectileShapeType.Linear)
             {
                 var l = new GMath.Line();
-                l.Length = data.length;
+                l.Length = data.Length;
                 return l;
             }
-            if (data.type == ProjectileShapeType.Rect)
+            if (data.Type == ProjectileShapeType.Rect)
             {
                 return null;
             }
@@ -38,26 +38,26 @@ namespace Constructor.Projectiles
         protected override Projectile GetEntity(ProjectileData data)
         {
             var p = ProjectileSys.Instance.NewEntity();
-            var f = FlyingYamlFactory.Instance.GetFromData(data.flying);
+            var f = FlyingYamlFactory.Instance.GetFromData(data.Flying);
             var t = TriggerSys.Instance.NewEntity();
             
-            t.hasWhite = data.hasWhite;
-            t.shape = GetShape(data.shape);
-            t.maxEffectTimes = data.maxEffectTimes;
-            t.hitEffect = data.hitEffectName;
-            t.trigEffect = data.trigEffectName;
-            t.hitAudio = data.hitAudioName;
-            t.trigAudio = data.trigAudioName;
-            t.targetsSet = CommonTargetSet.Instance;
+            t.HasWhite = data.HasWhite;
+            t.Shape = GetShape(data.Shape);
+            t.MaxEffectTimes = data.MaxEffectTimes;
+            t.HitEffect = data.HitEffectName;
+            t.TrigEffect = data.TrigEffectName;
+            t.HitAudio = data.HitAudioName;
+            t.TrigAudio = data.TrigAudioName;
+            t.TargetsSet = CommonTargetSet.Instance;
 
-            p.tag = data.tagEnum;
-            p.trigger = t;
-            p.flying = f;
-            p.damage = data.damage;
-            p.damageTextPrefabName = data.damageTextPrefabName;
-            p.damageTextColor = data.damageTextColor;
-            p.ampFactor = data.ampFactor;
-            p.findTargetRange = data.findTargetRange;
+            p.Tag = data.TagEnum;
+            p.Trigger = t;
+            p.Flying = f;
+            p.Damage = data.Damage;
+            p.DamageTextPrefabName = data.DamageTextPrefabName;
+            p.DamageTextColor = data.DamageTextColor;
+            p.AmpFactor = data.AmpFactor;
+            p.FindTargetRange = data.FindTargetRange;
 
             return p;
         }

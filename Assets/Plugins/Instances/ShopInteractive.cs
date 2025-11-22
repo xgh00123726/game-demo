@@ -14,13 +14,13 @@ namespace Instance
         private static Creature _target = null;
         private static Shop _nearestShop = null;
 
-        public static float ShopInteractiveDis = 100f;
-        public static Action<Shop> OnTargetNearShop;
-        public static Action<Shop> OnTargetFarFromShop;
-        public static Action<Shop> OnShopActive;
-        public static Action<Shop> OnShopInActive;
-        public static Func<bool> ShopActiveCmd;
-        public static Func<bool> ShopInActiveCmd;
+        public static float ShopInteractiveDis { get; set; } = 100f;
+        public static Action<Shop> OnTargetNearShop {  get; set; }
+        public static Action<Shop> OnTargetFarFromShop {  get; set; }
+        public static Action<Shop> OnShopActive { get; set; }
+        public static Action<Shop> OnShopInActive { get; set; }
+        public static Func<bool> ShopActiveCmd {  get; set; }
+        public static Func<bool> ShopInActiveCmd { get; set; }
 
         public ShopInteractive()
         {
@@ -49,11 +49,11 @@ namespace Instance
             _nearestShop = null;
             foreach (var shop in _shops)
             {
-                var shopPos = shop.obj.transform.position;
+                var shopPos = shop.Obj.transform.position;
 
                 var dis = GMath.GameDistance(_target.Position, shopPos);
 
-                if (dis > shop.detectRange)
+                if (dis > shop.DetectRange)
                 {
                     if (shop.isTargetNear)
                     {

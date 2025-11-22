@@ -81,7 +81,7 @@ namespace GameBase.AI
 
         protected override void OnAddTo(Creature c)
         {
-            mover = c.mover;
+            mover = c.Mover;
             if (!c.HasPossibleAttr("FollowRange"))
             {
                 c.AddPossibleAttr("FollowRange");
@@ -102,7 +102,7 @@ namespace GameBase.AI
                 return false;
             }
 
-            return GMath.GameDistance(target.Position, mover.owner.Position) <= arriveDis + owner.radius + target.radius;
+            return GMath.GameDistance(target.Position, mover.Owner.Position) <= arriveDis + owner.Radius + target.Radius;
         }
 
         private bool IsDistanceMiss()
@@ -111,7 +111,7 @@ namespace GameBase.AI
             {
                 return false;
             }
-            var ret = GMath.GameDistance(target.Position, mover.owner.Position) >= missDis;
+            var ret = GMath.GameDistance(target.Position, mover.Owner.Position) >= missDis;
             return ret;
         }
 
@@ -180,7 +180,7 @@ namespace GameBase.AI
             }
             if (target == null)
             {
-                target = CreatureSys.Instance.NearestEntity(mover.owner.Position, Camp.Typedef.Player, missDis);
+                target = CreatureSys.Instance.NearestEntity(mover.Owner.Position, Camp.Typedef.Player, missDis);
             }
         }
 

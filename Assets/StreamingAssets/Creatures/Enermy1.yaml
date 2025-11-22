@@ -1,13 +1,13 @@
-prefabName: Prefabs/Entity/Enemy1
-camp: Enermy
-animType: Zombie
-aiType: FollowAttack
-damage: 10
-moveSpeed: 1
-maxHP: 100
-healthRegen: 1
-attackRange: 2
-healthBarOffset:
+PrefabName: Prefabs/Entity/Enemy1
+Camp: Enermy
+AnimType: Zombie
+AIType: FollowAttack
+Damage: 10
+MoveSpeed: 1
+MaxHP: 100
+HealthRegen: 1
+AttackRange: 2
+HealthBarOffset:
   x: -0.1
   y: 2.1
-collideEnable: true
+CollideEnable: true

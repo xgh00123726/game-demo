@@ -1,9 +1,9 @@
-minCastAngle: 10
-textureName: Textures/Spell/Shoot1.png
-cooldown: 2
-tag: CastOnMousePosition
-camp:
-  include: Self
-indicator:
-  type: Circle
-actionName: BuffSelf
+MinCastAngle: 10
+TextureName: Textures/Spell/Shoot1.png
+Cooldown: 2
+Tag: CastOnMousePosition
+Camp:
+  Include: Self
+Indicator:
+  Type: Circle
+ActionName: BuffSelf

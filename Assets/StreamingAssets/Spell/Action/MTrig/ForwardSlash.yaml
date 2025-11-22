@@ -1,26 +1,26 @@
-trigPositionStyle: Self
-trigger:
-  maxEffectTimes: 99
-  trigStyle: Once
-  shape:
-    type: Linear
-    length: 3
-    width: 1
-    pivot: 0
-  delay: 0.5
-  damage: 20
-  ampFactor: 1
-  damageTextColor:
+TrigPositionStyle: Self
+Trigger:
+  MaxEffectTimes: 99
+  TrigStyle: Once
+  Shape:
+    Type: Linear
+    Length: 3
+    Width: 1
+    Pivot: 0
+  Delay: 0.5
+  Damage: 20
+  AmpFactor: 1
+  DamageTextColor:
     r: 1
     g: 1
     b: 1
     a: 1
-  damageTextPrefabName: Prefabs/UI/FloatText
-  trigEffectName: 
-  trigAudioName: 
-  hitEffectName: 
-  hitAudioName: 
-  createEffectName: Prefabs/Effect/Hit/ForwardSlash.prefab
-  createAudioName: Wave2.wav
-  tag: HasDamage
-slotNum: 2
+  DamageTextPrefabName: Prefabs/UI/FloatText
+  TrigEffectName: 
+  TrigAudioName: 
+  HitEffectName: 
+  HitAudioName: 
+  CreateEffectName: Prefabs/Effect/Hit/ForwardSlash.prefab
+  CreateAudioName: Wave2.wav
+  Tag: HasDamage
+SlotNum: 2

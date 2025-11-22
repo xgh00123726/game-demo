@@ -7,51 +7,56 @@ namespace GameBase.Creatures
 {
     public partial class Creature : IEquipmentOwner
     {
-        public CommonInventory<Equipment> equipments = new() { Size = 6 };
+        public CommonInventory<Equipment> Equipments { get; set; } = new() { Size = 6 };
 
         public bool AddEquipmentByID(int id, int index)
         {
-            if (equipments.HasItem(index))
+            if (Equipments.HasItem(index))
             {
                 return false;
             }
 
-            var equipment = EquipmentFactory.Instance.GetByID(id);
-            equipments.Add(equipment, index);
-            equipment.owner = this;
+            var equipment = EquipmentFactory.Instance.Get(id);
+            if (equipment == null)
+            {
+                return false;
+            }
+
+            Equipments.Add(equipment, index);
+            equipment.Owner = this;
 
             return true;
         }
 
         public bool AddEquipment(string name, int index)
         {
-            if (equipments.HasItem(index))
+            if (Equipments.HasItem(index))
             {
                 return false;
             }
 
             var equipment = EquipmentFactory.Instance.Get(name);
-            equipments.Add(equipment, index);
-            equipment.owner = this;
+            Equipments.Add(equipment, index);
+            equipment.Owner = this;
 
             return true;
         }
 
         public void RemoveEquipment(int index)
         {
-            if (!equipments.HasItem(index))
+            if (!Equipments.HasItem(index))
             {
                 return;
             }
-            equipments[index].Remove();
-            equipments.Remove(index);
+            Equipments[index].Remove();
+            Equipments.Remove(index);
         }
 
         public Equipment GetEquipment(int index)
         {
-            if (equipments.HasItem(index))
+            if (Equipments.HasItem(index))
             {
-                return equipments[index];
+                return Equipments[index];
             }
 
             return null;
@@ -59,7 +64,7 @@ namespace GameBase.Creatures
 
         public void SwapEquipment(int p1, int p2)
         {
-            equipments.Swap(p1, p2);
+            Equipments.Swap(p1, p2);
         }
 
         void IEquipmentOwner.OnGetEquipment(Equipment equip)

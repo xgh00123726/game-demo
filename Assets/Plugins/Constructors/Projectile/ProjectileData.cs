@@ -14,28 +14,28 @@ namespace Constructor.Projectiles
 
     public class ProjectileShapeData
     {
-        public ProjectileShapeType type;
-        public float radius;
-        public float length;
+        public ProjectileShapeType Type {  get; set; }
+        public float Radius { get; set; }
+        public float Length { get; set; }
     }
 
     public class ProjectileData
     {
-        public FlyingData flying;
-        public ProjectileShapeData shape;
-        public int maxEffectTimes;
-        public bool hasWhite;
-        public GameBase.Projectiles.Tag tagEnum;
-        public float findTargetRange;
-        public float damage;
-        public float ampFactor;
-        public Color damageTextColor;
+        public FlyingData Flying { get; set; }
+        public ProjectileShapeData Shape { get; set; }
+        public int MaxEffectTimes { get; set; }
+        public bool HasWhite {  get; set; }
+        public GameBase.Projectiles.Tag TagEnum { get; set; }
+        public float FindTargetRange { get; set; }
+        public float Damage { get; set; }
+        public float AmpFactor { get; set; }
+        public Color DamageTextColor { get; set; }
 
-        public string damageTextPrefabName;
-        public string tag;
-        public string hitEffectName;
-        public string trigEffectName;
-        public string hitAudioName;
-        public string trigAudioName;
+        public string DamageTextPrefabName { get; set; }
+        public string Tag {  get; set; }
+        public string HitEffectName {  get; set; }
+        public string TrigEffectName { get; set; }
+        public string HitAudioName { get; set; }
+        public string TrigAudioName { get; set; }
     }
 }

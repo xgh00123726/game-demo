@@ -1,6 +1,6 @@
 /*
  * Tencent is pleased to support the open source community by making xLua available.
- * Copyright (C) 2016 THL A29 Limited, a Tencent company. All rights reserved.
+ * Copyright (c) 2016 THL A29 Limited, a Tencent company. All rights reserved.
  * Licensed under the MIT License (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  * http://opensource.org/licenses/MIT
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
@@ -577,8 +577,8 @@ namespace XLua
                 {
                     return LuaAPI.luaL_error(L, "#2 param need a System.Type!");
                 }
-                //UnityEngine.Debug.Log("============================load type by __index:" + type);
-                //translator.TryDelayWrapLoader(L, type);
+                //UnityEngine.Debug.Log("============================load Type by __index:" + Type);
+                //translator.TryDelayWrapLoader(L, Type);
                 translator.GetTypeId(L, type);
                 LuaAPI.lua_pushvalue(L, 2);
                 LuaAPI.lua_rawget(L, 1);
@@ -615,7 +615,7 @@ namespace XLua
                 for (int i = 1; i <= n; i++)
                 {
                     LuaAPI.lua_pushvalue(L, -1);  /* function to be called */
-                    LuaAPI.lua_pushvalue(L, i);   /* value to print */
+                    LuaAPI.lua_pushvalue(L, i);   /* Value to print */
                     if (0 != LuaAPI.lua_pcall(L, 1, 1, 0))
                     {
                         return LuaAPI.lua_error(L);

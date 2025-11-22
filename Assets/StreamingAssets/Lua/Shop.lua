@@ -23,9 +23,9 @@ local function GenShop( dataTable )
     obj.name = dataTable.Name
 
     local shop = CS.Instance.Shop()
-    shop.inventory = inventory
-    shop.obj = obj
-    shop.detectRange = dataTable.DetectRange
+    shop.Inventory = inventory
+    shop.Obj = obj
+    shop.DetectRange = dataTable.DetectRange
 
     ShopInteracitve.RegisterShop(shop)
 

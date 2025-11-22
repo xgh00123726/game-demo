@@ -8,11 +8,11 @@ namespace GameBase.Creatures
     public partial class Creature :
         ISpeller
     {
-        public DynInventory<Spell> spells = new();
+        public DynInventory<Spell> Spells { get; set; } = new();
 
-        float ISpeller.CoolingAccelerate => modifyables["coolingAccelerate"].Value;
+        float ISpeller.CoolingAccelerate => _modifyables["coolingAccelerate"].Value;
 
-        ISpellCamp ISpeller.Camp => camp;
+        ISpellCamp ISpeller.Camp => Camp;
 
         public void AddSpell(Spell spell)
         {
@@ -22,15 +22,15 @@ namespace GameBase.Creatures
                     .Log("try to add null spell to creature");
                 return;
             }
-            var i = spells.Add(spell);
-            spell.speller = this;
+            var i = Spells.Add(spell);
+            spell.Speller = this;
         }
 
         public Spell GetSpell(int index)
         {
-            if (spells.HasItem(index))
+            if (Spells.HasItem(index))
             {
-                return spells[index];
+                return Spells[index];
             }
 
             return null;
@@ -39,7 +39,7 @@ namespace GameBase.Creatures
         void ISpeller.LookAt(Vector3 pos)
         {
             Interrupt();
-            mover.LookAt(pos);
+            Mover.LookAt(pos);
         }
     }
 }

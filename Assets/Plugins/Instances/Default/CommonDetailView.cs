@@ -44,15 +44,15 @@ namespace Instance
         }
 
         /// <summary>
-        /// <list type="bullet">
+        /// <list Type="bullet">
         /// <item>x=0,y=1, 默认状态，框在右下</item>
         /// <item>x=0,y=0, 右上</item>
         /// <item>x=1,y=1, 左上</item>
         /// <item>x=1,y=0, 左下</item>
         /// </list>
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
+        /// <param Name="x"></param>
+        /// <param Name="y"></param>
         private void SetPivot(float x, float y)
         {
             Vector3 iconPos = _iconRectTransform.localPosition;

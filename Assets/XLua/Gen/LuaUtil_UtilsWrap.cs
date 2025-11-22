@@ -32,7 +32,7 @@ namespace XLua.CSObjectWrap
 			    null, null, null);
 
 		    Utils.BeginClassRegister(type, L, __CreateInstance, 2, 0, 0);
-			Utils.RegisterFunc(L, Utils.CLS_IDX, "NewInstance", _m_NewInstance_xlua_st_);
+			Utils.RegisterFunc(L, Utils.CLS_IDX, "NewItemInventory", _m_NewItemInventory_xlua_st_);
             
 			
             
@@ -56,7 +56,7 @@ namespace XLua.CSObjectWrap
         
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _m_NewInstance_xlua_st_(RealStatePtr L)
+        static int _m_NewItemInventory_xlua_st_(RealStatePtr L)
         {
 		    try {
             
@@ -67,7 +67,7 @@ namespace XLua.CSObjectWrap
                 
                 {
                     
-                        var gen_ret = LuaUtil.Utils.NewInstance(  );
+                        var gen_ret = LuaUtil.Utils.NewItemInventory(  );
                         translator.Push(L, gen_ret);
                     
                     

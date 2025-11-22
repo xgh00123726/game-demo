@@ -5,17 +5,17 @@ namespace Constructor.Flyings
 {
     public class FlyingYamlFactory : YamlFactory<FlyingData, Flying, FlyingYamlFactory>
     {
-        protected override string YamlFolder => null;
+        protected override string Folder => null;
 
         protected override Flying GetEntity(FlyingData data)
         {
-            var e = FlyingSys.Instance.NewEntity(data.prefabName);
+            var e = FlyingSys.Instance.NewEntity(data.PrefabName);
 
-            e.curve = CurveFactory.CreateInstance(data.curve);
-            e.Speed = data.speed;
-            e.minExistTime = data.minExistTime;
+            e.Curve = CurveFactory.CreateInstance(data.Curve);
+            e.Speed = data.Speed;
+            e.MinExistTime = data.MinExistTime;
 
-            e.releaseEffect = data.releaseEffectName;
+            e.ReleaseEffect = data.ReleaseEffectName;
 
             return e;
         }

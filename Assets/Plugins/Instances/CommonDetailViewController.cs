@@ -6,7 +6,7 @@ namespace Instance
     public class CommonDetailViewController : SingletonInstance<CommonDetailViewController>
     {
         private bool _isAttachToMouse = false;
-        public CommonDetailView detailView;
+        public CommonDetailView DetailView { get; set; }
 
         public void AttachToMouse()
         {
@@ -20,14 +20,14 @@ namespace Instance
 
         protected override void Update()
         {
-            if (detailView == null)
+            if (DetailView == null)
             {
                 return;
             }
 
             if (_isAttachToMouse)
             {
-                detailView.SetPosition(UnityEngine.Input.mousePosition);
+                DetailView.SetPosition(UnityEngine.Input.mousePosition);
             }
         }
     }

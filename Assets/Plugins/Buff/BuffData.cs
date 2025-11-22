@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using GameBase.EntitySystem;
+using GameBase.Items;
 
 namespace GameBase.Buffs
 {
@@ -9,19 +11,20 @@ namespace GameBase.Buffs
 
         public ModifierPair(string key, float value)
         {
-            this.Key = key;
-            this.Value = value;
+            Key = key;
+            Value = value;
         }
     }
 
-    public class BuffData
+    public class BuffData : ItemData, INamedData
     {
-        public string textureName;
-        public int rarity;
-        public List<KeyValuePair<int, float>> iModifiers;
-        public BuffTag tagEnum;
+        public string Name { get; set; }
+        public string TextureName { get; set; }
+        public int Rarity { get; set; }
+        public List<KeyValuePair<int, float>> IntKeyModifiers { get; set; }
+        public BuffTag TagEnum { get; set; }
 
-        public string tag;
-        public List<ModifierPair> modifiers;
+        public string Tag {  get; set; }
+        public List<ModifierPair> Modifiers { get; set; }
     }
 }

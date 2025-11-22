@@ -12,7 +12,7 @@ namespace GameBase.Animations
         private SimpleAnimClipController moveController;
         private SimpleAnimClipController boringController;
 
-        public bool boringEnable = false;
+        public bool BoringEnable { get; set; } = false;
 
         public override void Update()
         {
@@ -23,23 +23,23 @@ namespace GameBase.Animations
 
         private bool IsMoving()
         {
-            return owner.mover.IsMoving;
+            return owner.Mover.IsMoving;
         }
 
         private bool IsIdle()
         {
-            return !owner.mover.IsMoving;
+            return !owner.Mover.IsMoving;
         }
 
         public override void OnAddTo(Creature creature)
         {
-            _animator = creature.animator;
+            _animator = creature.Animator;
 
             idleController = new SimpleAnimClipController(_animator, IsIdle, "Idle");
             moveController = new SimpleAnimClipController(_animator, IsMoving, "Run");
             boringController = new SimpleAnimClipController(_animator, () =>
             {
-                return boringEnable && IsIdle() && (idleController.stateDuration % 20) > 10;
+                return BoringEnable && IsIdle() && (idleController.stateDuration % 20) > 10;
             }, "Boring");
         }
     }

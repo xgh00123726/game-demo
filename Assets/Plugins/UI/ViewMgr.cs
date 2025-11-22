@@ -61,7 +61,7 @@ namespace GameBase.UI
                     foreach (var e in _views[k])
                     {
                         Rect r = e.RectTransform.rect;
-                        r.center = e.uiScript.transform.position;
+                        r.center = e.UIScript.transform.position;
                         if (r.Contains(position))
                         {
                             return e;
