@@ -8,9 +8,9 @@ namespace GameBase.EntitySystem
         where T_Entity : class
         where T_Sys : InheritableSys<T_Entity, T_Sys>, new()
     {
-        private bool _useObjectPool = true;
-        private bool _useDefaultContainer = true;
-        protected bool _fixedUpdate = false;
+        protected virtual bool UseObjectPool { get; } = true;
+        protected virtual bool UseDefaultContainer { get; } = true;
+        protected virtual bool FixedUpdate { get; } = false;
 
         protected EntitySys<T_Entity> _sys;
         protected Dictionary<Type, BaseObjectPool<T_Entity>> _pools;
@@ -19,16 +19,16 @@ namespace GameBase.EntitySystem
         {
             SingletonEntitySysInstance.CreateShadowMono(this);
 
-            if (_useObjectPool)
+            if (UseObjectPool)
             {
                 _pools = new();
             }
-            if (_useDefaultContainer)
+            if (UseDefaultContainer)
             {
                 _sys = new EntitySys<T_Entity>(new LinkListContainer<T_Entity>())
                 {
-                    _UpdateAction = UpdateEntity,
-                    _StartAction = EntityStart,
+                    UpdateAction = UpdateEntity,
+                    StartAction = EntityStart,
                 };
             }
         }
@@ -66,7 +66,7 @@ namespace GameBase.EntitySystem
         public T NewEntity<T>() where T : class, T_Entity, new()
         {
             T ret;
-            if (_useObjectPool)
+            if (UseObjectPool)
             {
                 ret = GetEntityFromPool<T>();
             }
@@ -86,7 +86,7 @@ namespace GameBase.EntitySystem
         {
             if (e == null) return;
 
-            if (_useObjectPool)
+            if (UseObjectPool)
             {
                 ReleaseEntityToPool(e);
             }
@@ -115,7 +115,7 @@ namespace GameBase.EntitySystem
 
         void IBaseSys.Update()
         {
-            if (_fixedUpdate)
+            if (FixedUpdate)
             {
                 return;
             }
@@ -125,7 +125,7 @@ namespace GameBase.EntitySystem
 
         void IBaseSys.FixedUpdate()
         {
-            if (!_fixedUpdate)
+            if (!FixedUpdate)
             {
                 return;
             }

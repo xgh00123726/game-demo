@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 
 namespace GameBase.Tools
 {
@@ -24,27 +25,40 @@ namespace GameBase.Tools
             return names;
         }
 
-        public static void SetInstanceNotNull<T>(T obj)
+        public static object CreateNotNullInstance(Type type)
         {
-            SetInstanceNotNull(typeof(T), obj);
+            var obj = CreateInstance(type);
+            if (type.IsValueType || type == typeof(string))
+            {
+                return obj;
+            }
+
+            foreach (var field  in type.GetFields())
+            {
+                field.SetValue(obj, CreateNotNullInstance(field.FieldType));
+            }
+            foreach (var property in type.GetProperties())
+            {
+                if (!property.CanWrite || property.GetIndexParameters().Length > 0)
+                {
+                    continue;
+                }
+                property.SetValue(obj, CreateNotNullInstance(property.PropertyType));
+            }
+
+            return obj;
         }
 
-        public static void SetInstanceNotNull(Type type, object obj)
+        public static T CreateNotNullInstance<T>()
         {
-            var fields = type.GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
-            foreach (var field in fields)
-            {
-                var value = CreateInstance(field.FieldType);
-                SetInstanceNotNull(field.FieldType, value);
-                field.SetValue(obj, value);
-            }
+            return (T)CreateNotNullInstance(typeof(T));
         }
 
         public static object CreateInstance(Type type)
         {
             if (type == typeof(string))
             {
-                return null;
+                return "NNN";
             }
             else
             {

@@ -1,5 +1,6 @@
 using Constructor.AttrAmplify;
 using CsvHelper.Configuration;
+using GameBase.Equipments;
 using GameBase.Inventorys;
 using GameBase.Move;
 using GameBase.Texts;
@@ -18,7 +19,7 @@ public class TestContainer
 {
     public class A
     {
-        public int a;
+        public string AA {  get; set; }
     }
     public class B : A
     {
@@ -27,17 +28,8 @@ public class TestContainer
     [MenuItem("Tools/TimerTest", false)]
     public static void Test()
     {
-        using var fileWriter = new StreamWriter($"{Application.streamingAssetsPath}/AttrAmplifier/Template.csv");
-        using var csvHelper = new CsvHelper.CsvWriter(fileWriter, new CsvConfiguration(System.Globalization.CultureInfo.InvariantCulture));
-        var datas = new AttrAmplifierData[1];
-        datas[0] = new AttrAmplifierData()
-        {
-            ID = 1,
-            Name = "a",
-            Modifier = new List<ModifierPair> { new ModifierPair("key", 1, 2) }
-        };
-        csvHelper.WriteRecords(datas);
-        XLogger.Instance.Log("write ok");
+        var a = General.CreateNotNullInstance<EquipmentData>();
+        XLogger.Instance.Log(a);
     }
 
 }

@@ -19,8 +19,8 @@ namespace GameBase.EntitySystem
         protected internal List<T> _entitiesNeedRemove = new();
         protected internal List<T> _entitiesNeedStart = new();
 
-        protected internal Action<T> _StartAction;
-        protected internal Action<T> _UpdateAction;
+        public Action<T> StartAction {  get; set; }
+        public Action<T> UpdateAction { get; set; }
         
         protected internal IEContainer<T> _container;
 
@@ -42,7 +42,15 @@ namespace GameBase.EntitySystem
                 return;
             }
             _entitiesNeedStart.Add(e);
-            _entityNeedRegister.Add(e);
+
+            if (_inUpdating)
+            {
+                _entityNeedRegister.Add(e);
+            }
+            else
+            {
+                _container.Add(e);
+            }
         }
 
         public void AddEntityImmediately(T e)
@@ -75,7 +83,7 @@ namespace GameBase.EntitySystem
 
             foreach (var e in _entitiesNeedStart)
             {
-                _StartAction?.Invoke(e);
+                StartAction?.Invoke(e);
             }
             _entitiesNeedStart.Clear();
 
@@ -89,7 +97,7 @@ namespace GameBase.EntitySystem
             _inUpdating = true;
             foreach (var e in _container)
             {
-                _UpdateAction?.Invoke(e);
+                UpdateAction?.Invoke(e);
                 _currIterIndex++;
             }
             _inUpdating = false;

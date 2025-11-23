@@ -52,7 +52,6 @@ UI.Inventory.OnExitDrag = function ( index )
     if (not dragEnd and mouseItem ~= nil) then
         local mouseIndex = mouseItem.ItemIndex
         local st = SwapInventoryAndEquipments(Creature.GetCurrentSelect(), mouseIndex, index)
-
         if (st) then
             inventoryPanel:UpdateItem(inventory, index)
         end

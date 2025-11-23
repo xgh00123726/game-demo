@@ -28,9 +28,12 @@ namespace Constructor.Spells
             }
             if (!SuperEnum.TryParse(data.Projectile.Tag, out GameBase.Projectiles.Tag tag))
             {
-                data.Projectile.TagEnum = tag;
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
                     .Log($"invalid enum string: {data.Projectile.Tag}");
+            }
+            else
+            {
+                data.Projectile.TagEnum = tag;
             }
         }
 

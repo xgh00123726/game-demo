@@ -1,14 +1,14 @@
 # this is a Spell Template
 # this is a template file, which will be ignored
-minCastAngle: 0
-textureName: 
-cooldown: 0
-tag: 0
-camp:
-  include: None
-  exclude: None
-indicator:
-  type: Circle
-  length: 0
-  radius: 0
-actionName: 
+MinCastAngle: 0
+TextureName: NNN
+Cooldown: 0
+Tag: 0
+Camp:
+  Include: None
+  Exclude: None
+Indicator:
+  Type: Circle
+  Length: 0
+  Radius: 0
+ActionName: NNN

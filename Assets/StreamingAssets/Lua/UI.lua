@@ -71,7 +71,7 @@ local function SetLayout( panel, layoutData)
 end
 
 local function AttrUIInit()
-    local panel = CS.Instance.AttrViewPanel()
+    local panel = CS.Instance.AttrViewPanel.Instance
 
     AttrUIChanger.Instance:SetActive(true)
 
@@ -88,7 +88,7 @@ local function AttrUIInit()
 end
 
 local function InventoryUIInit()
-    local panel = CS.Instance.InventoryViewPanel()
+    local panel = CS.Instance.InventoryViewPanel.Instance
 
     SetLayout(panel, UIData.Inventory.Layout)
 
@@ -115,7 +115,7 @@ local function InventoryUIInit()
 end
 
 local function ShopUIInit()
-    local panel = CS.Instance.ShopViewPanel() 
+    local panel = CS.Instance.ShopViewPanel.Instance
     local nearView = CS.Instance.ShopNearView("Prefabs/UI/ShopNearView.prefab")
 
     SetLayout(panel, UIData.Shop.Layout)
@@ -140,7 +140,7 @@ local function ShopUIInit()
 end
 
 local function EquipmentUIInit()
-    local panel = CS.Instance.EquipmentPanel()
+    local panel = CS.Instance.EquipmentPanel.Instance
 
     SetLayout(panel, UIData.Equipment.Layout)
 
@@ -171,7 +171,7 @@ local function EquipmentUIInit()
 end
 
 local function BuffUIInit()
-    local panel = CS.Instance.BuffViewPanel()
+    local panel = CS.Instance.BuffViewPanel.Instance
 
     SetLayout(panel, UIData.Buff.Layout)
 
@@ -183,7 +183,7 @@ local function BuffUIInit()
 end
 
 local function SpellUIInit()
-    local panel = CS.Instance.SpellViewPanel()
+    local panel = CS.Instance.SpellViewPanel.Instance
 
     SetLayout(panel, UIData.Spell.Layout)
 
@@ -197,7 +197,7 @@ local function SpellUIInit()
 end
 
 local function SpellActionModifierUIInit()
-    local panel = CS.Instance.SpellActionModifierViewPanel()
+    local panel = CS.Instance.SpellActionModifierViewPanel.Instance
 
     SetLayout(panel, UIData.SpellActionModifier.Layout)
 
@@ -210,7 +210,7 @@ local function SpellActionModifierUIInit()
 end
 
 local function AttrSelectUIInit()
-    local panel = CS.Instance.AttrSelectPanel("Prefabs/UI/AttrSelectPanel.prefab", "Prefabs/UI/AttrSelectItem.prefab")
+    local panel = CS.Instance.AttrSelectPanel.Instance
 
     SetLayout(panel, UIData.AttrSelect.Layout)
 

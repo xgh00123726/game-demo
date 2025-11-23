@@ -1,21 +1,21 @@
-trigPositionStyle: Mouse
-trigger:
-  maxEffectTimes: 0
-  shape:
-    type: Circle
-    radius: 0
-    length: 0
-    width: 0
-    pivot: 0
-  tagEnum: 0
-  trigStyle: External
-  delay: 0
-  trigPeriod: 0
-  existTime: 0
-  buffDuration: 0
-  damage: 0
-  ampFactor: 0
-  damageTextColor: &o0
+TrigPositionStyle: Mouse
+Trigger:
+  MaxEffectTimes: 0
+  Shape:
+    Type: Circle
+    Radius: 0
+    Length: 0
+    Width: 0
+    Pivot: 0
+  TagEnum: 0
+  TrigStyle: External
+  Delay: 0
+  TrigPeriod: 0
+  ExistTime: 0
+  BuffDuration: 0
+  Damage: 0
+  AmpFactor: 0
+  DamageTextColor: &o0
     r: 0
     g: 0
     b: 0
@@ -24,13 +24,13 @@ trigger:
     linear: *o0
     gamma: *o0
     maxColorComponent: 0
-  damageTextPrefabName: 
-  trigEffectName: 
-  trigAudioName: 
-  hitEffectName: 
-  hitAudioName: 
-  createEffectName: 
-  createAudioName: 
-  buffName: 
-  tag: 
-slotNum: 0
+  DamageTextPrefabName: NNN
+  TrigEffectName: NNN
+  TrigAudioName: NNN
+  HitEffectName: NNN
+  HitAudioName: NNN
+  CreateEffectName: NNN
+  CreateAudioName: NNN
+  BuffName: NNN
+  Tag: NNN
+SlotNum: 0

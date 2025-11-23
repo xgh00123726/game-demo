@@ -73,14 +73,14 @@ local function CreateBase( creatureBaseData )
                 local y = math.random(yMin, yMax)
                 local z = math.random(zMin, zMax)
                 c.Position = Vector3(x, y, z)
-                c.deadExp = deadExp
+                c.DeadExp = deadExp
                 c.OnDead = OnDead
                 local spell = Spell.Factory:Get(spellName)
                 c:AddSpell(spell)
 
-                if (c.ai ~= nil) then
-                    c.ai.arriveDis = 2
-                    c.ai.OnFollowArrive = function ()
+                if (c.AI ~= nil) then
+                    c.AI.arriveDis = 2
+                    c.AI.OnFollowArrive = function ()
                         Controller.AutoCaster.CastByStyle(c:GetSpell(0))
                     end
                 end
@@ -125,6 +125,6 @@ Creature = {
 
     --- @arg1 current : Creature
     GetCurrentSelect = function ()
-        return CreatureSelector.currentSelect
+        return CreatureSelector.CurrentSelect
     end
 }

@@ -6,28 +6,14 @@ using TMPro;
 
 namespace Instance
 {
-    public class AttrViewPanel : BaseViewPanel<AttrViewItem>
+    public class AttrViewPanel : BaseViewPanel<AttrViewItem, AttrViewPanel>
     {
-        private static AttrViewPanel _instance;
-        public static AttrViewPanel Instance => _instance;
-
-        public AttrViewPanel(string prefabName = "Prefabs/UI/AttrPanel",
-            string itemPrefabName = "Prefabs/UI/AttrItem") : base(prefabName, itemPrefabName)
+        protected override string PanelPrefabName => "Prefabs/UI/AttrPanel";
+        protected override string ItemPrefabName => "Prefabs/UI/AttrItem";
+        protected override void OnGet(AttrViewItem e)
         {
-            if (_instance != null)
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log("error");
-            }
-            _instance = this;
-        }
-        protected override BaseUI InstantiateObj(AttrViewItem e)
-        {
-            var obj = base.InstantiateObj(e);
-
+            base.OnGet(e);
             e.valueTMP = e.Obj.transform.Find("ValueText").GetComponent<TextMeshProUGUI>();
-
-            return obj;
         }
 
         public void SetAttrKey(int key, int index)

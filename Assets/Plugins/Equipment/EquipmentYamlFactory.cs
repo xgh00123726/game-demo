@@ -23,9 +23,12 @@ namespace GameBase.Equipments
         {
             if (!SuperEnum.TryParse(data.Tag, out EquipmentTag tag))
             {
-                data.TagEnum = tag;
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
                     .Log($"invalid enum string: {data.Tag}");
+            }
+            else
+            {
+                data.TagEnum = tag;
             }
 
             data.IntKeyModifiers = new();

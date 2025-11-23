@@ -7,10 +7,7 @@ namespace GameBase.Triggers
 {
     public class TriggerSys : SealedEntitySys<Trigger, TriggerSys>
     {
-        public TriggerSys()
-        {
-            _fixedUpdate = true;
-        }
+        protected override bool FixedUpdate => true;
 
         protected override void OnGet(Trigger e)
         {

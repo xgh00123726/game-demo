@@ -10,13 +10,12 @@ using UnityEngine.UI;
 
 namespace Instance
 {
-    public class ShopViewPanel : BaseViewPanel<ShopViewItem>
+    public class ShopViewPanel : BaseViewPanel<ShopViewItem, ShopViewPanel>
     {
+        protected override string PanelPrefabName => "Prefabs/UI/ShopPanel.prefab";
+        protected override string ItemPrefabName => "Prefabs/UI/ShopItem.prefab";
+
         private BaseUI _refreshIconScript;
-
-        private static ShopViewPanel _instance;
-        public static ShopViewPanel Instance => _instance;
-
         private Action _OnRefreshIconPush;
         public Action OnRefreshIconPush
         {
@@ -28,22 +27,14 @@ namespace Instance
             }
         }
 
-        public ShopViewPanel(string prefabName = "Prefabs/UI/ShopPanel.prefab",
-            string itemPrefabName = "Prefabs/UI/ShopItem.prefab") : base(prefabName, itemPrefabName)
+        public ShopViewPanel()
         {
-            if (_instance != null)
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log("instance has only one");
-            }
-            _instance = this;
             _refreshIconScript = panel.transform.Find("RefreshIcon").gameObject.AddComponent<BaseUI>();
         }
 
-        protected override BaseUI InstantiateObj(ShopViewItem e)
+        protected override void OnGet(ShopViewItem e)
         {
-            var obj = base.InstantiateObj(e);
-
+            base.OnGet(e);
             e.identifyIconObj = e.Obj.transform.Find("Identify").gameObject;
 
             var image = e.identifyIconObj.GetComponent<Image>();
@@ -52,8 +43,6 @@ namespace Instance
             e.priceText = e.Obj.transform.Find("PriceText").GetComponent<TextMeshProUGUI>();
 
             e.identifyText = e.Obj.transform.Find("IdentifyText").GetComponent<TextMeshProUGUI>();
-
-            return obj;
         }
 
         public void UpdateItem(ShopInventory model, int index)

@@ -1,56 +1,26 @@
+using CsvHelper.Configuration;
 using NReco.Csv;
 using System;
+using System.Collections.Generic;
+using System.Data;
 using System.IO;
 
 namespace GameBase.Tools
 {
     public class CsvReaderExtend
     {
-        private string _path;
-        private Action<int> _OnReadLen;
-        private Action<int, CsvReader> _OnReadLine;
-
-        public CsvReaderExtend(string path, Action<int> OnReadLen, Action<int, CsvReader> OnReadElem)
+        public static List<T> Read<T>(string path)
         {
-            _path = path;
-            _OnReadLen = OnReadLen;
-            _OnReadLine = OnReadElem;
-        }
-
-        public void Parse()
-        {
-            if (_path == null || _path.Length == 0 || _path == "")
+            using var fileReader = new StreamReader(path);
+            using var csvReader = new CsvHelper.CsvReader(fileReader,
+                System.Globalization.CultureInfo.InvariantCulture);
+            List<T> ret = new();
+            foreach (var item in csvReader.GetRecords<T>()) 
             {
-                return;
-            }
-            StreamReader reader = File.OpenText(_path);
-            CsvReader csvReader = new CsvReader(reader);
-            csvReader.Read();
-            if (int.TryParse(csvReader[0], out var len))
-            {
-                _OnReadLen?.Invoke(len);
-
-                for (int i = 0; i < len; ++i)
-                {
-                    csvReader.Read();
-
-                    _OnReadLine(i, csvReader);
-                }
-            }
-            else
-            {
-                _OnReadLen?.Invoke(-1);
-
-                int i = 0;
-                while(csvReader.Read())
-                {
-                    _OnReadLine(i, csvReader);
-                    i++;
-                }
+                ret.Add(item);
             }
 
-
-            reader.Close();
+            return ret;
         }
     }
 }

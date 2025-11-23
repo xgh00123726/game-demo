@@ -5,20 +5,10 @@ using GameBase.UI;
 
 namespace Instance
 {
-    public class EquipmentPanel : BaseViewPanel<EquipmentItem>
+    public class EquipmentPanel : BaseViewPanel<EquipmentItem, EquipmentPanel>
     {
-        private static EquipmentPanel _instance;
-        public static EquipmentPanel Instance => _instance;
-        public EquipmentPanel(string prefabName = "Prefabs/UI/EquipmentPanel",
-            string itemPrefabName = "Prefabs/UI/EquipmentItem") : base(prefabName, itemPrefabName)
-        {
-            if (_instance != null)
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log("instance has only one");
-            }
-            _instance = this;
-        }
+        protected override string PanelPrefabName => "Prefabs/UI/EquipmentPanel";
+        protected override string ItemPrefabName => "Prefabs/UI/EquipmentItem";
 
         public void UpdatePanel(Creature c)
         {

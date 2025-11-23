@@ -9,8 +9,8 @@ namespace GameBase.GCamera
         private Vector3 _dragCameraPosition;
         private Vector3 _dragMousePosition;
 
-        public bool EnableEdgeAutoDrag { get; set; } = true;
-        public bool EnableScrollToChangeFOV { get; set; } = true;
+        public bool EnableEdgeAutoDrag { get; set; } = false;
+        public bool EnableScrollToChangeFOV { get; set; } = false;
 
         public float DragFactor { get; set; } = 100f;
         public float XMoveSpeed { get; set; } = 10f;

@@ -6,7 +6,7 @@ namespace Instance
 {
     public abstract class UIInteractive<T, T_Panel, T_PanelItem> : SingletonInstance<T>
         where T : UIInteractive<T, T_Panel, T_PanelItem>, new()
-        where T_Panel : BaseViewPanel<T_PanelItem>
+        where T_Panel : BaseViewPanel<T_PanelItem, T_Panel>, new()
         where T_PanelItem : BaseViewItem, new()
     {
         public float EnterDragTime { get; set; } = 0.1f;

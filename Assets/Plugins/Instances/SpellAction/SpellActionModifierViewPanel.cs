@@ -4,24 +4,15 @@ using GameBase.Tools;
 using GameBase.UI;
 namespace Instance
 {
-    public class SpellActionModifierViewPanel : BaseViewPanel<SpellActionModifierViewItem>
+    public class SpellActionModifierViewPanel : BaseViewPanel<SpellActionModifierViewItem, SpellActionModifierViewPanel>
     {
-        private static SpellActionModifierViewPanel _instance;
-        public static SpellActionModifierViewPanel Instance => _instance;
+        protected override string PanelPrefabName => "Prefabs/UI/SpellActionModifierPanel.prefab";
+        protected override string ItemPrefabName => "Prefabs/UI/SpellActionModifierItem.prefab";
 
         private SpellShadowView _spellShadowView;
 
-        public SpellActionModifierViewPanel(string prefabName = "Prefabs/UI/SpellActionModifierPanel.prefab",
-            string itemPrefabName = "Prefabs/UI/SpellActionModifierItem.prefab") : base(
-            prefabName,
-            itemPrefabName)
+        public SpellActionModifierViewPanel()
         {
-            if (_instance != null)
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log("instance has only one");
-            }
-            _instance = this;
             _spellShadowView = new SpellShadowView(panel.transform);
         }
 

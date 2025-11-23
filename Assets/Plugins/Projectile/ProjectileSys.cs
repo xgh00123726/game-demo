@@ -9,10 +9,7 @@ namespace GameBase.Projectiles
 {
     public class ProjectileSys : SealedEntitySys<Projectile, ProjectileSys>
     {
-        public ProjectileSys()
-        {
-            _fixedUpdate = true;
-        }
+        protected override bool FixedUpdate => true;
         protected override void OnGet(Projectile e)
         {
             e.alive = true;

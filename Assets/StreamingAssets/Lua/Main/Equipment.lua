@@ -10,8 +10,8 @@ UI.Equipment.OnEnterDrag = function ( index )
 
     local controller = UI.Equipment.DragViewController
     local view = controller.DragView
-    local dragImage = view.triggerImage
-    local dragedItemImage = UI.Equipment.Panel[index].triggerImage
+    local dragImage = view.TriggerImage
+    local dragedItemImage = UI.Equipment.Panel[index].TriggerImage
 
     UI.Inputs.LockCaller("rectDrawer")
 
@@ -33,7 +33,7 @@ UI.Equipment.OnExitDrag = function ( index )
     local view = controller.DragView
     local equipmentPanel = UI.Equipment.Panel
     local dragedItem = equipmentPanel[index]
-    local dragedItemImage = dragedItem.triggerImage
+    local dragedItemImage = dragedItem.TriggerImage
     local c = Creature.GetCurrentSelect()
     local equipments = c.equipments
 

@@ -7,30 +7,16 @@ using UnityEngine.UI;
 
 namespace Instance
 {
-    public class SpellViewPanel : BaseViewPanel<SpellViewItem>
+    public class SpellViewPanel : BaseViewPanel<SpellViewItem, SpellViewPanel>
     {
+        protected override string PanelPrefabName => "Prefabs/UI/SpellPanel";
+        protected override string ItemPrefabName => "Prefabs/UI/SpellItem";
         private int _lastClickedItemIndex = -1;
-
         public Action<int> OnClickedItem;
-        private static SpellViewPanel _instance;
-        public static SpellViewPanel Instance => _instance;
-        public SpellViewPanel(string prefabName = "Prefabs/UI/SpellPanel",
-            string itemPrefabName = "Prefabs/UI/SpellItem") : base(
-            prefabName,
-            itemPrefabName)
-        {
-            if (_instance != null)
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log("instance has only one");
-            }
-            _instance = this;
-        }
 
-        protected override BaseUI InstantiateObj(SpellViewItem e)
+        protected override void OnGet(SpellViewItem e)
         {
-            var obj = base.InstantiateObj(e);
-
+            base.OnGet(e);
             e.timeTMP = e.Obj.transform.Find("CoolingDownText").GetComponent<TextMeshProUGUI>();
 
             e.chargeTMP = e.Obj.transform.Find("Charge").GetComponent<TextMeshProUGUI>();
@@ -38,8 +24,6 @@ namespace Instance
             var image = e.UIScript.GetComponent<Image>();
 
             e.MaskImage = new MaskImage(image);
-
-            return obj;
         }
 
         protected override void UpdateEntity(SpellViewItem e)

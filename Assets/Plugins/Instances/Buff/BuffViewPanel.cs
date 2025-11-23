@@ -9,52 +9,20 @@ using UnityEngine.UI;
 
 namespace Instance
 {
-    public class BuffViewPanel : BaseViewPanel<BuffViewItem>
+    public class BuffViewPanel : BaseViewPanel<BuffViewItem, BuffViewPanel>
     {
         private static BuffViewPanel _instance;
-        public static BuffViewPanel Instance => _instance;
-
-        private BaseObjectPool<GameObject> _pool = new();
-
-        public BuffViewPanel(string prefabName = "Prefabs/UI/BuffPanel",
-            string itemPrefabName = "Prefabs/UI/BuffItem") : base(
-            prefabName,
-            itemPrefabName)
+        protected override string PanelPrefabName => "Prefabs/UI/BuffPanel";
+        protected override string ItemPrefabName => "Prefabs/UI/BuffItem";
+        protected override void OnGet(BuffViewItem e)
         {
-            if (_instance != null)
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log("error");
-            }
-            _instance = this;
-            _pool.InstantiateFunc = () => GameObject.Instantiate(ResourceMgr.Prefab.Get(itemPrefabName));
-            _pool.InstantiateAction = static (e) => e.SetActive(true);
-            _pool.ReleaseAction = static (e) => e.SetActive(false);
-        }
-
-        protected override GameObject GetGameObject(string name)
-        {
-            return _pool.Get();
-        }
-
-        protected override void Remove(BuffViewItem e)
-        {
-            base.Remove(e);
-            _pool.Release(e.Obj);
-        }
-
-        protected override BaseUI InstantiateObj(BuffViewItem e)
-        {
-            var obj = base.InstantiateObj(e);
-
+            base.OnGet(e);
             var image = e.UIScript.GetComponent<Image>();
             e.iconMaterial = new Material(image.material);
             image.material = e.iconMaterial;
 
             e.iconMaterial.SetFloat("_Dir1", -1f);
             e.iconMaterial.SetFloat("_Dir2", -1f);
-
-            return obj;
         }
 
         public void UpdateItem(Buff buff, int index)

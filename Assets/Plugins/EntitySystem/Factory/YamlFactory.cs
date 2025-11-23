@@ -171,11 +171,7 @@ namespace GameBase.EntitySystem
                 path = $"{Folder}/{TEMPLATE_NAME}";
             }
             var data = GetTemplateData();
-            if (data == null)
-            {
-                data = Activator.CreateInstance<T_Data>();
-                General.SetInstanceNotNull(data);
-            }
+            data ??= General.CreateNotNullInstance<T_Data>();
             var serializer = new SerializerBuilder().Build();
             var yaml = serializer.Serialize(data);
             if (comment != null)

@@ -3,7 +3,7 @@ using GameBase.Modify;
 
 namespace Constructor.AttrAmplify
 {
-    public class AttrAmplifierFactory : MultiFactory<Modifyer, AttrAmplifierFactory>
+    public class AttrAmplifierFactory : MultiFactory<AttrAmplifier, AttrAmplifierFactory>
     {
         
     }

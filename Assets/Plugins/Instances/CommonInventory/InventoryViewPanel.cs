@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Instance
 {
-    public class InventoryViewPanel : BaseViewPanel<InventoryViewItem>
+    public class InventoryViewPanel : BaseViewPanel<InventoryViewItem, InventoryViewPanel>
     {
         protected bool _showFlag = false;
         protected float initX;
@@ -22,21 +22,13 @@ namespace Instance
         public float panelXOffsetTarget = 0f;
         public float panelYOffsetTarget = 0f;
 
-        private static InventoryViewPanel _instance;
-        public static InventoryViewPanel Instance => _instance;
+        protected override string PanelPrefabName => "Prefabs/UI/InventoryPanel";
+        protected override string ItemPrefabName => "Prefabs/UI/InventoryItem";
 
         public override bool IsShow => _showFlag;
 
-        public InventoryViewPanel(string prefabName = "Prefabs/UI/InventoryPanel",
-            string itemPrefabName = "Prefabs/UI/InventoryItem") : base(prefabName,
-            itemPrefabName)
+        public InventoryViewPanel()
         {
-            if (_instance != null)
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log("error");
-            }
-            _instance = this;
             SetLocalPosition(panel.transform.localPosition.x, panel.transform.localPosition.y);
         }
 

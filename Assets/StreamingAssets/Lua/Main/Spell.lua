@@ -38,8 +38,8 @@ UI.SpellActionModifier.OnEnterDrag = function ( index )
 
     local controller = UI.SpellActionModifier.DragViewController
     local view = controller.DragView
-    local dragImage = view.triggerImage
-    local dragedItemImage = UI.SpellActionModifier.Panel[index].triggerImage
+    local dragImage = view.TriggerImage
+    local dragedItemImage = UI.SpellActionModifier.Panel[index].TriggerImage
 
     UI.Inputs.LockCaller("rectDrawer")
     dragImage:Copy(dragedItemImage)
@@ -58,7 +58,7 @@ UI.SpellActionModifier.OnExitDrag = function ( index )
     local view = controller.DragView
     local mPanel = UI.SpellActionModifier.Panel
     local dragedItem = mPanel[index]
-    local dragedItemImage = dragedItem.triggerImage
+    local dragedItemImage = dragedItem.TriggerImage
 
     view:Hide()
     controller.Stop()

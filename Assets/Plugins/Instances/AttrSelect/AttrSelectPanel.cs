@@ -10,33 +10,22 @@ using UnityEngine.UI;
 
 namespace Instance
 {
-    public class AttrSelectPanel : BaseViewPanel<AttrSelectItem>
+    public class AttrSelectPanel : BaseViewPanel<AttrSelectItem, AttrSelectPanel>
     {
-        private static AttrSelectPanel _instance;
-        public static AttrSelectPanel Instance => _instance;
-        public AttrSelectPanel(string prefabName = "Prefabs/UI/AttrSelectPanel.prefab", string itemPrefabName = "Prefabs/UI/AttrSelectItem.prefab") : base(prefabName, itemPrefabName)
-        {
-            if (_instance != null)
-            {
-                XLogger.Instance.Level(XLogger.LogLevel.Error)
-                    .Log("error");
-            }
-            _instance = this;
-        }
+        protected override string PanelPrefabName => "Prefabs/UI/AttrSelectPanel.prefab";
+        protected override string ItemPrefabName => "Prefabs/UI/AttrSelectItem.prefab";
 
-        protected override BaseUI InstantiateObj(AttrSelectItem e)
+        protected override void OnGet(AttrSelectItem e)
         {
-            var obj = base.InstantiateObj(e);
-
+            base.OnGet(e);
             e.iconObj = e.Obj.transform.Find("Icon").gameObject;
 
             var image = e.iconObj.GetComponent<Image>();
             e.iconImage = new SuperImage(image);
 
             e.text = e.Obj.transform.Find("Text").GetComponent<TextMeshProUGUI>();
-
-            return obj;
         }
+
 
         public void UpdateItem(ShopInventory model, int index)
         {

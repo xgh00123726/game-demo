@@ -15,7 +15,6 @@ namespace GameBase.UI
     {
         private static int _count = 0;
         private static Dictionary<ViewTag, LinkedList<BaseViewItem>> _views = new();
-        private static List<BaseViewPanel<BaseViewItem>> _panels = new();
 
         static ViewMgr()
         {
@@ -35,11 +34,6 @@ namespace GameBase.UI
         {
             _views[view.tag].Remove(view);
             _count--;
-        }
-
-        internal static void RegisterViewPanel(BaseViewPanel<BaseViewItem> panel)
-        {
-
         }
 
         public static int GetViewCount()

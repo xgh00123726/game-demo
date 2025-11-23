@@ -49,12 +49,11 @@ function SwapInventoryAndEquipments(c, equipIndex, inventoryIndex)
         return false
     end
 
-
     local inventory = Inventory.Instance
     local hasItem = inventory:HasItem(inventoryIndex)
     local hasEquipItem = false -- 背包中是否有装备
     if (hasItem) then
-        hasEquipItem = inventory[inventoryIndex].type == ItemData.Enum.ItemType.EquipmentData
+        hasEquipItem = inventory[inventoryIndex].Type == ItemData.Enum.ItemType.EquipmentData
     end
     local equipment = c:GetEquipment(equipIndex)
     local hasEquipment = equipment ~= nil -- 人物身上是否有装备
@@ -117,7 +116,7 @@ function SwapInventoryAndSAM(c, spellIndex, modifierIndex, inventoryIndex)
     local inventoryHasItem = inventory:HasItem(inventoryIndex)
     local inventoryHasModifier = false
     if (inventoryHasItem) then
-        inventoryHasModifier = inventory[inventoryIndex].type == InventoryData.Enum.ItemType.SpellActionModifier
+        inventoryHasModifier = inventory[inventoryIndex].Type == InventoryData.Enum.ItemType.SpellActionModifier
     end
     local modifierID = spellAction:GetID(modifierIndex)
     local newModifierInfo = InventoryData.Struct.DataType()

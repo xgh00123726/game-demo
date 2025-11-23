@@ -19,9 +19,12 @@ namespace Constructor.Spells
 
             if (!SuperEnum.TryParse(data.Trigger.Tag, out TriggerActionTag tag))
             {
-                data.Trigger.TagEnum = tag;
                 XLogger.Instance.Level(XLogger.LogLevel.Error)
                     .Log($"invalid enum string: {data.Trigger.Tag}");
+            }
+            else
+            {
+                data.Trigger.TagEnum = tag;
             }
         }
 

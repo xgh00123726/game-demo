@@ -9,22 +9,20 @@ using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public class BaseViewPanel<T> : IBaseSys
+    public class BaseViewPanel<T, T_Panel> : SealedEntitySys<T, T_Panel>
         where T : BaseViewItem, new()
+        where T_Panel : BaseViewPanel<T, T_Panel>, new()
     {
-        protected internal LinkedList<T> _entityNeedRegister = new LinkedList<T>();
-        protected internal LinkedList<T> _entitiesNeedRemove = new LinkedList<T>();
-        protected internal bool _inUpdating = false;
-
-        protected internal string itemPrefabName = "Prefabs/UI/InventoryItem";
-        protected internal ListContainer<T> container = new();
         protected internal GameObject panel;
-
+        protected ListContainer<T> _container;
         private Action<int> _OnPointerDown;
         private Action<int> _OnPointerRightDown;
         private Action<int> _OnPointerUp;
         private Action<int> _OnPointerEnter;
         private Action<int> _OnPointerExit;
+        protected virtual string ItemPrefabName { get; } = "Prefabs/UI/InventoryItem";
+        protected virtual string PanelPrefabName { get; } = "Prefabs/UI/InventoryPanel";
+        protected override bool UseDefaultContainer => false;
         public ILayout Layout { get; set; }
         public Action<int> OnEnterDrag { get; set; }
         public Action<int> OnExitDrag { get; set; }
@@ -32,7 +30,6 @@ namespace GameBase.UI
         public Action<int> OnEnterDetail { get; set; }
         public Action<int> OnExitDetail { get; set; }
         public Action<int> OnDetail { get; set; }
-
         public Action<int> OnPointerDown
         {
             get => _OnPointerDown;
@@ -94,46 +91,44 @@ namespace GameBase.UI
             }
         }
 
-
-        public BaseViewPanel(string prefabName,
-            string itemPrefabName)
+        public BaseViewPanel()
         {
-            SingletonEntitySysInstance.CreateShadowMono(this); 
+            if (!UseDefaultContainer)
+            {
+                _container = new ListContainer<T>();
+                _sys = new EntitySys<T>(_container)
+                {
+                    StartAction = EntityStart,
+                    UpdateAction = UpdateEntity,
+                };
+            }
 
-            panel = GameObject.Instantiate(ResourceMgr.Prefab.Get(prefabName));
+            panel = GameObject.Instantiate(ResourceMgr.Prefab.Get(PanelPrefabName));
             panel.transform.SetParent(RootCanvas.Instance.Layer(0), false);
             panel.SetActive(false);
-            this.itemPrefabName = itemPrefabName;
         }
 
-        public virtual IEContainer<T> Entities => container;
-
-        protected virtual GameObject GetGameObject(string name)
+        protected override void OnGet(T e)
         {
-            return GameObject.Instantiate(ResourceMgr.Prefab.Get(name));
-        }
-
-        protected virtual BaseUI InstantiateObj(T e)
-        {
-            var obj = GetGameObject(e.PrefabName);
-            e.Obj = obj;
-
+            var obj = GameObject.Instantiate(ResourceMgr.Prefab.Get(ItemPrefabName));
+            obj.name = ItemPrefabName + Entities.Count;
+            obj.transform.SetParent(panel.transform, false);
+            e.Obj = obj; 
             var triggerObj = obj.transform.Find("Trigger").gameObject;
             var ui = triggerObj.AddComponent<BaseUI>();
-
+            e.UIScript = ui;
             var image = triggerObj.GetComponent<Image>();
             e.TriggerImage = new SuperImage(image);
             e.TriggerImage.SetHideColor(image.color);
-
             e.triggerObject = triggerObj;
-
-            obj.transform.SetParent(panel.transform, false);
-
             e.triggerRectTransform = e.triggerObject.GetComponent<RectTransform>();
 
-            e.UIScript = ui;
-
-            return ui;
+            e.UIScript.OnPointerDown = _OnPointerDown;
+            e.UIScript.OnPointerEnter = _OnPointerEnter;
+            e.UIScript.OnPointerRightDown = _OnPointerRightDown;
+            e.UIScript.OnPointerExit = _OnPointerExit;
+            e.UIScript.OnPointerUp = _OnPointerUp;
+            ViewMgr.RegisterView(e);
         }
 
         private void DragableUpdate(T e)
@@ -164,13 +159,14 @@ namespace GameBase.UI
         {
             if (Layout == null)
             {
+                XLogger.Instance.Log($"panel:{GetType()}, layout is null");
                 return;
             }
 
             e.Obj.transform.localPosition = Layout.GetItemLocalPosition(e.itemIndex);
         }
 
-        protected virtual void UpdateEntity(T e)
+        protected override void UpdateEntity(T e)
         {
             if (e.UIScript.isPointerOn)
             {
@@ -187,83 +183,11 @@ namespace GameBase.UI
                 e.UIScript.enterTime = 0;
                 e.UIScript.pointerDownTime = 0;
             }
+            e.itemIndex = CurrentIterateIndex;
 
             LayoutUpdate(e);
             DragableUpdate(e);
             DetailbleUpdate(e);
-        }
-
-        protected virtual void Update()
-        {
-            int index = 0;
-            foreach (var e in Entities)
-            {
-                e.itemIndex = index;
-                e.UIScript.index = index;
-                _inUpdating = true;
-                UpdateEntity(e);
-                index++;
-            }
-            foreach (var e in _entitiesNeedRemove)
-            {
-                Remove(e);
-            }
-            _entitiesNeedRemove.Clear();
-        }
-
-        public T NewEntity(string name = null)
-        {
-            var e = new T();
-            if (name != null)
-            {
-                e.PrefabName = name;
-            }
-            else
-            {
-                e.PrefabName = itemPrefabName;
-            }
-            return NewEntity(e);
-        }
-
-        public virtual T NewEntity(T e)
-        {
-            Entities.Add(e);
-            e.UIScript = InstantiateObj(e);
-            e.UIScript.OnPointerDown = _OnPointerDown;
-            e.UIScript.OnPointerEnter = _OnPointerEnter;
-            e.UIScript.OnPointerRightDown = _OnPointerRightDown;
-            e.UIScript.OnPointerExit = _OnPointerExit;
-            e.UIScript.OnPointerUp = _OnPointerUp;
-            ViewMgr.RegisterView(e);
-            return e;
-        }
-
-        /// <summary>
-        /// 将实体标记为删除
-        /// </summary>
-        public void RemoveEntity(T e)
-        {
-            if (e == null) return;
-
-            if (_entitiesNeedRemove.Contains(e))
-            {
-                return;
-            }
-
-            if (!_inUpdating)
-            {
-                Remove(e);
-            }
-            else
-            {
-                _entitiesNeedRemove.AddLast(e);
-            }
-        }
-
-        protected virtual void Remove(T e)
-        {
-            Entities.Remove(e);
-            ViewMgr.RemoveView(e);
         }
 
         public virtual void SetLocalPosition(float x, float y)
@@ -275,7 +199,7 @@ namespace GameBase.UI
 
         public void FillItem(int targetCount)
         {
-            int count = container.Count;
+            int count = Entities.Count;
             if (count >= targetCount)
             {
                 return;
@@ -288,8 +212,11 @@ namespace GameBase.UI
 
         public virtual T this[int index]
         {
-            get => container[index];
-            set => container[index] = value;
+            get
+            {
+                return _container[index];
+            }
+            set => _container[index] = value;
         }
 
         /// <summary>
@@ -319,16 +246,6 @@ namespace GameBase.UI
             var item2 = this[p2];
             item1.TriggerImage.Swap(item2.TriggerImage);
             (item1.InteractiveEnable, item2.InteractiveEnable) = (item2.InteractiveEnable, item1.InteractiveEnable);
-        }
-
-        public void AddChild(GameObject child)
-        {
-            child.transform.SetParent(panel.transform, false);
-        }
-
-        public Transform FindChild(string name)
-        {
-            return panel.transform.Find(name);
         }
 
         public void EnterDragState(int index)
@@ -403,36 +320,6 @@ namespace GameBase.UI
             {
                 Show();
             }
-        }
-
-        public SuperImage GetItemImage(int index)
-        {
-            return this[index].TriggerImage;
-        }
-
-        void IBaseSys.Update()
-        {
-            Update();
-        }
-
-        void IBaseSys.FixedUpdate()
-        {
-            
-        }
-
-        int IBaseSys.GetEntityCount()
-        {
-            return Entities.Count;
-        }
-
-        int IBaseSys.GetReleasedCount()
-        {
-            return 0;
-        }
-
-        int IBaseSys.GetActiveCount()
-        {
-            return 0;
         }
     }
 }

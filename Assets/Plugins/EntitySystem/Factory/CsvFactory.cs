@@ -61,7 +61,7 @@ namespace GameBase.EntitySystem
 
         protected virtual T_Data[] ReadCsvData(string path)
         {
-            return new CsvReaderReflect<T_Data>().Parse(path);
+            return CsvReaderExtend.Read<T_Data>(path).ToArray();
         }
 
         private T_Data[] ReadData()
@@ -150,15 +150,14 @@ namespace GameBase.EntitySystem
             var data = GetTemplateData();
             if (data == null)
             {
-                data = Activator.CreateInstance<T_Data>();
-                General.SetInstanceNotNull(data);
+                data = General.CreateNotNullInstance<T_Data>();
             }
             var datas = new T_Data[2]
             {
                 data,
                 data,
             };
-            new CsvWriterReflect<T_Data>().Write(datas, path);
+            CsvWriterExtend.Write(datas, path);
 
             XLogger.Instance.Log($"success to write template file to: {path}");
         }

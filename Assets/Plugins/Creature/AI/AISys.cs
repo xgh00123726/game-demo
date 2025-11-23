@@ -8,10 +8,7 @@ namespace GameBase.AI
 {
     public class AISys : InheritableSys<BaseAI, AISys>
     {
-        public AISys()
-        {
-            _fixedUpdate = true;
-        }
+        protected override bool FixedUpdate => true;
         protected override void UpdateEntity(BaseAI e)
         {
             if (e.owner == null)
