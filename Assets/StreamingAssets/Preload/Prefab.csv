@@ -49,8 +49,8 @@ Prefabs/UI/EpicExpBar.prefab
 Prefabs/Info/SelectorDrawer.prefab
 Prefabs/UI/RootCanvs.prefab
 Prefabs/UI/WorldCanvas.prefab
-Prefabs/UI/AttrSelectPanel.prefab
-Prefabs/UI/AttrSelectItem.prefab
+Prefabs/UI/EpicBonusSelectPanel.prefab
+Prefabs/UI/EpicBonusSelectItem.prefab
 Prefabs/Effect/Hit/SectorSlash.prefab
 Prefabs/Effect/Hit/ForwardSlash.prefab
 Prefabs/Entity/Zombie1.prefab

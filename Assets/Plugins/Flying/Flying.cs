@@ -16,7 +16,7 @@ namespace GameBase.Flyings
         public IFlyingTarget Target { get; set; }
         public float StartAngleOffset { get; set; }
         public Vector3 Dest {  get; set; }
-        public Curve Curve { get; set; }
+
         public string ReleaseEffect { get; set; }
         public string ReleaseAudio { get; set; }
         public Action OnReleased { get; set; }
@@ -25,6 +25,17 @@ namespace GameBase.Flyings
         internal Vector3 src;
         internal bool alive;
         internal float instantiateTime;
+        internal Curve curve;
+
+        public Curve Curve
+        {
+            get => curve;
+            set
+            {
+                curve = value;
+                curve?.SetOwner(this);
+            }
+        }
         public float Speed
         {
             get => speed;

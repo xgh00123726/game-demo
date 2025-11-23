@@ -1,7 +1,11 @@
 local AlignType = CS.Instance.AlignType
+local CanvasType = CS.GameBase.UI.FreeViewItem.CanvasType
 
 UIData = {
-    AlignType = AlignType,
+    Enum = {
+        AlignType = AlignType,
+        CanvasType = CanvasType,
+    },
     CommonDragView = {
         PrefabName = "Prefabs/UI/InventoryShadowItem",
     },
@@ -78,13 +82,69 @@ UIData = {
             align = AlignType.Left | AlignType.Bottom
         }
     },
-    AttrSelect = {
+    EpicBonusSelect = {
         Layout = {
             xInterval = 600,
             yInterval = 100,
             width = 1810,
             height = 600,
             align = AlignType.Left | AlignType.Bottom
+        }
+    },
+    ToolBar = {
+        ExpandTime = 0.3,
+        CollapseTime = 0.3,
+        Items = {
+            {
+                PrefabName = "UI/ToolBarItem.prefab",
+                IconTextureName = "Textures/Icon/arrow_right_ring.png",
+                Position = {
+                    x = 1700,
+                    y = 900
+                }
+            },            {
+                PrefabName = "UI/ToolBarItem.prefab",
+                IconTextureName = "Textures/Icon/BackPack.png",
+                Position = {
+                    x = 1600,
+                    y = 900
+                }
+            },            {
+                PrefabName = "UI/ToolBarItem.prefab",
+                IconTextureName = "Textures/Icon/hot.png",
+                Position = {
+                    x = 1500,
+                    y = 900
+                }
+            },            {
+                PrefabName = "UI/ToolBarItem.prefab",
+                IconTextureName = "Textures/Icon/market.png",
+                Position = {
+                    x = 1400,
+                    y = 900
+                }
+            },            {
+                PrefabName = "UI/ToolBarItem.prefab",
+                IconTextureName = "Textures/Icon/setting.png",
+                Position = {
+                    x = 1300,
+                    y = 900
+                }
+            },            {
+                PrefabName = "UI/ToolBarItem.prefab",
+                IconTextureName = "Textures/Icon/todo.png",
+                Position = {
+                    x = 1200,
+                    y = 900
+                }
+            },            {
+                PrefabName = "UI/ToolBarItem.prefab",
+                IconTextureName = "Textures/Icon/wepon.png",
+                Position = {
+                    x = 1100,
+                    y = 900
+                }
+            },
         }
     },
 }

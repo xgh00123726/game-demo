@@ -1,5 +1,4 @@
-using GameBase.EntitySystem;
-using GameBase.UI;
+using GameBase.Tools;
 
 namespace Instance
 {

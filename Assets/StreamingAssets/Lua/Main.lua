@@ -13,7 +13,7 @@ require("Item")
 require("Main/Util")
 require("Main/Inventory")
 require("Main/Shop")
-require("Main/AttrSelect")
+require("Main/BonusSelect")
 require("Main/Equipment")
 require("Main/Spell")
 
@@ -36,24 +36,18 @@ function OnInitOK()
 
     UI.Inventory.Init()
     UI.Inventory.Panel:UpdatePanel(Inventory.Instance)
-
     UI.Shop.Init()
-
     UI.Attr.Init()
     UI.Attr.SetTarget(Creature.Player)
-
     UI.Equipment.Init()
     UI.Equipment.SetTarget(Creature.Player)
-
     UI.Buff.Init()
     UI.Buff.SetTarget(Creature.Player)
-
     UI.Spell.Init()
     UI.Spell.SetTarget(Creature.Player)
-
     UI.SpellActionModifier.Init()
-
-    UI.AttrSelect.Init()
+    UI.EpicBonusSelect.Init()
+    UI.ToolBar.Init()
 
     Controller.Init()
     Controller.PlayerMove.SetTarget(Creature.Player)

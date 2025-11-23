@@ -16,7 +16,7 @@ namespace GameBase.UI
 
             var obj = GameObject.Instantiate(ResourceMgr.Prefab.Get(k));
 
-            obj.transform.SetParent(WorldCanvs.Instance.transform, false);
+            obj.transform.SetParent(WorldCanvs.Instance.Transform, false);
 
             e.Obj = obj;
 

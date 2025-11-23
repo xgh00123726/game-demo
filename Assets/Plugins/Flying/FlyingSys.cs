@@ -45,10 +45,7 @@ namespace GameBase.Flyings
 
         protected override void EntityStart(Flying e)
         {
-            if (e.Curve != null)
-            {
-                e.Curve.SetOwner(e);
-            }
+            e.Curve?.SetOwner(e);
 
             if (e.Target != null)
             {

@@ -4,7 +4,7 @@ using UnityEngine.AddressableAssets;
 namespace GameBase.Resources
 {
 
-    public class ResourceMgr
+    public static class ResourceMgr
     {
         public static ResourceLoader<GameObject> _prefabMgr;
         public static ResourceLoader<Sprite> _spriteMgr;
@@ -22,7 +22,7 @@ namespace GameBase.Resources
             foreach (var kvp in _textureMgr._resources)
             {
                 var texture = kvp.Value;
-                var sprite = UnityEngine.Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+                var sprite = texture.ToSprite();
                 _spriteMgr._resources.Add(kvp.Key, sprite);
             }
         }

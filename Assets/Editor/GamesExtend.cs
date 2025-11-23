@@ -64,4 +64,10 @@ public class GamesExtend
             }
         }
     }
+
+    [MenuItem("Tools/PreLoadSpecifyTextures", false)]
+    public static void PreLoadSpecifyTextures()
+    {
+
+    }
 }

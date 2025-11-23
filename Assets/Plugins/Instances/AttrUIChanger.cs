@@ -1,5 +1,5 @@
 using GameBase.Creatures;
-using GameBase.EntitySystem;
+using GameBase.Tools;
 
 namespace Instance
 {

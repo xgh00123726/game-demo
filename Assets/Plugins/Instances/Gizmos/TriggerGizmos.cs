@@ -16,39 +16,10 @@ namespace Instance
 
         private List<DelayDraw> _delayDraws = new();
         private List<DelayDraw> _delayDrawsNeedRemove = new();
-        private IShape2D testShape;
 
         private void Start()
         {
-            testShape = new GMath.Line(new Vector2(0, 0), new Vector2(1, 1), 3)
-            {
-                width = 1
-            };
-        }
-
-        private void DrawTestGizmos()
-        {
-            var c = CreatureSys.Instance.GetCreatureFromID(0);
-            if (c != null && testShape.Contains(c.Position))
-            {
-                Gizmos.color = Color.red;
-            }
-            else
-            {
-                Gizmos.color = Color.green;
-            }
-            GizmosAppend.DrawShape(testShape, GizmosCfg.drawY);
-        }
-
-        void OnDrawGizmos()
-        {
-            if (!GizmosCfg.IsDrawGizmos)
-            {
-                return;
-            }
-            //DrawTestGizmos();
-
-            foreach (var e in TriggerSys.Instance.Entities)
+            TriggerSys.Instance.OnTrig((e) =>
             {
                 if (e.TrigStyle == TrigStyle.Once)
                 {
@@ -69,12 +40,26 @@ namespace Instance
                         });
                     }
                 }
-                else
+            });
+        }
+
+        void OnDrawGizmos()
+        {
+            if (!GizmosCfg.IsDrawGizmos)
+            {
+                return;
+            }
+
+            foreach (var e in TriggerSys.Instance.Entities)
+            {
+                if(e.TrigStyle != TrigStyle.Once)
                 {
                     Gizmos.color = Color.green;
                     GizmosAppend.DrawShape(e.Shape, GizmosCfg.drawY);
                 }
             }
+
+
             foreach (var e in _delayDraws)
             {
                 if (Time.time < e.InstantiateTime + 1f)

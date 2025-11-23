@@ -18,7 +18,6 @@ namespace GameBase.UI
 
         public bool InteractiveEnable { get; set; } = true;
         public GameObject Obj {  get; set; }
-        public string IconTextureName { get; set; }
         public SuperImage TriggerImage { get; set; }
         public BaseUI UIScript { get; set; }
         public int ItemIndex => itemIndex;

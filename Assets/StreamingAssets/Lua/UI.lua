@@ -10,6 +10,8 @@ local SpellUIInteractive = CS.Instance.SpellUIInteractive.Instance
 local SpellActionModifierInteractive = CS.Instance.SpellActionModifierInteractive.Instance
 local Inputs = CS.GameBase.Tools.Inputs
 local TextSys = CS.GameBase.UI.TextSys.Instance
+local FreeViewItem = CS.GameBase.UI.FreeViewItem
+local Vector3 = CS.UnityEngine.Vector3
 
 local CommonDragViewController = CS.Instance.CommonDragViewController.Instance
 local CommonDetailViewController = CS.Instance.CommonDetailViewController.Instance
@@ -209,14 +211,78 @@ local function SpellActionModifierUIInit()
     UI.SpellActionModifier.Panel = panel
 end
 
-local function AttrSelectUIInit()
-    local panel = CS.Instance.AttrSelectPanel.Instance
+local function EpicBonusSelectUIInit()
+    local panel = CS.Instance.EpicBonusSelectPanel.Instance
 
-    SetLayout(panel, UIData.AttrSelect.Layout)
+    SetLayout(panel, UIData.EpicBonusSelect.Layout)
 
-    panel.OnPointerDown = UI.AttrSelect.OnPointerDown
+    panel.OnPointerDown = UI.EpicBonusSelect.OnPointerDown
 
-    UI.AttrSelect.Panel = panel
+    UI.EpicBonusSelect.Panel = panel
+end
+
+
+local function ToolBarExpand()
+    local itemDatas = UIData.ToolBar.Items
+    local items = UI.ToolBar.Items
+    local SetSprite = CS.GameBase.Resources.Utils.SetSprite
+    local DOMoveTo = CS.GameBase.Tools.Transforms.Move.DOMoveTo
+    local toggleItem = UI.ToolBar.Items[1]
+    SetSprite(toggleItem.Image, "Textures/Icon/arrow_left_ring.png")
+    for i = 2, #items do
+        local item = items[i]
+        local targetPosition = itemDatas[i].Position
+        item.Item:Show()
+        DOMoveTo(item.Item.Obj.transform, Vector3(targetPosition.x, targetPosition.y), UIData.ToolBar.ExpandTime)
+    end
+    toggleItem.IsExpand = true
+end
+
+local function ToolBarCollapse()
+    local itemDatas = UIData.ToolBar.Items
+    local items = UI.ToolBar.Items
+    local SetSprite = CS.GameBase.Resources.Utils.SetSprite
+    local DOMoveTo = CS.GameBase.Tools.Transforms.Move.DOMoveTo
+    local toggleItem = UI.ToolBar.Items[1]
+    local targetPosition = itemDatas[1].Position
+    SetSprite(toggleItem.Image, "Textures/Icon/arrow_right_ring.png")
+    for i = 2, #items do
+        local item = items[i]
+        DOMoveTo(item.Item.Obj.transform, Vector3(targetPosition.x, targetPosition.y), UIData.ToolBar.CollapseTime):Then(function ()
+            item.Item:Hide()
+        end)
+    end
+    toggleItem.IsExpand = false
+end
+
+local function ToolBarUIInit()
+    local itemDatas = UIData.ToolBar.Items
+    local SetSprite = CS.GameBase.Resources.Utils.SetSprite
+    UI.ToolBar.Items = {}
+    for i = 1, #itemDatas do
+        local itemData = itemDatas[i]
+        local item = FreeViewItem(itemData.PrefabName, UIData.Enum.CanvasType.Root, 4)
+        UI.ToolBar.Items[i] = {}
+        UI.ToolBar.Items[i].Item = item
+        item.Obj.transform.position = Vector3(itemData.Position.x, itemData.Position.y)
+        local image = item.Obj.transform:Find("Image"):GetComponent(typeof(CS.UnityEngine.UI.Image))
+        UI.ToolBar.Items[i].Image = image
+        if (image ~= nil) then
+            SetSprite(image, itemData.IconTextureName)
+        end
+    end
+
+    UI.ToolBar.Items[1].IsExpand = true
+    local toggleItem = UI.ToolBar.Items[1]
+    local toggleIcon = toggleItem.Item.Obj
+    local iconScript = toggleIcon:AddComponent(typeof(CS.GameBase.UI.BaseUI))
+    iconScript.OnPointerDown = function ( index )
+        if (toggleItem.IsExpand) then
+            ToolBarCollapse()
+        else
+            ToolBarExpand()
+        end
+    end
 end
 
 
@@ -309,9 +375,14 @@ UI = {
         DetailViewController = LCommonDetailViewController
     },
 
-    AttrSelect = {
+    EpicBonusSelect = {
         --- @noarg
-        Init = AttrSelectUIInit,
+        Init = EpicBonusSelectUIInit,
+    },
+
+    ToolBar = {
+        --- @noarg
+        Init = ToolBarUIInit,
     },
 
     TextSys = TextSys,

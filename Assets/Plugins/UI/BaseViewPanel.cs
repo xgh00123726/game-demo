@@ -22,6 +22,7 @@ namespace GameBase.UI
         private Action<int> _OnPointerExit;
         protected virtual string ItemPrefabName { get; } = "Prefabs/UI/InventoryItem";
         protected virtual string PanelPrefabName { get; } = "Prefabs/UI/InventoryPanel";
+        protected virtual int Layer { get; } = 0;
         protected override bool UseDefaultContainer => false;
         public ILayout Layout { get; set; }
         public Action<int> OnEnterDrag { get; set; }
@@ -104,7 +105,7 @@ namespace GameBase.UI
             }
 
             panel = GameObject.Instantiate(ResourceMgr.Prefab.Get(PanelPrefabName));
-            panel.transform.SetParent(RootCanvas.Instance.Layer(0), false);
+            panel.transform.SetParent(RootCanvas.Instance.Layer(Layer), false);
             panel.SetActive(false);
         }
 

@@ -1,6 +1,7 @@
 using GameBase.EntitySystem;
 using GameBase.Resources;
 using GameBase.Tools;
+using System;
 using UnityEngine;
 
 namespace GameBase.Triggers
@@ -8,6 +9,12 @@ namespace GameBase.Triggers
     public class TriggerSys : SealedEntitySys<Trigger, TriggerSys>
     {
         protected override bool FixedUpdate => true;
+        private Action<Trigger> _OnTrig;
+
+        public void OnTrig(Action<Trigger> OnTrig)
+        {
+            _OnTrig += OnTrig;
+        }
 
         protected override void OnGet(Trigger e)
         {
@@ -192,6 +199,7 @@ namespace GameBase.Triggers
             if (e.isTrig)
             {
                 e.OnTrig?.Invoke();
+                _OnTrig?.Invoke(e);
                 PlayTrigAudio(e);
                 PlayTrigEffect(e);
                 HitTarget(e);

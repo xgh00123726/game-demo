@@ -1,5 +1,5 @@
 using GameBase.Creatures;
-using GameBase.EntitySystem;
+using GameBase.Tools;
 using GameBase.Indicators;
 using GameBase.Inventorys;
 using System.Collections.Generic;

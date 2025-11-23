@@ -12,7 +12,7 @@ namespace GameBase.UI
             obj = GameObject.Instantiate(ResourceMgr.Prefab.Get("Prefabs/UI/WorldCanvas.prefab"));
         }
 
-        public Transform transform
+        public Transform Transform
         {
             get => obj.transform;
         }

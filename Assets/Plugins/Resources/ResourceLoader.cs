@@ -10,9 +10,9 @@ namespace GameBase.Resources
     {
         internal Dictionary<string, T> _resources = new();
 
-        public ResourceLoader(string path = null)
+        public ResourceLoader(string preloadFilePath = null)
         {
-            LoadAsset(path);
+            LoadAsset(preloadFilePath);
         }
 
         protected virtual T Instantiate(string name)
@@ -20,23 +20,21 @@ namespace GameBase.Resources
             return Addressables.LoadAssetAsync<T>(name).WaitForCompletion();
         }
 
-        protected virtual void LoadAsset(string path)
+        protected virtual void LoadAsset(string preloadFilePath)
         {
-            if (path == null)
+            if (preloadFilePath == null)
             {
                 return;
             }
 
-            StreamReader reader = File.OpenText(path);
-            CsvReader csvReader = new CsvReader(reader);
+            using var reader = File.OpenText(preloadFilePath);
+            var csvReader = new CsvReader(reader);
             string name = null;
             while (csvReader.Read())
             {
                 name = csvReader[0];
                 _resources[name] = Addressables.LoadAssetAsync<T>(name).WaitForCompletion();
             }
-
-            reader.Close();
         }
 
         public T Get(string name)
