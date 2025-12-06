@@ -1,0 +1,45 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [    
+        {
+            "label": "切换meta文件可见性",
+            "type": "shell",
+            "command": "python ${workspaceFolder}/.vscode/py/ToggleMetaVisible.py ${workspaceFolder}",
+            "problemMatcher": []
+        },
+        {
+            "label": "切换unity缓存文件可见性",
+            "type": "shell",
+            "command": "python ${workspaceFolder}/.vscode/py/ToggleUnityCacheVisible.py ${workspaceFolder}",
+            "problemMatcher": []
+        },
+        {
+            "label": "拉起服务器",
+            "type": "shell",
+            "command": "${workspaceFolder}/Network/NetworkServer/bin/Debug/net8.0/NetworkServer.exe",
+            "problemMatcher": []
+        },
+        {
+            "label": "build服务器",
+            "type": "shell",
+            "command": "dotnet build ${workspaceFolder}/Network/NetworkServer/NetworkServer.csproj",
+            "problemMatcher": []
+        },
+        {
+            "label": "build并拉起服务器",
+            "type": "shell",
+            "command": "dotnet build ${workspaceFolder}/Network/NetworkServer/NetworkServer.csproj; ${workspaceFolder}/Server/NetworkServer/bin/Debug/net8.0/NetworkServer.exe",
+            "problemMatcher": []
+        },
+        {
+            "label": "Protoc生成",
+            "type": "shell",
+            "command": "${workspaceFolder}/.vscode/bat/GenProto.bat",
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+    ]
+}

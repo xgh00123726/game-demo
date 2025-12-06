@@ -1,0 +1,23 @@
+{
+    "Lua.diagnostics.globals": [
+        "CS",
+        "xlua",
+        "typeof"
+    ],
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/*.meta": true,
+        "**/Library": true,
+        "**/Logs": true,
+        "**/obj": true,
+        "**/Packages": true,
+        "**/ProjectSettings": true,
+        "**/Temp": true,
+        "**/UserSettings": true,
+        "**.csproj": true,
+    },
+}
