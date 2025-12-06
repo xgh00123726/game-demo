@@ -1,0 +1,14 @@
+D:\project\game-demo\Server\NetworkServer\bin\Debug\net8.0\NetworkServer.exe
+D:\project\game-demo\Server\NetworkServer\bin\Debug\net8.0\NetworkServer.deps.json
+D:\project\game-demo\Server\NetworkServer\bin\Debug\net8.0\NetworkServer.runtimeconfig.json
+D:\project\game-demo\Server\NetworkServer\bin\Debug\net8.0\NetworkServer.dll
+D:\project\game-demo\Server\NetworkServer\bin\Debug\net8.0\NetworkServer.pdb
+D:\project\game-demo\Server\NetworkServer\obj\Debug\net8.0\NetworkServer.GeneratedMSBuildEditorConfig.editorconfig
+D:\project\game-demo\Server\NetworkServer\obj\Debug\net8.0\NetworkServer.AssemblyInfoInputs.cache
+D:\project\game-demo\Server\NetworkServer\obj\Debug\net8.0\NetworkServer.AssemblyInfo.cs
+D:\project\game-demo\Server\NetworkServer\obj\Debug\net8.0\NetworkServer.csproj.CoreCompileInputs.cache
+D:\project\game-demo\Server\NetworkServer\obj\Debug\net8.0\NetworkServer.dll
+D:\project\game-demo\Server\NetworkServer\obj\Debug\net8.0\refint\NetworkServer.dll
+D:\project\game-demo\Server\NetworkServer\obj\Debug\net8.0\NetworkServer.pdb
+D:\project\game-demo\Server\NetworkServer\obj\Debug\net8.0\NetworkServer.genruntimeconfig.cache
+D:\project\game-demo\Server\NetworkServer\obj\Debug\net8.0\ref\NetworkServer.dll
