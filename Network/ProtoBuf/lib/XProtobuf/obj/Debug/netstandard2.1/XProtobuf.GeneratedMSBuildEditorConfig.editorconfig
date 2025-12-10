@@ -1,0 +1,8 @@
+is_global = true
+build_property.RootNamespace = XProtobuf
+build_property.ProjectDir = D:\project\game-demo\Network\ProtoBuf\lib\XProtobuf\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.CsWinRTUseWindowsUIXamlProjections = false
+build_property.EffectiveAnalysisLevelStyle = 
+build_property.EnableCodeStyleSeverity = 

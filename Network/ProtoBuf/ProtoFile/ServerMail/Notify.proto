@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package ServerMail.Notify;
 
-option csharp_namespace = "Network";
+option csharp_namespace = "GameBase.Network";
 
 message Notify {
     string info = 1;

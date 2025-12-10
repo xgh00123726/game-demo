@@ -14,6 +14,7 @@ internal class ClientMgr
     private readonly object _clientLock = new object();
     private Stopwatch _stopwatch;
     public required ILogger Logger {  get; set; }
+    public bool IsLogHeartbeat { get; set; }
 
     public ClientMgr()
     {
@@ -26,28 +27,48 @@ internal class ClientMgr
     /// <param name="client"></param>
     public void AddClient(TcpClient client)
     {
+        var cts = new CancellationTokenSource();
         var id = GenerateClientId(client);
-        var thread = new Thread(() =>
+        var thread = new Thread(async () =>
         {
-            var clientInfo = _clients[id];
-            if (clientInfo == null)
+            try
             {
-                Logger.Log("非法时序调用");
-                return;
-            }
-            using var stream = client.GetStream();
-            byte[] buffer = new byte[1024];
-            while (client.Connected)
-            {
-                var len = stream.Read(buffer, 0, buffer.Length);
-                if (len == 0)
+                var clientInfo = _clients[id];
+                if (clientInfo == null)
                 {
-                    Logger.Log("客户端关闭连接");
-                    client.Close();
-                    break;
+                    Logger.Log("Illegal call");
+                    return;
                 }
+                using var stream = client.GetStream();
+                byte[] buffer = new byte[1024];
+                while (clientInfo.IsConnected)
+                {
+                    var len = await stream.ReadAsync(buffer, cts.Token);
+                    if (len == 0)
+                    {
+                        Logger.Log("Client close connect");
+                        client.Close();
+                        break;
+                    }
 
-                clientInfo.OnReceiveMsg?.Invoke(clientInfo, buffer, len);
+                    clientInfo.OnReceiveMsg?.Invoke(clientInfo, buffer, len);
+                }
+            }
+            catch(OperationCanceledException)
+            {
+                Logger.Log($"Client {id} disconnect due to cancel");
+            }
+            catch(IOException)
+            {
+                Logger.Log($"Client {id} disconnect due to remote");
+            }
+            finally
+            {
+                lock(_clientLock)
+                {
+                    _clients.Remove(id);
+                }
+                cts.Dispose();
             }
         });
 
@@ -56,16 +77,16 @@ internal class ClientMgr
             _clients[id] = new ClientInfo()
             {
                 Client = client,
-                HeartBeatInterval = 1000,
-                DisconnectTimeThreshold = 3000,
-                DisconnectThreshold = 3,
+                DisconnectTimeThreshold = 30000,
                 ReceiveThread = thread,
+                CTS = cts,
                 OnReceiveMsg = OnReceiveMsg,
                 LastHeartBeatTime = _stopwatch.ElapsedMilliseconds,
+                IsConnected = true,
             };
         }
         thread.Start();
-        Logger.Log($"客户端:{id} 已连接");
+        Logger.Log($"Client: {id} connected");
     }
 
     public void LogInfo()
@@ -111,7 +132,9 @@ internal class ClientMgr
                 if (time - client.LastHeartBeatTime >= client.DisconnectTimeThreshold)
                 {
                     client.IsConnected = false;
-                    Logger?.Log($"发送心跳失败超过 {client.DisconnectTimeThreshold} ms，连接已断开");
+                    Logger.Log($"Disconnect due to client: {id} HB fail over {client.DisconnectTimeThreshold} ms");
+                    client.CTS.Cancel();
+                    client.ReceiveThread.Join();
                     client.Client.Close();
                     inactives.Add(id);
                 }
@@ -152,14 +175,38 @@ internal class ClientMgr
         return result;
     }
 
+    public bool Boardcast(byte[] message)
+    {
+        if (message == null)
+        {
+            Logger.Log("Warning, Try to boardcast null messae");
+            return false;
+        }
+
+        var result = false;
+        foreach (var kvp in _clients)
+        {
+            var client = kvp.Value.Client;
+            var len = client.Client.Send(message);
+            if (len > 0)
+            {
+                result = true;
+            }
+        }
+
+        return result;
+    }
+
     private void OnReceiveMsg(ClientInfo clientInfo, byte[] buffer, int len)
     {
-        var time = DateTime.Now.Microsecond;
         if (len == 1 && buffer[0] == 0xFE)
         {
-            clientInfo.LastHeartBeatTime = time;
+            clientInfo.LastHeartBeatTime = _stopwatch.ElapsedMilliseconds;
+            if (IsLogHeartbeat)
+            {
+                Logger.Log($"Recv HB");
+            }
         }
-        Logger.Log($"接收到长度为:{len} 的数据包");
     }
 
 

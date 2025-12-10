@@ -1,0 +1,10 @@
+D:\project\game-demo\Network\ProtoBuf\lib\XProtobuf\bin\Release\netstandard2.1\XProtobuf.deps.json
+D:\project\game-demo\Network\ProtoBuf\lib\XProtobuf\bin\Release\netstandard2.1\XProtobuf.dll
+D:\project\game-demo\Network\ProtoBuf\lib\XProtobuf\bin\Release\netstandard2.1\XProtobuf.pdb
+D:\project\game-demo\Network\ProtoBuf\lib\XProtobuf\obj\Release\netstandard2.1\XProtobuf.csproj.AssemblyReference.cache
+D:\project\game-demo\Network\ProtoBuf\lib\XProtobuf\obj\Release\netstandard2.1\XProtobuf.GeneratedMSBuildEditorConfig.editorconfig
+D:\project\game-demo\Network\ProtoBuf\lib\XProtobuf\obj\Release\netstandard2.1\XProtobuf.AssemblyInfoInputs.cache
+D:\project\game-demo\Network\ProtoBuf\lib\XProtobuf\obj\Release\netstandard2.1\XProtobuf.AssemblyInfo.cs
+D:\project\game-demo\Network\ProtoBuf\lib\XProtobuf\obj\Release\netstandard2.1\XProtobuf.csproj.CoreCompileInputs.cache
+D:\project\game-demo\Network\ProtoBuf\lib\XProtobuf\obj\Release\netstandard2.1\XProtobuf.dll
+D:\project\game-demo\Network\ProtoBuf\lib\XProtobuf\obj\Release\netstandard2.1\XProtobuf.pdb

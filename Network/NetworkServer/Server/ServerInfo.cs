@@ -15,8 +15,8 @@ internal class ServerInfo
     {
         var tcpListener = new TcpListener(IPAddress, Port);
         tcpListener.Start();
-        ServerLogger.Log($"服务器已启动，监听地址：{IPAddress}:{Port}");
-        ServerLogger.Log("等待客户端连接...");
+        ServerLogger.Log($"Server start, Listening: {IPAddress}:{Port}");
+        ServerLogger.Log("Waiting connect...");
         while (true)
         {
             try
@@ -26,7 +26,7 @@ internal class ServerInfo
             }
             catch (Exception ex)
             {
-                ServerLogger.Log($"接收客户端连接失败：{ex.Message}");
+                ServerLogger.Log($"Recv connect fail: {ex.Message}");
                 break;
             }
         }

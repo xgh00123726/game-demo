@@ -3,11 +3,14 @@ using NetworkServer.Client;
 using NetworkServer.Input;
 using NetworkServer.Server;
 using System.Net;
+using GameBase.Network;
+using Google.Protobuf;
 
 var logger = new ConsoleLogger();
-var cm = new ClientMgr()
+var cm = new ClientMgr
 {
-    Logger = logger
+    Logger = logger,
+    IsLogHeartbeat = false
 };
 
 var server = new ServerInfo()
@@ -39,16 +42,44 @@ Command.Register("cm", (string[] cmds) =>
         {
             cm.LogInfo();
         }
+        else if (cmCmd == "bct")
+        {
+            var res = cm.Boardcast(new Notify()
+            {
+                Info = "hello world"
+            }.ToFrame());
+
+            if (res)
+            {
+                logger.Log("Test text has been boardcast");
+            }
+            else
+            {
+                logger.Log("Boardcast fail");
+            }
+        }
+        else if (cmCmd == "toggle-log")
+        {
+            cm.IsLogHeartbeat = !cm.IsLogHeartbeat;
+            if (cm.IsLogHeartbeat)
+            {
+                logger.Log("Enable heartbeat tip");
+            }
+            else
+            {
+                logger.Log("Disable heartbeat tip");
+            }
+        }
     }
 });
 Command.Register("exit", () =>
 {
-    logger.Log("正在结束进程...");
+    logger.Log("Exiting process...");
     Environment.Exit(0);
 });
 Command.Register("e", () =>
 {
-    logger.Log("正在结束进程...");
+    logger.Log("Exiting process...");
     Environment.Exit(0);
 });
 
