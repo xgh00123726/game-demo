@@ -145,3 +145,14 @@ function SwapInventoryAndSAM(c, spellIndex, modifierIndex, inventoryIndex)
 
     return true
 end
+
+function ToggleInventory()
+    local panel = UI.Inventory.Panel
+    if (panel.IsShow) then
+        panel:Hide()
+        UI.Inputs.UnlockCaller("rectDrawer")
+    else
+        panel:Show()
+        UI.Inputs.LockCaller("rectDrawer")
+    end
+end

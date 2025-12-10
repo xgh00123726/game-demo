@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace GameBase.UI
 {
-    public class FreeViewItem
+    public class FreeViewItem : ITodoTarget, ITodoView
     {
         public enum CanvasType
         {
@@ -27,7 +27,16 @@ namespace GameBase.UI
             }
         }
 
-        public bool IsShow => Obj.activeSelf;
+        public bool IsShow
+        {
+            get => Obj.activeSelf;
+            set => Obj.SetActive(value);
+        }
+        public Vector3 Position
+        {
+            get => Obj.transform.position;
+            set => Obj.transform.position = value;
+        }
         public void Show()
         {
             Obj.SetActive(true);

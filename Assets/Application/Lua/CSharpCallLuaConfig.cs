@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using XLua;
 
-public static class LuaCallCSharpConfig
+public static class CSharpCallLuaConfig
 {
     [CSharpCallLua]
     public static List<System.Type> csharpCallLuaList = new()
@@ -15,6 +15,7 @@ public static class LuaCallCSharpConfig
         typeof(ShopItemInfo),
         typeof(Action<Shop>),
         typeof(Action<Creature, int>),
-        typeof(Func<Spell, bool>)
+        typeof(Func<Spell, bool>),
+        typeof(Func<bool>),
     };
 }

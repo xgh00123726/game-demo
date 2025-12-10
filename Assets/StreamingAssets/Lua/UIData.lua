@@ -92,52 +92,60 @@ UIData = {
         }
     },
     ToolBar = {
-        ExpandTime = 0.3,
-        CollapseTime = 0.3,
+        ExpandTime = 0.2,
+        CollapseTime = 0.2,
+        ExpandTextureName = "Textures/Icon/arrow_left_ring.png",
+        CollapseTextureName = "Textures/Icon/arrow_right_ring.png",
         Items = {
-            {
+            Parent = {
                 PrefabName = "UI/ToolBarItem.prefab",
-                IconTextureName = "Textures/Icon/arrow_right_ring.png",
+                IconTextureName = "Textures/Icon/arrow_left_ring.png",
                 Position = {
                     x = 1700,
                     y = 900
                 }
-            },            {
+            },
+            BackPack = {
                 PrefabName = "UI/ToolBarItem.prefab",
                 IconTextureName = "Textures/Icon/BackPack.png",
                 Position = {
                     x = 1600,
                     y = 900
                 }
-            },            {
+            },
+            Hot = {
                 PrefabName = "UI/ToolBarItem.prefab",
                 IconTextureName = "Textures/Icon/hot.png",
                 Position = {
                     x = 1500,
                     y = 900
                 }
-            },            {
+            },
+            Market = {
                 PrefabName = "UI/ToolBarItem.prefab",
                 IconTextureName = "Textures/Icon/market.png",
                 Position = {
                     x = 1400,
                     y = 900
                 }
-            },            {
+            },
+            Settings = {
                 PrefabName = "UI/ToolBarItem.prefab",
                 IconTextureName = "Textures/Icon/setting.png",
                 Position = {
                     x = 1300,
                     y = 900
                 }
-            },            {
+            },
+            Todo = {
                 PrefabName = "UI/ToolBarItem.prefab",
                 IconTextureName = "Textures/Icon/todo.png",
                 Position = {
                     x = 1200,
                     y = 900
                 }
-            },            {
+            },
+            Weapon = {
                 PrefabName = "UI/ToolBarItem.prefab",
                 IconTextureName = "Textures/Icon/wepon.png",
                 Position = {

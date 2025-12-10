@@ -3,7 +3,7 @@
 <linker>
 
 	<assembly fullname="Assembly-CSharp">
-	    <type fullname="LuaMain" preserve="all"/>
+	    <type fullname="Main" preserve="all"/>
 		<type fullname="LuaUtil.Utils" preserve="all"/>
 		
 	</assembly>

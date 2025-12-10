@@ -105,6 +105,27 @@ namespace XLua
 #endif
 		}
         
+		public bool __Gen_Delegate_Imp4()
+		{
+#if THREAD_SAFE || HOTFIX_ENABLE
+            lock (luaEnv.luaEnvLock)
+            {
+#endif
+                RealStatePtr L = luaEnv.rawL;
+                int errFunc = LuaAPI.pcall_prepare(L, errorFuncRef, luaReference);
+                
+                
+                PCall(L, 0, 1, errFunc);
+                
+                
+                bool __gen_ret = LuaAPI.lua_toboolean(L, errFunc + 1);
+                LuaAPI.lua_settop(L, errFunc - 1);
+                return  __gen_ret;
+#if THREAD_SAFE || HOTFIX_ENABLE
+            }
+#endif
+		}
+        
         
 		static DelegateBridge()
 		{
@@ -132,6 +153,11 @@ namespace XLua
 		    if (type == typeof(System.Func<GameBase.Spells.Spell, bool>))
 			{
 			    return new System.Func<GameBase.Spells.Spell, bool>(__Gen_Delegate_Imp3);
+			}
+		
+		    if (type == typeof(System.Func<bool>))
+			{
+			    return new System.Func<bool>(__Gen_Delegate_Imp4);
 			}
 		
 		    return null;

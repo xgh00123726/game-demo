@@ -221,68 +221,32 @@ local function EpicBonusSelectUIInit()
     UI.EpicBonusSelect.Panel = panel
 end
 
-
-local function ToolBarExpand()
-    local itemDatas = UIData.ToolBar.Items
-    local items = UI.ToolBar.Items
-    local SetSprite = CS.GameBase.Resources.Utils.SetSprite
-    local DOMoveTo = CS.GameBase.Tools.Transforms.Move.DOMoveTo
-    local toggleItem = UI.ToolBar.Items[1]
-    SetSprite(toggleItem.Image, "Textures/Icon/arrow_left_ring.png")
-    for i = 2, #items do
-        local item = items[i]
-        local targetPosition = itemDatas[i].Position
-        item.Item:Show()
-        DOMoveTo(item.Item.Obj.transform, Vector3(targetPosition.x, targetPosition.y), UIData.ToolBar.ExpandTime)
-    end
-    toggleItem.IsExpand = true
-end
-
-local function ToolBarCollapse()
-    local itemDatas = UIData.ToolBar.Items
-    local items = UI.ToolBar.Items
-    local SetSprite = CS.GameBase.Resources.Utils.SetSprite
-    local DOMoveTo = CS.GameBase.Tools.Transforms.Move.DOMoveTo
-    local toggleItem = UI.ToolBar.Items[1]
-    local targetPosition = itemDatas[1].Position
-    SetSprite(toggleItem.Image, "Textures/Icon/arrow_right_ring.png")
-    for i = 2, #items do
-        local item = items[i]
-        DOMoveTo(item.Item.Obj.transform, Vector3(targetPosition.x, targetPosition.y), UIData.ToolBar.CollapseTime):Then(function ()
-            item.Item:Hide()
-        end)
-    end
-    toggleItem.IsExpand = false
-end
-
 local function ToolBarUIInit()
     local itemDatas = UIData.ToolBar.Items
     local SetSprite = CS.GameBase.Resources.Utils.SetSprite
-    UI.ToolBar.Items = {}
-    for i = 1, #itemDatas do
-        local itemData = itemDatas[i]
+    for name, itemData in pairs(itemDatas) do
         local item = FreeViewItem(itemData.PrefabName, UIData.Enum.CanvasType.Root, 4)
-        UI.ToolBar.Items[i] = {}
-        UI.ToolBar.Items[i].Item = item
+        UI.ToolBar.Items[name].Item = item
         item.Obj.transform.position = Vector3(itemData.Position.x, itemData.Position.y)
         local image = item.Obj.transform:Find("Image"):GetComponent(typeof(CS.UnityEngine.UI.Image))
-        UI.ToolBar.Items[i].Image = image
+        UI.ToolBar.Items[name].Image = image
         if (image ~= nil) then
             SetSprite(image, itemData.IconTextureName)
         end
     end
 
-    UI.ToolBar.Items[1].IsExpand = true
-    local toggleItem = UI.ToolBar.Items[1]
-    local toggleIcon = toggleItem.Item.Obj
-    local iconScript = toggleIcon:AddComponent(typeof(CS.GameBase.UI.BaseUI))
-    iconScript.OnPointerDown = function ( index )
-        if (toggleItem.IsExpand) then
-            ToolBarCollapse()
-        else
-            ToolBarExpand()
+    UI.ToolBar.Items.Parent.IsExpand = true
+
+    for _, item in pairs(UI.ToolBar.Items) do
+        if (item.OnPointerDown ~= nil) then
+            local iconScript = item.Item.Obj:AddComponent(typeof(CS.GameBase.UI.BaseUI))
+            iconScript.OnPointerDown = item.OnPointerDown
         end
     end
+end
+
+local function CreateFreeUI( prefabName, canvasType, layer )
+    return FreeViewItem(prefabName, canvasType, layer)
 end
 
 
@@ -388,4 +352,10 @@ UI = {
     TextSys = TextSys,
 
     Inputs = Inputs,
+
+    --- @arg1 prefabName : str
+    --- @arg2 canvasType : UIData.Enum.CanvasType
+    --- @arg3 layer : int
+    --- @ret FreeViewItem : FreeViewItem
+    CreateFree = CreateFreeUI,
 }

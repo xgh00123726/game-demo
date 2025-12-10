@@ -1,13 +1,12 @@
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
 namespace GameBase.Tools
 {
-    public class XLogger
+    public class XLogger : SingletonInstance<XLogger>
     {
         public static string relativeFolderPath = @"D:\project\game-demo\Assets\Log";
-        private static XLogger _instance = new XLogger();
-        public static XLogger Instance => _instance;
         public enum LogLevel
         {
             Fatal,
@@ -25,6 +24,9 @@ namespace GameBase.Tools
         private bool _toFile = false;
         private string _filePath = "FullLog.html";
         private bool _toConsole = true;
+        private bool _inSubThread = false;
+        private object _logQueueLock = new();
+        private Queue<object> _logQueue = new();
 
         private void Reset()
         {
@@ -37,6 +39,7 @@ namespace GameBase.Tools
             _toFile = false;
             _filePath = "FullLog.html";
             _toConsole = true;
+            _inSubThread = false;
         }
 
         /// <summary>
@@ -48,19 +51,37 @@ namespace GameBase.Tools
         public XLogger IF(bool ifLog)
         {
             _ifLog = ifLog;
-            return _instance;
+            return Instance;
         }
 
+        /// <summary>
+        /// 不输出到控制台
+        /// </summary>
+        /// <returns></returns>
         public XLogger DontToConsole()
         {
             _toConsole = false;
-            return _instance;
+            return Instance;
         }
 
+        /// <summary>
+        /// 子线程中使用
+        /// </summary>
+        /// <returns></returns>
+        public XLogger InSubThread()
+        {
+            _inSubThread = true;
+            return Instance;
+        }
+
+        /// <summary>
+        /// 不输出当前帧
+        /// </summary>
+        /// <returns></returns>
         public XLogger WithOutFrame()
         {
             _withFrameCount = false;
-            return _instance;
+            return Instance;
         }
 
         /// <summary>
@@ -72,7 +93,7 @@ namespace GameBase.Tools
         public XLogger Ignore(LogLevel level)
         {
             _ignoreLevel = level;
-            return _instance;
+            return Instance;
         }
 
         /// <summary>
@@ -88,7 +109,7 @@ namespace GameBase.Tools
             {
                 _toFile = true;
             }
-            return _instance;
+            return Instance;
         }
 
         /// <summary>
@@ -101,9 +122,14 @@ namespace GameBase.Tools
         {
             _color = color;
             _colorSet = true;
-            return _instance;
+            return Instance;
         }
 
+        /// <summary>
+        /// 输出到文件中
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public XLogger ToFile(string path = null)
         {
             _toFile = true;
@@ -111,7 +137,7 @@ namespace GameBase.Tools
             {
                 _filePath = path;
             }
-            return _instance;
+            return Instance;
         }
 
         /// <summary>
@@ -123,7 +149,7 @@ namespace GameBase.Tools
         public XLogger EditorOnly(bool editorOnly)
         {
             _editorOnly = editorOnly;
-            return _instance;
+            return Instance;
         }
 
         private void WriteToFile(string content)
@@ -196,24 +222,44 @@ namespace GameBase.Tools
         /// <returns>供链式调用的logger</returns>
         public XLogger Log(object info, bool reserve = true)
         {
-            if (_editorOnly)
+            if (_inSubThread)
             {
-#if UNITY_EDITOR
-                LogMessage(info, _logLevel);
-#endif
+                lock(_logQueueLock)
+                {
+                    _logQueue.Enqueue(info);
+                }
             }
             else
             {
-                LogMessage(info, _logLevel);
+                if (_editorOnly)
+                {
+#if UNITY_EDITOR
+                    LogMessage(info, _logLevel);
+#endif
+                }
+                else
+                {
+                    LogMessage(info, _logLevel);
+                }
             }
 
             Reset();
-            return _instance;
+            return Instance;
         }
 
         public XLogger Log(object info)
         {
             return Log(info, true);
+        }
+
+
+        protected override void Update()
+        {
+            foreach (var o in _logQueue)
+            {
+                Log(o);
+            }
+            _logQueue.Clear();
         }
     }
 }

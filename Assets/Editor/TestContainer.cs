@@ -19,17 +19,19 @@ public class TestContainer
 {
     public class A
     {
-        public string AA {  get; set; }
-    }
-    public class B : A
-    {
-        public int b;
+        public int x;
+        public A()
+        {
+            XLogger.Instance.Log(x);
+        }
     }
     [MenuItem("Tools/TimerTest", false)]
     public static void Test()
     {
-        var a = General.CreateNotNullInstance<EquipmentData>();
-        XLogger.Instance.Log(a);
+        new A()
+        {
+            x = 10
+        };
     }
 
 }

@@ -3,7 +3,7 @@ using GameBase.Items;
 using GameBase.Tools;
 using UnityEngine;
 
-public class ItemWarpper
+public class ItemRegisterWarpper
 {
     public static void Init()
     {

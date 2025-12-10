@@ -113,8 +113,11 @@ namespace Instance.UI
 
             if (_inCmdMode && Inputs.GetKeyDown(KeyFunction.ChooseText, "cmd"))
             {
-                _inputTextField.text = _tipTexts[_currTipNum - 1];
-                _inputTextField.caretPosition = _inputTextField.text.Length + 1;
+                if (_currTipNum > 0)
+                {
+                    _inputTextField.text = _tipTexts[_currTipNum - 1];
+                    _inputTextField.caretPosition = _inputTextField.text.Length + 1;
+                }
             }
 
             _lastInCmdMode = _inCmdMode;

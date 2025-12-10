@@ -1,24 +1,21 @@
+using GameBase.Network;
 using System;
 using System.IO;
 using UnityEngine;
 using XLua;
 
-[LuaCallCSharp]
-public class LuaMain : MonoBehaviour
+public static class LuaMgr
 {
-    internal static LuaEnv luaEnv = new LuaEnv(); 
+    internal static LuaEnv luaEnv = new();
     internal static float lastGCTime = 0;
     internal const float GCInterval = 1;
 
-    private static Action OnInitOK;
     private static Action LuaUpdate;
+    public static LuaTable Table { get; private set; }
 
-    private static LuaTable _table;
-    public static LuaTable Table => _table;
-
-    void Awake()
+    public static void Init()
     {
-        _table = luaEnv.NewTable();
+        Table = luaEnv.NewTable();
 
         luaEnv.AddLoader((ref string fileName) =>
         {
@@ -34,35 +31,33 @@ public class LuaMain : MonoBehaviour
         using (LuaTable meta = luaEnv.NewTable())
         {
             meta.Set("__index", luaEnv.Global);
-            _table.SetMetaTable(meta);
+            Table.SetMetaTable(meta);
         }
 
 
         // 从 Lua 脚本域中获取定义的函数
-        _table.Get("OnInitOK", out OnInitOK);
-        _table.Get("Update", out LuaUpdate);
-
-        ItemWarpper.Init();
+        Table.Get<string, Action>("OnInitOK", out var OnInitOK);
+        Table.Get("Update", out LuaUpdate);
 
         OnInitOK?.Invoke();
-
-        DontDestroyOnLoad(this);
     }
 
-    void Update()
+    public static void Update()
     {
         LuaUpdate?.Invoke();
 
-        if (Time.time - LuaMain.lastGCTime > GCInterval)
+
+        if (Time.time - lastGCTime > GCInterval)
         {
             luaEnv.Tick();
-            LuaMain.lastGCTime = Time.time;
+            lastGCTime = Time.time;
         }
     }
 
-    void OnDestroy()
+    public static void Dispose()
     {
-        _table.Dispose();
+        Table.Dispose();
+        NetworkMgr.Instance.Dispose();
         LuaUpdate = null;
     }
 }

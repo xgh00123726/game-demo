@@ -287,6 +287,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 306ae512ec99bb947b1f527607b9551c
+    m_Address: Prefabs/UI/RedPoint.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 30df1e8312c4fec44a91b1a8080f4e4c
     m_Address: Textures/Increasing/Magic.png
     m_ReadOnly: 0

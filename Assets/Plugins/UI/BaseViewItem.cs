@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace GameBase.UI
 {
-    public class BaseViewItem
+    public class BaseViewItem : ITodoView, ITodoTarget
     {
         protected internal ViewTag tag = ViewTag.None;
         protected internal GameObject triggerObject;
@@ -22,5 +22,17 @@ namespace GameBase.UI
         public BaseUI UIScript { get; set; }
         public int ItemIndex => itemIndex;
         public RectTransform RectTransform => triggerRectTransform;
+
+        public bool IsShow
+        {
+            get => Obj.activeSelf;
+            set => Obj.SetActive(value);
+        }
+
+        public Vector3 Position
+        {
+            get => Obj.transform.position;
+            set => Obj.transform.position = value;
+        }
     }
 }
