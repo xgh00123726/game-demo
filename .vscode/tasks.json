@@ -30,15 +30,15 @@
         {
             "label": "build并拉起服务器",
             "type": "shell",
-            "command": "dotnet build ${workspaceFolder}/Network/NetworkServer/NetworkServer.csproj; ${workspaceFolder}/Server/NetworkServer/bin/Debug/net8.0/NetworkServer.exe",
+            "command": "dotnet build ${workspaceFolder}/Network/NetworkServer/NetworkServer.csproj; ${workspaceFolder}/Network/NetworkServer/bin/Debug/net8.0/NetworkServer.exe",
             "problemMatcher": []
         },
         {
             "label": "Protoc生成",
             "type": "shell",
-            "command": "${workspaceFolder}/.vscode/bat/GenProto.bat",
+            "command": "${workspaceFolder}/.vscode/bat/GenProtoTarget.bat",
             "problemMatcher": []
-        }
+        },
     ],
     "inputs": [
     ]
