@@ -36,5 +36,13 @@ namespace GameBase.Network
         {
             WarpperInit();
         }
+
+        public static void Update()
+        {
+            foreach (var para in _params)
+            {
+                para.Update();
+            }
+        }
     }
 }

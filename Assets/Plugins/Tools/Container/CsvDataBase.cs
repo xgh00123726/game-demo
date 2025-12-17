@@ -33,7 +33,6 @@ namespace GameBase.Tools
         public CsvDataBase()
         {
             Init();
-            Command.Register($"reload-database-{GetType().Name}", Init);
         }
 
         private void Init()

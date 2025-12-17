@@ -4,24 +4,16 @@ namespace GameBase.Network
 {
     public partial class NetworkProtoMgr
     {
-        private static byte[] MergeBytes(params byte[][] arrays)
+        private static byte[] MergeBytes(byte[] b1, byte[] b2)
         {
-            int totalLength = 0;
-            foreach (var array in arrays)
-            {
-                totalLength += array.Length;
-            }
+            int totalLength = b1.Length + b2.Length;
 
             byte[] result = new byte[totalLength];
 
             Span<byte> resultSpan = result.AsSpan();
-            int offset = 0;
 
-            foreach (var array in arrays)
-            {
-                array.AsSpan().CopyTo(resultSpan.Slice(offset));
-                offset += array.Length;
-            }
+            b1.AsSpan().CopyTo(resultSpan[..]);
+            b2.AsSpan().CopyTo(resultSpan[b1.Length..]);
 
             return result;
         }

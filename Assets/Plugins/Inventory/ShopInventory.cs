@@ -10,7 +10,6 @@ namespace GameBase.Inventorys
         public ShopInventory(string relativePath)
         {
             Init(relativePath);
-            Command.Register($"shop-{relativePath}-init", Init);
             Refresh();
         }
 

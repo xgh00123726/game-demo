@@ -108,6 +108,11 @@ namespace GameBase.Network
             }
         }
 
+        public static void ManualConnect()
+        {
+            _tryConnectTimes = 0;
+        }
+
         public static void ConnectToServer()
         {
             _tcpClient = new TcpClient();

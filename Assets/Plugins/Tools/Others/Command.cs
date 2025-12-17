@@ -1,93 +1,62 @@
 using System;
 using System.Collections.Generic;
+using System.CommandLine;
 using System.Linq;
+
+using SCCommand = System.CommandLine.Command;
 
 namespace GameBase.Tools
 {
     public class Command
     {
-        private static Dictionary<string, Action<string[]>> _commands = new();
-        private static HashSet<string> _commandKeys = new();
+        private static RootCommand _root = new();
+        private static Dictionary<string, SCCommand> _subCmds = new();
 
-        public static HashSet<string> CommandKeys => _commandKeys;
-
-        public static void Register(string key, Action action)
+        public static List<string> GetCompletions(string input)
         {
-            Register(key, (string[] args) => action?.Invoke());
-        }
-
-        public static void Register(string key, Action<string> action)
-        {
-            Register(key, (string[] args) =>
+            var result = new List<string>();
+            foreach (var cmd in _root.Parse(input).GetCompletions())
             {
-                if (args.Length < 2)
-                {
-                    return;
-                }
-                else
-                {
-                    action?.Invoke(args[1]);
-                }
-            });
+                result.Add(cmd.Label);
+            }
+
+            return result;
         }
 
-        public static void Register(string key, Action<int> action)
+        public static string GetMatchest(string input)
         {
-            Register(key, (string[] args) =>
+            var completions = _root.Parse(input).GetCompletions();
+            foreach (var c in completions)
             {
-                if (args.Length < 2)
-                {
-                    return;
-                }
-                else
-                {
-                    if (int.TryParse(args[1], out int value))
-                    {
-                        action?.Invoke(value);
-                    }
-                }
-            });
+                return c.Label;
+            }
+
+            return null;
         }
 
-        public static void Register(string key, Action<int, int> action)
+        public static SCCommand RegisterCommand(string name)
         {
-            Register(key, (string[] args) =>
+            var cmd = new SCCommand(name);
+            _root.Add(cmd);
+            _subCmds.Add(name, cmd);
+            return cmd;
+        }
+
+        public static Option<string> RegisterOption(string cmdName, string optionName)
+        {
+            if (_subCmds.TryGetValue(cmdName, out var cmd))
             {
-                if (args.Length < 3)
-                {
-                    return;
-                }
-                else
-                {
-                    if (int.TryParse(args[1], out int v1) && int.TryParse(args[2], out int v2))
-                    {
-                        action?.Invoke(v1, v2);
-                    }
-                }
-            });
-        }
+                var option = new Option<string>(optionName);
+                cmd.Options.Add(option);
+                return option;
+            }
 
-        public static void Register(string key, Action<string[]> action)
-        {
-            _commands[key] = action;
-            _commandKeys.Add(key);
+            return null;
         }
 
         public static void Exec(string cmd)
         {
-            string[] args = cmd.Split(" ");
-            
-            if (args.Length == 0)
-            {
-                return;
-            }
-
-            string key = args[0];
-
-            if (_commands.ContainsKey(key))
-            {
-                _commands[key]?.Invoke(args);
-            }
+            _root.Parse(cmd).Invoke();
         }
     }
 }

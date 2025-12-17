@@ -13,7 +13,6 @@ namespace GameBase.EntitySystem
         protected SealedConstructor()
         {
             Init();
-            Command.Register($"{typeof(T_Constructor).FullName}-init", Init);
         }
         protected abstract string RelativePath { get; }
 

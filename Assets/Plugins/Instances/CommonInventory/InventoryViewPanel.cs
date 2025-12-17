@@ -75,7 +75,7 @@ namespace Instance
             panelXMoveSpeed = InventoryConfig.Float.InventoryPanelHideSpeed;
         }
 
-        public void UpdatePanel(DynInventory<ItemData> model)
+        public void UpdatePanel(DynInventory<int> model)
         {
             FillItem(model.Size);
             for (int i = 0; i < model.Size; ++i)
@@ -84,13 +84,13 @@ namespace Instance
             }
         }
 
-        public void UpdateItem(DynInventory<ItemData> model, int index)
+        public void UpdateItem(DynInventory<int> model, int index)
         {
             var viewItem = this[index];
 
             if (model.HasItem(index))
             {
-                var item = model[index];
+                var item = ItemDataMgr.Get(model[index]);
 
                 string textureName = null;
                 int rarity = -1;

@@ -12,6 +12,17 @@ namespace GameBase.UI
             _nodes.Add(node);
         }
 
+        public void UpdateAll()
+        {
+            foreach (var node in _nodes)
+            {
+                if (node.Parent == null)
+                {
+                    node.Update();
+                }
+            }
+        }
+
         protected override void Update()
         {
             foreach (var node in _nodes)

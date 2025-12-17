@@ -13,7 +13,6 @@ namespace GameBase.EntitySystem
         protected KeyConstructor()
         {
             Init();
-            Command.Register($"{typeof(T_Constructor).FullName}-init", Init);
         }
         protected abstract string RelativePath { get; }
         protected abstract T_Entity GetFromData(in T_Data data);

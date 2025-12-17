@@ -19,7 +19,7 @@ namespace GameBase.Network
 
         protected override void Update()
         {
-
+            NetworkProtoMgr.Update();
         }
 
         protected override void FixedUpdate()

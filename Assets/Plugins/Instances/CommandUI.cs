@@ -9,7 +9,7 @@ namespace Instance.UI
 {
     public class CommandUI : MonoBehaviour
     {
-        private string[] _tipTexts;
+        private string _matchestText;
         private GameObject _tipText;
         private TextMeshProUGUI _tipTextTMP;
         private GameObject _inputText;
@@ -33,25 +33,20 @@ namespace Instance.UI
         /// <param Name="currInput"></param>
         private void UpdateTipText(string currInput)
         {
-            var keys = Command.CommandKeys;
-
-            _tipTextTMP.text = "";
+            var completions = Command.GetCompletions(currInput); 
             _currTipNum = 0;
-            foreach (var key in keys)
+            _tipTextTMP.text = "";
+            foreach (var c in completions)
             {
                 if (_currTipNum >= MaxTipNum)
                 {
                     break;
                 }
-
-                if (currInput == null || currInput.Length <= 1 || key.StartsWith(currInput))
-                {
-                    _tipTexts[_currTipNum] = key;
-                    _currTipNum++;
-                    _tipTextTMP.text += $"{key}\n";
-                }
+                _tipTextTMP.text += $"{c}\n";
+                _matchestText = c;
+                _currTipNum++;
             }
-
+            
             _inputTextField.ActivateInputField();
         }
 
@@ -66,8 +61,6 @@ namespace Instance.UI
             _inputTextField = _inputText.GetComponent<TMP_InputField>();
 
             _inputTextField.onValueChanged.AddListener(UpdateTipText);
-
-            _tipTexts = new string[MaxTipNum];
 
             SetElemActive(false);
         }
@@ -115,7 +108,7 @@ namespace Instance.UI
             {
                 if (_currTipNum > 0)
                 {
-                    _inputTextField.text = _tipTexts[_currTipNum - 1];
+                    _inputTextField.text = _matchestText;
                     _inputTextField.caretPosition = _inputTextField.text.Length + 1;
                 }
             }

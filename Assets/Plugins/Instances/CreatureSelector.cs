@@ -132,5 +132,11 @@ namespace Instance
                 }
             }
         }
+
+        public void ForceSelect(Creature c)
+        {
+            OnFirstSelectCreature();
+            OnSelectCreature(c);
+        }
     }
 }

@@ -24,6 +24,19 @@ namespace GameBase.Inventorys
             }
         }
 
+        public static implicit operator CommonInventory<T_Item>(List<T_Item> items)
+        {
+            var ret = new CommonInventory<T_Item>()
+            {
+                Size = items.Count,
+            };
+            for (int i = 0; i < items.Count; i++)
+            {
+                ret[i] = items[i];
+            }
+            return ret;
+        }
+
         protected List<CInventoryItem> _items = new();
         protected SortedIntList _nullIndexes = new((x, y) => (y - x));
 

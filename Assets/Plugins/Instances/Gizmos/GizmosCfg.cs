@@ -21,31 +21,31 @@ namespace Instance
         public static float ForceLenTimes { get; set; } = 5;
         static GizmosCfg()
         {
-            Command.Register("toggle-all-gizmos", () =>
+            Command.RegisterCommand("toggle-all-gizmos").SetAction(result =>
             {
                 IsDrawGizmos = !IsDrawGizmos;
             });
-            Command.Register("toggle-draw-force", () =>
+            Command.RegisterCommand("toggle-draw-force").SetAction(result =>
             {
                 IsDrawForce = !IsDrawForce;
             });
-            Command.Register("toggle-draw-collide", () =>
+            Command.RegisterCommand("toggle-draw-collide").SetAction(result =>
             {
                 IsDrawCollider = !IsDrawCollider;
             });
-            Command.Register("toggle-draw-move", () =>
+            Command.RegisterCommand("toggle-draw-move").SetAction(result =>
             {
                 IsDrawMove = !IsDrawMove;
             });
-            Command.Register("toggle-draw-attackRange", () =>
+            Command.RegisterCommand("toggle-draw-attackRange").SetAction(result =>
             {
                 IsDrawAttackRange = !IsDrawAttackRange;
             });
-            Command.Register("toggle-draw-trigger", () =>
+            Command.RegisterCommand("toggle-draw-trigger").SetAction(result =>
             {
                 IsDrawTrigger = !IsDrawTrigger;
             });
-            Command.Register("toggle-draw-grid", () =>
+            Command.RegisterCommand("toggle-draw-grid").SetAction(result =>
             {
                 IsDrawGrid = !IsDrawGrid;
             });
